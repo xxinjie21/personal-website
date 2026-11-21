@@ -4,6 +4,32 @@ import * as THREE from 'three'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const el = ref(null)
+// 无 WebGL（云电脑 / 禁用 GPU）时退回静态暖色光晕，避免整页报错
+const failed = ref(false)
+// 静态螺旋芯片，用于无 WebGL 的降级画面
+const fallbackChips = (() => {
+  const out = []
+  const warm = [217, 87, 26]
+  const cream = [255, 231, 208]
+  for (let i = 0; i < 92; i++) {
+    const t = i / 91
+    const a = t * Math.PI * 4.2
+    const r = 16 + 8 * Math.sin(t * Math.PI)
+    const depth = (Math.cos(a) + 1) / 2
+    const k = Math.pow(depth, 1.4)
+    const rgb = warm.map((c, j) => Math.round(c + (cream[j] - c) * (0.25 + 0.55 * k)))
+    const size = 2.2 + 2.0 * k
+    out.push({
+      k: i,
+      x: 50 + Math.sin(a) * r - size / 2,
+      y: 10 + t * 76 + Math.cos(a) * 2.4 - size / 2,
+      s: size,
+      fill: `rgb(${rgb.join(',')})`,
+      o: 0.35 + 0.5 * k,
+    })
+  }
+  return out
+})()
 
 let renderer, scene, camera, raf, obs, group, inst
 let clock
@@ -155,10 +181,19 @@ function onPointer(e) {
 }
 
 onMounted(() => {
-  build()
-  obs = new ResizeObserver(resize)
-  obs.observe(el.value)
-  window.addEventListener('pointermove', onPointer, { passive: true })
+  try {
+    build()
+  } catch (e) {
+    failed.value = true
+    return
+  }
+  try {
+    obs = new ResizeObserver(resize)
+    obs.observe(el.value)
+    window.addEventListener('pointermove', onPointer, { passive: true })
+  } catch (e) {
+    failed.value = true
+  }
 })
 
 onBeforeUnmount(() => {
@@ -173,7 +208,22 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="el" class="ribbon-scene" aria-hidden="true"></div>
+  <div ref="el" class="ribbon-scene" :class="{ 'is-fallback': failed }" aria-hidden="true">
+    <svg v-if="failed" class="ribbon-fallback" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="58" cy="50" r="46" class="ribbon-halo" />
+      <rect
+        v-for="c in fallbackChips"
+        :key="c.k"
+        :x="c.x"
+        :y="c.y"
+        :width="c.s"
+        :height="c.s"
+        :fill="c.fill"
+        :opacity="c.o"
+        rx="0.5"
+      />
+    </svg>
+  </div>
 </template>
 
 <style scoped>
@@ -181,6 +231,18 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+.ribbon-fallback {
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  width: min(44vw, 540px);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  filter: blur(0.4px) drop-shadow(0 18px 40px rgba(217, 87, 26, 0.18));
+}
+.ribbon-fallback .ribbon-halo {
+  fill: rgba(255, 226, 203, 0.34);
 }
 .ribbon-scene canvas {
   display: block;
