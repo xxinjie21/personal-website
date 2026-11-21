@@ -365,6 +365,39 @@ function startDrag(side, e) {
   window.addEventListener('pointercancel', stop)
 }
 
+// 右栏两块（大纲 / 链接）可拖拽分高、可折叠，默认大纲 2/3、链接 1/3
+const railEl = ref(null)
+const outlinePct = ref(66.67)
+const outlineCollapsed = ref(false)
+const linksCollapsed = ref(false)
+const railDragging = ref(false)
+
+function startRailDrag(e) {
+  if (outlineCollapsed.value || linksCollapsed.value) return
+  const rail = railEl.value
+  if (!rail) return
+  railDragging.value = true
+  const rect = rail.getBoundingClientRect()
+  const padTop = 16
+  const usable = Math.max(1, rect.height - padTop - 20)
+  const move = (ev) => {
+    const y = ev.clientY - rect.top - padTop
+    outlinePct.value = Math.min(88, Math.max(12, (y / usable) * 100))
+  }
+  const stop = () => {
+    railDragging.value = false
+    window.removeEventListener('pointermove', move)
+    window.removeEventListener('pointerup', stop)
+    window.removeEventListener('pointercancel', stop)
+  }
+  window.addEventListener('pointermove', move)
+  window.addEventListener('pointerup', stop)
+  window.addEventListener('pointercancel', stop)
+}
+function resetRail() {
+  outlinePct.value = 66.67
+}
+
 // 链接：出链（→ 本篇指向）+ 反向链接（← 引用本篇），合并去重成一个列表
 const relatedLinks = computed(() => {
   const out = []
@@ -526,10 +559,27 @@ watch(
     </div>
 
     <div class="pane pane-right" :class="{ closed: !rightOpen }" :style="{ width: rightOpen ? rightW + 'px' : '0px' }">
-      <aside class="rail pane-body" :style="{ width: rightW + 'px' }">
-      <div class="rail-block outline-block">
-        <div class="rail-head">
-          <span><em class="rail-idx mono">01</em>大纲</span>
+      <aside
+        ref="railEl"
+        class="rail pane-body"
+        :class="{ dragging: railDragging }"
+        :style="{ width: rightW + 'px' }"
+      >
+      <div
+        class="rail-block outline-block"
+        :class="{ collapsed: outlineCollapsed }"
+        :style="{ flex: outlineCollapsed ? '0 0 auto' : `0 0 calc(${outlinePct}% - 14px)` }"
+      >
+        <div class="rail-head" @click="outlineCollapsed = !outlineCollapsed">
+          <span>
+            <Icon
+              name="chevron-right"
+              class="rail-chevron"
+              :class="{ open: !outlineCollapsed }"
+              :size="9"
+            />
+            <em class="rail-idx mono">01</em>大纲
+          </span>
           <span class="rail-count">{{ outline.length }}</span>
         </div>
         <ul v-if="outline.length" class="outline">
@@ -558,9 +608,33 @@ watch(
         <p v-else class="rail-empty">暂无标题</p>
       </div>
 
-      <div class="rail-block">
-        <div class="rail-head">
-          <span><em class="rail-idx mono">02</em>链接</span>
+      <div
+        v-if="!outlineCollapsed && !linksCollapsed"
+        class="rail-splitter"
+        role="separator"
+        aria-orientation="horizontal"
+        title="拖动调整上下比例，双击恢复 2:1"
+        @pointerdown.prevent="startRailDrag"
+        @dblclick="resetRail"
+      >
+        <span class="rail-splitter-grip"></span>
+      </div>
+
+      <div
+        class="rail-block links-block"
+        :class="{ collapsed: linksCollapsed }"
+        :style="{ flex: linksCollapsed ? '0 0 auto' : '1 1 0' }"
+      >
+        <div class="rail-head" @click="linksCollapsed = !linksCollapsed">
+          <span>
+            <Icon
+              name="chevron-right"
+              class="rail-chevron"
+              :class="{ open: !linksCollapsed }"
+              :size="9"
+            />
+            <em class="rail-idx mono">02</em>链接
+          </span>
           <span class="rail-count">{{ relatedLinks.length }}</span>
         </div>
         <ul v-if="relatedLinks.length" class="links">
@@ -986,18 +1060,58 @@ watch(
   flex-direction: column;
   min-height: 0;
 }
-.rail-block.outline-block {
-  flex: 0 1 auto;
+.rail-block {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
 }
-.rail-block + .rail-block {
-  margin-top: 16px;
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
+.rail-block.collapsed .outline,
+.rail-block.collapsed .links,
+.rail-block.collapsed .rail-empty {
+  display: none;
+}
+.rail-block.collapsed .rail-head {
+  margin-bottom: 0;
+}
+.rail-chevron {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: -1px;
+  color: var(--muted);
+  transition: transform 0.28s var(--ease);
+}
+.rail-chevron.open {
+  transform: rotate(90deg);
+}
+.rail-splitter {
+  flex: none;
+  height: 13px;
+  margin: 4px 0 6px;
+  display: flex;
+  align-items: center;
+  cursor: row-resize;
+  touch-action: none;
+}
+.rail-splitter-grip {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  transition: background 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.rail-splitter:hover .rail-splitter-grip,
+.rail.dragging .rail-splitter-grip {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 2px rgba(217, 87, 26, 0.12);
+}
+.rail.dragging {
+  cursor: row-resize;
+  user-select: none;
 }
 .rail-head {
+  cursor: pointer;
+  user-select: none;
+}.rail-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1030,9 +1144,8 @@ watch(
   list-style: none;
   margin: 0;
   padding: 0 2px 0 0;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 0;
-  max-height: 46vh;
   overflow-y: auto;
 }
 .outline-item {
@@ -1111,7 +1224,8 @@ watch(
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 220px;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
 }
 .link {
