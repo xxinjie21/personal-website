@@ -10,18 +10,32 @@
 :root{--ink:#241a12;--muted:#8a7365;--line:rgba(126,84,46,.16);--paper:#f7f2ec;--white:#fffdfa;--accent:#d9571a;--blue:#3d6b86;--green:#4b7a56;--brown:#8a6a3c;--teal:#4a7370}
 html,body{height:100%;margin:0}
 body{display:grid;grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh;overflow:hidden;background:var(--paper);color:var(--ink);font:15px/1.6 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-.hdr{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;column-gap:14px;padding:5px 14px 4px;border-bottom:1px solid var(--line)}
+.hdr{display:flex;align-items:center;gap:14px;padding:5px 14px 4px;border-bottom:1px solid var(--line)}
 .hdr h1{margin:0;font-size:15px;font-weight:600;letter-spacing:.3px;line-height:1.25;display:flex;align-items:center;gap:8px}
 .hdr h1 .yr{font-size:9.5px;font-weight:500;letter-spacing:.06em;color:var(--accent-cream);background:rgba(217,87,26,.1);border:1px solid rgba(217,87,26,.22);border-radius:999px;padding:1px 7px;font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .hdr .sub{margin:1px 0 0;font-size:10.5px;color:var(--muted);letter-spacing:.2px}
-.tools{display:flex;gap:15px;align-items:center;justify-self:end}
+/* 词汇图谱的分类栏 + 控制行，合成一条并进顶部栏，跟长难句的工具同一行 */
+.batools{display:none;align-items:center;gap:6px;flex:1 1 auto;min-width:0;justify-content:flex-end;overflow-x:auto;scrollbar-width:none}
+.batools::-webkit-scrollbar{display:none}
+.hdr.mm-mode .batools{display:flex}
+.batools .mmtabs{display:flex;gap:2px;padding:2px;border-radius:8px;background:rgba(126,84,46,.07);flex:none}
+.batools .mmtab{height:24px;padding:0 7px;border:0;border-radius:6px;background:none;font-family:inherit;font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap;max-width:7.6em;overflow:hidden;text-overflow:ellipsis;transition:background .18s,color .18s}
+.batools .mmtab:hover{color:var(--ink)}
+.batools .mmtab.on{background:var(--white);color:var(--ink);box-shadow:0 1px 2px rgba(30,40,54,.1)}
+.batools .mmstat{font-size:10.5px;color:var(--muted);white-space:nowrap;flex:none;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.batools .mmprog{width:44px;height:4px;border-radius:3px;background:rgba(126,84,46,.16);overflow:hidden;flex:none}
+.batools .mmprog i{display:block;height:100%;background:var(--green);width:0;transition:width .25s}
+.batools .mmbtn{height:25px;padding:0 7px;border-radius:6px;border:1px solid var(--line);background:var(--white);font-family:inherit;font-size:11px;color:var(--text-dim);cursor:pointer;white-space:nowrap;flex:none;transition:background .18s,color .18s,border-color .18s}
+.batools .mmbtn:hover{color:var(--ink);background:#f4ece1;border-color:rgba(217,87,26,.28)}
+.batools .mmbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tools{display:flex;gap:10px;align-items:center;flex:none}
 .t{border:0;background:none;padding:0 6px;min-height:30px;display:inline-flex;align-items:center;font:inherit;font-size:12px;color:var(--muted);cursor:pointer;border-bottom:1.6px solid transparent;border-radius:5px;font-family:inherit;transition:color .18s,background .18s,border-color .18s}
 .t:hover{color:var(--ink);background:rgba(126,84,46,.07)}
 .t.on{color:var(--ink);border-bottom-color:var(--accent);background:rgba(217,87,26,.06)}
 #btnToggle{min-width:4.6em;justify-content:center}
-.tabs{position:relative;display:flex;gap:2px;border:1px solid var(--line);border-radius:7px;padding:2px;flex:none;justify-self:end;isolation:isolate}
+.tabs{position:relative;display:flex;gap:2px;border:1px solid var(--line);border-radius:7px;padding:2px;flex:none;margin-left:auto;isolation:isolate}
 .pill{position:absolute;top:3px;bottom:3px;left:3px;width:0;background:var(--ink);border-radius:5px;transition:left .22s cubic-bezier(.4,0,.2,1),width .22s cubic-bezier(.4,0,.2,1);z-index:0}
-.tab{position:relative;z-index:1;border:0;background:none;padding:0 11px;min-height:30px;font-family:inherit;font-size:12px;color:var(--muted);cursor:pointer;border-radius:5px;transition:color .18s}
+.tab{position:relative;z-index:1;border:0;background:none;padding:0 11px;min-height:30px;font-family:inherit;font-size:12px;color:var(--muted);cursor:pointer;border-radius:5px;transition:color .18s;white-space:nowrap;flex:none}
 .tab.on{color:#fbfaf6}
 .viewport{min-height:0;overflow:hidden}
 @keyframes fadein{from{opacity:.25}to{opacity:1}}
@@ -186,6 +200,7 @@ main{display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr
     <button class="t" id="btnToggle">展开解析</button>
     <button class="t" id="btnRand">随机</button>
   </div>
+  <div class="batools" id="mmBarSlot"></div>
 </header>
 
 <div class="viewport">
@@ -19674,6 +19689,109 @@ function fadeIn(el){
   el.classList.add('fade');
 }
 const VIEW_KEY = 'lsc.view.v1';
+/* ---- 词汇图谱：它自己的两行（分类栏 + 控制行）收进顶部栏，成一条 ----
+   原控件仍在图谱 iframe 里，只是隐藏；顶部栏这排按钮点一下就把点击代理回原控件 */
+const mmSlot = document.getElementById('mmBarSlot');
+const MM_ACTIONS = [
+  ['randomBtn','随机'],['undoneBtn','未掌握'],['doneBtn','已掌握'],['unkBtn','生词本'],
+  ['findBtn','找词'],['expand','展开'],['collapse','收起'],['fit','复位']
+];
+let mmTimer = 0;
+const mmDoc = () => { const f = document.getElementById('mmFrame'); return f ? f.contentDocument : null; };
+
+function buildMmBar(){
+  const d = mmDoc();
+  if(!d) return false;
+  const tabsEl = d.getElementById('tabs');
+  if(!tabsEl || !tabsEl.children.length) return false;
+  const hd = d.querySelector('header');
+  if(hd){
+    hd.style.padding = '0';
+    hd.style.border = '0';
+    hd.style.background = 'transparent';
+    hd.style.boxShadow = 'none';
+  }
+  tabsEl.style.display = 'none';
+  const barEl = d.querySelector('.bar');
+  if(barEl) barEl.style.display = 'none';
+  const findBar = d.getElementById('findBar');
+  if(findBar) findBar.style.marginTop = '0';
+  if(mmSlot.dataset.built === '1'){ syncMmBar(); return true; }
+
+  // 第四个分类名自带“· 6311 词”，一行放不下，去掉后半段（词数在别处能看到）
+  const cats = [...tabsEl.children].map(b => b.textContent.trim().replace(/·\s*\d+\s*词$/, '').trim());
+  mmSlot.innerHTML =
+    '<div class="mmtabs">' + cats.map((n,i) =>
+      '<button type="button" class="mmtab'+(i===0?' on':'')+'" data-cat="'+i+'">'+esc(n)+'</button>').join('') + '</div>'
+    + '<span class="mmstat" id="mmStat">0 / 0</span>'
+    + '<div class="mmprog"><i id="mmProg"></i></div>'
+    + MM_ACTIONS.map(a => '<button type="button" class="mmbtn" data-btn="'+a[0]+'">'+a[1]+'</button>').join('');
+  mmSlot.dataset.built = '1';
+  syncMmBar();
+  return true;
+}
+
+function syncMmBar(){
+  const d = mmDoc();
+  if(!d || mmSlot.dataset.built !== '1') return;
+  const tabsEl = d.getElementById('tabs');
+  const onIdx = tabsEl ? [...tabsEl.children].findIndex(t => t.classList.contains('on')) : 0;
+  mmSlot.querySelectorAll('.mmtab').forEach((b,i)=>b.classList.toggle('on', i === onIdx));
+  const stat = d.getElementById('stat');
+  if(stat) mmSlot.querySelector('#mmStat').textContent =
+    stat.textContent.replace('已掌握','').replace('词','').replace(/\s+/g,' ').trim();
+  const pb = d.getElementById('pbar');
+  if(pb) mmSlot.querySelector('#mmProg').style.width = pb.style.width || '0%';
+  MM_ACTIONS.forEach(a=>{
+    const src = d.getElementById(a[0]);
+    const btn = mmSlot.querySelector('[data-btn="'+a[0]+'"]');
+    if(src && btn) btn.classList.toggle('on', src.classList.contains('on'));
+  });
+}
+
+mmSlot.addEventListener('click', e=>{
+  const cat = e.target.closest('.mmtab');
+  const act = e.target.closest('.mmbtn');
+  const d = mmDoc();
+  if(!d) return;
+  if(cat){
+    const t = d.getElementById('tabs').children[Number(cat.dataset.cat)];
+    if(t) t.click();
+  } else if(act){
+    const src = d.getElementById(act.dataset.btn);
+    if(src) src.click();
+  } else return;
+  setTimeout(syncMmBar, 80);
+});
+
+function mmFit(){
+  const f = document.getElementById('mmFrame');
+  const w = f && f.contentWindow;
+  if(w && typeof w.fit === 'function'){ try{ w.fit(); }catch(e){} }
+}
+
+function mountMmBar(){
+  document.querySelector('.hdr').classList.add('mm-mode');
+  const ok = buildMmBar();
+  clearInterval(mmTimer);
+  mmTimer = setInterval(syncMmBar, 800);
+  setTimeout(mmFit, 80);
+  if(!ok){
+    const f = document.getElementById('mmFrame');
+    f.addEventListener('load', function once(){
+      f.removeEventListener('load', once);
+      if(state.view === 'mm'){ buildMmBar(); syncMmBar(); mmFit(); }
+    });
+  }
+}
+function unmountMmBar(){
+  document.querySelector('.hdr').classList.remove('mm-mode');
+  clearInterval(mmTimer);
+  mmTimer = 0;
+  setTimeout(mmFit, 80);
+}
+window.addEventListener('resize', () => { if(state.view === 'mm') mmFit(); });
+
 function applyView(v, save){
   state.view = v;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.v===v));
@@ -19684,7 +19802,7 @@ function applyView(v, save){
   mm.hidden = (v !== 'mm');
   document.getElementById('tools').style.display = (v === 'lsc') ? 'flex' : 'none';
   fadeIn(v === 'lsc' ? lsc : mm);
-  if(v === 'mm') ensureFrame();
+  if(v === 'mm'){ ensureFrame(); mountMmBar(); } else { unmountMmBar(); }
   if(save){ try{ localStorage.setItem(VIEW_KEY, v); }catch(e){} }
 }
 document.querySelectorAll('.tab').forEach(tb=>{
@@ -19693,8 +19811,7 @@ document.querySelectorAll('.tab').forEach(tb=>{
     if(state.view === v) return;
     applyView(v, true);
   };
-});
-window.addEventListener('resize', movePill);
+});window.addEventListener('resize', movePill);
 try{
   const v = localStorage.getItem(VIEW_KEY);
   if(v === 'mm' || v === 'lsc') applyView(v, false);
