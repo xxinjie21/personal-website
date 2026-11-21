@@ -22,6 +22,3 @@ public/custom-pages/
 .shots/
 preview.log
 *.log
-
-# Cloudflare API Token（本地部署用，绝不入库）
-.cloudflare-token

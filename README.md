@@ -1,24 +1,25 @@
 # personal-website
 
-个人知识可视化站点（纯静态）。Obsidian 笔记库只读渲染 + 自制 HTML 工具页；进度经 Cloudflare Worker 中转私有 Gist 同步。
+个人知识站点（纯静态，只读）。Obsidian 笔记库渲染 + 自制 HTML 工具页，部署在 GitHub Pages：
+**https://xxinjie21.github.io/personal-website/**
 
 ## 目录结构
 
 ```
 personal-website/
 ├── src/
-│   ├── layouts/      # 全局布局：顶部导航、倒计时、同步状态
+│   ├── layouts/      # 全局布局：顶部导航、倒计时、只读徽标
 │   ├── views/        # 主页 / 笔记页 / 自定义页面
-│   ├── components/   # GraphCanvas 图谱画布
-│   ├── router/       # hash 路由
-│   ├── lib/store.js  # localStorage + Worker 同步层（预留）
-│   ├── lib/graph.js  # 图谱模型：双链解析、邻居、状态统计
-│   ├── style/        # Obsidian 主题 CSS 变量
+│   ├── components/   # 阅读器、文件树、图标、首页 3D 雕塑
+│   ├── router/       # history 路由（无 # 的干净路径）
+│   ├── lib/store.js  # 只读空进度（不存任何数据）
+│   ├── lib/graph.js  # 双链解析、笔记索引
+│   ├── style/        # 暖白亮色主题 CSS 变量
 │   └── data/         # parse 脚本生成的 site-manifest.json
 ├── custom-pages/     # 自制 HTML 页面，丢进来即自动识别
 ├── notes/            # Gitee 笔记库（git 子模块：xxj0817/obsidian-notes）
 ├── build-script/     # 解析 md / frontmatter / 双链 / 标签 / 页面清单
-└── public/           # favicon 等静态资源
+└── public/           # favicon、笔记图片、自定义页构建副本
 ```
 
 > `notes/` 为子模块：更新笔记后在 `notes/` 内 `git pull`，再回到项目根目录 `npm run parse` 重新生成清单。
@@ -28,37 +29,22 @@ personal-website/
 ```bash
 npm install
 npm run parse     # 扫描 notes/ 与 custom-pages/，生成 src/data/site-manifest.json
-npm run dev       # 本地开发
+npm run dev       # 本地开发 http://localhost:5173
 npm run build     # 产出 dist/（静态托管）
 npm run preview   # 预览构建产物
 ```
 
-## 同步配置（`.env.development` / `.env.production`，不入库）
+## 部署
 
-- `VITE_WORKER_URL`：Cloudflare Worker 地址
-- `VITE_AUTH_KEY`：前端与 Worker 共享的 Bearer 密钥
+`.github/workflows/build.yml`：
 
-本地照 `.env.example` 复制填值；CI 用仓库的 Actions 变量/密钥同名注入。
+- 触发：push master / 手动 Run workflow / `repository_dispatch`（`gitee-notes-updated`）/ 每 5 分钟轮询
+- 流程：checkout（含子模块）→ `git submodule update --remote notes` → `npm ci` → `npm run build` → 复制 `dist/index.html` 为 `dist/404.html`（history 路由回退）→ `actions/deploy-pages`
+- Pages 子路径部署时 `VITE_BASE=/personal-website/` 控制资源前缀；本地 dev 默认 `/`
 
-同步逻辑见 `src/lib/store.js`：启动 GET 远端合并本地；改动防抖 PUT 推回；Worker 不可用时回退纯 localStorage。
+详见 `部署与同步说明.md`。
 
-## 构建流水线
+## 说明
 
-`.github/workflows/build.yml`：push master / 手动 / `repository_dispatch` / 每日兜底触发 → 拉 notes 最新 → parse → build → 上传 `dist` 为 artifact。详见 `部署与同步说明.md`。
-
-## 进度数据结构
-
-```json
-{
-  "noteStatus": { "<noteId>": "not-started | learning | mastered" },
-  "wordProgress": { "count": 0, "round": 0, "lastDate": "" },
-  "updatedAt": ""
-}
-```
-
-## 待办（按方案阶段）
-
-- 阶段 2（骨架已通）：171 篇笔记已入图谱，环形/力导向可切换、标签过滤、邻居高亮、状态着色、统计/标签面板、分享链接、触摸缩放。待细化：节点标签密度过高需默认隐藏/悬停显示；节点点击命中体偏小需优化；力导向斥力参数可调。
-- 阶段 3：Obsidian 三栏阅读页
-- 阶段 4：生词本等自定义页面、快捷键、偏好记忆
-- 阶段 5：Pages 静态部署；上线后把 Worker 的 `ALLOWED_ORIGIN` 从 `*` 改为实际 Pages 域名
+- 站点纯只读：不写入 localStorage、不请求后端、不保存学习状态
+- 深链（`/notes?note=...`）走 Pages 的 404 回退，页面正常渲染但 HTTP 状态为 404，属 GitHub Pages 固有行为
