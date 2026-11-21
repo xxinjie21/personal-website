@@ -1,5 +1,5 @@
 # Cloudflare Worker（静态资源托管）：构建产物 dist 直接作为 assets 部署
-name = "personal-website"
+name = "xxj"
 compatibility_date = "2026-11-21"
 
 [assets]
