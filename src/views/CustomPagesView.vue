@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import Icon from '../components/Icon.vue'
 
 // 页面清单由 build-script/parse.mjs 扫描 custom-pages/ 生成到 src/data/site-manifest.json
 const pages = ref([])
@@ -43,13 +44,13 @@ function spot(e) {
         <span class="idx mono">{{ String(i + 1).padStart(2, '0') }}</span>
         <h2>{{ p.title }}</h2>
         <span class="file mono">{{ p.file }}</span>
-        <span class="go" aria-hidden="true">↗</span>
+        <Icon name="arrow-up-right" class="go" :size="15" />
       </router-link>
     </div>
 
     <div v-else class="empty reveal reveal-d1">
       <div class="empty-glow"></div>
-      <span class="plus" aria-hidden="true">＋</span>
+      <span class="plus" aria-hidden="true"><Icon name="plus" :size="24" :weight="2" /></span>
       <h2>还没有自定义页面</h2>
       <p>
         把 <code>.html</code> 放进 <code>custom-pages/</code>，再跑一次
@@ -164,7 +165,6 @@ code {
   position: absolute;
   right: 20px;
   bottom: 20px;
-  font-size: 16px;
   color: var(--accent-soft);
   opacity: 0;
   transform: translate(-4px, 4px) rotate(-8deg);
@@ -197,7 +197,6 @@ code {
   pointer-events: none;
 }
 .plus {
-  font-size: 26px;
   color: var(--accent-soft);
   width: 54px;
   height: 54px;

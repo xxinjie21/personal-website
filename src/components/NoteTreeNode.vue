@@ -2,6 +2,7 @@
 // 文件树节点（递归）：目录可折叠，文件显示学习状态点
 import { computed } from 'vue'
 import { normalizeStatus } from '../lib/graph.js'
+import Icon from './Icon.vue'
 
 const props = defineProps({
   node: { type: Object, required: true },
@@ -26,10 +27,8 @@ const isOpen = computed(() => !!props.openPaths[props.node.path])
       :style="{ paddingLeft: depth * 16 + 'px' }"
       @click="emit('toggle', node.path)"
     >
-      <span class="caret" :class="{ open: isOpen }">▸</span>
-      <svg class="ico folder" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3.6 7.5A2 2 0 0 1 5.6 5.4h3.6l1.9 2.1h7.3a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2H5.6a2 2 0 0 1-2-2z" />
-      </svg>
+      <Icon name="chevron-right" class="caret" :class="{ open: isOpen }" :size="10" :weight="1.9" />
+      <Icon name="folder" class="ico folder" :size="12" />
       <span class="dir-name">{{ node.name }}</span>
     </button>
     <Transition name="fold">
@@ -54,10 +53,7 @@ const isOpen = computed(() => !!props.openPaths[props.node.path])
         :style="{ paddingLeft: (node.name ? (depth + 1) * 16 + 21 : 9) + 'px' }"
         @click="emit('select', note.slug)"
       >
-        <svg class="ico fileico" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 3.6h6.2L17 7.4v13H7z" />
-          <path d="M13.1 3.6v3.8h3.8" />
-        </svg>
+        <Icon name="file" class="ico fileico" :size="11" />
         <span class="file-name">{{ note.title }}</span>
         <span class="dot" :class="normalizeStatus(note.slug)"></span>
       </button>
@@ -185,12 +181,9 @@ export default { name: 'NoteTreeNode' }
 
 .caret {
   flex: none;
-  width: 11px;
-  height: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
   color: var(--text-muted);
   opacity: 1;
   transition: transform 0.22s var(--ease), color 0.16s linear, opacity 0.16s linear;

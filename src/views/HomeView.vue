@@ -3,6 +3,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import RibbonScene from '../components/RibbonScene.vue'
+import Icon from '../components/Icon.vue'
 
 const router = useRouter()
 
@@ -107,7 +108,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
 
       <div class="cta reveal reveal-d3">
         <button class="btn btn-primary" @click="goNotes">
-          进入笔记库 <span class="arw">↗</span>
+          进入笔记库 <Icon name="arrow-up-right" class="arw" :size="12" />
         </button>
         <a
           class="btn ghost"
@@ -115,7 +116,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
           target="_blank"
           rel="noreferrer"
         >
-          GitHub <span class="arw">↗</span>
+          GitHub <Icon name="arrow-up-right" class="arw" :size="12" />
         </a>
       </div>
 
@@ -142,7 +143,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
     <div class="vol-head">
       <p class="eyebrow">VOLUMES — {{ String(folders.length).padStart(2, '0') }}</p>
       <h2 class="reveal">三卷分区</h2>
-      <button class="more link-x" @click="goNotes">看全部 →</button>
+      <button class="more link-x" @click="goNotes">看全部 <Icon name="arrow-right" class="more-arw" :size="11" /></button>
     </div>
 
     <div class="vol-grid">
@@ -158,7 +159,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
         <b class="vol-count mono">{{ f.count }}</b>
         <h3>{{ f.name }}</h3>
         <span class="vol-bar"><i></i></span>
-        <span class="vol-go">打开这一卷 <em>↗</em></span>
+        <span class="vol-go">打开这一卷 <em><Icon name="arrow-up-right" :size="10" /></em></span>
       </button>
     </div>
   </section>
@@ -266,8 +267,15 @@ max-width: 560px;
   margin-bottom: 34px;
 }
 .cta .arw {
-  font-size: 13px;
+  color: currentColor;
   transition: transform 0.35s var(--ease);
+}
+.more-arw {
+  color: currentColor;
+  transition: transform 0.35s var(--ease);
+}
+.more:hover .more-arw {
+  transform: translateX(3px);
 }
 .cta .btn:hover .arw {
   transform: translate(2px, -2px);

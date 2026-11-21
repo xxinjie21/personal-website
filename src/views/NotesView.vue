@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import manifest from '../data/site-manifest.json'
 import NoteTree from '../components/NoteTree.vue'
 import NoteReader from '../components/NoteReader.vue'
+import Icon from '../components/Icon.vue'
 import { getProgress, updateProgress, initSync, isOwner, setOwner } from '../lib/store.js'
 import { slugifyHeading } from '../lib/markdown.js'
 import { normalizeStatus } from '../lib/graph.js'
@@ -492,7 +493,7 @@ watch(
       @pointerdown="startDrag('left', $event)"
       @click="togglePane('left')"
     >
-      <span>›</span>
+      <span><Icon name="chevron-right" :size="12" :weight="1.9" /></span>
     </button>
 
     <div class="pane pane-left" :class="{ closed: !leftOpen }" :style="{ width: leftOpen ? leftW + 'px' : '0px' }">
@@ -548,7 +549,7 @@ watch(
         >
           <span class="dot" :class="normalizeStatus(slug)"></span>
           <span class="tab-name">{{ noteTitle(slug) }}</span>
-          <span class="tab-close" @click.stop="closeTab(slug)">×</span>
+          <span class="tab-close" @click.stop="closeTab(slug)"><Icon name="close" :size="10" :weight="2" /></span>
         </button>
         <span v-if="!tabs.length" class="tabs-empty">未打开笔记</span>
         <span class="tabs-spacer"></span>
@@ -674,7 +675,7 @@ watch(
       @pointerdown="startDrag('right', $event)"
       @click="togglePane('right')"
     >
-      <span>‹</span>
+      <span><Icon name="chevron-left" :size="12" :weight="1.9" /></span>
     </button>
 
     <div v-if="lightbox" class="lightbox" @click="lightbox = null">
@@ -749,9 +750,8 @@ watch(
   background: linear-gradient(270deg, rgba(217, 87, 26, 0.16), rgba(217, 87, 26, 0));
 }
 .edge-handle span {
-  font-size: 11px;
+  display: inline-flex;
   opacity: 0.75;
-  transform: translateY(-1px);
 }
 .edge-handle:hover {
   color: var(--accent-cream);
@@ -1025,6 +1025,8 @@ watch(
   text-overflow: ellipsis;
 }
 .tab-close {
+  display: inline-flex;
+  align-items: center;
   opacity: 0.5;
   padding: 0 2px;
   transition: opacity 0.2s var(--ease), transform 0.28s var(--ease), color 0.2s var(--ease);
