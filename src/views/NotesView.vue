@@ -72,12 +72,33 @@ async function loadNote(slug) {
   }
 }
 
+// 记住最后打开的一篇，下次只认它（站点不存阅读数据，只留这一条定位键）
+const LAST_KEY = 'notes:last'
+
+function rememberLast(slug) {
+  try {
+    localStorage.setItem(LAST_KEY, slug)
+  } catch {
+    /* 隐私模式忽略 */
+  }
+}
+
+function readLast() {
+  try {
+    const s = localStorage.getItem(LAST_KEY) || ''
+    return noteBySlug.has(s) ? s : ''
+  } catch {
+    return ''
+  }
+}
+
 function openNote(slug, { addTab = true } = {}) {
   if (!slug || !noteBySlug.has(slug)) return
   if (addTab && !tabs.value.includes(slug)) {
     tabs.value = [...tabs.value, slug].slice(-8)
   }
   activeSlug.value = slug
+  rememberLast(slug)
   router.replace({ query: { ...route.query, note: slug } })
   loadNote(slug)
 }
@@ -465,6 +486,7 @@ onMounted(async () => {
   setTimeout(trackHeading, 400)
   const fromQuery = String(route.query.note || '')
   if (fromQuery && noteBySlug.has(fromQuery)) openNote(fromQuery)
+  else if (readLast()) openNote(readLast())
   else {
     const first =
       notes.find((n) => n.rel.includes('00-考研总览')) ||

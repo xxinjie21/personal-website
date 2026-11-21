@@ -1,6 +1,6 @@
 <script setup>
 // 左侧文件树：按 notes/ 目录层级折叠展示，支持过滤与学习状态点
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import NoteTreeNode from './NoteTreeNode.vue'
 
 const props = defineProps({
@@ -10,7 +10,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['select', 'update:keyword'])
 
-// 展开状态只存在内存里：刷新后回到"顶层分区展开"的默认视图
+// 展开状态只存在内存里：进入笔记库时只展开当前笔记的父级目录，其余全部收起
 const expanded = ref(new Set())
 
 function topLevelDirs(list) {
@@ -22,26 +22,30 @@ function topLevelDirs(list) {
   return set
 }
 
-// 首次进入：顶层分区展开，深层收起
-expanded.value = topLevelDirs(props.notes)
+// 没有当前笔记时才退回"顶层分区展开"的默认视图
+expanded.value = props.activeSlug ? new Set() : topLevelDirs(props.notes)
+
+// 首次定位：只保留当前笔记所在路径（祖先展开，其余全部收起）
+// 之后切笔记只补展开祖先，不再动用户手动展开的分区
+function ancestorsOf(slug) {
+  const note = props.notes.find((n) => n.slug === slug)
+  if (!note) return null
+  const parts = note.rel.replace(/\.md$/, '').split('/').slice(0, -1)
+  const set = new Set()
+  parts.forEach((_, i) => set.add(parts.slice(0, i + 1).join('/')))
+  return set
+}
+
+function focusAncestors(slug) {
+  const next = ancestorsOf(slug)
+  if (!next) return
+  expanded.value = next
+}
 
 function expandAncestors(slug) {
-  const note = props.notes.find((n) => n.slug === slug)
-  if (!note) return false
-  const parts = note.rel.replace(/\.md$/, '').split('/').slice(0, -1)
-  const s = new Set(expanded.value)
-  let changed = false
-  parts.forEach((_, i) => {
-    const path = parts.slice(0, i + 1).join('/')
-    if (!s.has(path)) {
-      s.add(path)
-      changed = true
-    }
-  })
-  if (changed) {
-    expanded.value = s
-  }
-  return changed
+  const next = ancestorsOf(slug)
+  if (!next || [...next].every((p) => expanded.value.has(p))) return
+  expanded.value = new Set([...expanded.value, ...next])
 }
 
 function buildTree(list) {
@@ -84,11 +88,35 @@ function toggle(path) {
   expanded.value = s
 }
 
-// 选中笔记时展开其所有父级目录（不接管用户已收起的层级）
+// 选中笔记时只展开它的父级目录，其余文件夹收起，并把它滚到树栏中间
+const bodyEl = ref(null)
+
+function scrollToActive() {
+  const body = bodyEl.value
+  const el = body?.querySelector('.file.active')
+  if (!body || !el) return
+  const r = el.getBoundingClientRect()
+  const b = body.getBoundingClientRect()
+  const top = body.scrollTop + r.top - b.top - (b.height - r.height) / 2
+  body.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+}
+
+// 进入笔记库的第一次定位才收拢目录，之后只补展开
+let focusedOnce = false
+
 watch(
   () => props.activeSlug,
-  (slug) => {
-    if (slug) expandAncestors(slug)
+  async (slug) => {
+    if (slug) {
+      if (!focusedOnce) {
+        focusAncestors(slug)
+        focusedOnce = true
+      } else {
+        expandAncestors(slug)
+      }
+    }
+    await nextTick()
+    scrollToActive()
   },
   { immediate: true }
 )
@@ -108,7 +136,7 @@ watch(
         @input="emit('update:keyword', $event.target.value)"
       />
     </div>
-    <div class="tree-body">
+    <div ref="bodyEl" class="tree-body">
       <NoteTreeNode
         :node="tree"
         :open-paths="openPaths"
