@@ -7,9 +7,9 @@ on:
   # Gitee 笔记推送后可经 GitHub API 触发（见 部署与同步说明.md）
   repository_dispatch:
     types: [gitee-notes-updated]
-  # 兜底：每天一次，把 notes 子模块更新到 Gitee master 最新
+  # 兜底轮询：每 5 分钟把 notes 子模块更新到 Gitee master（无声明的推送时也能近实时）
   schedule:
-    - cron: '0 20 * * *'
+    - cron: '*/5 * * * *'
 
 concurrency:
   group: build-${{ github.ref }}
