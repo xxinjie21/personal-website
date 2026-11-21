@@ -3092,11 +3092,11 @@
   ],
   "customPages": [
     {
-      "file": "english-2010-sentences.html",
-      "slug": "english-2010-sentences",
-      "title": "考研英语 · 真题长难句精读（2010–2020）"
+      "file": "kaoyan-english-words-sentences.html",
+      "slug": "kaoyan-english-words-sentences",
+      "title": "考研英语 · 单词与长难句"
     }
   ],
   "assetCount": 99,
-  "generatedAt": "2026-11-21T18:10:56.080Z"
+  "generatedAt": "2026-11-21T18:19:19.888Z"
 }
