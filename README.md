@@ -33,12 +33,18 @@ npm run build     # 产出 dist/（静态托管）
 npm run preview   # 预览构建产物
 ```
 
-## 同步配置（.env.development / .env.production）
+## 同步配置（`.env.development` / `.env.production`，不入库）
 
 - `VITE_WORKER_URL`：Cloudflare Worker 地址
 - `VITE_AUTH_KEY`：前端与 Worker 共享的 Bearer 密钥
 
+本地照 `.env.example` 复制填值；CI 用仓库的 Actions 变量/密钥同名注入。
+
 同步逻辑见 `src/lib/store.js`：启动 GET 远端合并本地；改动防抖 PUT 推回；Worker 不可用时回退纯 localStorage。
+
+## 构建流水线
+
+`.github/workflows/build.yml`：push master / 手动 / `repository_dispatch` / 每日兜底触发 → 拉 notes 最新 → parse → build → 上传 `dist` 为 artifact。详见 `部署与同步说明.md`。
 
 ## 进度数据结构
 
