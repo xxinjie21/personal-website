@@ -189,17 +189,18 @@ function followLink(target) {
 
 // 大纲：按标题的编号语义重排层级，去掉书名重复项与“✅/❌/方式一”这类注脚噪声
 const CN_SECTION = /^([一二三四五六七八九十]+)、/
+const CHAPTER = /^第\s*[0-9一二三四五六七八九十百]+\s*章/
 const NUM_SECTION = /^(\d+)[.、]\s*/
 const NUM_SUB = /^(\d+(?:\.\d+)+)/
 const NOTE_LIKE = /^(方式|方案|做法|✅|❌|注意|示例|对比|优点|缺点|小结)/
 
-function outlineDepth(text, rawLevel) {
-  if (CN_SECTION.test(text)) return 1
+// 层级不能只看标题自己的编号：章 = 1 级，N.N = 2 级，“1.” 这类条目跟随父级下一层
+function outlineDepth(text, rawLevel, prev) {
+  if (CHAPTER.test(text) || CN_SECTION.test(text)) return 1
   const sub = text.match(NUM_SUB)
-  if (sub) return Math.min(3, sub[1].split('.').length)
-  if (NUM_SECTION.test(text)) return 1
-  if (NOTE_LIKE.test(text)) return 3
-  return Math.min(3, rawLevel || 1)
+  if (sub) return Math.min(Math.min(3, sub[1].split('.').length), prev + 1)
+  if (NUM_SECTION.test(text) || NOTE_LIKE.test(text)) return Math.min(3, prev + 1)
+  return Math.min(3, Math.max(1, Math.min(rawLevel || 1, prev + 1)))
 }
 
 const outline = computed(() => {
@@ -213,7 +214,7 @@ const outline = computed(() => {
     if (!text) return
     if (i === 0 && text.replace(/\s+/g, '').includes(title.slice(0, 8))) return
     if (out.length && out[out.length - 1].text === text) return
-    const level = Math.min(outlineDepth(text, h.level), prev + 1)
+    const level = Math.min(outlineDepth(text, h.level, prev), prev + 1)
     prev = level
     const base = slugifyHeading(h.text)
     const n = (ids.get(base) || 0) + 1
@@ -524,7 +525,7 @@ watch(
             :key="h.id"
             class="outline-item"
             :class="['lv' + h.level, { active: h.id === activeHeading }]"
-            :style="{ paddingLeft: (h.level - 1) * 15 + 4 + 'px' }"
+            :style="{ paddingLeft: (h.level - 1) * 16 + 3 + 'px' }"
             @click="scrollTo(h.id)"
           >
             <button
@@ -1046,7 +1047,7 @@ watch(
   margin: 0 4px;
   padding: 3px 6px;
   border-radius: 4px;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.55;
   color: var(--text-dim);
   cursor: pointer;
@@ -1063,9 +1064,9 @@ watch(
   padding: 0;
   border: 0;
   background: none;
-  color: var(--accent-soft);
+  color: var(--muted);
   line-height: 1;
-  opacity: 0.85;
+  opacity: 0.6;
   cursor: pointer;
   transition: transform 0.18s var(--ease), opacity 0.18s var(--ease);
 }
@@ -1095,7 +1096,7 @@ watch(
   margin-top: 1px;
 }
 .outline-item.lv3 .outline-text {
-  font-weight: 500;
+  font-weight: 600;
 }
 .outline-item.lv3 {
   color: var(--text-muted);
