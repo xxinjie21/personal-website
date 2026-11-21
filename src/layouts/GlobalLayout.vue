@@ -29,11 +29,32 @@ const links = [
   { to: '/notes', label: '笔记库', en: 'LIBRARY' },
   { to: '/custom-pages', label: '自定义页', en: 'PAGES' },
 ]
+
+// 点击品牌：文字补扫一次光；已在首页时顺手回顶部（给一个“到站了”的反馈）
+const sweeping = ref(false)
+let sweepTimer = null
+const onBrandClick = () => {
+  sweeping.value = false
+  requestAnimationFrame(() => {
+    sweeping.value = true
+    clearTimeout(sweepTimer)
+    sweepTimer = setTimeout(() => (sweeping.value = false), 1200)
+  })
+  if (window.location.pathname === '/') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
 </script>
 
 <template>
   <header class="topbar">
-    <router-link to="/" class="brand">
+    <router-link
+      to="/"
+      class="brand"
+      :class="{ sweeping: sweeping }"
+      title="回首页"
+      @click="onBrandClick"
+    >
       <span class="mark"><i></i></span>
       <span class="brand-text">
         <b>XXJ</b>
@@ -88,6 +109,10 @@ const links = [
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  transition: transform 0.35s var(--ease);
+}
+.brand:active {
+  transform: scale(0.985);
 }
 .mark {
   position: relative;
@@ -99,7 +124,7 @@ const links = [
   background: conic-gradient(from 140deg, #ff5e22, #ffb067, #7a3d1d, #ff5e22);
   box-shadow: 0 0 24px -4px rgba(217, 87, 26, 0.6);
   animation: mark-spin 9s linear infinite;
-  transition: box-shadow 0.35s var(--ease);
+  transition: box-shadow 0.35s var(--ease), transform 0.4s var(--ease);
 }
 @keyframes mark-spin {
   to {
@@ -109,6 +134,7 @@ const links = [
 .brand:hover .mark {
   box-shadow: 0 0 30px -2px rgba(217, 87, 26, 0.9);
   animation-duration: 2.4s;
+  transform: scale(1.06);
 }
 .mark::after {
   content: '';
@@ -201,6 +227,26 @@ const links = [
   100% {
     background-position: -60% 0;
   }
+}
+/* 指针停在品牌上：扫光提速，让人知道这里可以点 */
+.brand:hover .brand-text b {
+  animation-duration: 2.6s;
+}
+/* 点击触发：一次完整扫光，作为“回首页”的动作反馈 */
+.brand.sweeping .brand-text b {
+  animation: brand-sweep-once 0.9s var(--ease) 1 both;
+}
+@keyframes brand-sweep-once {
+  0% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+/* 核心点：hover 时更亮更实，点击回收 */
+.brand:hover .mark i {
+  animation-duration: 1.6s;
 }
 /* 导航 */
 .nav {
