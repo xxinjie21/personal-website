@@ -87,10 +87,19 @@ watch(
 onBeforeUnmount(() => observer?.disconnect())
 
 defineExpose({ bindBody })
+
+// 阅读进度：容器滚动比例，喂给顶部那条 2px 暖橙细线
+const prog = ref(0)
+function onScroll(e) {
+  const el = e.currentTarget
+  const total = el.scrollHeight - el.clientHeight
+  prog.value = total > 8 ? Math.min(1, Math.max(0, el.scrollTop / total)) : 0
+}
 </script>
 
 <template>
-  <div class="reader">
+  <div class="reader" @scroll="onScroll">
+    <span class="read-bar" :style="{ transform: `scaleX(${prog})` }" aria-hidden="true"></span>
     <div v-if="loading" class="state">加载中…</div>
     <div v-else-if="!note" class="state">
       <p class="state-title">还没有打开任何笔记</p>
@@ -114,11 +123,30 @@ defineExpose({ bindBody })
 .reader {
   min-height: 0;
   overflow-y: auto;
-  padding: 34px 44px 90px;
+  scroll-behavior: smooth;
+  padding: 0 44px 90px;
+}
+/* 阅读进度线：贴住阅读区顶边，随滚动从左往右长 */
+.read-bar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: block;
+  width: calc(100% + 88px);
+  margin-left: -44px;
+  height: 2px;
+  margin-bottom: -2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 122, 47, 0), var(--accent) 45%, var(--accent-cream));
+  transform-origin: 0 50%;
+  transition: transform 0.12s linear;
+  box-shadow: 0 0 10px rgba(255, 122, 47, 0.5);
+  pointer-events: none;
 }
 .article {
   max-width: 820px;
   margin: 0 auto;
+  padding-top: 34px;
 }
 .state {
   padding: 60px 0;

@@ -67,6 +67,13 @@ function goNotes() {
   router.push('/notes')
 }
 
+// 卡片聚光：光标位置写进 CSS 变量，由 ::after 的径向渐变跟过去（Uiverse spotlight card）
+function volSpot(e) {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+}
+
 onMounted(async () => {
   try {
     const mod = await import('../data/site-manifest.json')
@@ -144,6 +151,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
         :key="f.name"
         class="vol"
         :style="{ '--vol': f.color, '--pct': f.pct }"
+        @mousemove="volSpot"
         @click="goNotes"
       >
         <span class="vol-idx mono">{{ f.idx }}</span>
@@ -375,6 +383,25 @@ max-width: 560px;
 .vol:hover::before {
   opacity: 0.32;
   transform: scale(1.12);
+}
+/* 跟光：一层随鼠标走的暖光 + 一圈细描边高光 */
+.vol::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 190, 140, 0.16), transparent 68%),
+    radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 122, 47, 0.08), transparent 72%);
+  transition: opacity 0.4s var(--ease);
+}
+.vol:hover::after {
+  opacity: 1;
+}
+.vol:active {
+  transform: translateY(-2px) scale(0.994);
 }
 .vol-idx {
   font-size: 10px;

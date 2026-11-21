@@ -20,25 +20,22 @@ const total = computed(() => {
 </script>
 
 <template>
-  <div class="group" :class="{ nest: depth > 0 }" :style="{ paddingLeft: depth ? '13px' : '0' }">
+  <div class="group" :class="{ nest: depth > 0 }">
     <button
       v-if="node.name"
       class="dir"
-      :class="'d' + Math.min(depth, 2)"
+      :class="'d' + Math.min(depth, 3)"
       type="button"
       :title="node.path"
+      :style="{ paddingLeft: depth * 14 + 'px' }"
       @click="emit('toggle', node.path)"
     >
       <span class="caret" :class="{ open: isOpen }">▸</span>
-      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M3.5 7.4A2 2 0 0 1 5.5 5.4h3.5l1.9 2.1h7.6a2 2 0 0 1 2 2v7.4a2 2 0 0 1-2 2H5.5a2 2 0 0 1-2-2z"
-        />
-      </svg>
       <span class="dir-name">{{ node.name }}</span>
-      <span class="count">{{ total }}</span>
+      <span v-if="depth <= 2" class="count">{{ total }}</span>
     </button>
-    <div v-show="!node.name || isOpen">
+    <Transition name="fold">
+      <div v-show="!node.name || isOpen">
       <NoteTreeNode
         v-for="dir in dirs"
         :key="dir.path"
@@ -56,13 +53,14 @@ const total = computed(() => {
         class="file"
         :class="{ active: note.slug === activeSlug }"
         :title="note.rel"
-        :style="{ paddingLeft: (node.name ? 25 : 6) + 'px' }"
+        :style="{ paddingLeft: (node.name ? depth * 14 + 15 : 6) + 'px' }"
         @click="emit('select', note.slug)"
       >
-        <span class="dot" :class="normalizeStatus(note.slug)"></span>
         <span class="file-name">{{ note.title }}</span>
+        <span class="dot" :class="normalizeStatus(note.slug)"></span>
       </button>
-    </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -71,168 +69,131 @@ export default { name: 'NoteTreeNode' }
 </script>
 
 <style scoped>
+/* 参照 Obsidian 的大纲观感：只有缩进 + 极细导轨 + 三角，靠层级和留白区分，不加装饰 */
 .group {
   position: relative;
 }
-/* 层级导轨：每一层一条竖线，比缩进更好判断“谁在谁里面” */
 .group.nest::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 2px;
-  bottom: 2px;
-  width: 1px;
-  border-radius: 1px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 169, 110, 0.18),
-    rgba(255, 169, 110, 0.07) 70%,
-    rgba(255, 169, 110, 0.16)
-  );
-  pointer-events: none;
+  display: none;
 }
+
 .dir,
 .file {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   width: 100%;
-  padding: 5px 8px;
-  border: none;
-  border-radius: 6px;
+  padding: 3px 6px;
+  border: 0;
+  border-radius: 5px;
   background: transparent;
-  color: var(--text-muted);
-  font-size: 12px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.65;
   text-align: left;
   cursor: pointer;
-}
-/* 折角：从导轨接到这一行的名字 */
-.dir.d1::before,
-.dir.d2::before {
-  content: '';
-  position: absolute;
-  left: -7px;
-  top: 50%;
-  width: 6px;
-  height: 1px;
-  background: rgba(255, 169, 110, 0.22);
+  transition: background 0.16s var(--ease), color 0.16s var(--ease);
 }
 .dir:hover,
 .file:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 246, 238, 0.045);
   color: var(--text);
 }
-.dir-name {
+
+.dir-name,
+.file-name {
   flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* 第一层：分区名，稍微亮一点、粗一点 */
+.dir.d1 .dir-name {
+  font-weight: 600;
+  color: var(--text-dim);
+}
+/* 更深层：同级同色，只靠缩进区分 */
+.dir.d2 .dir-name,
+.dir.d3 .dir-name {
   font-weight: 500;
+  color: var(--text-muted);
 }
-.count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  opacity: 0.6;
+.dir:hover .dir-name {
+  color: var(--text);
 }
-/* 文件夹图标：和文件行的“状态圆点”拉开差别 */
-.ico {
-  width: 13px;
-  height: 13px;
-  flex: none;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  opacity: 0.7;
+
+/* 文件比目录弱一档，避免抢层级 */
+.file {
+  color: var(--text-muted);
 }
-.dir:hover .ico {
-  opacity: 1;
+.file.active {
+  background: rgba(255, 122, 47, 0.13);
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--accent-cream);
 }
+
 .caret {
-  display: inline-block;
-  width: 11px;
-  color: var(--accent-soft);
+  flex: none;
+  width: 10px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: var(--muted);
   opacity: 0.75;
-  transition: transform 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+  transition: transform 0.22s var(--ease), color 0.16s linear, opacity 0.16s linear;
 }
 .dir:hover .caret {
-  color: var(--accent);
+  color: var(--accent-soft);
   opacity: 1;
 }
 .caret.open {
   transform: rotate(90deg);
 }
-.file {
-  color: var(--text);
-}
-.file.active {
-  background: rgba(255, 122, 47, 0.15);
-  box-shadow: inset 2px 0 0 var(--accent);
-  color: var(--accent-cream);
-}
-.dir.d0 {
-  margin-top: 8px;
-  padding: 8px 8px 8px 6px;
-  border-left: 2px solid rgba(255, 122, 47, 0.5);
-  border-radius: 0 6px 6px 0;
-  background: linear-gradient(90deg, rgba(255, 122, 47, 0.07), transparent 78%);
-}
-.dir.d0 .dir-name {
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent-soft);
-}
-.dir.d0 .ico,
-.dir.d0 .caret {
-  color: var(--accent);
-}
-.dir.d0 .count {
+
+.count {
+  flex: none;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 9.5px;
+  color: var(--muted);
   opacity: 0.55;
 }
-.dir.d1 {
-  margin-top: 3px;
-}
-.dir.d1 .dir-name {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--text);
-}
-.dir.d2 .dir-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-dim);
-}
-.dir.d1 .ico,
-.dir.d2 .ico {
+.dir:hover .count {
+  opacity: 0.85;
   color: var(--accent-soft);
 }
-.file {
-  padding: 6px 8px;
-  font-size: 12px;
-  color: var(--text-dim);
-}
-.file-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+
 .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
   flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  opacity: 0.8;
 }
 .dot.not-started {
   background: var(--status-not-started);
+  opacity: 0.35;
 }
 .dot.learning {
   background: var(--status-learning);
 }
 .dot.mastered {
   background: var(--status-mastered);
+}
+
+/* 目录展开/收起：子级整体轻微下滑淡入，收起时反向 */
+.fold-enter-active,
+.fold-leave-active {
+  transition: opacity 0.2s var(--ease), transform 0.24s var(--ease);
+  transform-origin: top center;
+}
+.fold-enter-from,
+.fold-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 </style>

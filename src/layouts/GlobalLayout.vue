@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue'
-import { initSync, getSyncStatus } from '../lib/store.js'
+import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { initSync, getSyncStatus, getProgress } from '../lib/store.js'
 
 // 28 考研初试：2027 年 12 月下旬（占位 12-21，临近再校准）
 const EXAM_DATE = new Date('2027-12-21T00:00:00+08:00')
@@ -13,6 +13,8 @@ const daysLeft = computed(() => {
 const shownDays = ref(0)
 onMounted(() => {
   initSync()
+  readSync()
+  syncTimer = setInterval(readSync, 1500)
   const target = daysLeft.value
   const t0 = performance.now()
   const dur = 900
@@ -25,10 +27,46 @@ onMounted(() => {
   requestAnimationFrame(step)
 })
 
-const statusKey = computed(() => getSyncStatus())
-const statusLabel = computed(
-  () => ({ idle: '未同步', syncing: '同步中', online: '已同步', offline: '本地模式', error: '同步异常' }[statusKey.value] || statusKey.value)
-)
+// 同步状态不是响应式的：轮询拿到最新状态和落盘时间
+const syncInfo = ref({ key: 'idle', at: '' })
+let syncTimer = null
+function readSync() {
+  syncInfo.value = { key: getSyncStatus(), at: getProgress().updatedAt || '' }
+}
+
+const statusKey = computed(() => syncInfo.value.key)
+
+// 时间：今天只显示时:分，隔天带上月-日
+const syncTime = computed(() => {
+  const raw = syncInfo.value.at
+  if (!raw) return ''
+  const d = new Date(raw)
+  if (Number.isNaN(d.getTime())) return ''
+  const pad = (n) => String(n).padStart(2, '0')
+  const hm = `${pad(d.getHours())}:${pad(d.getMinutes())}`
+  const now = new Date()
+  const sameDay = d.toDateString() === now.toDateString()
+  return sameDay ? hm : `${d.getMonth() + 1}-${d.getDate()} ${hm}`
+})
+
+const statusLabel = computed(() => {
+  const key = statusKey.value
+  const t = syncTime.value
+  if (key === 'syncing') return '同步中…'
+  if (!t) return key === 'offline' ? '本地模式' : '尚未同步'
+  if (key === 'online') return `已同步 ${t}`
+  if (key === 'offline') return `本地 ${t}`
+  if (key === 'error') return `同步异常 ${t}`
+  return `上次 ${t}`
+})
+
+const statusTip = computed(() => {
+  const key = statusKey.value
+  const base = { idle: '等待首次同步', syncing: '正在与云端交换进度', online: '进度已与云端一致', offline: 'Worker 不可达，进度只存在本机', error: '同步出错，已保留本地副本' }
+  return `${base[key] || key}${syncTime.value ? `（最近一次 ${syncTime.value}）` : ''}`
+})
+
+onBeforeUnmount(() => clearInterval(syncTimer))
 
 const links = [
   { to: '/', label: '首页', en: 'HOME' },
@@ -55,9 +93,11 @@ const links = [
     </nav>
 
     <div class="meta">
-      <span class="sync" :class="statusKey">
+      <span class="sync" :class="statusKey" :title="statusTip">
         <i class="dot"></i>
-        {{ statusLabel }}
+        <Transition name="syncfade" mode="out-in">
+          <span :key="statusLabel" class="sync-text">{{ statusLabel }}</span>
+        </Transition>
       </span>
       <div class="countdown">
         <span class="cd-label">距 28 考研初试</span>
@@ -105,6 +145,17 @@ const links = [
   place-items: center;
   background: conic-gradient(from 140deg, #ff5e22, #ffb067, #7a3d1d, #ff5e22);
   box-shadow: 0 0 24px -4px rgba(255, 122, 47, 0.6);
+  animation: mark-spin 9s linear infinite;
+  transition: box-shadow 0.35s var(--ease);
+}
+@keyframes mark-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+.brand:hover .mark {
+  box-shadow: 0 0 30px -2px rgba(255, 122, 47, 0.9);
+  animation-duration: 2.4s;
 }
 .mark::after {
   content: '';
@@ -112,6 +163,29 @@ const links = [
   inset: 3px;
   border-radius: 50%;
   background: #0b0908;
+}
+/* 外圈呼吸环：从中心向外扩散一圈再消失 */
+.mark::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 176, 103, 0.55);
+  animation: mark-pulse 3.2s var(--ease) infinite;
+}
+@keyframes mark-pulse {
+  0% {
+    transform: scale(0.82);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
 }
 .mark i {
   position: relative;
@@ -121,24 +195,66 @@ const links = [
   border-radius: 50%;
   background: var(--accent-cream);
   box-shadow: 0 0 12px rgba(255, 176, 103, 0.9);
+  animation: core-breathe 3.2s var(--ease) infinite;
 }
+@keyframes core-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.28);
+    opacity: 1;
+  }
+}
+/* 环在转、点在同频呼吸：整体是一个很小的“活着的”标记 */
 .brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.15;
 }
+/* 品牌字：暖橙光带自左向右扫过，8 秒一次，不抢注意力 */
 .brand-text b {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   letter-spacing: 0.18em;
   font-weight: 500;
   color: var(--text);
+  background-image: linear-gradient(
+    100deg,
+    var(--text) 0%,
+    var(--text) 38%,
+    var(--accent-cream) 48%,
+    var(--accent) 52%,
+    var(--text) 62%,
+    var(--text) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: brand-sweep 7.5s ease-in-out 1.2s infinite;
+}
+@keyframes brand-sweep {
+  0%,
+  72% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
 }
 .brand-text em {
   font-style: normal;
   font-size: 11px;
   color: var(--muted);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  transition: color 0.3s var(--ease), letter-spacing 0.4s var(--ease);
+}
+.brand:hover .brand-text em {
+  color: var(--accent-soft);
+  letter-spacing: 0.2em;
 }
 
 /* 导航 */
@@ -155,7 +271,8 @@ const links = [
   padding: 8px 14px;
   border-radius: 999px;
   color: var(--text-dim);
-  transition: color 0.3s var(--ease), background 0.3s var(--ease);
+  transition: color 0.3s var(--ease), background 0.3s var(--ease),
+    transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .nav-link i {
   font-family: 'JetBrains Mono', monospace;
@@ -180,6 +297,8 @@ const links = [
 .nav-link:hover {
   color: var(--text);
   background: rgba(255, 169, 110, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -16px rgba(255, 122, 47, 0.9);
 }
 .nav-link:hover em {
   opacity: 0.8;
@@ -197,6 +316,21 @@ const links = [
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   box-shadow: 0 0 10px rgba(255, 122, 47, 0.8);
+  transform-origin: 50% 50%;
+  animation: navline 0.6s var(--ease) both;
+}
+@keyframes navline {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 .nav-link.router-link-active em {
   opacity: 0.55;
@@ -219,22 +353,60 @@ const links = [
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--text-dim);
   background: rgba(255, 246, 238, 0.03);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+}
+.sync-text {
+  font-family: 'JetBrains Mono', 'Noto Sans SC', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+}
+.syncfade-enter-active,
+.syncfade-leave-active {
+  transition: opacity 0.28s var(--ease), transform 0.28s var(--ease);
+}
+.syncfade-enter-from {
+  opacity: 0;
+  transform: translateY(3px);
+}
+.syncfade-leave-to {
+  opacity: 0;
+  transform: translateY(-3px);
 }
 .sync .dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--muted);
+  transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+/* 已同步：小点常亮 + 一圈缓慢呼吸，和品牌环呼应 */
+.sync.online .dot {
+  background: var(--status-mastered);
+  box-shadow: 0 0 8px rgba(255, 94, 44, 0.9);
+  animation: syncbreathe 2.6s var(--ease) infinite;
+}
+@keyframes syncbreathe {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 0 rgba(255, 122, 47, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 7px rgba(255, 122, 47, 0);
+  }
+}
+.sync.error {
+  color: #e0746b;
+  border-color: rgba(224, 116, 107, 0.35);
+}
+.sync.error .dot {
+  background: #e0746b;
 }
 .sync.online {
   color: var(--status-mastered);
   border-color: rgba(255, 94, 44, 0.3);
-}
-.sync.online .dot {
-  background: var(--status-mastered);
-  box-shadow: 0 0 8px rgba(255, 94, 44, 0.9);
 }
 .sync.offline {
   color: var(--accent-soft);

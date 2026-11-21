@@ -932,6 +932,7 @@ watch(
   flex: none;
 }
 .tab {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -943,10 +944,13 @@ watch(
   font-size: 12px;
   white-space: nowrap;
   cursor: pointer;
+  transition: color 0.25s var(--ease), background 0.25s var(--ease),
+    border-color 0.25s var(--ease), transform 0.25s var(--ease);
 }
 .tab:hover {
   color: var(--text);
   background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
 }
 .tab.active {
   background: rgba(255, 122, 47, 0.08);
@@ -954,6 +958,28 @@ watch(
   border-bottom-color: transparent;
   color: var(--accent-cream);
   box-shadow: inset 0 1px 0 rgba(255, 176, 103, 0.2);
+}
+/* 激活页签：顶边一道从中间长出来的暖光 */
+.tab.active::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform-origin: 50% 50%;
+  animation: tablight 0.5s var(--ease) both;
+}
+@keyframes tablight {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 .tab-name {
   max-width: 160px;
@@ -963,10 +989,12 @@ watch(
 .tab-close {
   opacity: 0.5;
   padding: 0 2px;
+  transition: opacity 0.2s var(--ease), transform 0.28s var(--ease), color 0.2s var(--ease);
 }
 .tab-close:hover {
   opacity: 1;
   color: #e0746b;
+  transform: rotate(90deg) scale(1.08);
 }
 .dot {
   width: 6px;

@@ -221,7 +221,11 @@ button {
 .chip:hover {
   border-color: rgba(255, 169, 110, 0.42);
   color: var(--text);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -16px rgba(255, 122, 47, 0.9), inset 0 0 14px rgba(255, 169, 110, 0.08);
+}
+.chip:active {
+  transform: translateY(0) scale(0.97);
 }
 .chip.on {
   background: rgba(255, 122, 47, 0.16);

@@ -12,6 +12,13 @@ onMounted(async () => {
     pages.value = []
   }
 })
+
+// 卡片聚光：跟随光标的暖光斑（Uiverse spotlight card）
+function spot(e) {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+}
 </script>
 
 <template>
@@ -31,6 +38,7 @@ onMounted(async () => {
         :key="p.file"
         :to="`/custom-pages/${p.slug}`"
         class="card"
+        @mousemove="spot"
       >
         <span class="idx mono">{{ String(i + 1).padStart(2, '0') }}</span>
         <h2>{{ p.title }}</h2>
@@ -121,6 +129,22 @@ code {
 }
 .card:hover::before {
   opacity: 1;
+}
+/* 跟光：叠一层随光标移动的小亮点，卡片像有内衬反光 */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 200, 160, 0.14), transparent 70%);
+  transition: opacity 0.4s var(--ease);
+}
+.card:hover::after {
+  opacity: 1;
+}
+.card:active {
+  transform: translateY(-2px) scale(0.995);
 }
 .idx {
   font-size: 10px;
