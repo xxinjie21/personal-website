@@ -179,6 +179,7 @@ onMounted(() => {
   window.addEventListener('keydown', menuKey)
   window.addEventListener('scroll', closeMenu, true)
   window.addEventListener('resize', closeMenu)
+  document.addEventListener('scroll', onOutlineScroll, true)
 })
 
 onBeforeUnmount(() => {
@@ -186,6 +187,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', menuKey)
   window.removeEventListener('scroll', closeMenu, true)
   window.removeEventListener('resize', closeMenu)
+  document.removeEventListener('scroll', onOutlineScroll, true)
   clearTimeout(toastTimer)
 })
 
@@ -281,6 +283,39 @@ function toggleCollapse(id) {
   else next.add(id)
   collapsed.value = next
 }
+
+// 当前阅读位置：按标题离阅读区顶部的距离算，整行高亮跟着滚动走
+const activeHeading = ref('')
+let outlineTick = 0
+function trackHeading() {
+  const reader = document.querySelector('.reader')
+  if (!reader) return
+  const heads = reader.querySelectorAll('.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6')
+  const line = reader.getBoundingClientRect().top + 100
+  const rows = outline.value
+  let cur = ''
+  // 只认大纲里真实存在的标题（书名那层 h1 会被过滤掉，不能算当前项）
+  heads.forEach((el) => {
+    if (el.getBoundingClientRect().top <= line && rows.some((r) => r.id === el.id)) cur = el.id
+  })
+  if (!cur && rows.length) cur = rows[0].id
+  activeHeading.value = cur
+}
+function onOutlineScroll() {
+  if (outlineTick) return
+  outlineTick = setTimeout(() => {
+    outlineTick = 0
+    trackHeading()
+  }, 60)
+}
+watch(activeSlug, () => {
+  setTimeout(trackHeading, 200)
+  setTimeout(trackHeading, 700)
+}, { flush: 'post' })
+// 正文渲染完（大纲有内容）后再标一次，避免阅读区还没挂上元素
+watch(outline, () => {
+  if (outline.value.length) setTimeout(trackHeading, 160)
+}, { flush: 'post' })
 
 // 三栏：左右两栏都能拖宽、能收起，宽度和开合状态记在本地
 const LAYOUT_KEY = 'notes-layout-v2'
@@ -405,6 +440,7 @@ function onKey(e) {
 onMounted(async () => {
   window.addEventListener('keydown', onKey)
   initSync().then(() => (progress.value = getProgress()))
+  setTimeout(trackHeading, 400)
   let saved = []
   try {
     saved = JSON.parse(localStorage.getItem(TABS_KEY) || '[]')
@@ -529,6 +565,7 @@ watch(
         :highlight="keyword"
         @open="followLink"
         @lightbox="toggleLightbox"
+        @rendered="trackHeading"
       />
     </main>
 
@@ -569,24 +606,10 @@ watch(
             v-for="h in outlineRows"
             :key="h.id"
             class="outline-item"
-            :class="'lv' + h.level"
-            :style="{
-              paddingLeft: (h.level - 1) * 14 + 8 + 'px',
-              '--rail': (h.level - 1) * 14 + 2 + 'px',
-            }"
+            :class="['lv' + h.level, { active: h.id === activeHeading }]"
+            :style="{ paddingLeft: (h.level - 1) * 13 + 10 + 'px' }"
             @click="scrollTo(h.id)"
           >
-            <button
-              v-if="h.hasChildren"
-              type="button"
-              class="outline-caret"
-              :class="{ open: !isCollapsed(h.id) }"
-              :aria-label="isCollapsed(h.id) ? '展开' : '收起'"
-              @click.stop="toggleCollapse(h.id)"
-            >
-              ▸
-            </button>
-            <span v-else class="outline-caret ghost"></span>
             <span class="outline-text">{{ h.text }}</span>
           </li>
         </ul>
@@ -1119,21 +1142,14 @@ watch(
   display: flex;
   align-items: flex-start;
   gap: 3px;
-  padding: 3px 6px 3px 0;
-  border-radius: 6px;
+  margin: 0 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--muted);
   cursor: pointer;
   transition: background 0.16s var(--ease), color 0.16s var(--ease);
-}
-/* 每级父线上挂出的细导引线，连续多行自然接成一条 */
-.outline-item.lv2::before,
-.outline-item.lv3::before {
-  content: '';
-  position: absolute;
-  left: var(--rail, 16px);
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgba(255, 169, 110, 0.12);
 }
 .outline-caret {
   flex: none;
@@ -1172,23 +1188,26 @@ watch(
   padding-top: 1px;
 }
 .outline-item.lv1 {
-  margin-top: 2px;
-  font-size: 12.5px;
-  font-weight: 650;
-  color: var(--text);
-}
-.outline-item.lv2 {
-  font-size: 12px;
-  font-weight: 500;
+  margin-top: 3px;
+  font-weight: 600;
   color: var(--text-dim);
 }
+.outline-item.lv2 {
+  font-weight: 400;
+  color: var(--text-muted);
+}
 .outline-item.lv3 {
-  font-size: 11.5px;
   color: var(--muted);
 }
 .outline-item:hover {
   background: rgba(255, 169, 110, 0.07);
   color: var(--accent-cream);
+}
+/* 当前阅读位置：像 Obsidian 那样整行实底高亮 */
+.outline-item.active {
+  background: rgba(255, 169, 110, 0.17);
+  color: var(--accent-cream);
+  font-weight: 600;
 }
 .links {
   list-style: none;

@@ -8,7 +8,7 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   highlight: { type: String, default: '' },
 })
-const emit = defineEmits(['open', 'lightbox'])
+const emit = defineEmits(['open', 'lightbox', 'rendered'])
 
 const bodyRef = ref(null)
 const html = computed(() => (props.note ? renderMarkdown(props.note.content || '') : ''))
@@ -76,6 +76,8 @@ watch(
   async () => {
     await nextTick()
     bindBody()
+    // 正文挂好之后再通知外层：此时标题都在 DOM 里，大纲可以定位当前项
+    emit('rendered', props.note?.slug)
   }
 )
 

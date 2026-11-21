@@ -13,10 +13,6 @@ const emit = defineEmits(['toggle', 'select'])
 
 const dirs = computed(() => [...props.node.dirs.values()])
 const isOpen = computed(() => !!props.openPaths[props.node.path])
-const total = computed(() => {
-  const count = (n) => n.files.length + [...n.dirs.values()].reduce((a, c) => a + count(c), 0)
-  return count(props.node)
-})
 </script>
 
 <template>
@@ -31,8 +27,10 @@ const total = computed(() => {
       @click="emit('toggle', node.path)"
     >
       <span class="caret" :class="{ open: isOpen }">▸</span>
+      <svg class="ico folder" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.6 7.5A2 2 0 0 1 5.6 5.4h3.6l1.9 2.1h7.3a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2H5.6a2 2 0 0 1-2-2z" />
+      </svg>
       <span class="dir-name">{{ node.name }}</span>
-      <span v-if="depth <= 2" class="count">{{ total }}</span>
     </button>
     <Transition name="fold">
       <div v-show="!node.name || isOpen">
@@ -53,9 +51,13 @@ const total = computed(() => {
         class="file"
         :class="{ active: note.slug === activeSlug }"
         :title="note.rel"
-        :style="{ paddingLeft: (node.name ? (depth + 1) * 16 + 6 : 6) + 'px' }"
+        :style="{ paddingLeft: (node.name ? (depth + 1) * 16 + 21 : 9) + 'px' }"
         @click="emit('select', note.slug)"
       >
+        <svg class="ico fileico" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3.6h6.2L17 7.4v13H7z" />
+          <path d="M13.1 3.6v3.8h3.8" />
+        </svg>
         <span class="file-name">{{ note.title }}</span>
         <span class="dot" :class="normalizeStatus(note.slug)"></span>
       </button>
@@ -95,15 +97,15 @@ export default { name: 'NoteTreeNode' }
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   width: 100%;
-  padding: 3px 6px;
+  padding: 2px 6px;
   border: 0;
   border-radius: 5px;
   background: transparent;
   color: var(--text-dim);
-  font-size: 12.5px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.55;
   text-align: left;
   cursor: pointer;
   transition: background 0.16s var(--ease), color 0.16s var(--ease);
@@ -125,8 +127,8 @@ export default { name: 'NoteTreeNode' }
 
 /* 目录比文件亮一档、厚一档：层级先靠颜色拉开，再靠缩进 */
 .dir.d1 .dir-name {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--text);
 }
 .dir.d2 .dir-name {
@@ -141,38 +143,55 @@ export default { name: 'NoteTreeNode' }
   color: var(--text);
 }
 
-/* 文件最暗，行首一个小小的 # 作为笔记标记（很淡，只在 hover 亮起） */
+/* 图标：目录小文件夹、文件小纸张，和 Obsidian 一样靠图标区分类型 */
+.ico {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.85;
+  transition: opacity 0.16s var(--ease), color 0.16s var(--ease);
+}
+.dir:hover .ico,
+.file:hover .ico {
+  opacity: 1;
+}
+.ico.folder {
+  color: var(--accent-soft);
+}
+.ico.fileico {
+  color: var(--text-muted);
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+}
+
+/* 文件比目录暗一档 */
 .file {
   color: var(--muted);
 }
-.file::before {
-  content: '#';
-  flex: none;
-  width: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: rgba(255, 169, 110, 0.42);
-  transition: color 0.16s var(--ease);
-}
-.file:hover::before {
-  color: var(--accent-soft);
+.file:hover {
+  color: var(--text-dim);
 }
 .file.active {
-  background: linear-gradient(90deg, rgba(255, 122, 47, 0.16), rgba(255, 122, 47, 0.04));
-  box-shadow: inset 2px 0 0 var(--accent);
+  background: rgba(255, 169, 110, 0.14);
   color: var(--accent-cream);
 }
 
 .caret {
   flex: none;
-  width: 10px;
+  width: 11px;
   height: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  color: var(--text-dim);
-  opacity: 0.9;
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 1;
   transition: transform 0.22s var(--ease), color 0.16s linear, opacity 0.16s linear;
 }
 .dir:hover .caret {
