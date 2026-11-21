@@ -29,20 +29,6 @@ function spot(e) {
 
 <template>
   <section v-if="slug" class="page-shell">
-    <header class="page-bar">
-      <router-link to="/custom-pages" class="back">
-        <Icon name="chevron-left" :size="15" />
-        <span>自定义页</span>
-      </router-link>
-      <div class="meta">
-        <h1>{{ current?.title || slug }}</h1>
-        <span class="file mono">{{ current?.file || `${slug}.html` }}</span>
-      </div>
-      <a :href="frameSrc" target="_blank" rel="noreferrer" class="open">
-        <span>新窗口</span>
-        <Icon name="arrow-up-right" :size="14" />
-      </a>
-    </header>
     <iframe :src="frameSrc" :title="current?.title || slug" class="page-frame" />
   </section>
 
@@ -90,57 +76,13 @@ function spot(e) {
   flex-direction: column;
   height: calc(100vh - var(--nav-height));
   box-sizing: border-box;
-  padding: 6px 14px 10px;
-  gap: 8px;
-}
-.page-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 2px;
-}
-.back,
-.open {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.3s var(--ease);
-}
-.back:hover,
-.open:hover {
-  color: var(--accent);
-}
-.meta {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-.meta h1 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.meta .file {
-  font-size: 10.5px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 0 10px 8px;
 }
 .page-frame {
   flex: 1;
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 0 0 12px 12px;
   background: var(--panel-solid);
   box-shadow: var(--shadow);
 }
