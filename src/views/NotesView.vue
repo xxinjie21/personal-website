@@ -365,6 +365,25 @@ function startDrag(side, e) {
   window.addEventListener('pointercancel', stop)
 }
 
+// 链接：出链（→ 本篇指向）+ 反向链接（← 引用本篇），合并去重成一个列表
+const relatedLinks = computed(() => {
+  const out = []
+  const seen = new Set([activeSlug.value])
+  const note = noteBySlug.get(activeSlug.value)
+  for (const target of note?.links || []) {
+    const slug = resolveTarget(target)
+    if (!slug || seen.has(slug)) continue
+    seen.add(slug)
+    out.push({ slug, dir: 'out', title: noteTitle(slug) })
+  }
+  for (const b of loaded.value?.backlinks || []) {
+    if (!b.slug || seen.has(b.slug)) continue
+    seen.add(b.slug)
+    out.push({ slug: b.slug, dir: 'in', title: b.title })
+  }
+  return out
+})
+
 function toggleLightbox(payload) {
   lightbox.value = payload
 }
@@ -537,6 +556,22 @@ watch(
           </li>
         </ul>
         <p v-else class="rail-empty">暂无标题</p>
+      </div>
+
+      <div class="rail-block">
+        <div class="rail-head">
+          <span><em class="rail-idx mono">02</em>链接</span>
+          <span class="rail-count">{{ relatedLinks.length }}</span>
+        </div>
+        <ul v-if="relatedLinks.length" class="links">
+          <li v-for="l in relatedLinks" :key="l.dir + l.slug">
+            <button type="button" class="link" @click="openNote(l.slug)">
+              <span class="link-dir">{{ l.dir === 'out' ? '→' : '←' }}</span>
+              {{ l.title }}
+            </button>
+          </li>
+        </ul>
+        <p v-else class="rail-empty">本篇还没有双链</p>
       </div>
     </aside>
     </div>
@@ -1094,6 +1129,13 @@ watch(
 }
 .link:hover {
   color: var(--accent);
+}
+.link-dir {
+  display: inline-block;
+  width: 12px;
+  color: var(--accent-soft);
+  font-size: 10.5px;
+  opacity: 0.8;
 }
 .link.missing {
   color: var(--text-muted);
