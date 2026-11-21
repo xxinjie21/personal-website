@@ -16,9 +16,10 @@ dev.err
 notes/.git/
 
 # 自定义页构副本（由 npm run parse 从 custom-pages/ 生成）
-public/custom-pages/
+public/pagedocs/
 
 # 本地调试产物
 .shots/
 preview.log
 *.log
+

@@ -18,7 +18,9 @@ onMounted(async () => {
 })
 
 const current = computed(() => pages.value.find((p) => p.slug === slug.value) || null)
-const frameSrc = computed(() => `${import.meta.env.BASE_URL}custom-pages/${slug.value}.html`)
+// 副本文件名与路由同名会被 dev server 的 .html 回落抢占（/custom-pages/x 直接返回 x.html），
+// 所以静态副本放在 pagedocs/ 目录，路由保持 /custom-pages/<slug>
+const frameSrc = computed(() => `${import.meta.env.BASE_URL}pagedocs/${slug.value}.html`)
 // 卡片聚光：跟随光标的暖光斑（Uiverse spotlight card）
 function spot(e) {
   const r = e.currentTarget.getBoundingClientRect()

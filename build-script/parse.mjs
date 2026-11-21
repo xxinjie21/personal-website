@@ -224,8 +224,9 @@ function main() {
 
   const assets = copyAssets(walk(notesDir).filter((f) => IMAGE_EXT.test(f)))
 
-  // 自定义页 HTML 同步到 public/custom-pages/，供站点内 iframe 与新窗口直接打开
-  const pagesPublicDir = path.join(root, 'public', 'custom-pages')
+  // 自定义页 HTML 同步到 public/pagedocs/，供站点内 iframe 直接加载
+  // 注意：不能放 public/custom-pages/，否则 /custom-pages/<slug> 会被 dev 的 .html 回落命中，路由失效
+  const pagesPublicDir = path.join(root, 'public', 'pagedocs')
   fs.rmSync(pagesPublicDir, { recursive: true, force: true })
   fs.mkdirSync(pagesPublicDir, { recursive: true })
   for (const f of fs.readdirSync(pagesDir).filter((f) => f.endsWith('.html') && !f.startsWith('_'))) {
