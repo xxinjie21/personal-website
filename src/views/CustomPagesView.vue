@@ -79,7 +79,7 @@ function spot(e) {
 .head h1 em {
   font-style: normal;
   color: var(--accent);
-  text-shadow: 0 0 42px rgba(255, 122, 47, 0.4);
+  text-shadow: 0 0 42px rgba(217, 87, 26, 0.4);
 }
 .lede {
   font-size: 13.5px;
@@ -92,7 +92,7 @@ code {
   font-size: 11.5px;
   padding: 1px 6px;
   border-radius: 5px;
-  background: rgba(255, 169, 110, 0.09);
+  background: rgba(217, 87, 26, 0.09);
   color: var(--accent-cream);
 }
 
@@ -109,7 +109,7 @@ code {
   padding: 22px 22px 26px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: linear-gradient(160deg, rgba(42, 31, 25, 0.55), rgba(14, 11, 9, 0.7));
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(252, 244, 234, 0.86));
   overflow: hidden;
   transition: transform 0.45s var(--ease), border-color 0.45s var(--ease),
     box-shadow 0.45s var(--ease);
@@ -119,13 +119,13 @@ code {
   position: absolute;
   inset: 0;
   opacity: 0;
-  background: radial-gradient(120% 80% at 80% 0%, rgba(255, 122, 47, 0.22), transparent 60%);
+  background: radial-gradient(120% 80% at 80% 0%, rgba(217, 87, 26, 0.22), transparent 60%);
   transition: opacity 0.45s var(--ease);
 }
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 169, 110, 0.42);
-  box-shadow: 0 26px 50px -26px rgba(255, 122, 47, 0.4);
+  border-color: rgba(217, 87, 26, 0.42);
+  box-shadow: 0 26px 50px -26px rgba(217, 87, 26, 0.4);
 }
 .card:hover::before {
   opacity: 1;
@@ -183,8 +183,8 @@ code {
   gap: 10px;
   padding: 76px 28px;
   border-radius: 22px;
-  border: 1px dashed rgba(255, 169, 110, 0.24);
-  background: rgba(255, 169, 110, 0.02);
+  border: 1px dashed rgba(217, 87, 26, 0.24);
+  background: rgba(217, 87, 26, 0.02);
   text-align: center;
   overflow: hidden;
 }
@@ -193,7 +193,7 @@ code {
   width: 520px;
   height: 320px;
   top: -140px;
-  background: radial-gradient(closest-side, rgba(255, 122, 47, 0.2), transparent);
+  background: radial-gradient(closest-side, rgba(217, 87, 26, 0.08), transparent);
   pointer-events: none;
 }
 .plus {
@@ -202,11 +202,11 @@ code {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 169, 110, 0.28);
+  border: 1px solid rgba(217, 87, 26, 0.28);
   display: grid;
   place-items: center;
   margin-bottom: 6px;
-  box-shadow: 0 0 40px -12px rgba(255, 122, 47, 0.5);
+  box-shadow: 0 0 40px -12px rgba(217, 87, 26, 0.5);
 }
 .empty h2 {
   font-size: 20px;

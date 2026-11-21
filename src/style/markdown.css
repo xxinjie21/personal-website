@@ -44,7 +44,7 @@
   margin: 0 0 12px;
   padding: 6px 14px;
   border-left: 3px solid var(--accent);
-  background: rgba(255, 122, 47, 0.07);
+  background: rgba(217, 87, 26, 0.07);
   color: var(--text-muted);
   border-radius: 0 6px 6px 0;
 }
@@ -59,7 +59,7 @@
   position: relative;
   margin: 0 0 14px;
   padding: 14px 14px 14px;
-  background: #140f0c;
+  background: #fbf6ef;
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow-x: auto;
@@ -68,7 +68,7 @@
 }
 .markdown pre code {
   font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
-  color: #e8d9cb;
+  color: #4a3527;
   background: none;
   padding: 0;
 }
@@ -78,7 +78,7 @@
   padding: 1px 5px;
   border-radius: 4px;
   background: var(--bg-elevated);
-  color: #ffb877;
+  color: var(--accent-cream);
 }
 .markdown .code-copy {
   position: absolute;
@@ -88,7 +88,7 @@
   font-size: 11px;
   border-radius: 6px;
   border: 1px solid var(--border);
-  background: rgba(28, 21, 17, 0.9);
+  background: rgba(255, 253, 250, 0.92);
   color: var(--text-muted);
   cursor: pointer;
   opacity: 0;
@@ -127,7 +127,7 @@
   cursor: pointer;
 }
 .markdown .wiki-link:hover {
-  background: rgba(255, 122, 47, 0.12);
+  background: rgba(217, 87, 26, 0.12);
 }
 .markdown .md-figure {
   margin: 0 0 14px;

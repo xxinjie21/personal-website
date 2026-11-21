@@ -139,10 +139,10 @@ function onScroll(e) {
   height: 2px;
   margin-bottom: -2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, rgba(255, 122, 47, 0), var(--accent) 45%, var(--accent-cream));
+  background: linear-gradient(90deg, rgba(217, 87, 26, 0), var(--accent) 45%, var(--accent-cream));
   transform-origin: 0 50%;
   transition: transform 0.12s linear;
-  box-shadow: 0 0 10px rgba(255, 122, 47, 0.5);
+  box-shadow: 0 0 10px rgba(217, 87, 26, 0.5);
   pointer-events: none;
 }
 .article {
@@ -184,8 +184,8 @@ function onScroll(e) {
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(255, 122, 47, 0.13);
-  border: 1px solid rgba(255, 122, 47, 0.22);
+  background: rgba(217, 87, 26, 0.13);
+  border: 1px solid rgba(217, 87, 26, 0.22);
   color: var(--accent-soft);
 }
 .alias {

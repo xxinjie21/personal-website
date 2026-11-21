@@ -153,8 +153,9 @@ watch(
 .tree {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #14100d, #0d0a08);
+  background: linear-gradient(180deg, #fffdfa, #f8f1e8);
   border-right: 1px solid var(--border);
+  box-shadow: inset -14px 0 28px -30px rgba(85, 53, 28, 0.35);
   min-height: 0;
   overflow: hidden;
 }
@@ -188,8 +189,8 @@ watch(
   outline: none;
 }
 .tree-search input:focus {
-  border-color: rgba(255, 122, 47, 0.55);
-  box-shadow: 0 0 0 3px rgba(255, 122, 47, 0.1);
+  border-color: rgba(217, 87, 26, 0.55);
+  box-shadow: 0 0 0 3px rgba(217, 87, 26, 0.1);
 }
 .tree-body {
   flex: 1;

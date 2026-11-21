@@ -123,11 +123,11 @@ const links = [
   align-items: center;
   gap: 32px;
   padding: 0 24px;
-  background: rgba(11, 9, 8, 0.68);
-  backdrop-filter: blur(22px) saturate(130%);
-  -webkit-backdrop-filter: blur(22px) saturate(130%);
-  border-bottom: 1px solid transparent;
-  border-image: linear-gradient(90deg, transparent, rgba(255, 169, 110, 0.22), transparent) 1;
+  background: rgba(255, 253, 250, 0.86);
+  backdrop-filter: blur(22px) saturate(120%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 12px 30px -28px rgba(85, 53, 28, 0.4);
 }
 
 /* 品牌 */
@@ -145,7 +145,7 @@ const links = [
   display: grid;
   place-items: center;
   background: conic-gradient(from 140deg, #ff5e22, #ffb067, #7a3d1d, #ff5e22);
-  box-shadow: 0 0 24px -4px rgba(255, 122, 47, 0.6);
+  box-shadow: 0 0 24px -4px rgba(217, 87, 26, 0.6);
   animation: mark-spin 9s linear infinite;
   transition: box-shadow 0.35s var(--ease);
 }
@@ -155,7 +155,7 @@ const links = [
   }
 }
 .brand:hover .mark {
-  box-shadow: 0 0 30px -2px rgba(255, 122, 47, 0.9);
+  box-shadow: 0 0 30px -2px rgba(217, 87, 26, 0.9);
   animation-duration: 2.4s;
 }
 .mark::after {
@@ -163,7 +163,7 @@ const links = [
   position: absolute;
   inset: 3px;
   border-radius: 50%;
-  background: #0b0908;
+  background: #f7f2ec;
 }
 /* 外圈呼吸环：从中心向外扩散一圈再消失 */
 .mark::before {
@@ -171,7 +171,7 @@ const links = [
   position: absolute;
   inset: -1px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 176, 103, 0.55);
+  border: 1px solid rgba(196, 118, 46, 0.55);
   animation: mark-pulse 3.2s var(--ease) infinite;
 }
 @keyframes mark-pulse {
@@ -195,7 +195,7 @@ const links = [
   height: 7px;
   border-radius: 50%;
   background: var(--accent-cream);
-  box-shadow: 0 0 12px rgba(255, 176, 103, 0.9);
+  box-shadow: 0 0 12px rgba(196, 118, 46, 0.9);
   animation: core-breathe 3.2s var(--ease) infinite;
 }
 @keyframes core-breathe {
@@ -297,9 +297,9 @@ const links = [
 }
 .nav-link:hover {
   color: var(--text);
-  background: rgba(255, 169, 110, 0.06);
+  background: rgba(217, 87, 26, 0.06);
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px -16px rgba(255, 122, 47, 0.9);
+  box-shadow: 0 10px 22px -16px rgba(217, 87, 26, 0.9);
 }
 .nav-link:hover em {
   opacity: 0.8;
@@ -316,7 +316,7 @@ const links = [
   bottom: 2px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  box-shadow: 0 0 10px rgba(255, 122, 47, 0.8);
+  box-shadow: 0 0 10px rgba(217, 87, 26, 0.8);
   transform-origin: 50% 50%;
   animation: navline 0.6s var(--ease) both;
 }
@@ -355,7 +355,7 @@ const links = [
   border-radius: 999px;
   border: 1px solid var(--line);
   color: var(--text-dim);
-  background: rgba(255, 246, 238, 0.03);
+  background: rgba(86, 56, 36, 0.03);
   font-variant-numeric: tabular-nums;
   transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
 }
@@ -392,10 +392,10 @@ const links = [
 @keyframes syncbreathe {
   0%,
   100% {
-    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 0 rgba(255, 122, 47, 0.45);
+    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 0 rgba(217, 87, 26, 0.45);
   }
   70% {
-    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 7px rgba(255, 122, 47, 0);
+    box-shadow: 0 0 8px rgba(255, 94, 44, 0.9), 0 0 0 7px rgba(217, 87, 26, 0);
   }
 }
 .sync.error {
@@ -411,7 +411,7 @@ const links = [
 }
 .sync.offline {
   color: var(--accent-soft);
-  border-color: rgba(255, 176, 103, 0.3);
+  border-color: rgba(196, 118, 46, 0.3);
 }
 .sync.guest {
   color: var(--muted);
@@ -447,7 +447,7 @@ const links = [
   font-weight: 500;
   color: var(--accent-cream);
   letter-spacing: 0.02em;
-  text-shadow: 0 0 26px rgba(255, 122, 47, 0.5);
+  text-shadow: 0 0 26px rgba(217, 87, 26, 0.5);
 }
 .cd-unit {
   font-size: 10.5px;

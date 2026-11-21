@@ -10,8 +10,8 @@ let clock
 const pointer = { x: 0, y: 0 }
 const COUNT = 150
 // 颜色沿 ribbon 流动：起点暖橙、尾部奶白
-const WARM = new THREE.Color('#ff5e22')
-const CREAM = new THREE.Color('#ffd7b8')
+const WARM = new THREE.Color('#d9521b')
+const CREAM = new THREE.Color('#ffe3cd')
 const TINT = new THREE.Color()
 
 function glowTexture() {
@@ -19,9 +19,9 @@ function glowTexture() {
   c.width = c.height = 256
   const ctx = c.getContext('2d')
   const g = ctx.createRadialGradient(128, 128, 10, 128, 128, 128)
-  g.addColorStop(0, 'rgba(255, 150, 80, 0.55)')
-  g.addColorStop(0.45, 'rgba(255, 100, 40, 0.16)')
-  g.addColorStop(1, 'rgba(255, 80, 20, 0)')
+  g.addColorStop(0, 'rgba(230, 130, 70, 0.35)')
+  g.addColorStop(0.45, 'rgba(217, 87, 26, 0.1)')
+  g.addColorStop(1, 'rgba(217, 87, 26, 0)')
   ctx.fillStyle = g
   ctx.fillRect(0, 0, 256, 256)
   const t = new THREE.CanvasTexture(c)
@@ -45,14 +45,14 @@ function build() {
   renderer.setClearColor(0x000000, 0)
   el.value.appendChild(renderer.domElement)
 
-  scene.add(new THREE.AmbientLight(0xffe6d2, 0.5))
-  const key = new THREE.DirectionalLight(0xffb27a, 2.6)
+  scene.add(new THREE.AmbientLight(0xfff0e0, 0.9))
+  const key = new THREE.DirectionalLight(0xffc79a, 1.9)
   key.position.set(7, 9, 12)
   scene.add(key)
-  const fill = new THREE.DirectionalLight(0xff6a2a, 1.3)
+  const fill = new THREE.DirectionalLight(0xff8a4a, 0.85)
   fill.position.set(-9, -5, 7)
   scene.add(fill)
-  const rim = new THREE.DirectionalLight(0xfff2e2, 1.5)
+  const rim = new THREE.DirectionalLight(0xfffaf2, 1.3)
   rim.position.set(0, -7, -9)
   scene.add(rim)
 
@@ -76,10 +76,10 @@ function build() {
 
   const geo = new THREE.BoxGeometry(2.4, 0.18, 2.4)
   const mat = new THREE.MeshStandardMaterial({
-    metalness: 0.45,
-    roughness: 0.26,
-    emissive: new THREE.Color('#26100a'),
-    emissiveIntensity: 0.9,
+    metalness: 0.28,
+    roughness: 0.4,
+    emissive: new THREE.Color('#3a1c11'),
+    emissiveIntensity: 0.35,
   })
   inst = new THREE.InstancedMesh(geo, mat, COUNT)
   inst.instanceMatrix.setUsage(THREE.DynamicDrawUsage)

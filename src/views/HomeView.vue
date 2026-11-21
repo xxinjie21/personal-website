@@ -185,8 +185,8 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(90deg, #0b0908 0%, rgba(11, 9, 8, 0.94) 30%, rgba(11, 9, 8, 0.55) 52%, rgba(11, 9, 8, 0.12) 70%, transparent 82%),
-    linear-gradient(180deg, rgba(11, 9, 8, 0.75), transparent 22%, transparent 78%, rgba(11, 9, 8, 0.8));
+    linear-gradient(90deg, #f7f2ec 0%, rgba(247, 242, 236, 0.94) 30%, rgba(247, 242, 236, 0.55) 52%, rgba(247, 242, 236, 0.12) 70%, transparent 82%),
+    linear-gradient(180deg, rgba(247, 242, 236, 0.75), transparent 22%, transparent 78%, rgba(247, 242, 236, 0.8));
 }
 .copy {
   position: relative;
@@ -200,18 +200,18 @@ max-width: 560px;
   margin-right: 9px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(255, 122, 47, 0.6);
+  box-shadow: 0 0 0 0 rgba(217, 87, 26, 0.6);
   animation: live 2.4s infinite;
 }
 @keyframes live {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 122, 47, 0.55);
+    box-shadow: 0 0 0 0 rgba(217, 87, 26, 0.55);
   }
   70% {
-    box-shadow: 0 0 0 9px rgba(255, 122, 47, 0);
+    box-shadow: 0 0 0 9px rgba(217, 87, 26, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 122, 47, 0);
+    box-shadow: 0 0 0 0 rgba(217, 87, 26, 0);
   }
 }
 .copy h1 {
@@ -226,7 +226,7 @@ max-width: 560px;
   font-family: 'Noto Serif SC', 'Playfair Display', serif;
   font-weight: 600;
   color: var(--accent);
-  text-shadow: 0 0 52px rgba(255, 122, 47, 0.38);
+  text-shadow: 0 0 52px rgba(217, 87, 26, 0.38);
 }
 .typeword {
   white-space: nowrap;
@@ -239,7 +239,7 @@ max-width: 560px;
   margin-left: 5px;
   vertical-align: 0.02em;
   background: var(--accent-cream);
-  box-shadow: 0 0 14px rgba(255, 122, 47, 0.85);
+  box-shadow: 0 0 14px rgba(217, 87, 26, 0.85);
   animation: capline 1.05s steps(1, end) infinite;
 }
 @keyframes capline {
@@ -274,7 +274,7 @@ max-width: 560px;
 }
 .ghost {
   background: transparent;
-  border-color: rgba(255, 246, 238, 0.22);
+  border-color: rgba(86, 56, 36, 0.22);
   color: var(--text-dim);
   text-decoration: none;
 }
@@ -305,14 +305,14 @@ max-width: 560px;
   gap: 10px;
   font-size: 13px;
   letter-spacing: 0.2em;
-  color: rgba(255, 214, 180, 0.62);
+  color: rgba(120, 80, 50, 0.62);
   text-transform: uppercase;
 }
 .stage-note::before {
   content: '';
   width: 26px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 122, 47, 0.8), rgba(255, 176, 103, 0.15));
+  background: linear-gradient(90deg, rgba(217, 87, 26, 0.8), rgba(196, 118, 46, 0.15));
 }
 
 /* 三卷 */
@@ -357,7 +357,7 @@ max-width: 560px;
   cursor: pointer;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: linear-gradient(165deg, rgba(38, 28, 22, 0.6), rgba(13, 10, 8, 0.72));
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.6), rgba(255, 250, 244, 0.72));
   color: var(--text);
   overflow: hidden;
   transition: transform 0.45s var(--ease), border-color 0.45s var(--ease),
@@ -378,7 +378,7 @@ max-width: 560px;
 .vol:hover {
   transform: translateY(-5px);
   border-color: color-mix(in srgb, var(--vol) 45%, transparent);
-  box-shadow: 0 30px 60px -34px rgba(255, 122, 47, 0.55);
+  box-shadow: 0 30px 60px -34px rgba(217, 87, 26, 0.55);
 }
 .vol:hover::before {
   opacity: 0.32;
@@ -393,8 +393,8 @@ max-width: 560px;
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 190, 140, 0.16), transparent 68%),
-    radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 122, 47, 0.08), transparent 72%);
+    radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(230, 150, 90, 0.16), transparent 68%),
+    radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(217, 87, 26, 0.08), transparent 72%);
   transition: opacity 0.4s var(--ease);
 }
 .vol:hover::after {
@@ -413,7 +413,7 @@ max-width: 560px;
   font-weight: 500;
   line-height: 1;
   color: var(--vol);
-  text-shadow: 0 0 30px rgba(255, 122, 47, 0.28);
+  text-shadow: 0 0 30px rgba(217, 87, 26, 0.28);
 }
 .vol h3 {
   margin: 0;
@@ -428,7 +428,7 @@ max-width: 560px;
   width: 100%;
   height: 1px;
   margin-top: auto;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(86, 56, 36, 0.08);
   overflow: hidden;
 }
 .vol-bar i {
@@ -454,8 +454,8 @@ max-width: 560px;
 @media (max-width: 1024px) {
   .hero-mask {
     background:
-      linear-gradient(180deg, rgba(11, 9, 8, 0.92) 0%, rgba(11, 9, 8, 0.7) 55%, rgba(11, 9, 8, 0.95)),
-      linear-gradient(90deg, #0b0908 0%, rgba(11, 9, 8, 0.75) 45%, transparent 80%);
+      linear-gradient(180deg, rgba(247, 242, 236, 0.92) 0%, rgba(247, 242, 236, 0.7) 55%, rgba(247, 242, 236, 0.95)),
+      linear-gradient(90deg, #f7f2ec 0%, rgba(247, 242, 236, 0.75) 45%, transparent 80%);
   }
   .vol-grid {
     grid-template-columns: 1fr;

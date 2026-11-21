@@ -192,7 +192,7 @@ function ringTexture() {
   const c = document.createElement('canvas')
   c.width = c.height = 256
   const ctx = c.getContext('2d')
-  ctx.strokeStyle = 'rgba(255, 214, 180, 0.55)'
+  ctx.strokeStyle = 'rgba(120, 80, 50, 0.55)'
   ctx.lineWidth = 14
   ctx.beginPath()
   ctx.arc(128, 128, 100, 0, Math.PI * 2)
@@ -863,7 +863,7 @@ onBeforeUnmount(() => {
   transform: translate(-50%, -130%);
   padding: 6px 10px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 169, 110, 0.28);
+  border: 1px solid rgba(217, 87, 26, 0.28);
   background: rgba(18, 12, 9, 0.86);
   backdrop-filter: blur(10px);
   pointer-events: none;

@@ -85,8 +85,8 @@ export default { name: 'NoteTreeNode' }
   width: 1px;
   background: linear-gradient(
     180deg,
-    rgba(255, 169, 110, 0.18),
-    rgba(255, 169, 110, 0.05) 70%,
+    rgba(217, 87, 26, 0.18),
+    rgba(217, 87, 26, 0.05) 70%,
     transparent
   );
   pointer-events: none;
@@ -112,7 +112,7 @@ export default { name: 'NoteTreeNode' }
 }
 .dir:hover,
 .file:hover {
-  background: rgba(255, 246, 238, 0.045);
+  background: rgba(86, 56, 36, 0.045);
   color: var(--text);
 }
 
@@ -150,10 +150,10 @@ export default { name: 'NoteTreeNode' }
   height: 12px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.7;
+  stroke-width: 1.8;
   stroke-linejoin: round;
   stroke-linecap: round;
-  opacity: 0.85;
+  opacity: 1;
   transition: opacity 0.16s var(--ease), color 0.16s var(--ease);
 }
 .dir:hover .ico,
@@ -161,13 +161,14 @@ export default { name: 'NoteTreeNode' }
   opacity: 1;
 }
 .ico.folder {
-  color: var(--accent-soft);
+  color: #a4551f;
 }
 .ico.fileico {
-  color: var(--text-muted);
+  color: #6f5f51;
   width: 11px;
   height: 11px;
-  opacity: 0.7;
+  stroke-width: 1.5;
+  opacity: 0.8;
 }
 
 /* 文件比目录暗一档 */
@@ -178,7 +179,7 @@ export default { name: 'NoteTreeNode' }
   color: var(--text-dim);
 }
 .file.active {
-  background: rgba(255, 169, 110, 0.14);
+  background: rgba(217, 87, 26, 0.14);
   color: var(--accent-cream);
 }
 
