@@ -132,7 +132,7 @@ async function menuCopyLink() {
   const slug = tabMenu.value?.slug
   closeMenu()
   if (!slug) return
-  const url = `${location.origin}${location.pathname}#/notes?note=${encodeURIComponent(slug)}`
+  const url = `${location.origin}/notes?note=${encodeURIComponent(slug)}`
   try {
     await navigator.clipboard.writeText(url)
     toast.value = '链接已复制'
@@ -145,7 +145,7 @@ function menuOpenWindow() {
   const slug = tabMenu.value?.slug
   closeMenu()
   if (!slug) return
-  const url = `${location.origin}${location.pathname}#/notes?note=${encodeURIComponent(slug)}`
+  const url = `${location.origin}/notes?note=${encodeURIComponent(slug)}`
   window.open(url, '_blank', 'noopener')
 }
 
