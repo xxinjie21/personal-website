@@ -120,48 +120,26 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
         </a>
       </div>
 
-      <div class="stats reveal reveal-d3">
-        <div class="stat-cell">
-          <b>{{ total }}</b>
-          <small>笔记</small>
-        </div>
-        <div class="stat-cell">
-          <b>{{ tagCount }}</b>
-          <small>标签</small>
-        </div>
-        <div class="stat-cell">
-          <b>{{ folders.length }}</b>
-          <small>分区</small>
-        </div>
+      <div class="vol-row reveal reveal-d3">
+        <button
+          v-for="f in folders"
+          :key="f.name"
+          class="vol"
+          :style="{ '--vol': f.color, '--pct': f.pct }"
+          @mousemove="volSpot"
+          @click="goNotes"
+        >
+          <span class="vol-top">
+            <em class="vol-idx mono">{{ f.idx }}</em>
+            <b class="vol-count mono">{{ f.count }}</b>
+          </span>
+          <span class="vol-name">{{ f.name }}</span>
+          <span class="vol-bar"><i></i></span>
+        </button>
       </div>
     </div>
 
     <p class="stage-note mono">MOVE THE CURSOR · THE RIBBON BREATHES</p>
-  </section>
-
-  <section class="volumes">
-    <div class="vol-head">
-      <p class="eyebrow">VOLUMES — {{ String(folders.length).padStart(2, '0') }}</p>
-      <h2 class="reveal">三卷分区</h2>
-      <button class="more link-x" @click="goNotes">看全部 <Icon name="arrow-right" class="more-arw" :size="11" /></button>
-    </div>
-
-    <div class="vol-grid">
-      <button
-        v-for="f in folders"
-        :key="f.name"
-        class="vol"
-        :style="{ '--vol': f.color, '--pct': f.pct }"
-        @mousemove="volSpot"
-        @click="goNotes"
-      >
-        <span class="vol-idx mono">{{ f.idx }}</span>
-        <b class="vol-count mono">{{ f.count }}</b>
-        <h3>{{ f.name }}</h3>
-        <span class="vol-bar"><i></i></span>
-        <span class="vol-go">打开这一卷 <em><Icon name="arrow-up-right" :size="10" /></em></span>
-      </button>
-    </div>
   </section>
 </template>
 
@@ -286,21 +264,108 @@ max-width: 560px;
   color: var(--text-dim);
   text-decoration: none;
 }
-.stats {
-  display: inline-flex;
-  padding-top: 16px;
+/* 三卷：直接并进首屏左栏，做成一行紧凑卡片，不再单独占一整块 */
+.vol-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 18px;
   border-top: 1px solid var(--line);
 }
-.stats .stat-cell {
-  padding: 0 26px;
-  border-left: 1px solid var(--line);
+.vol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 12px 13px 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.7), rgba(255, 250, 244, 0.82));
+  color: var(--text);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
 }
-.stats .stat-cell:first-child {
-  padding-left: 0;
-  border-left: none;
+.vol::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  right: -70px;
+  top: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--vol), transparent 62%);
+  opacity: 0.16;
+  transition: opacity 0.5s var(--ease), transform 0.6s var(--ease);
 }
-.stats .stat-cell:last-child {
-  padding-right: 0;
+.vol:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--vol) 45%, transparent);
+  box-shadow: 0 18px 40px -26px rgba(217, 87, 26, 0.55);
+}
+.vol:hover::before {
+  opacity: 0.32;
+  transform: scale(1.12);
+}
+/* 跟光：一层随鼠标走的暖光 */
+.vol::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(150px circle at var(--mx, 50%) var(--my, 0%), rgba(230, 150, 90, 0.16), transparent 68%);
+  transition: opacity 0.4s var(--ease);
+}
+.vol:hover::after {
+  opacity: 1;
+}
+.vol:active {
+  transform: translateY(-1px) scale(0.994);
+}
+.vol-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+}
+.vol-idx {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.vol-count {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--vol);
+}
+.vol-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.vol-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 4px;
+  background: rgba(86, 56, 36, 0.08);
+  overflow: hidden;
+}
+.vol-bar i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: calc(var(--pct) * 100%);
+  background: var(--vol);
 }
 .stage-note {
   position: absolute;
@@ -324,140 +389,6 @@ max-width: 560px;
 }
 
 /* 三卷 */
-.volumes {
-  padding: 64px 44px 88px;
-}
-.vol-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 26px;
-}
-.vol-head h2 {
-  margin: 10px 0 0;
-  font-family: 'Noto Serif SC', 'Playfair Display', serif;
-  font-size: clamp(22px, 2.2vw, 30px);
-  font-weight: 600;
-}
-.more {
-  border: none;
-  background: none;
-  color: var(--text-dim);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 6px 0;
-}
-.vol-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.vol {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 22px 22px 18px;
-  min-height: 176px;
-  text-align: left;
-  cursor: pointer;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.6), rgba(255, 250, 244, 0.72));
-  color: var(--text);
-  overflow: hidden;
-  transition: transform 0.45s var(--ease), border-color 0.45s var(--ease),
-    box-shadow 0.45s var(--ease);
-}
-.vol::before {
-  content: '';
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  right: -90px;
-  top: -110px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--vol), transparent 62%);
-  opacity: 0.16;
-  transition: opacity 0.5s var(--ease), transform 0.6s var(--ease);
-}
-.vol:hover {
-  transform: translateY(-5px);
-  border-color: color-mix(in srgb, var(--vol) 45%, transparent);
-  box-shadow: 0 30px 60px -34px rgba(217, 87, 26, 0.55);
-}
-.vol:hover::before {
-  opacity: 0.32;
-  transform: scale(1.12);
-}
-/* 跟光：一层随鼠标走的暖光 + 一圈细描边高光 */
-.vol::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(230, 150, 90, 0.16), transparent 68%),
-    radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(217, 87, 26, 0.08), transparent 72%);
-  transition: opacity 0.4s var(--ease);
-}
-.vol:hover::after {
-  opacity: 1;
-}
-.vol:active {
-  transform: translateY(-2px) scale(0.994);
-}
-.vol-idx {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-}
-.vol-count {
-  font-size: 44px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--vol);
-  text-shadow: 0 0 30px rgba(217, 87, 26, 0.28);
-}
-.vol h3 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--text-dim);
-}
-.vol-bar {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin-top: auto;
-  background: rgba(86, 56, 36, 0.08);
-  overflow: hidden;
-}
-.vol-bar i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 1px;
-  width: calc(var(--pct) * 100%);
-  background: var(--vol);
-}
-.vol-go {
-  font-size: 11px;
-  color: var(--muted);
-  transition: color 0.3s var(--ease);
-}
-.vol-go em {
-  font-style: normal;
-}
-.vol:hover .vol-go {
-  color: var(--accent-cream);
-}
 
 @media (max-width: 1024px) {
   .hero-mask {
@@ -511,8 +442,8 @@ max-width: 560px;
     max-width: 520px;
     font-size: 17.5px;
   }
-  .stats .stat-cell b {
-    font-size: 40px;
+  .vol-count {
+    font-size: 28px;
   }
   .stage-note {
     font-size: 15px;
@@ -532,16 +463,21 @@ max-width: 560px;
   .hero {
     padding: 22px 18px 34px;
   }
-  .volumes {
-    padding: 44px 18px 26px;
+  .vol-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
-  .stats {
-    width: 100%;
-    justify-content: space-between;
+  .vol {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
-  .stat-row .stat-cell,
-  .stats .stat-cell {
-    padding: 0 14px;
+  .vol-top {
+    width: auto;
+    gap: 8px;
+  }
+  .vol-bar {
+    display: none;
   }
 }
 </style>
