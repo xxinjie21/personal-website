@@ -524,9 +524,20 @@ watch(
             :key="h.id"
             class="outline-item"
             :class="['lv' + h.level, { active: h.id === activeHeading }]"
-            :style="{ paddingLeft: (h.level - 1) * 7 + 10 + 'px' }"
+            :style="{ paddingLeft: (h.level - 1) * 15 + 4 + 'px' }"
             @click="scrollTo(h.id)"
           >
+            <button
+              v-if="h.hasChildren"
+              type="button"
+              class="outline-caret"
+              :class="{ open: !isCollapsed(h.id) }"
+              :title="isCollapsed(h.id) ? '展开子标题' : '收起子标题'"
+              @click.stop="toggleCollapse(h.id)"
+            >
+              <Icon name="chevron-right" :size="10" :weight="1.8" />
+            </button>
+            <span v-else class="outline-caret ghost" aria-hidden="true"></span>
             <span class="outline-text">{{ h.text }}</span>
           </li>
         </ul>
@@ -1032,29 +1043,29 @@ watch(
   display: flex;
   align-items: flex-start;
   gap: 3px;
-  margin: 0 6px;
-  padding: 2px 8px;
+  margin: 0 4px;
+  padding: 3px 6px;
   border-radius: 4px;
   font-size: 11.5px;
-  line-height: 1.6;
-  color: var(--muted);
+  line-height: 1.55;
+  color: var(--text-dim);
   cursor: pointer;
   transition: background 0.16s var(--ease), color 0.16s var(--ease);
 }
 .outline-caret {
   flex: none;
   width: 11px;
-  height: 15px;
+  height: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-top: 2px;
   padding: 0;
   border: 0;
   background: none;
   color: var(--accent-soft);
-  font-size: 9px;
   line-height: 1;
-  opacity: 0.7;
+  opacity: 0.85;
   cursor: pointer;
   transition: transform 0.18s var(--ease), opacity 0.18s var(--ease);
 }
@@ -1072,22 +1083,22 @@ watch(
 .outline-text {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
   padding-top: 1px;
+  font-weight: 600;
 }
 .outline-item.lv1 {
-  margin-top: 3px;
-  font-weight: 600;
-  color: var(--text-dim);
+  margin-top: 4px;
 }
 .outline-item.lv2 {
-  font-weight: 400;
-  color: var(--text-muted);
+  margin-top: 1px;
+}
+.outline-item.lv3 .outline-text {
+  font-weight: 500;
 }
 .outline-item.lv3 {
-  color: var(--muted);
+  color: var(--text-muted);
 }
 .outline-item:hover {
   background: rgba(217, 87, 26, 0.07);
