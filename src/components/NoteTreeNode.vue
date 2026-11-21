@@ -102,12 +102,15 @@ export default { name: 'NoteTreeNode' }
   line-height: 1.55;
   text-align: left;
   cursor: pointer;
-  transition: background 0.16s var(--ease), color 0.16s var(--ease);
+  transition: background 0.16s var(--ease), color 0.16s var(--ease),
+    transform 0.22s var(--ease);
 }
 .dir:hover,
 .file:hover {
   background: rgba(86, 56, 36, 0.045);
   color: var(--text);
+  /* 指针掠过时整行往右让一点，像被吸住 */
+  transform: translateX(2px);
 }
 
 .dir-name,
@@ -175,6 +178,28 @@ export default { name: 'NoteTreeNode' }
 .file.active {
   background: rgba(217, 87, 26, 0.14);
   color: var(--accent-cream);
+}
+/* 当前笔记：左侧一道 2px 橙条从中间“长”出来 */
+.file.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-cream));
+  animation: bar-grow 0.26s var(--ease) both;
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 .caret {

@@ -120,7 +120,12 @@ function onScroll(e) {
 <template>
   <div class="reader" @scroll="onScroll">
     <span class="read-bar" :style="{ transform: `scaleX(${prog})` }" aria-hidden="true"></span>
-    <div v-if="loading" class="state">加载中…</div>
+    <div v-if="loading" class="skeleton" aria-hidden="true">
+      <span class="sk-line sk-title"></span>
+      <span class="sk-line"></span>
+      <span class="sk-line w80"></span>
+      <span class="sk-line w60"></span>
+    </div>
     <div v-else-if="!note" class="state">
       <p class="state-title">还没有打开任何笔记</p>
       <p class="state-hint">从左侧目录选一篇，或在首页图谱里点一个节点。</p>
@@ -201,7 +206,31 @@ function onScroll(e) {
 @keyframes article-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* 正文块依次浮现：前 10 块按 18ms 递减错峰，后面的块直接跟上，长文也不拖 */
+.markdown > * {
+  animation: block-in 0.4s var(--ease) both;
+}
+.markdown > *:nth-child(1) { animation-delay: 0.04s; }
+.markdown > *:nth-child(2) { animation-delay: 0.058s; }
+.markdown > *:nth-child(3) { animation-delay: 0.076s; }
+.markdown > *:nth-child(4) { animation-delay: 0.094s; }
+.markdown > *:nth-child(5) { animation-delay: 0.112s; }
+.markdown > *:nth-child(6) { animation-delay: 0.13s; }
+.markdown > *:nth-child(7) { animation-delay: 0.148s; }
+.markdown > *:nth-child(8) { animation-delay: 0.166s; }
+.markdown > *:nth-child(9) { animation-delay: 0.184s; }
+.markdown > *:nth-child(10) { animation-delay: 0.2s; }
+@keyframes block-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -212,6 +241,46 @@ function onScroll(e) {
   padding: 60px 0;
   color: var(--text-muted);
   text-align: center;
+  animation: article-in 0.3s var(--ease) both;
+}
+/* 加载骨架：几道灰条从左往右扫一道光，比“加载中…”更像在等东西 */
+.skeleton {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sk-line {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(126, 84, 46, 0.08) 0%,
+    rgba(126, 84, 46, 0.16) 40%,
+    rgba(126, 84, 46, 0.08) 80%
+  );
+  background-size: 220% 100%;
+  animation: sk-sweep 1.5s ease-in-out infinite;
+}
+.sk-title {
+  height: 26px;
+  width: 46%;
+}
+.w80 {
+  width: 80%;
+}
+.w60 {
+  width: 60%;
+}
+@keyframes sk-sweep {
+  0% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
 }
 .state-title {
   color: var(--text);

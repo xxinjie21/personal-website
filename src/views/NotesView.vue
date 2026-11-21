@@ -1005,6 +1005,14 @@ watch(
   cursor: pointer;
   transition: color 0.25s var(--ease), background 0.25s var(--ease),
     border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  /* 新开的页签从上方轻轻落下来 */
+  animation: tab-in 0.24s var(--ease) backwards;
+}
+@keyframes tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.97);
+  }
 }
 .tab:hover {
   color: var(--text);
@@ -1301,9 +1309,12 @@ watch(
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 0.2s var(--ease), transform 0.22s var(--ease);
 }
 .link:hover {
   color: var(--accent);
+  /* 链接往右让 3px，箭头往前探，方向感更明确 */
+  transform: translateX(3px);
 }
 .link-dir {
   display: inline-block;
@@ -1311,6 +1322,11 @@ watch(
   color: var(--accent-soft);
   font-size: 10.5px;
   opacity: 0.8;
+  transition: opacity 0.2s var(--ease), transform 0.22s var(--ease);
+}
+.link:hover .link-dir {
+  opacity: 1;
+  transform: translateX(2px);
 }
 .link.missing {
   color: var(--text-muted);
@@ -1329,15 +1345,37 @@ watch(
   gap: 12px;
   z-index: 60;
   cursor: zoom-out;
+  animation: lb-fade 0.24s var(--ease) both;
+  backdrop-filter: blur(6px);
 }
 .lightbox img {
   max-width: 86vw;
   max-height: 82vh;
   border-radius: 8px;
   background: #fff;
+  animation: lb-zoom 0.34s var(--ease) both;
 }
 .lightbox-cap {
   color: #cfd3d8;
   font-size: 12px;
+  animation: lb-fade 0.34s var(--ease) 0.08s both;
+}
+@keyframes lb-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lb-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>

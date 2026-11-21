@@ -1,6 +1,6 @@
 <script setup>
 // 纯阅读站点：不取进度、不连 Worker
-import { onMounted, computed, ref } from 'vue'
+import { onBeforeUnmount, onMounted, computed, ref } from 'vue'
 
 // 28 考研初试：2027 年 12 月下旬（占位 12-21，临近再校准）
 const EXAM_DATE = new Date('2027-12-21T00:00:00+08:00')
@@ -23,6 +23,19 @@ onMounted(() => {
   }
   requestAnimationFrame(step)
 })
+
+// 顶栏：页面一滚就加投影，跟内容分层（阅读区内部滚动也要算，用捕获阶段接）
+const lifted = ref(false)
+const onScroll = () => {
+  const reader = document.querySelector('.reader')
+  const y = Math.max(window.scrollY || 0, reader ? reader.scrollTop : 0)
+  lifted.value = y > 8
+}
+onMounted(() => {
+  onScroll()
+  document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+})
+onBeforeUnmount(() => document.removeEventListener('scroll', onScroll, true))
 
 const links = [
   { to: '/', label: '首页', en: 'HOME' },
@@ -47,7 +60,7 @@ const onBrandClick = () => {
 </script>
 
 <template>
-  <header class="topbar">
+  <header class="topbar" :class="{ lift: lifted }">
     <router-link
       to="/"
       class="brand"
@@ -97,6 +110,14 @@ const onBrandClick = () => {
   -webkit-backdrop-filter: blur(22px) saturate(120%);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 12px 30px -28px rgba(85, 53, 28, 0.4);
+  transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+/* 页面往下滚一点：顶栏底色更实、投影加深，和内容分层 */
+.topbar.lift {
+  background: rgba(255, 253, 250, 0.96);
+  border-color: rgba(126, 84, 46, 0.22);
+  box-shadow: 0 14px 34px -22px rgba(85, 53, 28, 0.5);
 }
 
 /* 品牌 */
