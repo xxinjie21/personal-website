@@ -132,6 +132,7 @@ const onBrandClick = () => {
   transform: scale(0.985);
 }
 .mark {
+  --breathe: 0.034;
   position: relative;
   width: 30px;
   height: 30px;
@@ -139,19 +140,30 @@ const onBrandClick = () => {
   display: grid;
   place-items: center;
   background: conic-gradient(from 140deg, #ff5e22, #ffb067, #7a3d1d, #ff5e22);
-  box-shadow: 0 0 24px -4px rgba(217, 87, 26, 0.6);
-  animation: mark-spin 9s linear infinite;
-  transition: box-shadow 0.35s var(--ease), transform 0.4s var(--ease);
+  /* 环在转 + 整体随呼吸缩放、光圈一明一暗（3.9s 一呼一吸） */
+  animation: mark-spin 9s linear infinite, mark-breathe 3.9s ease-in-out infinite;
 }
 @keyframes mark-spin {
   to {
     transform: rotate(1turn);
   }
 }
+/* 用独立的 scale 属性做呼吸，不和旋转用的 transform 打架 */
+@keyframes mark-breathe {
+  0%,
+  100% {
+    scale: 1;
+    box-shadow: 0 0 16px -6px rgba(217, 87, 26, 0.42);
+  }
+  50% {
+    scale: calc(1 + var(--breathe));
+    box-shadow: 0 0 30px -2px rgba(217, 87, 26, 0.82);
+  }
+}
+/* 指针停上来：呼吸幅度加深，像人注意到你 */
 .brand:hover .mark {
-  box-shadow: 0 0 30px -2px rgba(217, 87, 26, 0.9);
-  animation-duration: 2.4s;
-  transform: scale(1.06);
+  --breathe: 0.09;
+  animation-duration: 2.4s, 2.2s;
 }
 .mark::after {
   content: '';
@@ -167,7 +179,7 @@ const onBrandClick = () => {
   inset: -1px;
   border-radius: 50%;
   border: 1px solid rgba(196, 118, 46, 0.55);
-  animation: mark-pulse 3.2s var(--ease) infinite;
+  animation: mark-pulse 3.9s var(--ease) infinite;
 }
 @keyframes mark-pulse {
   0% {
@@ -191,7 +203,7 @@ const onBrandClick = () => {
   border-radius: 50%;
   background: var(--accent-cream);
   box-shadow: 0 0 12px rgba(196, 118, 46, 0.9);
-  animation: core-breathe 3.2s var(--ease) infinite;
+  animation: core-breathe 3.9s var(--ease) infinite;
 }
 @keyframes core-breathe {
   0%,
@@ -234,7 +246,18 @@ const onBrandClick = () => {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: brand-sweep 7.5s ease-in-out 1.2s infinite;
+  animation: brand-sweep 7.5s ease-in-out 1.2s infinite,
+    brand-breathe 3.9s ease-in-out infinite;
+}
+/* 字也跟着同一口气起伏：从 88% 到不透明的极轻变化，和圆环同频 */
+@keyframes brand-breathe {
+  0%,
+  100% {
+    opacity: 0.86;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 @keyframes brand-sweep {
   0%,
@@ -247,7 +270,7 @@ const onBrandClick = () => {
 }
 /* 指针停在品牌上：扫光提速，让人知道这里可以点 */
 .brand:hover .brand-text b {
-  animation-duration: 2.6s;
+  animation-duration: 2.6s, 2.2s;
 }
 /* 点击触发：一次完整扫光，作为“回首页”的动作反馈 */
 .brand.sweeping .brand-text b {
@@ -504,3 +527,4 @@ const onBrandClick = () => {
   }
 }
 </style>
+
