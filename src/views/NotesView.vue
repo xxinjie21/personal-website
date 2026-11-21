@@ -365,12 +365,6 @@ function startDrag(side, e) {
   window.addEventListener('pointercancel', stop)
 }
 
-const backlinks = computed(() => loaded.value?.backlinks || [])
-const outlinks = computed(() => {
-  const note = noteBySlug.get(activeSlug.value)
-  return (note?.links || []).map((t) => ({ target: t, slug: resolveTarget(t) }))
-})
-
 function toggleLightbox(payload) {
   lightbox.value = payload
 }
@@ -543,39 +537,6 @@ watch(
           </li>
         </ul>
         <p v-else class="rail-empty">暂无标题</p>
-      </div>
-
-      <div class="rail-block">
-        <div class="rail-head">
-          <span><em class="rail-idx mono">02</em>反向链接</span>
-          <span class="rail-count">{{ backlinks.length }}</span>
-        </div>
-        <ul v-if="backlinks.length" class="links">
-          <li v-for="b in backlinks" :key="b.slug">
-            <button type="button" class="link" @click="openNote(b.slug)">{{ b.title }}</button>
-          </li>
-        </ul>
-        <p v-else class="rail-empty">还没有其他笔记引用本篇</p>
-      </div>
-
-      <div class="rail-block">
-        <div class="rail-head">
-          <span><em class="rail-idx mono">03</em>出链</span>
-          <span class="rail-count">{{ outlinks.length }}</span>
-        </div>
-        <ul v-if="outlinks.length" class="links">
-          <li v-for="(l, i) in outlinks" :key="i">
-            <button
-              type="button"
-              class="link"
-              :class="{ missing: !l.slug }"
-              @click="followLink(l.target)"
-            >
-              {{ l.target.split('/').pop() }}<span v-if="!l.slug" class="muted">（未创建）</span>
-            </button>
-          </li>
-        </ul>
-        <p v-else class="rail-empty">本篇没有双链</p>
       </div>
     </aside>
     </div>
