@@ -22,8 +22,9 @@ if (window.location.hash.startsWith('#/')) {
   window.history.replaceState(null, '', window.location.hash.slice(1))
 }
 
-router.afterEach((to) => {
-  document.title = to.meta.title ? `${to.meta.title} · 个人站点` : '个人站点'
+// 浏览器标签固定显示 XXJ（不随页面变，保持标签短而稳）
+router.afterEach(() => {
+  document.title = 'XXJ'
 })
 
 export default router
