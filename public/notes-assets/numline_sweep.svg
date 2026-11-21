@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 330" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="780" height="330" fill="#ffffff"/>
+<text x="390" y="18" font-size="12" fill="#94a3b8" text-anchor="middle">穿根法：奇次根穿过、偶次根弹回</text>
+<path d="M 710.0,117.4 C 703.7,126.5 689.6,153.9 672.4,171.7 C 655.1,189.5 629.2,214.6 606.5,224.3 C 583.7,234.0 556.3,238.8 535.9,230.0 C 515.5,221.2 501.4,187.3 484.1,171.7 C 466.9,156.1 448.0,144.5 432.4,136.3 C 416.7,128.1 404.1,121.0 390.0,122.6 C 375.9,124.1 363.3,137.2 347.6,145.4 C 332.0,153.6 312.4,172.9 295.9,171.7 C 279.4,170.6 264.5,138.6 248.8,138.6 C 233.1,138.6 219.0,157.1 201.8,171.7 C 184.5,186.3 167.3,217.0 145.3,226.0 C 123.3,235.0 82.5,226.0 70.0,226.0" fill="none" stroke="#2563eb" stroke-width="2.3"/>
+<line x1="70" y1="171.7" x2="710" y2="171.7" stroke="#334155" stroke-width="1.4"/>
+<circle cx="201.8" cy="171.7" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="1.4"/>
+<text x="201.8" y="191.7" font-size="11" fill="#334155" text-anchor="middle">-2</text>
+<text x="201.8" y="155.7" font-size="10" fill="#94a3b8" text-anchor="middle">奇次·穿过</text>
+<circle cx="295.9" cy="171.7" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="1.4"/>
+<text x="295.9" y="191.7" font-size="11" fill="#334155" text-anchor="middle">-1</text>
+<text x="295.9" y="213.7" font-size="10" fill="#ea580c" text-anchor="middle">偶次·弹回</text>
+<circle cx="484.1" cy="171.7" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="1.4"/>
+<text x="484.1" y="191.7" font-size="11" fill="#334155" text-anchor="middle">1</text>
+<text x="484.1" y="155.7" font-size="10" fill="#94a3b8" text-anchor="middle">奇次·穿过</text>
+<circle cx="672.4" cy="171.7" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="1.4"/>
+<text x="672.4" y="191.7" font-size="11" fill="#334155" text-anchor="middle">3</text>
+<text x="672.4" y="155.7" font-size="10" fill="#94a3b8" text-anchor="middle">奇次·穿过</text>
+<text x="135.9" y="143.7" font-size="13" fill="#94a3b8" text-anchor="middle" font-weight="700">−</text>
+<text x="248.8" y="143.7" font-size="13" fill="#16a34a" text-anchor="middle" font-weight="700">+</text>
+<text x="390.0" y="143.7" font-size="13" fill="#16a34a" text-anchor="middle" font-weight="700">+</text>
+<text x="578.2" y="143.7" font-size="13" fill="#94a3b8" text-anchor="middle" font-weight="700">−</text>
+<text x="691.2" y="143.7" font-size="13" fill="#16a34a" text-anchor="middle" font-weight="700">+</text>
+</svg>

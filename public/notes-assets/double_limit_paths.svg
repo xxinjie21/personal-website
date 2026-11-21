@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 350" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="820" height="350" fill="#ffffff"/>
+<text x="410" y="18" font-size="12" fill="#94a3b8" text-anchor="middle">二重极限：沿不同路径趋近，可能得到不同的值</text>
+<line x1="113.3" y1="45.0" x2="113.3" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="166.7" y1="45.0" x2="166.7" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="220.0" y1="45.0" x2="220.0" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="273.3" y1="45.0" x2="273.3" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="326.7" y1="45.0" x2="326.7" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60.0" y1="233.0" x2="380.0" y2="233.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60.0" y1="186.0" x2="380.0" y2="186.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60.0" y1="139.0" x2="380.0" y2="139.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60.0" y1="92.0" x2="380.0" y2="92.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60.0" y1="221.2" x2="380.0" y2="221.2" stroke="#334155" stroke-width="1.4"/>
+<polygon points="380.0,221.2 372.0,217.2 372.0,225.2" fill="#334155"/>
+<line x1="140.0" y1="280.0" x2="140.0" y2="45.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="140.0,45.0 136.0,53.0 144.0,53.0" fill="#334155"/>
+<text x="220.0" y="300.0" font-size="11" fill="#2563eb" text-anchor="middle" font-weight="600">沿 y=x：极限 1/2</text>
+<circle cx="140.0" cy="221.2" r="3.6" fill="#ea580c" stroke="#ffffff" stroke-width="1.2"/>
+<text x="150.7" y="211.5" font-size="9.5" fill="#ea580c" text-anchor="start" font-weight="600">O</text>
+<line x1="353.3" y1="64.6" x2="156.0" y2="209.5" stroke="#2563eb" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="273.3" y="98.9" font-size="9.5" fill="#2563eb" text-anchor="start" font-weight="600">y=x</text>
+<line x1="483.3" y1="45.0" x2="483.3" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="536.7" y1="45.0" x2="536.7" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="590.0" y1="45.0" x2="590.0" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="643.3" y1="45.0" x2="643.3" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="696.7" y1="45.0" x2="696.7" y2="280.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="233.0" x2="750.0" y2="233.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="186.0" x2="750.0" y2="186.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="139.0" x2="750.0" y2="139.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="92.0" x2="750.0" y2="92.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="221.2" x2="750.0" y2="221.2" stroke="#334155" stroke-width="1.4"/>
+<polygon points="750.0,221.2 742.0,217.2 742.0,225.2" fill="#334155"/>
+<line x1="510.0" y1="280.0" x2="510.0" y2="45.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="510.0,45.0 506.0,53.0 514.0,53.0" fill="#334155"/>
+<text x="590.0" y="300.0" font-size="11" fill="#2563eb" text-anchor="middle" font-weight="600">沿 y=x²：极限 0</text>
+<circle cx="510.0" cy="221.2" r="3.6" fill="#ea580c" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M 512.7 221.2 L 514.3 221.1 L 516.0 221.1 L 517.7 220.9 L 519.3 220.8 L 521.0 220.6 L 522.7 220.4 L 524.3 220.1 L 526.0 219.8 L 527.7 219.5 L 529.3 219.2 L 531.0 218.8 L 532.7 218.4 L 534.3 218.0 L 536.0 217.5 L 537.7 217.0 L 539.3 216.5 L 541.0 216.0 L 542.7 215.4 L 544.3 214.8 L 546.0 214.1 L 547.7 213.4 L 549.3 212.7 L 551.0 212.0 L 552.7 211.2 L 554.3 210.4 L 556.0 209.6 L 557.7 208.7 L 559.3 207.8 L 561.0 206.9 L 562.7 206.0 L 564.3 205.0 L 566.0 204.0 L 567.7 202.9 L 569.3 201.9 L 571.0 200.8 L 572.7 199.6 L 574.3 198.5 L 576.0 197.3 L 577.7 196.0 L 579.3 194.8 L 581.0 193.5 L 582.7 192.2 L 584.3 190.8 L 586.0 189.4 L 587.7 188.0 L 589.3 186.6 L 591.0 185.1 L 592.7 183.6 L 594.3 182.1 L 596.0 180.5 L 597.7 178.9 L 599.3 177.3 L 601.0 175.6 L 602.7 174.0 L 604.3 172.2 L 606.0 170.5 L 607.7 168.7 L 609.3 166.9 L 611.0 165.1 L 612.7 163.2 L 614.3 161.3 L 616.0 159.4 L 617.7 157.4 L 619.3 155.4 L 621.0 153.4 L 622.7 151.3 L 624.3 149.3 L 626.0 147.1 L 627.7 145.0 L 629.3 142.8 L 631.0 140.6 L 632.7 138.4 L 634.3 136.1 L 636.0 133.8 L 637.7 131.5 L 639.3 129.1 L 641.0 126.7 L 642.7 124.3 L 644.3 121.9 L 646.0 119.4 L 647.7 116.9 L 649.3 114.3 L 651.0 111.7 L 652.7 109.1 L 654.3 106.5 L 656.0 103.8 L 657.7 101.1 L 659.3 98.4 L 661.0 95.7 L 662.7 92.9 L 664.3 90.1 L 666.0 87.2 L 667.7 84.3 L 669.3 81.4 L 671.0 78.5 L 672.7 75.5 L 674.3 72.5 L 676.0 69.5 L 677.7 66.4 L 679.3 63.3 L 681.0 60.2 L 682.7 57.0 L 684.3 53.9 L 686.0 50.6 L 687.7 47.4" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="670.0" y="108.6" font-size="9.5" fill="#2563eb" text-anchor="start" font-weight="600">y=x²</text>
+<text x="610.0" y="335.0" font-size="11.0" fill="#2563eb" text-anchor="middle" font-weight="600">两路径不同值 ⇒ 二重极限不存在</text>
+</svg>

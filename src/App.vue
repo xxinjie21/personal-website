@@ -5,7 +5,7 @@ import GlobalLayout from './layouts/GlobalLayout.vue'
 <template>
   <GlobalLayout>
     <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
+      <transition name="page" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>

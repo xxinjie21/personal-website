@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="820" height="340" fill="#ffffff"/>
+<text x="410" y="18" font-size="12" fill="#94a3b8" text-anchor="middle">同一区域两种切法：先 y 后 x / 先 x 后 y</text>
+<line x1="98.3" y1="45.0" x2="98.3" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="156.7" y1="45.0" x2="156.7" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="215.0" y1="45.0" x2="215.0" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="273.3" y1="45.0" x2="273.3" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="331.7" y1="45.0" x2="331.7" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="40.0" y1="225.0" x2="390.0" y2="225.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="40.0" y1="180.0" x2="390.0" y2="180.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="40.0" y1="135.0" x2="390.0" y2="135.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="40.0" y1="90.0" x2="390.0" y2="90.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="40.0" y1="237.9" x2="390.0" y2="237.9" stroke="#334155" stroke-width="1.4"/>
+<polygon points="390.0,237.9 382.0,233.9 382.0,241.9" fill="#334155"/>
+<line x1="90.0" y1="270.0" x2="90.0" y2="45.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="90.0,45.0 86.0,53.0 94.0,53.0" fill="#334155"/>
+<text x="215.0" y="290.0" font-size="11" fill="#2563eb" text-anchor="middle" font-weight="600">X 型：竖条，先 y</text>
+<polygon points="90.0,237.9 315.0,237.9 315.0,109.3 165.0,109.3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+<line x1="115.0" y1="237.9" x2="115.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="140.0" y1="237.9" x2="140.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="165.0" y1="237.9" x2="165.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="190.0" y1="237.9" x2="190.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="215.0" y1="237.9" x2="215.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="240.0" y1="237.9" x2="240.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="265.0" y1="237.9" x2="265.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="290.0" y1="237.9" x2="290.0" y2="109.3" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="202.5" y="257.9" font-size="9.5" fill="#2563eb" text-anchor="start" font-weight="600">a≤x≤b，下方到上方</text>
+<line x1="488.3" y1="45.0" x2="488.3" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="546.7" y1="45.0" x2="546.7" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="605.0" y1="45.0" x2="605.0" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="663.3" y1="45.0" x2="663.3" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="721.7" y1="45.0" x2="721.7" y2="270.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="225.0" x2="780.0" y2="225.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="180.0" x2="780.0" y2="180.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="135.0" x2="780.0" y2="135.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="90.0" x2="780.0" y2="90.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430.0" y1="237.9" x2="780.0" y2="237.9" stroke="#334155" stroke-width="1.4"/>
+<polygon points="780.0,237.9 772.0,233.9 772.0,241.9" fill="#334155"/>
+<line x1="480.0" y1="270.0" x2="480.0" y2="45.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="480.0,45.0 476.0,53.0 484.0,53.0" fill="#334155"/>
+<text x="605.0" y="290.0" font-size="11" fill="#2563eb" text-anchor="middle" font-weight="600">Y 型：横条，先 x</text>
+<polygon points="480.0,237.9 705.0,237.9 705.0,109.3 555.0,109.3" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+<line x1="480.0" y1="222.8" x2="705.0" y2="222.8" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="208.7" x2="705.0" y2="208.7" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="194.7" x2="705.0" y2="194.7" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="180.6" x2="705.0" y2="180.6" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="166.5" x2="705.0" y2="166.5" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="152.5" x2="705.0" y2="152.5" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="138.4" x2="705.0" y2="138.4" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<line x1="480.0" y1="124.4" x2="705.0" y2="124.4" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="555.0" y="257.9" font-size="9.5" fill="#ea580c" text-anchor="start" font-weight="600">c≤y≤d，左边界到右边界</text>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="760" height="330" fill="#ffffff"/>
+<text x="380" y="18" font-size="12" fill="#94a3b8" text-anchor="middle">取整函数 y = ⌊x⌋ 与符号函数 y = sgn x</text>
+<line x1="68.0" y1="34" x2="68.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="118.0" y1="34" x2="118.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="168.0" y1="34" x2="168.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="218.0" y1="34" x2="218.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="268.0" y1="34" x2="268.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="318.0" y1="34" x2="318.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="368.0" y1="34" x2="368.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="263.2" x2="378" y2="263.2" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="228.4" x2="378" y2="228.4" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="193.7" x2="378" y2="193.7" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="159.0" x2="378" y2="159.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="124.3" x2="378" y2="124.3" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="89.6" x2="378" y2="89.6" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="54.8" x2="378" y2="54.8" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="58" y1="159.0" x2="378" y2="159.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="378,159.0 370,155.0 370,163.0" fill="#334155"/>
+<line x1="218.0" y1="34" x2="218.0" y2="284" stroke="#334155" stroke-width="1.4"/>
+<polygon points="218.0,34 214.0,42 222.0,42" fill="#334155"/>
+<text x="68.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">-3</text>
+<text x="118.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">-2</text>
+<text x="168.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">-1</text>
+<text x="268.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">1</text>
+<text x="318.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">2</text>
+<text x="368.0" y="173.0" font-size="10" fill="#334155" text-anchor="middle">3</text>
+<text x="212.0" y="266.2" font-size="10" fill="#334155" text-anchor="end">-3</text>
+<text x="212.0" y="231.4" font-size="10" fill="#334155" text-anchor="end">-2</text>
+<text x="212.0" y="196.7" font-size="10" fill="#334155" text-anchor="end">-1</text>
+<text x="212.0" y="127.3" font-size="10" fill="#334155" text-anchor="end">1</text>
+<text x="212.0" y="92.6" font-size="10" fill="#334155" text-anchor="end">2</text>
+<text x="212.0" y="57.8" font-size="10" fill="#334155" text-anchor="end">3</text>
+<text x="212.0" y="174.0" font-size="10" fill="#334155" text-anchor="end">O</text>
+<text x="376" y="151.0" font-size="11" fill="#334155" text-anchor="end">x</text>
+<text x="225.0" y="46" font-size="11" fill="#334155">y</text>
+<line x1="68.0" y1="263.2" x2="118.0" y2="263.2" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="68.0" cy="263.2" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="118.0" cy="263.2" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<line x1="118.0" y1="228.4" x2="168.0" y2="228.4" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="118.0" cy="228.4" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="168.0" cy="228.4" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<line x1="168.0" y1="193.7" x2="218.0" y2="193.7" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="168.0" cy="193.7" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="218.0" cy="193.7" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<line x1="218.0" y1="159.0" x2="268.0" y2="159.0" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="218.0" cy="159.0" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="268.0" cy="159.0" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<line x1="268.0" y1="124.3" x2="318.0" y2="124.3" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="268.0" cy="124.3" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="318.0" cy="124.3" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<line x1="318.0" y1="89.6" x2="368.0" y2="89.6" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="318.0" cy="89.6" r="2.6" fill="#2563eb" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="368.0" cy="89.6" r="2.6" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="301.5" y="62.5" font-size="11.5" fill="#2563eb" font-weight="600" text-anchor="start">y = ⌊x⌋</text>
+<text x="58" y="308" font-size="10.5" fill="#94a3b8">实心点为左端点取值，空心点为右端点不取</text>
+<line x1="462.3" y1="34" x2="462.3" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="516.2" y1="34" x2="516.2" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="570.0" y1="34" x2="570.0" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="623.8" y1="34" x2="623.8" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="677.7" y1="34" x2="677.7" y2="284" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430" y1="228.4" x2="710" y2="228.4" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430" y1="159.0" x2="710" y2="159.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430" y1="89.6" x2="710" y2="89.6" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="430" y1="159.0" x2="710" y2="159.0" stroke="#334155" stroke-width="1.4"/>
+<polygon points="710,159.0 702,155.0 702,163.0" fill="#334155"/>
+<line x1="570.0" y1="34" x2="570.0" y2="284" stroke="#334155" stroke-width="1.4"/>
+<polygon points="570.0,34 566.0,42 574.0,42" fill="#334155"/>
+<text x="462.3" y="173.0" font-size="10" fill="#334155" text-anchor="middle">-2</text>
+<text x="516.2" y="173.0" font-size="10" fill="#334155" text-anchor="middle">-1</text>
+<text x="623.8" y="173.0" font-size="10" fill="#334155" text-anchor="middle">1</text>
+<text x="677.7" y="173.0" font-size="10" fill="#334155" text-anchor="middle">2</text>
+<text x="564.0" y="231.4" font-size="10" fill="#334155" text-anchor="end">-1</text>
+<text x="564.0" y="92.6" font-size="10" fill="#334155" text-anchor="end">1</text>
+<text x="564.0" y="174.0" font-size="10" fill="#334155" text-anchor="end">O</text>
+<text x="708" y="151.0" font-size="11" fill="#334155" text-anchor="end">x</text>
+<text x="577.0" y="46" font-size="11" fill="#334155">y</text>
+<line x1="430.0" y1="228.4" x2="570.0" y2="228.4" stroke="#dc2626" stroke-width="2.4"/>
+<line x1="570.0" y1="89.6" x2="710.0" y2="89.6" stroke="#dc2626" stroke-width="2.4"/>
+<circle cx="570.0" cy="159.0" r="4" fill="#dc2626" stroke="#ffffff" stroke-width="1.4"/>
+<text x="578.0" y="175.0" font-size="10.5" fill="#dc2626" font-weight="600" text-anchor="start">(0,0)</text>
+<circle cx="567.3" cy="228.4" r="2.4" fill="#ffffff" stroke="#dc2626" stroke-width="1.8"/>
+<circle cx="572.7" cy="89.6" r="2.4" fill="#ffffff" stroke="#dc2626" stroke-width="1.8"/>
+<text x="627.2" y="57.2" font-size="11.5" fill="#dc2626" font-weight="600" text-anchor="start">y = sgn x</text>
+</svg>

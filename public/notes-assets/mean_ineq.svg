@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="560" height="372" fill="#ffffff"/>
+<text x="280" y="18" font-size="12" fill="#94a3b8" text-anchor="middle">算术平均与几何平均的几何意义</text>
+<line x1="104.0" y1="44" x2="104.0" y2="314" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="214.0" y1="44" x2="214.0" y2="314" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="324.0" y1="44" x2="324.0" y2="314" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="434.0" y1="44" x2="434.0" y2="314" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60" y1="278.8" x2="500" y2="278.8" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60" y1="161.4" x2="500" y2="161.4" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60" y1="44.0" x2="500" y2="44.0" stroke="#f1f5f9" stroke-width="1"/>
+<line x1="60" y1="278.8" x2="500" y2="278.8" stroke="#334155" stroke-width="1.4"/>
+<polygon points="500,278.8 492,274.8 492,282.8" fill="#334155"/>
+<line x1="104.0" y1="44" x2="104.0" y2="314" stroke="#334155" stroke-width="1.4"/>
+<polygon points="104.0,44 100.0,52 108.0,52" fill="#334155"/>
+<text x="98.0" y="293.8" font-size="10" fill="#334155" text-anchor="end">O</text>
+<text x="498" y="270.8" font-size="11" fill="#334155" text-anchor="end">x</text>
+<text x="111.0" y="56" font-size="11" fill="#334155">y</text>
+<path d="M 104.0,278.8 A 176.0,176.0 0 0 1 456.0,278.8" fill="none" stroke="#2563eb" stroke-width="2.2"/>
+<line x1="104.0" y1="278.8" x2="456.0" y2="278.8" stroke="#334155" stroke-width="1.8"/>
+<line x1="384.5" y1="278.8" x2="384.5" y2="127.6" stroke="#16a34a" stroke-width="2.4"/>
+<line x1="104.0" y1="278.8" x2="384.5" y2="127.6" stroke="#e2e8f0" stroke-width="1.6" stroke-dasharray="4 3"/>
+<line x1="456.0" y1="278.8" x2="384.5" y2="127.6" stroke="#e2e8f0" stroke-width="1.6" stroke-dasharray="4 3"/>
+<line x1="280.0" y1="278.8" x2="280.0" y2="91.0" stroke="#ea580c" stroke-width="2.4"/>
+<circle cx="384.5" cy="127.6" r="3.6" fill="#16a34a" stroke="#ffffff" stroke-width="1.4"/>
+<circle cx="280.0" cy="91.0" r="3.6" fill="#ea580c" stroke="#ffffff" stroke-width="1.4"/>
+<text x="392.5" y="121.6" font-size="11.5" fill="#16a34a" font-weight="600" text-anchor="start">√ab</text>
+<text x="206.0" y="85.0" font-size="11.5" fill="#ea580c" font-weight="600" text-anchor="start">(a+b)/2</text>
+<text x="240.2" y="296.8" font-size="11" fill="#334155" font-weight="600" text-anchor="start">a</text>
+<text x="416.2" y="296.8" font-size="11" fill="#334155" font-weight="600" text-anchor="start">b</text>
+<text x="90.0" y="296.8" font-size="10.5" fill="#334155" font-weight="600" text-anchor="start">A</text>
+<text x="460.0" y="296.8" font-size="10.5" fill="#334155" font-weight="600" text-anchor="start">B</text>
+<text x="380.5" y="296.8" font-size="10.5" fill="#334155" font-weight="600" text-anchor="start">C</text>
+<text x="276.0" y="312.8" font-size="10.5" fill="#334155" font-weight="600" text-anchor="start">O</text>
+<text x="280" y="352" font-size="10.5" fill="#94a3b8" text-anchor="middle">OC = |a-b|/2，OD = (a+b)/2 为半径，直角三角形中 OD ≥ CD = √ab</text>
+</svg>

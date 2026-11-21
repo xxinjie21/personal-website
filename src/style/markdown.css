@@ -1,0 +1,164 @@
+/* 笔记正文排版（Obsidian 阅读模式风格） */
+.markdown {
+  font-size: 14px;
+  line-height: 1.78;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.markdown .md-heading {
+  margin: 26px 0 12px;
+  line-height: 1.35;
+  scroll-margin-top: calc(var(--nav-height) + 12px);
+}
+.markdown h1 {
+  font-size: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+.markdown h2 {
+  font-size: 17px;
+}
+.markdown h3 {
+  font-size: 15px;
+}
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.markdown p {
+  margin: 0 0 12px;
+}
+.markdown ul,
+.markdown ol {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+.markdown li + li {
+  margin-top: 4px;
+}
+.markdown blockquote {
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  border-left: 3px solid var(--accent);
+  background: rgba(255, 122, 47, 0.07);
+  color: var(--text-muted);
+  border-radius: 0 6px 6px 0;
+}
+.markdown hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 22px 0;
+}
+
+/* 代码块 */
+.markdown pre {
+  position: relative;
+  margin: 0 0 14px;
+  padding: 14px 14px 14px;
+  background: #140f0c;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.markdown pre code {
+  font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+  color: #e8d9cb;
+  background: none;
+  padding: 0;
+}
+.markdown :not(pre) > code {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 12.5px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: #ffb877;
+}
+.markdown .code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 8px;
+  font-size: 11px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(28, 21, 17, 0.9);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.markdown pre:hover .code-copy {
+  opacity: 1;
+}
+
+/* 表格 */
+.markdown .table-wrap {
+  overflow-x: auto;
+  margin: 0 0 14px;
+}
+.markdown table {
+  border-collapse: collapse;
+  font-size: 12.5px;
+  min-width: 100%;
+}
+.markdown th,
+.markdown td {
+  border: 1px solid var(--border);
+  padding: 7px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.markdown th {
+  background: var(--bg-elevated);
+  font-weight: 600;
+}
+
+/* 双链与图片 */
+.markdown .wiki-link {
+  color: var(--accent);
+  border-bottom: 1px dashed rgba(255, 140, 70, 0.5);
+  cursor: pointer;
+}
+.markdown .wiki-link:hover {
+  background: rgba(255, 122, 47, 0.12);
+}
+.markdown .md-figure {
+  margin: 0 0 14px;
+  text-align: center;
+}
+.markdown .md-img {
+  max-width: 100%;
+  border-radius: 8px;
+  background: #fff;
+  cursor: zoom-in;
+  padding: 8px;
+}
+.markdown figcaption {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* 公式 */
+.markdown .md-math-block {
+  overflow-x: auto;
+  padding: 4px 0;
+  margin-bottom: 12px;
+}
+.markdown .katex-display {
+  margin: 8px 0;
+}
+
+/* 关键词高亮 */
+.markdown .kw-hit {
+  background: rgba(255, 158, 61, 0.3);
+  color: inherit;
+  border-radius: 3px;
+}
