@@ -524,7 +524,7 @@ watch(
             :key="h.id"
             class="outline-item"
             :class="['lv' + h.level, { active: h.id === activeHeading }]"
-            :style="{ paddingLeft: (h.level - 1) * 13 + 10 + 'px' }"
+            :style="{ paddingLeft: (h.level - 1) * 7 + 10 + 'px' }"
             @click="scrollTo(h.id)"
           >
             <span class="outline-text">{{ h.text }}</span>
