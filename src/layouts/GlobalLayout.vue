@@ -37,7 +37,6 @@ const links = [
       <span class="mark"><i></i></span>
       <span class="brand-text">
         <b>XXJ</b>
-        <em>个人知识库</em>
       </span>
     </router-link>
 
@@ -163,16 +162,20 @@ const links = [
   }
 }
 /* 环在转、点在同频呼吸：整体是一个很小的“活着的”标记 */
+/* 品牌字占满原来两行的高度：单行放大，垂直居中 */
 .brand-text {
   display: flex;
-  flex-direction: column;
-  line-height: 1.15;
+  align-items: center;
+  align-self: stretch;
+  line-height: 1;
 }
 /* 品牌字：暖橙光带自左向右扫过，8 秒一次，不抢注意力 */
 .brand-text b {
+  display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  letter-spacing: 0.26em;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0.2em;
   font-weight: 500;
   color: var(--text);
   background-image: linear-gradient(
@@ -199,18 +202,6 @@ const links = [
     background-position: -60% 0;
   }
 }
-.brand-text em {
-  font-style: normal;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-  transition: color 0.3s var(--ease), letter-spacing 0.4s var(--ease);
-}
-.brand:hover .brand-text em {
-  color: var(--accent-soft);
-  letter-spacing: 0.2em;
-}
-
 /* 导航 */
 .nav {
   display: flex;
@@ -413,9 +404,6 @@ const links = [
 
 @media (max-width: 1180px) {
   .nav-link em {
-    display: none;
-  }
-  .brand-text em {
     display: none;
   }
 }
