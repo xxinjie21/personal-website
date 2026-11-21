@@ -1,0 +1,76 @@
+name: Build Site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+  # Gitee 笔记推送后可经 GitHub API 触发（见 部署与同步说明.md）
+  repository_dispatch:
+    types: [gitee-notes-updated]
+  # 兜底：每天一次，把 notes 子模块更新到 Gitee master 最新
+  schedule:
+    - cron: '0 20 * * *'
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout（含子模块）
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: 更新 notes 子模块到 Gitee master 最新
+        run: git submodule update --remote --init notes
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建（parse + vite build）
+        env:
+          VITE_WORKER_URL: ${{ vars.VITE_WORKER_URL }}
+          VITE_AUTH_KEY: ${{ secrets.VITE_AUTH_KEY }}
+        run: npm run build
+
+      - name: 记录构建信息
+        run: |
+          echo "notes commit: $(git -C notes rev-parse --short HEAD)"
+          ls -la dist
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+          retention-days: 14
+
+      # —— 托管平台确定后，把下面这段取消注释并启用 Pages（Settings → Pages → Source: GitHub Actions）——
+      # - name: 上传 Pages 产物
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: dist
+      #
+      # 另加一个部署 job：
+      # deploy:
+      #   needs: build
+      #   runs-on: ubuntu-latest
+      #   permissions:
+      #     pages: write
+      #     id-token: write
+      #   environment:
+      #     name: github-pages
+      #     url: ${{ steps.deployment.outputs.page_url }}
+      #   steps:
+      #     - id: deployment
+      #       uses: actions/deploy-pages@v4
