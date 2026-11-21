@@ -6,9 +6,7 @@ import manifest from '../data/site-manifest.json'
 import NoteTree from '../components/NoteTree.vue'
 import NoteReader from '../components/NoteReader.vue'
 import Icon from '../components/Icon.vue'
-import { getProgress, updateProgress, initSync, isOwner, setOwner } from '../lib/store.js'
 import { slugifyHeading } from '../lib/markdown.js'
-import { normalizeStatus } from '../lib/graph.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -35,20 +33,10 @@ const loaded = ref(null)
 const loading = ref(false)
 const cache = new Map()
 
-const TABS_KEY = 'pw-open-tabs'
-const LAST_KEY = 'pw-last-note'
 const tabs = ref([])
 const activeSlug = ref('')
 const keyword = ref('')
 const lightbox = ref(null)
-
-const progress = ref(getProgress())
-
-function persistTabs() {
-  try {
-    localStorage.setItem(TABS_KEY, JSON.stringify(tabs.value))
-  } catch {}
-}
 
 function noteTitle(slug) {
   return noteBySlug.get(slug)?.title || slug
@@ -90,10 +78,6 @@ function openNote(slug, { addTab = true } = {}) {
     tabs.value = [...tabs.value, slug].slice(-8)
   }
   activeSlug.value = slug
-  persistTabs()
-  try {
-    localStorage.setItem(LAST_KEY, slug)
-  } catch {}
   router.replace({ query: { ...route.query, note: slug } })
   loadNote(slug)
 }
@@ -110,7 +94,6 @@ function closeTab(slug) {
       router.replace({ query: { ...route.query, note: undefined } })
     }
   }
-  persistTabs()
 }
 
 // 标签页右键菜单：关闭 / 关闭其他 / 关闭全部 / 复制链接 / 打开新窗口
@@ -135,7 +118,6 @@ function menuCloseOthers() {
   if (!slug) return
   tabs.value = [slug]
   if (activeSlug.value !== slug) openNote(slug, { addTab: false })
-  persistTabs()
 }
 
 function menuCloseAll() {
@@ -143,7 +125,6 @@ function menuCloseAll() {
   tabs.value = []
   activeSlug.value = ''
   loaded.value = null
-  persistTabs()
   router.replace({ query: { ...route.query, note: undefined } })
 }
 
@@ -318,8 +299,7 @@ watch(outline, () => {
   if (outline.value.length) setTimeout(trackHeading, 160)
 }, { flush: 'post' })
 
-// 三栏：左右两栏都能拖宽、能收起，宽度和开合状态记在本地
-const LAYOUT_KEY = 'notes-layout-v2'
+// 三栏：左右两栏都能拖宽、能收起；宽度只活在本次会话里，不落盘
 const leftW = ref(250)
 const rightW = ref(272)
 const leftOpen = ref(true)
@@ -328,36 +308,9 @@ const dragging = ref('')
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
 
-try {
-  const saved = JSON.parse(localStorage.getItem(LAYOUT_KEY) || '{}')
-  if (typeof saved.leftW === 'number') leftW.value = clamp(saved.leftW, 190, 460)
-  if (typeof saved.rightW === 'number') rightW.value = clamp(saved.rightW, 200, 480)
-  if (typeof saved.leftOpen === 'boolean') leftOpen.value = saved.leftOpen
-  if (typeof saved.rightOpen === 'boolean') rightOpen.value = saved.rightOpen
-} catch (err) {
-  /* 本地布局读不出来就退回默认 */
-}
-
-function saveLayout() {
-  try {
-    localStorage.setItem(
-      LAYOUT_KEY,
-      JSON.stringify({
-        leftW: leftW.value,
-        rightW: rightW.value,
-        leftOpen: leftOpen.value,
-        rightOpen: rightOpen.value,
-      }),
-    )
-  } catch (err) {
-    /* 隐私模式下写不进去不影响使用 */
-  }
-}
-
 function togglePane(side) {
   if (side === 'left') leftOpen.value = !leftOpen.value
   else rightOpen.value = !rightOpen.value
-  saveLayout()
 }
 
 // 拖动：按住分隔条横向拉，拉到很窄就吸附收起，从收起处往回拖就重新展开
@@ -405,27 +358,10 @@ function startDrag(side, e) {
       rightOpen.value = open
       rightW.value = open ? clamp(current, min, max) : Math.max(min, rightW.value)
     }
-    saveLayout()
   }
   window.addEventListener('pointermove', move)
   window.addEventListener('pointerup', stop)
   window.addEventListener('pointercancel', stop)
-}
-
-const status = computed(() => (activeSlug.value ? normalizeStatus(activeSlug.value) : 'not-started'))
-const STATUS_LABEL = { 'not-started': '未开始', learning: '学习中', mastered: '已掌握' }
-
-// 本机编辑开关：只有开了才写进度；别人打开站点默认只读
-const owner = ref(isOwner())
-function toggleOwner() {
-  setOwner(!owner.value)
-  owner.value = isOwner()
-  if (owner.value) initSync().then(() => (progress.value = getProgress()))
-}
-
-function setStatus(value) {
-  if (!activeSlug.value || !owner.value) return
-  progress.value = updateProgress({ noteStatus: { [activeSlug.value]: value } })
 }
 
 const backlinks = computed(() => loaded.value?.backlinks || [])
@@ -448,22 +384,9 @@ function onKey(e) {
 
 onMounted(async () => {
   window.addEventListener('keydown', onKey)
-  initSync().then(() => (progress.value = getProgress()))
   setTimeout(trackHeading, 400)
-  let saved = []
-  try {
-    saved = JSON.parse(localStorage.getItem(TABS_KEY) || '[]')
-  } catch {}
-  tabs.value = saved.filter((s) => noteBySlug.has(s))
   const fromQuery = String(route.query.note || '')
-  let last = ''
-  try {
-    last = localStorage.getItem(LAST_KEY) || ''
-  } catch {}
   if (fromQuery && noteBySlug.has(fromQuery)) openNote(fromQuery)
-  // 地址里没带笔记：先回到上次关页面时看的那篇
-  else if (last && noteBySlug.has(last)) openNote(last, { addTab: false })
-  else if (tabs.value.length) openNote(tabs.value[0], { addTab: false })
   else {
     const first =
       notes.find((n) => n.rel.includes('00-考研总览')) ||
@@ -547,7 +470,6 @@ watch(
           @click="openNote(slug, { addTab: false })"
           @contextmenu.prevent="openTabMenu($event, slug)"
         >
-          <span class="dot" :class="normalizeStatus(slug)"></span>
           <span class="tab-name">{{ noteTitle(slug) }}</span>
           <span class="tab-close" @click.stop="closeTab(slug)"><Icon name="close" :size="10" :weight="2" /></span>
         </button>
@@ -591,30 +513,9 @@ watch(
 
     <div class="pane pane-right" :class="{ closed: !rightOpen }" :style="{ width: rightOpen ? rightW + 'px' : '0px' }">
       <aside class="rail pane-body" :style="{ width: rightW + 'px' }">
-      <div class="rail-block">
-        <div class="rail-head">
-          <span><em class="rail-idx mono">01</em>学习状态</span>
-        </div>
-        <select
-          class="status-select"
-          :value="status"
-          :disabled="!activeSlug || !owner"
-          :title="owner ? '改动只保存到本机并同步云端' : '只读：点下方「启用本机编辑」才能保存'"
-          @change="setStatus($event.target.value)"
-        >
-          <option v-for="(label, key) in STATUS_LABEL" :key="key" :value="key">{{ label }}</option>
-        </select>
-        <div class="owner-row">
-          <span class="owner-hint">{{ owner ? '本机可写：只保存你的进度' : '访客只读：点了也不会保存' }}</span>
-          <button type="button" class="owner-btn" :class="{ on: owner }" @click="toggleOwner">
-            {{ owner ? '关闭本机编辑' : '启用本机编辑' }}
-          </button>
-        </div>
-      </div>
-
       <div class="rail-block outline-block">
         <div class="rail-head">
-          <span><em class="rail-idx mono">02</em>大纲</span>
+          <span><em class="rail-idx mono">01</em>大纲</span>
           <span class="rail-count">{{ outline.length }}</span>
         </div>
         <ul v-if="outline.length" class="outline">
@@ -634,7 +535,7 @@ watch(
 
       <div class="rail-block">
         <div class="rail-head">
-          <span><em class="rail-idx mono">03</em>反向链接</span>
+          <span><em class="rail-idx mono">02</em>反向链接</span>
           <span class="rail-count">{{ backlinks.length }}</span>
         </div>
         <ul v-if="backlinks.length" class="links">
@@ -647,7 +548,7 @@ watch(
 
       <div class="rail-block">
         <div class="rail-head">
-          <span><em class="rail-idx mono">04</em>出链</span>
+          <span><em class="rail-idx mono">03</em>出链</span>
           <span class="rail-count">{{ outlinks.length }}</span>
         </div>
         <ul v-if="outlinks.length" class="links">
@@ -1036,21 +937,6 @@ watch(
   color: #e0746b;
   transform: rotate(90deg) scale(1.08);
 }
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex: none;
-}
-.dot.not-started {
-  background: var(--status-not-started);
-}
-.dot.learning {
-  background: var(--status-learning);
-}
-.dot.mastered {
-  background: var(--status-mastered);
-}
 .tabs-empty {
   font-size: 12px;
   color: var(--text-muted);
@@ -1131,60 +1017,6 @@ watch(
   font-size: 11px;
   color: var(--text-muted);
   line-height: 1.5;
-}
-.status-select {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background: rgba(217, 87, 26, 0.05);
-  color: var(--text);
-  font-size: 12px;
-  outline: none;
-  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-.status-select:focus {
-  border-color: rgba(217, 87, 26, 0.55);
-  box-shadow: 0 0 0 3px rgba(217, 87, 26, 0.1);
-}
-.status-select:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-/* 本机编辑开关：一眼看出当前是能写还是只读 */
-.owner-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 8px;
-}
-.owner-hint {
-  font-size: 10.5px;
-  line-height: 1.4;
-  color: var(--muted);
-}
-.owner-btn {
-  flex: none;
-  padding: 4px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 10.5px;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.25s var(--ease);
-}
-.owner-btn:hover {
-  border-color: rgba(217, 87, 26, 0.5);
-  color: var(--accent-cream);
-  transform: translateY(-1px);
-}
-.owner-btn.on {
-  border-color: rgba(217, 87, 26, 0.45);
-  background: rgba(217, 87, 26, 0.1);
-  color: var(--accent-cream);
 }
 .outline {
   list-style: none;

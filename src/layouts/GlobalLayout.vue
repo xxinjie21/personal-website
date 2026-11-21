@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
-import { initSync, getSyncStatus, getProgress } from '../lib/store.js'
+// 纯阅读站点：不取进度、不连 Worker
+import { onMounted, computed, ref } from 'vue'
 
 // 28 考研初试：2027 年 12 月下旬（占位 12-21，临近再校准）
 const EXAM_DATE = new Date('2027-12-21T00:00:00+08:00')
@@ -12,9 +12,6 @@ const daysLeft = computed(() => {
 // 数字滚动入场
 const shownDays = ref(0)
 onMounted(() => {
-  initSync()
-  readSync()
-  syncTimer = setInterval(readSync, 1500)
   const target = daysLeft.value
   const t0 = performance.now()
   const dur = 900
@@ -26,48 +23,6 @@ onMounted(() => {
   }
   requestAnimationFrame(step)
 })
-
-// 同步状态不是响应式的：轮询拿到最新状态和落盘时间
-const syncInfo = ref({ key: 'idle', at: '' })
-let syncTimer = null
-function readSync() {
-  syncInfo.value = { key: getSyncStatus(), at: getProgress().updatedAt || '' }
-}
-
-const statusKey = computed(() => syncInfo.value.key)
-
-// 时间：今天只显示时:分，隔天带上月-日
-const syncTime = computed(() => {
-  const raw = syncInfo.value.at
-  if (!raw) return ''
-  const d = new Date(raw)
-  if (Number.isNaN(d.getTime())) return ''
-  const pad = (n) => String(n).padStart(2, '0')
-  const hm = `${pad(d.getHours())}:${pad(d.getMinutes())}`
-  const now = new Date()
-  const sameDay = d.toDateString() === now.toDateString()
-  return sameDay ? hm : `${d.getMonth() + 1}-${d.getDate()} ${hm}`
-})
-
-const statusLabel = computed(() => {
-  const key = statusKey.value
-  const t = syncTime.value
-  if (key === 'guest') return '只读'
-  if (key === 'syncing') return '同步中…'
-  if (!t) return key === 'offline' ? '本地模式' : '尚未同步'
-  if (key === 'online') return `已同步 ${t}`
-  if (key === 'offline') return `本地 ${t}`
-  if (key === 'error') return `同步异常 ${t}`
-  return `上次 ${t}`
-})
-
-const statusTip = computed(() => {
-  const key = statusKey.value
-  const base = { idle: '等待首次同步', syncing: '正在与云端交换进度', online: '进度已与云端一致', offline: 'Worker 不可达，进度只存在本机', error: '同步出错，已保留本地副本', guest: '未启用本机编辑，学习状态只读、不会保存' }
-  return `${base[key] || key}${syncTime.value ? `（最近一次 ${syncTime.value}）` : ''}`
-})
-
-onBeforeUnmount(() => clearInterval(syncTimer))
 
 const links = [
   { to: '/', label: '首页', en: 'HOME' },
@@ -94,11 +49,9 @@ const links = [
     </nav>
 
     <div class="meta">
-      <span class="sync" :class="statusKey" :title="statusTip">
+      <span class="sync readonly" title="纯阅读站点：没有编辑入口，也不保存任何数据">
         <i class="dot"></i>
-        <Transition name="syncfade" mode="out-in">
-          <span :key="statusLabel" class="sync-text">{{ statusLabel }}</span>
-        </Transition>
+        <span class="sync-text">只读</span>
       </span>
       <div class="countdown">
         <span class="cd-label">距 28 考研初试</span>

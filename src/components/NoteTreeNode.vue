@@ -1,7 +1,6 @@
 <script setup>
-// 文件树节点（递归）：目录可折叠，文件显示学习状态点
+// 文件树节点（递归）：目录可折叠，文件只做阅读入口
 import { computed } from 'vue'
-import { normalizeStatus } from '../lib/graph.js'
 import Icon from './Icon.vue'
 
 const props = defineProps({
@@ -55,7 +54,6 @@ const isOpen = computed(() => !!props.openPaths[props.node.path])
       >
         <Icon name="file" class="ico fileico" :size="11" />
         <span class="file-name">{{ note.title }}</span>
-        <span class="dot" :class="normalizeStatus(note.slug)"></span>
       </button>
       </div>
     </Transition>
@@ -206,24 +204,6 @@ export default { name: 'NoteTreeNode' }
 .dir:hover .count {
   opacity: 0.85;
   color: var(--accent-soft);
-}
-
-.dot {
-  flex: none;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  opacity: 0.8;
-}
-.dot.not-started {
-  background: var(--status-not-started);
-  opacity: 0.35;
-}
-.dot.learning {
-  background: var(--status-learning);
-}
-.dot.mastered {
-  background: var(--status-mastered);
 }
 
 /* 目录展开/收起：子级整体轻微下滑淡入，收起时反向 */

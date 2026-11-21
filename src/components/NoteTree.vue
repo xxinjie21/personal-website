@@ -10,29 +10,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['select', 'update:keyword'])
 
-// 展开状态记在本地：只存已展开的目录路径，默认只展开顶层三个分区
-const OPEN_KEY = 'notes-tree-open-v1'
-
-function readOpen() {
-  try {
-    const arr = JSON.parse(localStorage.getItem(OPEN_KEY) || 'null')
-    if (Array.isArray(arr)) return new Set(arr)
-  } catch (err) {
-    /* 读不出来就退回默认 */
-  }
-  return null
-}
-
-const restored = readOpen()
-const expanded = ref(restored || new Set())
-
-function saveOpen() {
-  try {
-    localStorage.setItem(OPEN_KEY, JSON.stringify([...expanded.value]))
-  } catch (err) {
-    /* 隐私模式下不落盘不影响使用 */
-  }
-}
+// 展开状态只存在内存里：刷新后回到"顶层分区展开"的默认视图
+const expanded = ref(new Set())
 
 function topLevelDirs(list) {
   const set = new Set()
@@ -43,12 +22,8 @@ function topLevelDirs(list) {
   return set
 }
 
-// 首次进入：顶层分区展开，深层收起；同时把当前笔记的父目录链打开
-if (!restored) {
-  const init = topLevelDirs(props.notes)
-  expanded.value = init
-  saveOpen()
-}
+// 首次进入：顶层分区展开，深层收起
+expanded.value = topLevelDirs(props.notes)
 
 function expandAncestors(slug) {
   const note = props.notes.find((n) => n.slug === slug)
@@ -65,7 +40,6 @@ function expandAncestors(slug) {
   })
   if (changed) {
     expanded.value = s
-    saveOpen()
   }
   return changed
 }
@@ -108,7 +82,6 @@ function toggle(path) {
   if (s.has(path)) s.delete(path)
   else s.add(path)
   expanded.value = s
-  saveOpen()
 }
 
 // 选中笔记时展开其所有父级目录（不接管用户已收起的层级）

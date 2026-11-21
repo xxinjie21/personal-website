@@ -1,11 +1,9 @@
 // 由 site-manifest.json 构建图谱模型：节点、边、邻居、状态统计
-import { getProgress } from './store.js'
-
+// 只读站点：没有学习进度，所有节点统一按"未开始"处理
 const STATUS_ORDER = ['not-started', 'learning', 'mastered']
 
-export function normalizeStatus(slug) {
-  const status = getProgress().noteStatus[slug]
-  return STATUS_ORDER.includes(status) ? status : 'not-started'
+export function normalizeStatus() {
+  return 'not-started'
 }
 
 // 把 [[链接目标]]（路径 / 标题 / 别名 / slug）解析到节点 id
