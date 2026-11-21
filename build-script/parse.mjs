@@ -212,6 +212,14 @@ function main() {
 
   const assets = copyAssets(walk(notesDir).filter((f) => IMAGE_EXT.test(f)))
 
+  // 自定义页 HTML 同步到 public/custom-pages/，供站点内 iframe 与新窗口直接打开
+  const pagesPublicDir = path.join(root, 'public', 'custom-pages')
+  fs.rmSync(pagesPublicDir, { recursive: true, force: true })
+  fs.mkdirSync(pagesPublicDir, { recursive: true })
+  for (const f of fs.readdirSync(pagesDir).filter((f) => f.endsWith('.html') && !f.startsWith('_'))) {
+    fs.copyFileSync(path.join(pagesDir, f), path.join(pagesPublicDir, f))
+  }
+
   fs.rmSync(noteOutDir, { recursive: true, force: true })
   fs.mkdirSync(noteOutDir, { recursive: true })
   for (const n of notes) {

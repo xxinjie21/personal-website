@@ -1,9 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import Icon from '../components/Icon.vue'
 
 // 页面清单由 build-script/parse.mjs 扫描 custom-pages/ 生成到 src/data/site-manifest.json
 const pages = ref([])
+const route = useRoute()
+const slug = computed(() => route.params.page || '')
 
 onMounted(async () => {
   try {
@@ -14,6 +17,8 @@ onMounted(async () => {
   }
 })
 
+const current = computed(() => pages.value.find((p) => p.slug === slug.value) || null)
+const frameSrc = computed(() => `${import.meta.env.BASE_URL}custom-pages/${slug.value}.html`)
 // 卡片聚光：跟随光标的暖光斑（Uiverse spotlight card）
 function spot(e) {
   const r = e.currentTarget.getBoundingClientRect()
@@ -23,7 +28,25 @@ function spot(e) {
 </script>
 
 <template>
-  <section class="pages-view">
+  <section v-if="slug" class="page-shell">
+    <header class="page-bar">
+      <router-link to="/custom-pages" class="back">
+        <Icon name="chevron-left" :size="15" />
+        <span>自定义页</span>
+      </router-link>
+      <div class="meta">
+        <h1>{{ current?.title || slug }}</h1>
+        <span class="file mono">{{ current?.file || `${slug}.html` }}</span>
+      </div>
+      <a :href="frameSrc" target="_blank" rel="noreferrer" class="open">
+        <span>新窗口</span>
+        <Icon name="arrow-up-right" :size="14" />
+      </a>
+    </header>
+    <iframe :src="frameSrc" :title="current?.title || slug" class="page-frame" />
+  </section>
+
+  <section v-else class="pages-view">
     <header class="head reveal">
       <p class="eyebrow">CUSTOM PAGES — HTML TOOLS</p>
       <h1>自己写的小工具，<em>都在这儿。</em></h1>
@@ -62,6 +85,65 @@ function spot(e) {
 </template>
 
 <style scoped>
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--nav-height));
+  box-sizing: border-box;
+  padding: 18px 28px 22px;
+  gap: 12px;
+}
+.page-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 2px;
+}
+.back,
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.back:hover,
+.open:hover {
+  color: var(--accent);
+}
+.meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.meta h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meta .file {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.page-frame {
+  flex: 1;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel-solid);
+  box-shadow: var(--shadow);
+}
 .pages-view {
   max-width: 1180px;
   margin: 0 auto;
