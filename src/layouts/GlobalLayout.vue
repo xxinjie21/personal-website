@@ -132,7 +132,7 @@ const onBrandClick = () => {
   transform: scale(0.985);
 }
 .mark {
-  --breathe: 0.034;
+  --breathe: 0.075;
   position: relative;
   width: 30px;
   height: 30px;
@@ -153,16 +153,16 @@ const onBrandClick = () => {
   0%,
   100% {
     scale: 1;
-    box-shadow: 0 0 16px -6px rgba(217, 87, 26, 0.42);
+    box-shadow: 0 0 18px -6px rgba(217, 87, 26, 0.5), 0 0 0 0 rgba(217, 87, 26, 0);
   }
   50% {
     scale: calc(1 + var(--breathe));
-    box-shadow: 0 0 30px -2px rgba(217, 87, 26, 0.82);
+    box-shadow: 0 0 46px 2px rgba(255, 110, 40, 0.72), 0 0 0 5px rgba(217, 87, 26, 0.08);
   }
 }
 /* 指针停上来：呼吸幅度加深，像人注意到你 */
 .brand:hover .mark {
-  --breathe: 0.09;
+  --breathe: 0.13;
   animation-duration: 2.4s, 2.2s;
 }
 .mark::after {
@@ -178,20 +178,20 @@ const onBrandClick = () => {
   position: absolute;
   inset: -1px;
   border-radius: 50%;
-  border: 1px solid rgba(196, 118, 46, 0.55);
+  border: 1.5px solid rgba(217, 87, 26, 0.6);
   animation: mark-pulse 3.9s var(--ease) infinite;
 }
 @keyframes mark-pulse {
   0% {
-    transform: scale(0.82);
-    opacity: 0.7;
+    transform: scale(0.78);
+    opacity: 0.85;
   }
   70% {
-    transform: scale(1.35);
+    transform: scale(1.5);
     opacity: 0;
   }
   100% {
-    transform: scale(1.35);
+    transform: scale(1.5);
     opacity: 0;
   }
 }
@@ -209,14 +209,34 @@ const onBrandClick = () => {
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.9;
+    opacity: 0.78;
+    box-shadow: 0 0 10px rgba(196, 118, 46, 0.7);
   }
   50% {
-    transform: scale(1.28);
+    transform: scale(1.5);
     opacity: 1;
+    box-shadow: 0 0 22px rgba(255, 140, 60, 0.95);
   }
 }
-/* 环在转、点在同频呼吸：整体是一个很小的“活着的”标记 */
+/* 系统开了“减少动效”时不做缩放/旋转，但保留一口气：只让光晕明暗呼吸 */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 14px -4px rgba(217, 87, 26, 0.48);
+  }
+  50% {
+    box-shadow: 0 0 32px 0 rgba(255, 110, 40, 0.8);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    animation: glow-breathe 6s ease-in-out infinite !important;
+  }
+  .mark::before,
+  .mark i {
+    animation: none !important;
+  }
+}
 /* 品牌字占满原来两行的高度：单行放大，垂直居中 */
 .brand-text {
   display: flex;
