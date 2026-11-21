@@ -125,6 +125,8 @@ function onScroll(e) {
 .reader {
   min-height: 0;
   overflow-y: auto;
+  /* 进度条比正文宽 44px，锁死横向滚动，避免底部出现一条假的横向滑条 */
+  overflow-x: hidden;
   scroll-behavior: smooth;
   padding: 0 44px 90px;
 }
