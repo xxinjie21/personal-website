@@ -20,14 +20,14 @@ const total = computed(() => {
 </script>
 
 <template>
-  <div class="group" :class="{ nest: depth > 0 }">
+  <div class="group" :class="{ nest: depth > 0 }" :style="{ '--depth': depth }">
     <button
       v-if="node.name"
       class="dir"
       :class="'d' + Math.min(depth, 3)"
       type="button"
       :title="node.path"
-      :style="{ paddingLeft: depth * 14 + 'px' }"
+      :style="{ paddingLeft: depth * 16 + 'px' }"
       @click="emit('toggle', node.path)"
     >
       <span class="caret" :class="{ open: isOpen }">▸</span>
@@ -53,7 +53,7 @@ const total = computed(() => {
         class="file"
         :class="{ active: note.slug === activeSlug }"
         :title="note.rel"
-        :style="{ paddingLeft: (node.name ? depth * 14 + 15 : 6) + 'px' }"
+        :style="{ paddingLeft: (node.name ? (depth + 1) * 16 + 6 : 6) + 'px' }"
         @click="emit('select', note.slug)"
       >
         <span class="file-name">{{ note.title }}</span>
@@ -73,8 +73,21 @@ export default { name: 'NoteTreeNode' }
 .group {
   position: relative;
 }
+/* 层级导轨：每一层在父目录的 caret 下方拉一条极淡的竖线，层级一眼看出来 */
 .group.nest::before {
-  display: none;
+  content: '';
+  position: absolute;
+  left: calc(var(--depth) * 16px - 5px);
+  top: 3px;
+  bottom: 3px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 169, 110, 0.18),
+    rgba(255, 169, 110, 0.05) 70%,
+    transparent
+  );
+  pointer-events: none;
 }
 
 .dir,
@@ -88,9 +101,9 @@ export default { name: 'NoteTreeNode' }
   border: 0;
   border-radius: 5px;
   background: transparent;
-  color: var(--muted);
+  color: var(--text-dim);
   font-size: 12.5px;
-  line-height: 1.65;
+  line-height: 1.7;
   text-align: left;
   cursor: pointer;
   transition: background 0.16s var(--ease), color 0.16s var(--ease);
@@ -110,27 +123,42 @@ export default { name: 'NoteTreeNode' }
   white-space: nowrap;
 }
 
-/* 第一层：分区名，稍微亮一点、粗一点 */
+/* 目录比文件亮一档、厚一档：层级先靠颜色拉开，再靠缩进 */
 .dir.d1 .dir-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.dir.d2 .dir-name {
   font-weight: 600;
   color: var(--text-dim);
 }
-/* 更深层：同级同色，只靠缩进区分 */
-.dir.d2 .dir-name,
 .dir.d3 .dir-name {
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-dim);
 }
 .dir:hover .dir-name {
   color: var(--text);
 }
 
-/* 文件比目录弱一档，避免抢层级 */
+/* 文件最暗，行首一个小小的 # 作为笔记标记（很淡，只在 hover 亮起） */
 .file {
-  color: var(--text-muted);
+  color: var(--muted);
+}
+.file::before {
+  content: '#';
+  flex: none;
+  width: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(255, 169, 110, 0.42);
+  transition: color 0.16s var(--ease);
+}
+.file:hover::before {
+  color: var(--accent-soft);
 }
 .file.active {
-  background: rgba(255, 122, 47, 0.13);
+  background: linear-gradient(90deg, rgba(255, 122, 47, 0.16), rgba(255, 122, 47, 0.04));
   box-shadow: inset 2px 0 0 var(--accent);
   color: var(--accent-cream);
 }
@@ -142,9 +170,9 @@ export default { name: 'NoteTreeNode' }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
-  color: var(--muted);
-  opacity: 0.75;
+  font-size: 9px;
+  color: var(--text-dim);
+  opacity: 0.9;
   transition: transform 0.22s var(--ease), color 0.16s linear, opacity 0.16s linear;
 }
 .dir:hover .caret {
