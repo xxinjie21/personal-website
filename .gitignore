@@ -17,6 +17,7 @@ notes/.git/
 
 # 自定义页构副本（由 npm run parse 从 custom-pages/ 生成）
 public/pagedocs/
+public/embed/
 
 # 本地调试产物
 .shots/

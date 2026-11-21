@@ -16,7 +16,7 @@ personal-website/
 │   ├── lib/graph.js  # 双链解析、笔记索引
 │   ├── style/        # 暖白亮色主题 CSS 变量
 │   └── data/         # parse 脚本生成的 site-manifest.json
-├── custom-pages/     # 自制 HTML 页面，丢进来即自动识别
+├── custom-pages/     # 自制 HTML 页面，丢进来即自动识别；_embed/ 放页面内嵌的独立资源
 ├── notes/            # Gitee 笔记库（git 子模块：xxj0817/obsidian-notes）
 ├── build-script/     # 解析 md / frontmatter / 双链 / 标签 / 页面清单
 └── public/           # favicon、笔记图片、自定义页构建副本（pagedocs/，由 parse 生成）
@@ -24,6 +24,9 @@ personal-website/
 
 > 自定义页路由是 `/custom-pages/<slug>`，但静态副本放在 `public/pagedocs/<slug>.html`：
 > 两者同目录时 dev server 会按 `.html` 回落，把源 HTML 直接吐给路由，站点外壳就没了。
+
+> 页面内嵌的独立 HTML（如词汇图谱）放 `custom-pages/_embed/`，parse 时复制到 `public/embed/`：
+> 下划线前缀不会被扫成一张卡片，页面里用 `../embed/<file>.html` 按需加载，首屏不必解析它。
 
 > `notes/` 为子模块：更新笔记后在 `notes/` 内 `git pull`，再回到项目根目录 `npm run parse` 重新生成清单。
 

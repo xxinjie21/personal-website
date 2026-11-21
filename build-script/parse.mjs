@@ -233,6 +233,18 @@ function main() {
     fs.copyFileSync(path.join(pagesDir, f), path.join(pagesPublicDir, f))
   }
 
+  // 自定义页的附属资源（如内嵌 iframe 的独立 HTML）：custom-pages/_embed/* → public/embed/*
+  // 放 _embed 而不是直接放 custom-pages，是为了不被上面的页面清单扫成一张卡片
+  const embedSrcDir = path.join(pagesDir, '_embed')
+  const embedPublicDir = path.join(root, 'public', 'embed')
+  fs.rmSync(embedPublicDir, { recursive: true, force: true })
+  if (fs.existsSync(embedSrcDir)) {
+    fs.mkdirSync(embedPublicDir, { recursive: true })
+    for (const f of fs.readdirSync(embedSrcDir)) {
+      fs.copyFileSync(path.join(embedSrcDir, f), path.join(embedPublicDir, f))
+    }
+  }
+
   fs.rmSync(noteOutDir, { recursive: true, force: true })
   fs.mkdirSync(noteOutDir, { recursive: true })
   for (const n of notes) {
