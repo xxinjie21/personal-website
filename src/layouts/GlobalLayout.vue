@@ -80,7 +80,7 @@ const links = [
     <router-link to="/" class="brand">
       <span class="mark"><i></i></span>
       <span class="brand-text">
-        <b>ZISHIKU</b>
+        <b>XXJ</b>
         <em>个人知识库</em>
       </span>
     </router-link>
@@ -217,8 +217,8 @@ const links = [
 /* 品牌字：暖橙光带自左向右扫过，8 秒一次，不抢注意力 */
 .brand-text b {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  font-size: 14px;
+  letter-spacing: 0.26em;
   font-weight: 500;
   color: var(--text);
   background-image: linear-gradient(
