@@ -50,13 +50,13 @@ body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto mi
 .viewport{min-height:0;overflow:hidden}
 @keyframes fadein{from{opacity:0;transform:translateY(6px) scale(.994)}to{opacity:1;transform:none}}
 .fade{animation:fadein .26s cubic-bezier(.22,.9,.28,1) both}
-@media (prefers-reduced-motion: reduce){.fade,.tools,.batools{animation:none!important}}
 .viewport>main{height:100%}
 .viewport>main[hidden]{display:none}
 #mm-wrap{height:100%}
 #mm-wrap[hidden]{display:none}
 #mmFrame{width:100%;height:100%;border:0;display:block}
-.flag{margin-left:auto;border:0;background:none;font-family:inherit;font-size:15px;line-height:1;color:#c4bcab;cursor:pointer;padding:2px 4px;min-height:26px}
+.flag{margin-left:auto;border:0;background:none;font-family:inherit;font-size:15px;line-height:1;color:#c4bcab;cursor:pointer;padding:2px 4px;min-height:26px;transition:color .18s,transform .18s}
+.flag:hover{transform:scale(1.12)}
 .flag.on{color:var(--accent)}
 .it .d{flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);align-self:center}
 .nav .empty{font-size:12px;color:var(--muted);padding:6px 9px;line-height:1.6}
@@ -67,7 +67,7 @@ main{display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr
 .nav{overflow:auto;padding:8px 8px 16px;border-right:1px solid var(--line);min-width:0;transition:opacity .22s var(--ease),padding .3s var(--ease),border-color .3s var(--ease)}
 .nav .g{font-size:11px;color:var(--muted);letter-spacing:.5px;margin:6px 0 3px;padding-left:9px}
 .nav .yr{margin:1px 0}
-.nav .yh{display:flex;align-items:center;gap:7px;width:100%;background:none;border:0;border-radius:6px;padding:8px 9px;cursor:pointer;font-family:inherit;color:inherit;text-align:left;min-height:34px}
+.nav .yh{display:flex;align-items:center;gap:7px;width:100%;background:none;border:0;border-radius:6px;padding:8px 9px;cursor:pointer;font-family:inherit;color:inherit;text-align:left;min-height:34px;transition:background .16s}
 .nav .yh:hover{background:#f3f1ea}
 .nav .yy{font-size:13px;font-weight:700;letter-spacing:.2px;font-variant-numeric:tabular-nums}
 .nav .yn{font-size:10.5px;color:var(--muted)}
@@ -75,9 +75,10 @@ main{display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr
 .nav .yh .arr{flex:none;color:#b3ac9e;transition:transform .18s}
 .nav .yr.open .yh .arr{transform:rotate(90deg)}
 .nav .yb{display:none;padding:1px 0 6px}
-.nav .yr.open .yb{display:block}
-.it{display:flex;gap:8px;width:100%;background:none;border:0;border-left:2px solid transparent;padding:6px 8px;cursor:pointer;text-align:left;font-family:inherit;color:#5f6672;font-size:12px;line-height:1.4}
-.it:hover{color:var(--ink)}
+.nav .yr.open .yb{display:block;animation:navIn .22s cubic-bezier(.22,.9,.28,1) both}
+@keyframes navIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.it{display:flex;gap:8px;width:100%;background:none;border:0;border-left:2px solid transparent;padding:6px 8px;cursor:pointer;text-align:left;font-family:inherit;color:#5f6672;font-size:12px;line-height:1.4;transition:color .16s,background .16s,border-left-color .2s,padding-left .2s}
+.it:hover{color:var(--ink);background:#f7f5ee}
 .it.cur{color:var(--ink);border-left-color:var(--accent)}
 .it .n{flex:none;width:18px;font-size:10.5px;color:var(--muted)}
 .it .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:Georgia,"Times New Roman",serif}
@@ -95,6 +96,13 @@ main.nav-narrow .nav .yh .yn,main.nav-narrow .nav .yh .k{display:none}
 .orig{flex:none;max-height:31vh;overflow:auto;padding:11px 20px 11px;border-bottom:1px solid var(--line);background:var(--white)}
 .orig .meta{display:flex;gap:11px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:7px}
 .en{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.72;color:#121a24}
+/* 换句：原句与解析块轻微上浮淡入，跟图谱跳转一个手感 */
+@keyframes swapIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.orig.swap .meta,.orig.swap .en{animation:swapIn .3s cubic-bezier(.22,.9,.28,1) both}
+.parse.swap > .layer{animation:swapIn .32s cubic-bezier(.22,.9,.28,1) both}
+.parse.swap > .layer:nth-child(2){animation-delay:.04s}
+.parse.swap > .layer:nth-child(3){animation-delay:.08s}
+.parse.swap > .p-hint{animation:swapIn .32s cubic-bezier(.22,.9,.28,1) both;animation-delay:.1s}
 .seg{border-bottom:3px solid transparent;padding-bottom:1px}
 .seg .sl{color:#b9b2a4;margin-left:2px}
 .seg .no{font-size:9px;color:#a8a296;margin-right:3px;vertical-align:super}
@@ -19588,6 +19596,13 @@ function render(keepScroll){
     + (state.mark ? LEGEND : '');
   parseEl.innerHTML = LAYERS.map(l=>layer(l[0],s)).join('') + '<p class="p-hint">上面三块都收着：点「句子拆解」看成分如何切、点「重点词」看生词、点「译文」对照中文。</p>' + FOOT;
   parseEl.scrollTop = st;
+  /* 换句/换页时重新播放一次上浮淡入，标记状态变化时不闪 */
+  if(!render._first){
+    origEl.classList.add('swap'); parseEl.classList.add('swap');
+    clearTimeout(render._t);
+    render._t = setTimeout(function(){ origEl.classList.remove('swap'); parseEl.classList.remove('swap'); }, 420);
+  }
+  render._first = false;
 }
 const FOOT = '';
 
@@ -19634,12 +19649,16 @@ function highlight(g){
   if(li){
     li.classList.add('hi');
     const off = li.getBoundingClientRect().top - parseEl.getBoundingClientRect().top;
-    if(off < 0 || off > parseEl.clientHeight - 40) parseEl.scrollTop += off - 40;
+    /* 和图谱跳转同一手感：缓动滚到目标块，而不是硬跳 */
+    if(off < 0 || off > parseEl.clientHeight - 40){
+      parseEl.scrollTo({ top: parseEl.scrollTop + off - 40, behavior: 'smooth' });
+    }
   }
 }
 
 document.getElementById('cnt').textContent = S.length;
 movePill();
+render._first = true;
 renderNav(); render(); syncBtns();
 
 navEl.addEventListener('click', e=>{

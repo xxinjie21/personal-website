@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import Icon from '../components/Icon.vue'
 
@@ -21,6 +21,9 @@ const current = computed(() => pages.value.find((p) => p.slug === slug.value) ||
 // 副本文件名与路由同名会被 dev server 的 .html 回落抢占（/custom-pages/x 直接返回 x.html），
 // 所以静态副本放在 pagedocs/ 目录，路由保持 /custom-pages/<slug>
 const frameSrc = computed(() => `${import.meta.env.BASE_URL}pagedocs/${slug.value}.html`)
+// iframe 首帧出来后淡入，避免白屏硬切
+const frameReady = ref(false)
+watch(slug, () => (frameReady.value = false))
 // 卡片聚光：跟随光标的暖光斑（Uiverse spotlight card）
 function spot(e) {
   const r = e.currentTarget.getBoundingClientRect()
@@ -31,7 +34,13 @@ function spot(e) {
 
 <template>
   <section v-if="slug" class="page-shell">
-    <iframe :src="frameSrc" :title="current?.title || slug" class="page-frame" />
+    <iframe
+      :src="frameSrc"
+      :title="current?.title || slug"
+      class="page-frame"
+      :class="{ ready: frameReady }"
+      @load="frameReady = true"
+    />
   </section>
 
   <section v-else class="pages-view">
@@ -87,6 +96,13 @@ function spot(e) {
   border-radius: 0 0 12px 12px;
   background: var(--panel-solid);
   box-shadow: var(--shadow);
+  opacity: 0.001;
+  transform: translateY(6px) scale(0.997);
+  transition: opacity 0.4s ease, transform 0.5s var(--ease);
+}
+.page-frame.ready {
+  opacity: 1;
+  transform: none;
 }
 .pages-view {
   max-width: 1180px;

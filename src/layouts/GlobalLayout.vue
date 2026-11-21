@@ -218,25 +218,6 @@ const onBrandClick = () => {
     box-shadow: 0 0 22px rgba(255, 140, 60, 0.95);
   }
 }
-/* 系统开了“减少动效”时不做缩放/旋转，但保留一口气：只让光晕明暗呼吸 */
-@keyframes glow-breathe {
-  0%,
-  100% {
-    box-shadow: 0 0 14px -4px rgba(217, 87, 26, 0.48);
-  }
-  50% {
-    box-shadow: 0 0 32px 0 rgba(255, 110, 40, 0.8);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mark {
-    animation: glow-breathe 6s ease-in-out infinite !important;
-  }
-  .mark::before,
-  .mark i {
-    animation: none !important;
-  }
-}
 /* 品牌字占满原来两行的高度：单行放大，垂直居中 */
 .brand-text {
   display: flex;

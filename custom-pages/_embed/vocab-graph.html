@@ -26,8 +26,8 @@ font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;overflow:h
 .progress{width:74px;height:5px;border-radius:3px;background:#e8e2d4;overflow:hidden;flex:0 0 auto}
 .progress i{display:block;height:100%;background:#5b8a63;width:0;transition:width .25s}
 .mini{height:30px;padding:0 10px;font-size:12.5px;border-radius:8px;border:1px solid #e3dccb;background:#fffdf8;
-color:#525a66;font-family:inherit;cursor:pointer;white-space:nowrap}
-.mini:active{background:#efe9db}
+color:#525a66;font-family:inherit;cursor:pointer;white-space:nowrap;transition:background .16s,color .16s,transform .12s}
+.mini:active{background:#efe9db;transform:scale(.97)}
 #viewport{flex:1;position:relative;overflow:hidden;touch-action:none;cursor:grab;min-height:0}
 #canvas{position:absolute;left:0;top:0;transform-origin:0 0;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
 #canvas.moving{will-change:transform}
@@ -44,6 +44,10 @@ color:#525a66;font-family:inherit;cursor:pointer;white-space:nowrap}
 .node.lpress{background:#fff6df!important;box-shadow:0 0 0 2px #e8c98a!important}
 .node{position:absolute;display:flex;align-items:center;gap:7px;background:#fff;overflow:visible;cursor:pointer;
 font-family:inherit;transition:box-shadow .16s,background .16s,transform .16s}
+/* 布局位移：渲染后用 FLIP 从旧位置滑到新位置 */
+.node.anim{transition:transform .46s cubic-bezier(.22,.61,.36,1),box-shadow .16s,background .16s}
+.node.enter{animation:nodeIn .34s cubic-bezier(.22,.61,.36,1) both}
+@keyframes nodeIn{from{opacity:.35;transform:scale(.94)}to{opacity:1;transform:none}}
 .node.lv0{background:#1e2836;color:#f8f5ee;border-radius:18px;justify-content:center;font-weight:700;
 box-shadow:0 6px 18px rgba(30,40,54,.22);letter-spacing:.6px}
 .node.lv1{background:#fff;border:1px solid #e7e0d1;border-left:4px solid #a8552f;border-radius:9px;font-weight:600;color:#2b3340;
@@ -98,16 +102,21 @@ box-shadow:0 1px 3px rgba(30,40,54,.06)}
 .mini:focus-visible{outline:2px solid #a8552f;outline-offset:1px}
 .bar{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .bar::-webkit-scrollbar{display:none}
-#toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);background:rgba(30,40,54,.92);color:#fff;
-padding:9px 15px;border-radius:10px;font-size:13px;z-index:9;opacity:0;transition:opacity .18s;white-space:nowrap;
+#toast{position:absolute;left:50%;bottom:24px;transform:translate(-50%,8px);background:rgba(30,40,54,.92);color:#fff;
+padding:9px 15px;border-radius:10px;font-size:13px;z-index:9;opacity:0;transition:opacity .18s,transform .24s cubic-bezier(.22,.61,.36,1);white-space:nowrap;
 pointer-events:none;max-width:88%;overflow:hidden;text-overflow:ellipsis}
-#toast.on{opacity:1}
+#toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- 子节点侧栏：多词节点免拖拽，点一下直接跳 ---------- */
 #rail{position:absolute;top:9px;bottom:9px;left:9px;width:158px;z-index:8;display:none;flex-direction:column;
 background:rgba(255,253,250,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid #e7e0d1;border-radius:12px;
 box-shadow:0 18px 40px -26px rgba(30,40,54,.55);overflow:hidden}
-#rail.on{display:flex}
+#rail.on{display:flex;animation:railIn .24s cubic-bezier(.22,.61,.36,1) both}
+#rail.right.on{animation-name:railInR}
+@keyframes railIn{from{opacity:0;transform:translateX(-8px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes railInR{from{opacity:0;transform:translateX(8px) scale(.985)}to{opacity:1;transform:none}}
+#rail.fresh .ri{animation:riIn .24s cubic-bezier(.22,.61,.36,1) both;animation-delay:calc(var(--i) * 18ms)}
+@keyframes riIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 #rail.right{left:auto;right:9px}
 #rail .rh{display:flex;align-items:center;gap:6px;padding:9px 10px 8px;border-bottom:1px solid #efe7d7;color:#2b3340;flex:none}
 #rail .rh b{font-size:12.5px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -137,9 +146,8 @@ background:rgba(255,253,250,.94);color:#b0a897;font:13px/1 inherit;cursor:pointe
   #railTab.right{left:50%;right:auto;border:1px solid #e7e0d1;border-bottom:0;border-radius:8px 8px 0 0}
   #railTab.on{display:flex}
 }
-.node.lit{box-shadow:0 0 0 2px rgba(217,87,26,.5),0 12px 26px -14px rgba(30,40,54,.4)!important}
-@media (prefers-reduced-motion: reduce){#rail .ri{transition:none}}
-@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.node.lit{box-shadow:0 0 0 2px rgba(217,87,26,.5),0 12px 26px -14px rgba(30,40,54,.4)!important;animation:litPulse .72s cubic-bezier(.22,.61,.36,1)}
+@keyframes litPulse{0%{transform:scale(.97)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
 #findBar{display:none;margin-top:8px;position:relative}
 #findBar.on{display:block}
 #q{width:100%;height:36px;font-size:16px;border-radius:9px;border:1px solid #ddd4c2;background:#fff;
@@ -425,6 +433,16 @@ function nodeHTML(n, side){
 }
 
 function render(){
+  // 先记住上一帧各节点的位置，重排后做 FLIP 补间（节点太多时跳过，保帧率）
+  const prev = {};
+  const olds0 = canvas.querySelectorAll('.node');
+  const flipOn = olds0.length <= 620;
+  if(flipOn){
+    for(let i = 0; i < olds0.length; i++){
+      const el = olds0[i];
+      prev[el.dataset.id] = { l: parseFloat(el.style.left) || 0, t: parseFloat(el.style.top) || 0 };
+    }
+  }
   layout();
   canvas.style.width = W + 'px';
   canvas.style.height = H + 'px';
@@ -450,21 +468,42 @@ function render(){
   });
   canvas.innerHTML = '<svg width="' + W + '" height="' + H + '" fill="none" stroke-width="1.4" stroke-linecap="round" ' +
     'style="position:absolute;left:0;top:0">' + paths + '</svg>' + nodes;
+  if(flipOn){
+    const els = canvas.querySelectorAll('.node');
+    for(let i = 0; i < els.length; i++){
+      const el = els[i], n = byId[el.dataset.id];
+      const p = prev[el.dataset.id];
+      if(!n) continue;
+      if(p){
+        const dx = p.l - n.x, dy = p.t - n.y;
+        if(Math.abs(dx) > 0.4 || Math.abs(dy) > 0.4){
+          el.classList.add('anim');
+          el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+          void el.offsetWidth;
+          el.style.transform = '';
+          setTimeout(function(){ el.classList.remove('anim'); }, 480);
+        }
+      } else if(el.classList.contains('k-word') || n.k === 'seg' || n.k === 'cat' || n.k === 'dv'){
+        el.classList.add('enter');
+        setTimeout(function(){ el.classList.remove('enter'); }, 360);
+      }
+    }
+  }
   apply();
   railSync();
   const em = document.getElementById('empty');
   if(em) em.style.display = 'none';
 }
 
-function fit(){
+function fit(animate){
   const cw = viewport.clientWidth || window.innerWidth;
   const ch = viewport.clientHeight || window.innerHeight;
-  scale = Math.min(1.12, (cw - 26) / W, (ch - 30) / H);
-  if(!isFinite(scale) || scale <= 0) scale = 1;
-  if(scale < 0.66) scale = 0.66;
-  tx = Math.round((cw - W * scale) / 2);
-  ty = Math.round((ch - H * scale) / 2);
-  apply();
+  let s2 = Math.min(1.12, (cw - 26) / W, (ch - 30) / H);
+  if(!isFinite(s2) || s2 <= 0) s2 = 1;
+  if(s2 < 0.66) s2 = 0.66;
+  const x2 = Math.round((cw - W * s2) / 2), y2 = Math.round((ch - H * s2) / 2);
+  if(animate) flyTo(x2, y2, s2, 380);
+  else { scale = s2; tx = x2; ty = y2; apply(); }
 }
 
 function focusSubtree(top){
@@ -483,10 +522,8 @@ function focusSubtree(top){
   const bw = maxX - minX, bh = maxY - minY;
   let sc = Math.min(1.05, (cw - 52) / bw, (ch - 52) / bh);
   if(!isFinite(sc) || sc <= 0) sc = 1;
-  scale = Math.max(0.72, Math.min(1.05, sc));
-  tx = Math.round(cw / 2 - ((minX + maxX) / 2) * scale);
-  ty = Math.round(ch / 2 - ((minY + maxY) / 2) * scale);
-  apply();
+  const s2 = Math.max(0.72, Math.min(1.05, sc));
+  flyTo(Math.round(cw / 2 - ((minX + maxX) / 2) * s2), Math.round(ch / 2 - ((minY + maxY) / 2) * s2), s2, 420);
 }
 
 function zoomAt(cx, cy, f){
@@ -579,7 +616,7 @@ function lpStart(e){
   lpTimer = setTimeout(function(){
     lpTimer = null; lpFire = Date.now();
     if(lpEl) lpEl.classList.remove('lpress');
-    if(n.ref){ syncWord(n.n, 'done'); saveDone(); buildUnknown(); render(); fit(); updateStat(); toast('已标记为掌握'); return; }
+    if(n.ref){ syncWord(n.n, 'done'); saveDone(); buildUnknown(); render(); fit(true); updateStat(); toast('已标记为掌握'); return; }
     if(n.unknown){ n.unknown = false; n.done = false; toast('已移出生词本'); }
     else { n.unknown = true; n.done = false; toast('已收入生词本'); }
     saveDone(); render(); updateStat();
@@ -619,6 +656,22 @@ canvas.addEventListener('pointermove', function(e){
   if(lpEl && Math.hypot(e.movementX || 0, e.movementY || 0) > 4){ lpEnd(); }
 }, {passive: true});
 
+/* ---------- 展开一个节点时，其他分支一起收起，视野只跟着这条线 ---------- */
+function isAnc(a, b){
+  let p = b && b.p;
+  while(p){ if(p === a) return true; p = p.p; }
+  return false;
+}
+function collapseOthers(target){
+  (function walk(x){
+    if(!x || !x.c) return;
+    const keep = (x === target) || isAnc(x, target) || isAnc(target, x);
+    if(!keep && !x.collapsed) x.collapsed = true;
+    if(x === target) return;               /* 目标自己的层级保持原样 */
+    x.c.forEach(walk);
+  })(root);
+}
+
 canvas.addEventListener('click', function(e){
   if(Date.now() < suppress) return;
   if(Date.now() - lpFire < 600) return;
@@ -636,7 +689,9 @@ canvas.addEventListener('click', function(e){
     else { syncWord(n.n, 'clear'); toast('已移出生词本'); }
     saveDone(); render(); updateStat();
   } else if(n.c && n.c.length){
+    const opening = n.collapsed;
     n.collapsed = !n.collapsed;
+    if(opening) collapseOthers(n);
     render();
     if(!n.collapsed) railOpen(n); else if(railNodeId === n.id) railClose();
     focusSubtree(n);
@@ -651,7 +706,7 @@ const railTitleEl = document.getElementById('railTitle');
 const railCountEl = document.getElementById('railCount');
 const railTabEl = document.getElementById('railTab');
 const railGripEl = document.getElementById('railGrip');
-let railNodeId = null, railW = 158, railCollapsed = false, railSide = 'left', railAnim = 0;
+let railNodeId = null, railW = 158, railCollapsed = false, railSide = 'left', railMoved = 0;
 
 function railTarget(){
   if(railNodeId == null) return null;
@@ -668,21 +723,30 @@ function railPlace(){
   railTabEl.textContent = railSide === 'right' ? '‹' : '›';
   railTabEl.title = '展开侧栏';
 }
+let railKey = '', railFreshT = 0;
 function railSync(){
   const n = railTarget();
-  if(!n){ railPlace(); return; }
+  if(!n){ railKey = ''; railPlace(); return; }
   railSide = ((n.x + n.w / 2) < (root.x + root.w / 2)) ? 'left' : 'right';
   railEl.style.width = railW + 'px';
   railTitleEl.textContent = String(n.n);
   railCountEl.textContent = n.c.length + ' 项';
   const items = n.c.slice().sort(function(a, b){ return a.y - b.y; });
+  const key = n.id + ':' + items.length;
+  const fresh = key !== railKey;
+  railKey = key;
   let out = '';
   for(let i = 0; i < items.length; i++){
     const c = items[i];
-    out += '<button type="button" class="ri" data-id="' + c.id + '"><span class="rn">' + esc(c.n) + '</span>' +
+    out += '<button type="button" class="ri" style="--i:' + Math.min(i, 14) + '" data-id="' + c.id + '"><span class="rn">' + esc(c.n) + '</span>' +
       (c.k === 'word' && c.d ? '<span class="rm">' + esc(c.d) + '</span>' : '') + '</button>';
   }
   railListEl.innerHTML = out;
+  if(fresh){
+    railEl.classList.add('fresh');
+    clearTimeout(railFreshT);
+    railFreshT = setTimeout(function(){ railEl.classList.remove('fresh'); }, 700);
+  }
   railPlace();
 }
 function railOpen(n){
@@ -694,24 +758,40 @@ function railOpen(n){
 function railClose(){
   railNodeId = null;
   railCollapsed = false;
+  railKey = '';
+  railEl.classList.remove('fresh');
   railPlace();
 }
-function animateTo(x2, y2){
-  cancelAnimationFrame(railAnim);
-  const x0 = tx, y0 = ty, t0 = performance.now(), dur = 320;
+let camAnim = 0;
+
+/* 统一的镜头飞行：点击跳转、随机、搜索命中都用同一套缓动与时长 */
+function flyTo(x2, y2, s2, dur, done){
+  cancelAnimationFrame(camAnim);
+  if(s2 == null) s2 = scale;
+  const x0 = tx, y0 = ty, s0 = scale;
+  const d = Math.hypot(x2 - x0, y2 - y0);
+  /* 镜头位移是导航反馈，不做 reduced-motion 降级：系统关了动画也要能看清飞到哪 */
+  dur = dur || Math.max(300, Math.min(560, 300 + d * 0.45));
+  const t0 = performance.now();
+  canvas.classList.add('moving');
   function step(t){
-    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-    tx = x0 + (x2 - x0) * e; ty = y0 + (y2 - y0) * e; apply();
-    if(p < 1) railAnim = requestAnimationFrame(step);
+    const p = Math.min(1, (t - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 3);   /* easeOutCubic：起步就有位移，落点稳 */
+    tx = x0 + (x2 - x0) * e;
+    ty = y0 + (y2 - y0) * e;
+    scale = s0 + (s2 - s0) * e;
+    apply();
+    if(p < 1) camAnim = requestAnimationFrame(step);
+    else { void canvas.offsetWidth; if(done) done(); }
   }
-  railAnim = requestAnimationFrame(step);
+  camAnim = requestAnimationFrame(step);
 }
 function focusNode(id){
   const n = byId[id];
   if(!n) return;
   const r = viewport.getBoundingClientRect();
-  if(scale < 0.92) scale = 0.92;
-  animateTo(Math.round(r.width / 2 - (n.x + n.w / 2) * scale), Math.round(r.height / 2 - (n.y + n.h / 2) * scale));
+  const s2 = Math.max(scale, 0.92);
+  flyTo(Math.round(r.width / 2 - (n.x + n.w / 2) * s2), Math.round(r.height / 2 - (n.y + n.h / 2) * s2), s2);
   const el = canvas.querySelector('.node[data-id="' + id + '"]');
   if(el){
     el.classList.add('lit');
@@ -909,7 +989,7 @@ function enterUnknown(){
   const bs = document.querySelectorAll('.tab');
   for(let j = 0; j < bs.length; j++) bs[j].className = 'tab';
   document.getElementById('unkBtn').classList.add('on');
-  render(); fit(); updateStat();
+  render(); fit(true); updateStat();
   if(!countUnknown()) toast('还没有生词，点两下单词即可收进生词本');
 }
 function randomWord(){
@@ -922,7 +1002,7 @@ function randomWord(){
   const n = pool[Math.floor(Math.random() * pool.length)];
   let p = n.p;
   while(p){ if(p.c && p.c.length) p.collapsed = false; p = p.p; }
-  render(); centerOn(n); flash(n);
+  render(); focusNode(n.id);
   toast(n.n + (n.d ? '  ' + n.d : ''));
 }
 document.getElementById('randomBtn').addEventListener('click', randomWord);
@@ -934,7 +1014,7 @@ document.getElementById('doneBtn').addEventListener('click', function(){
   let n = 0;
   (function walk(x){ if(x.k === 'word' && x.done) n++; if(x.c) x.c.forEach(walk); })(root);
   if(filterDone && mode === 'cat' && !n) toast('这一页还没有标记掌握的词');
-  render(); fit(); updateStat();
+  render(); fit(true); updateStat();
 });
 document.getElementById('undoneBtn').addEventListener('click', function(){
   filterUndone = !filterUndone;
@@ -945,7 +1025,7 @@ document.getElementById('undoneBtn').addEventListener('click', function(){
     (function walk(n){ if(n.k === 'word' && !n.done) left++; if(n.c) n.c.forEach(walk); })(root);
     if(!left) toast('这一页都掌握了');
   }
-  render(); fit(); updateStat();
+  render(); fit(true); updateStat();
 });
 document.getElementById('unkBtn').addEventListener('click', function(){
   if(mode === 'unk'){ switchCat(cur); return; }
@@ -965,10 +1045,8 @@ function buildIndex(){
 }
 function centerOn(n){
   const cw = viewport.clientWidth, ch = viewport.clientHeight;
-  scale = Math.min(1.05, Math.max(0.62, scale));
-  tx = Math.round(cw / 2 - (n.x + n.w / 2) * scale);
-  ty = Math.round(ch / 2 - (n.y + n.h / 2) * scale);
-  apply();
+  const s2 = Math.min(1.05, Math.max(0.62, scale));
+  flyTo(Math.round(cw / 2 - (n.x + n.w / 2) * s2), Math.round(ch / 2 - (n.y + n.h / 2) * s2), s2);
 }
 function flash(n){
   const el = canvas.querySelector('.node[data-id="' + n.id + '"]');
@@ -981,8 +1059,7 @@ function goTo(it){
   let p = it.node.p;
   while(p){ if(p.c && p.c.length) p.collapsed = false; p = p.p; }
   render();
-  centerOn(it.node);
-  flash(it.node);
+  focusNode(it.node.id);
   document.getElementById('hits').className = '';
   document.getElementById('findBar').classList.remove('on');
   document.getElementById('q').blur();
@@ -1072,7 +1149,7 @@ document.getElementById('expand').addEventListener('click', function(){
   visible.forEach(function(n){
     if(n.c && n.c.length && n.collapsed) n.collapsed = false;
   });
-  render(); fit();
+  render(); fit(true);
   if(scale < 0.56){
     const cw = viewport.clientWidth, ch = viewport.clientHeight;
     scale = 0.56;
@@ -1085,9 +1162,9 @@ document.getElementById('collapse').addEventListener('click', function(){
   (function walk(n){
     if(n.c && n.c.length){ n.collapsed = !(n.c[0] && n.c[0].k === 'dv'); n.c.forEach(walk); }
   })(root);
-  render(); fit();
+  render(); fit(true);
 });
-document.getElementById('fit').addEventListener('click', function(){ render(); fit(); });
+document.getElementById('fit').addEventListener('click', function(){ render(); fit(true); });
 
 /* ---------- 启动 ---------- */
 loadDone();
