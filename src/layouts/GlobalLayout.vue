@@ -69,10 +69,6 @@ const onBrandClick = () => {
     </nav>
 
     <div class="meta">
-      <span class="sync readonly" title="纯阅读站点：没有编辑入口，也不保存任何数据">
-        <i class="dot"></i>
-        <span class="sync-text">只读</span>
-      </span>
       <div class="countdown">
         <span class="cd-label">距 28 考研初试</span>
         <b class="mono">{{ shownDays }}</b>

@@ -7,8 +7,26 @@ const props = defineProps({
   note: { type: Object, default: null },
   loading: { type: Boolean, default: false },
   highlight: { type: String, default: '' },
+  prev: { type: Object, default: null },
+  next: { type: Object, default: null },
 })
 const emit = defineEmits(['open', 'lightbox', 'rendered'])
+
+// 面包屑：rel 里的目录层级拆开，末段去掉 .md
+const crumbs = computed(() => {
+  const rel = props.note?.rel || ''
+  return rel
+    .replace(/\.md$/i, '')
+    .split('/')
+    .filter(Boolean)
+})
+// 元信息：字数 / 阅读时长 / 源文件更新时间
+const updatedText = computed(() => {
+  const m = props.note?.mtime
+  if (!m) return ''
+  const d = new Date(m)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+})
 
 const bodyRef = ref(null)
 const html = computed(() => (props.note ? renderMarkdown(props.note.content || '') : ''))
@@ -107,16 +125,41 @@ function onScroll(e) {
       <p class="state-title">还没有打开任何笔记</p>
       <p class="state-hint">从左侧目录选一篇，或在首页图谱里点一个节点。</p>
     </div>
-    <article v-else class="article">
+    <article v-else :key="note.slug" class="article">
       <header class="head">
-        <p class="crumb">{{ note.rel }}</p>
+        <p class="crumb">
+          <template v-for="(c, i) in crumbs" :key="i">
+            <span v-if="i" class="crumb-sep">/</span><span class="crumb-part">{{ c }}</span>
+          </template>
+        </p>
         <h1 class="title">{{ note.title }}</h1>
+        <p class="stats mono">
+          <span>{{ note.chars || 0 }} 字</span>
+          <span class="dot">·</span>
+          <span>约 {{ note.minutes || 1 }} 分钟</span>
+          <template v-if="updatedText">
+            <span class="dot">·</span>
+            <span>更新 {{ updatedText }}</span>
+          </template>
+        </p>
         <div class="meta">
           <span v-for="tag in note.tags" :key="tag" class="tag">#{{ tag }}</span>
           <span v-for="alias in note.aliases" :key="alias" class="alias">别名：{{ alias }}</span>
         </div>
       </header>
       <div ref="bodyRef" class="markdown" v-html="html"></div>
+
+      <nav v-if="prev || next" class="pager">
+        <button v-if="prev" type="button" class="pager-btn prev" @click="emit('open', prev.slug)">
+          <span class="pager-dir">← 上一篇</span>
+          <span class="pager-name">{{ prev.title }}</span>
+        </button>
+        <span v-else class="pager-gap"></span>
+        <button v-if="next" type="button" class="pager-btn next" @click="emit('open', next.slug)">
+          <span class="pager-dir">下一篇 →</span>
+          <span class="pager-name">{{ next.title }}</span>
+        </button>
+      </nav>
     </article>
   </div>
 </template>
@@ -143,14 +186,27 @@ function onScroll(e) {
   border-radius: 2px;
   background: linear-gradient(90deg, rgba(217, 87, 26, 0), var(--accent) 45%, var(--accent-cream));
   transform-origin: 0 50%;
-  transition: transform 0.12s linear;
+  /* 换成缓出曲线：滚快了也像“顺手拉长”，不是硬跟手 */
+  transition: transform 0.24s var(--ease);
   box-shadow: 0 0 10px rgba(217, 87, 26, 0.5);
   pointer-events: none;
 }
+/* 换笔记：正文淡入 + 轻微上浮，切篇不“闪” */
 .article {
   max-width: 820px;
   margin: 0 auto;
   padding-top: 34px;
+  animation: article-in 0.34s var(--ease) both;
+}
+@keyframes article-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .state {
   padding: 60px 0;
@@ -167,6 +223,73 @@ function onScroll(e) {
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 0.04em;
+}
+.crumb-sep {
+  margin: 0 5px;
+  color: rgba(138, 115, 101, 0.55);
+}
+.crumb-part:last-child {
+  color: var(--text-dim);
+}
+/* 元信息：字数 / 时长 / 更新时间，弱化但不隐形 */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+.stats .dot {
+  margin: 0 7px;
+  opacity: 0.6;
+}
+/* 底部翻页 */
+.pager {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin: 46px 0 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.pager-gap {
+  flex: 1 1 0;
+}
+.pager-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 253, 250, 0.6);
+  text-align: left;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.pager-btn.next {
+  text-align: right;
+}
+.pager-btn:hover {
+  background: #fffdfa;
+  border-color: rgba(217, 87, 26, 0.32);
+  transform: translateY(-2px);
+}
+.pager-dir {
+  font-size: 10.5px;
+  color: var(--accent-soft);
+  letter-spacing: 0.06em;
+}
+.pager-name {
+  font-size: 12.5px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .title {
   margin: 0 0 12px;

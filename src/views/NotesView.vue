@@ -1,6 +1,6 @@
 <script setup>
 // 阶段 3：三栏阅读视图 —— 左文件树 / 中多标签正文 / 右大纲 + 反向链接。
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import manifest from '../data/site-manifest.json'
 import NoteTree from '../components/NoteTree.vue'
@@ -300,6 +300,20 @@ watch(outline, () => {
   if (outline.value.length) setTimeout(trackHeading, 160)
 }, { flush: 'post' })
 
+// 大纲左侧的橙色指示条：跟着当前项滑，滚动时右栏不是“跳色块”而是“一条线在走”
+const outlineListEl = ref(null)
+const indicatorTop = ref(-1)
+function syncIndicator() {
+  const ul = outlineListEl.value
+  if (!ul) {
+    indicatorTop.value = -1
+    return
+  }
+  const li = ul.querySelector('.outline-item.active')
+  indicatorTop.value = li ? li.offsetTop + li.offsetHeight / 2 - 7 : -1
+}
+watch([activeHeading, outlineRows], () => nextTick(syncIndicator), { flush: 'post' })
+
 // 三栏：左右两栏都能拖宽、能收起；宽度只活在本次会话里，不落盘
 const leftW = ref(250)
 const rightW = ref(272)
@@ -423,11 +437,28 @@ function toggleLightbox(payload) {
 
 function onKey(e) {
   if (e.key === 'Escape') lightbox.value = null
+  // ⌘K / Ctrl+K：一键跳到左栏筛选框，键盘上就能找到笔记
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault()
+    const input = document.querySelector('.tree-search input, .pane-left input[type="search"], .pane-left input')
+    if (input) {
+      input.focus()
+      input.select?.()
+    }
+    return
+  }
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'w' && activeSlug.value) {
     e.preventDefault()
     closeTab(activeSlug.value)
   }
 }
+
+// 上一篇 / 下一篇：按左栏清单顺序走，读完一章不用回目录点
+const noteIndex = computed(() => notes.findIndex((n) => n.slug === activeSlug.value))
+const prevNote = computed(() => (noteIndex.value > 0 ? notes[noteIndex.value - 1] : null))
+const nextNote = computed(() =>
+  noteIndex.value > -1 && noteIndex.value < notes.length - 1 ? notes[noteIndex.value + 1] : null
+)
 
 onMounted(async () => {
   window.addEventListener('keydown', onKey)
@@ -541,6 +572,8 @@ watch(
         :note="loaded"
         :loading="loading"
         :highlight="keyword"
+        :prev="prevNote"
+        :next="nextNote"
         @open="followLink"
         @lightbox="toggleLightbox"
         @rendered="trackHeading"
@@ -582,7 +615,9 @@ watch(
           </span>
           <span class="rail-count">{{ outline.length }}</span>
         </div>
-        <ul v-if="outline.length" class="outline">
+        <div class="rail-body">
+        <ul v-if="outline.length" ref="outlineListEl" class="outline">
+          <span class="outline-ind" :style="{ transform: `translateY(${indicatorTop}px)`, opacity: indicatorTop > -1 ? 1 : 0 }" aria-hidden="true"></span>
           <li
             v-for="h in outlineRows"
             :key="h.id"
@@ -606,6 +641,7 @@ watch(
           </li>
         </ul>
         <p v-else class="rail-empty">暂无标题</p>
+        </div>
       </div>
 
       <div
@@ -637,6 +673,7 @@ watch(
           </span>
           <span class="rail-count">{{ relatedLinks.length }}</span>
         </div>
+        <div class="rail-body">
         <ul v-if="relatedLinks.length" class="links">
           <li v-for="l in relatedLinks" :key="l.dir + l.slug">
             <button type="button" class="link" @click="openNote(l.slug)">
@@ -646,6 +683,7 @@ watch(
           </li>
         </ul>
         <p v-else class="rail-empty">本篇还没有双链</p>
+        </div>
       </div>
     </aside>
     </div>
@@ -1066,13 +1104,22 @@ watch(
   min-height: 0;
   overflow: hidden;
 }
-.rail-block.collapsed .outline,
-.rail-block.collapsed .links,
-.rail-block.collapsed .rail-empty {
-  display: none;
-}
 .rail-block.collapsed .rail-head {
   margin-bottom: 0;
+}
+/* 折叠动画：内容高度 max-height 收放 + 淡出，是被“抽”进去的，不是瞬间消失 */
+.rail-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 2400px;
+  transition: max-height 0.32s var(--ease), opacity 0.24s var(--ease);
+}
+.rail-block.collapsed .rail-body {
+  flex: 0 0 auto;
+  max-height: 0;
+  opacity: 0;
 }
 .rail-chevron {
   display: inline-block;
@@ -1144,9 +1191,23 @@ watch(
   list-style: none;
   margin: 0;
   padding: 0 2px 0 0;
+  position: relative;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+}
+/* 当前章节指示条：一条 2px 暖橙短线，随滚动在条目之间滑动 */
+.outline-ind {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-cream));
+  box-shadow: 0 0 8px rgba(217, 87, 26, 0.35);
+  transition: transform 0.28s var(--ease), opacity 0.22s var(--ease);
+  pointer-events: none;
 }
 .outline-item {
   position: relative;

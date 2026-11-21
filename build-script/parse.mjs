@@ -152,6 +152,15 @@ function parseNotes() {
     for (const t of tags) tagMap.set(t, (tagMap.get(t) || 0) + 1)
     for (const target of links) edges.push({ source: slug, target })
 
+    // 字数（去空白、去 md 标记）与阅读时长估算 400 字/分钟；时间取源文件 mtime
+    const plain = stripCode(body)
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, '$1')
+      .replace(/^[#>*\-\s]+/gm, '')
+      .replace(/\s+/g, '')
+    const chars = plain.length
+    const mtime = fs.statSync(full).mtime.toISOString()
+
     notes.push({
       slug,
       rel,
@@ -161,6 +170,9 @@ function parseNotes() {
       aliases: fm.aliases || [],
       links,
       images,
+      chars,
+      minutes: Math.max(1, Math.round(chars / 400)),
+      mtime,
       headings: extractHeadings(body),
       content: body.replace(/^\s+/, ''),
     })
@@ -229,6 +241,9 @@ function main() {
       rel: n.rel,
       tags: n.tags,
       aliases: n.aliases,
+      chars: n.chars,
+      minutes: n.minutes,
+      mtime: n.mtime,
       headings: n.headings,
       backlinks: [...(backlinks.get(n.slug) || [])].map((s) => ({
         slug: s,
