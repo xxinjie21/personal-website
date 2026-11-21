@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import manifest from '../data/site-manifest.json'
 import NoteTree from '../components/NoteTree.vue'
 import NoteReader from '../components/NoteReader.vue'
-import { getProgress, updateProgress, initSync } from '../lib/store.js'
+import { getProgress, updateProgress, initSync, isOwner, setOwner } from '../lib/store.js'
 import { slugifyHeading } from '../lib/markdown.js'
 import { normalizeStatus } from '../lib/graph.js'
 
@@ -414,8 +414,16 @@ function startDrag(side, e) {
 const status = computed(() => (activeSlug.value ? normalizeStatus(activeSlug.value) : 'not-started'))
 const STATUS_LABEL = { 'not-started': '未开始', learning: '学习中', mastered: '已掌握' }
 
+// 本机编辑开关：只有开了才写进度；别人打开站点默认只读
+const owner = ref(isOwner())
+function toggleOwner() {
+  setOwner(!owner.value)
+  owner.value = isOwner()
+  if (owner.value) initSync().then(() => (progress.value = getProgress()))
+}
+
 function setStatus(value) {
-  if (!activeSlug.value) return
+  if (!activeSlug.value || !owner.value) return
   progress.value = updateProgress({ noteStatus: { [activeSlug.value]: value } })
 }
 
@@ -589,11 +597,18 @@ watch(
         <select
           class="status-select"
           :value="status"
-          :disabled="!activeSlug"
+          :disabled="!activeSlug || !owner"
+          :title="owner ? '改动只保存到本机并同步云端' : '只读：点下方「启用本机编辑」才能保存'"
           @change="setStatus($event.target.value)"
         >
           <option v-for="(label, key) in STATUS_LABEL" :key="key" :value="key">{{ label }}</option>
         </select>
+        <div class="owner-row">
+          <span class="owner-hint">{{ owner ? '本机可写：只保存你的进度' : '访客只读：点了也不会保存' }}</span>
+          <button type="button" class="owner-btn" :class="{ on: owner }" @click="toggleOwner">
+            {{ owner ? '关闭本机编辑' : '启用本机编辑' }}
+          </button>
+        </div>
       </div>
 
       <div class="rail-block outline-block">
@@ -1127,6 +1142,45 @@ watch(
 .status-select:focus {
   border-color: rgba(255, 122, 47, 0.55);
   box-shadow: 0 0 0 3px rgba(255, 122, 47, 0.1);
+}
+.status-select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+/* 本机编辑开关：一眼看出当前是能写还是只读 */
+.owner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+.owner-hint {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.owner-btn {
+  flex: none;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+.owner-btn:hover {
+  border-color: rgba(255, 169, 110, 0.5);
+  color: var(--accent-cream);
+  transform: translateY(-1px);
+}
+.owner-btn.on {
+  border-color: rgba(255, 122, 47, 0.45);
+  background: rgba(255, 122, 47, 0.1);
+  color: var(--accent-cream);
 }
 .outline {
   list-style: none;

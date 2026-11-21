@@ -52,6 +52,7 @@ const syncTime = computed(() => {
 const statusLabel = computed(() => {
   const key = statusKey.value
   const t = syncTime.value
+  if (key === 'guest') return '只读'
   if (key === 'syncing') return '同步中…'
   if (!t) return key === 'offline' ? '本地模式' : '尚未同步'
   if (key === 'online') return `已同步 ${t}`
@@ -62,7 +63,7 @@ const statusLabel = computed(() => {
 
 const statusTip = computed(() => {
   const key = statusKey.value
-  const base = { idle: '等待首次同步', syncing: '正在与云端交换进度', online: '进度已与云端一致', offline: 'Worker 不可达，进度只存在本机', error: '同步出错，已保留本地副本' }
+  const base = { idle: '等待首次同步', syncing: '正在与云端交换进度', online: '进度已与云端一致', offline: 'Worker 不可达，进度只存在本机', error: '同步出错，已保留本地副本', guest: '未启用本机编辑，学习状态只读、不会保存' }
   return `${base[key] || key}${syncTime.value ? `（最近一次 ${syncTime.value}）` : ''}`
 })
 
@@ -411,6 +412,10 @@ const links = [
 .sync.offline {
   color: var(--accent-soft);
   border-color: rgba(255, 176, 103, 0.3);
+}
+.sync.guest {
+  color: var(--muted);
+  border-color: var(--line);
 }
 .sync.offline .dot {
   background: var(--accent-soft);

@@ -9,7 +9,30 @@
 const WORKER_URL = import.meta.env.VITE_WORKER_URL || ''
 const AUTH_KEY = import.meta.env.VITE_AUTH_KEY || ''
 const LS_KEY = 'pw-progress'
+const OWNER_KEY = 'pw-owner'
 const DEBOUNCE_MS = 800
+
+// 只有"本机主人"能写进度：本机开关点开过，或正在本地开发环境跑
+// 别人打开站点默认是只读，点了也不会写本地、不会推云端
+export function isOwner() {
+  try {
+    const flag = localStorage.getItem(OWNER_KEY)
+    if (flag === '1') return true
+    if (flag === '0') return false
+    const host = location.hostname
+    return host === 'localhost' || host === '127.0.0.1'
+  } catch {
+    return false
+  }
+}
+
+export function setOwner(on) {
+  try {
+    localStorage.setItem(OWNER_KEY, on ? '1' : '0')
+  } catch {
+    /* 隐私模式忽略 */
+  }
+}
 
 const DEFAULT_PROGRESS = {
   noteStatus: {},
@@ -59,6 +82,11 @@ async function fetchRemote() {
     syncStatus = 'offline'
     return state
   }
+  // 访客不拉云端：别人的浏览器只看到空状态，也不会覆盖你的进度
+  if (!isOwner()) {
+    syncStatus = 'guest'
+    return state
+  }
   syncStatus = 'syncing'
   try {
     const r = await fetch(WORKER_URL, { headers: authHeaders() })
@@ -76,7 +104,7 @@ async function fetchRemote() {
 }
 
 async function pushRemote(data) {
-  if (!WORKER_URL) return
+  if (!WORKER_URL || !isOwner()) return
   try {
     const r = await fetch(WORKER_URL, {
       method: 'PUT',
@@ -109,8 +137,13 @@ export async function initSync() {
   return fetchRemote()
 }
 
-// 改动入口：patch 为部分字段，更新本地并防抖推回 Gist
+// 改动入口：patch 为部分字段，更新本地并防抖推回云端
+// 非主人直接忽略：别人点什么都不会被保存
 export function updateProgress(patch) {
+  if (!isOwner()) {
+    syncStatus = 'guest'
+    return state
+  }
   state = {
     ...state,
     ...patch,
