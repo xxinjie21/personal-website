@@ -15,6 +15,11 @@ const router = createRouter({
   routes,
 })
 
+// 兼容旧分享链接：/#/notes?note=x → /notes?note=x
+if (window.location.hash.startsWith('#/')) {
+  window.history.replaceState(null, '', window.location.hash.slice(1))
+}
+
 router.afterEach((to) => {
   document.title = to.meta.title ? `${to.meta.title} · 个人站点` : '个人站点'
 })
