@@ -306,13 +306,13 @@ button {
 /* ===== 页面切换 ===== */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.22s ease, transform 0.26s var(--ease), filter 0.2s ease;
+  transition: opacity 0.15s ease, transform 0.18s var(--ease), filter 0.14s ease;
 }
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-  transform: translateY(8px) scale(0.997);
-  filter: blur(4px);
+  transform: translateY(6px) scale(0.998);
+  filter: blur(2px);
 }
 
 /* ===== 全局颗粒：PIXZEN 的印刷噪点，压到 4% ===== */

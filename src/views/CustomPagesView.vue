@@ -98,7 +98,7 @@ function spot(e) {
   box-shadow: var(--shadow);
   opacity: 0.001;
   transform: translateY(6px) scale(0.997);
-  transition: opacity 0.3s ease, transform 0.34s var(--ease);
+  transition: opacity 0.2s ease, transform 0.24s var(--ease);
 }
 .page-frame.ready {
   opacity: 1;
