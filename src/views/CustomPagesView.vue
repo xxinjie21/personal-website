@@ -90,13 +90,13 @@ function spot(e) {
   flex-direction: column;
   height: calc(100vh - var(--nav-height));
   box-sizing: border-box;
-  padding: 18px 28px 22px;
-  gap: 12px;
+  padding: 6px 14px 10px;
+  gap: 8px;
 }
 .page-bar {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   padding: 0 2px;
 }
 .back,
@@ -104,7 +104,7 @@ function spot(e) {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.3s var(--ease);
@@ -118,11 +118,11 @@ function spot(e) {
   min-width: 0;
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 10px;
 }
 .meta h1 {
   margin: 0;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -130,7 +130,7 @@ function spot(e) {
   text-overflow: ellipsis;
 }
 .meta .file {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
@@ -140,7 +140,7 @@ function spot(e) {
   flex: 1;
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--panel-solid);
   box-shadow: var(--shadow);
 }
