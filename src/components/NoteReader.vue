@@ -1,6 +1,6 @@
 <script setup>
 // 单篇笔记正文：Markdown + KaTeX 渲染、图片灯箱、双链点击、关键词高亮
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { renderMarkdown, enhanceRendered } from '../lib/markdown.js'
 
 const props = defineProps({
@@ -119,6 +119,22 @@ function onScroll(e) {
 function toTop() {
   readerEl.value?.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+// 公式放大：点整行公式，把同一段 KaTeX 复制到灯箱里按 1.45 倍看，长公式不用再横着拖
+const zoomMath = ref('')
+function onMathClick(e) {
+  const mb = e.target.closest('.md-math-block')
+  if (!mb) return
+  zoomMath.value = mb.innerHTML
+}
+function closeMath() {
+  zoomMath.value = ''
+}
+onMounted(() => document.addEventListener('keydown', onMathKey))
+onBeforeUnmount(() => document.removeEventListener('keydown', onMathKey))
+function onMathKey(e) {
+  if (e.key === 'Escape') closeMath()
+}
 </script>
 
 <template>
@@ -168,7 +184,7 @@ function toTop() {
           <span v-for="alias in note.aliases" :key="alias" class="alias">别名：{{ alias }}</span>
         </div>
       </header>
-      <div ref="bodyRef" class="markdown" v-html="html"></div>
+      <div ref="bodyRef" class="markdown" v-html="html" @click="onMathClick"></div>
 
       <nav v-if="prev || next" class="pager">
         <button v-if="prev" type="button" class="pager-btn prev" @click="emit('open', prev.slug)">
@@ -183,6 +199,17 @@ function toTop() {
       </nav>
     </article>
   </div>
+
+  <Teleport to="body">
+    <Transition name="mathzoom">
+      <div v-if="zoomMath" class="math-zoom" @click="closeMath">
+        <div class="math-card" role="dialog" aria-label="公式放大">
+          <div class="math-body" v-html="zoomMath"></div>
+          <p class="math-hint">点击任意处或按 Esc 关闭</p>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -214,7 +241,7 @@ function toTop() {
 }
 /* 换笔记：正文淡入 + 轻微上浮，切篇不“闪” */
 .article {
-  max-width: 820px;
+  max-width: 768px;
   margin: 0 auto;
   padding-top: 34px;
   animation: article-in 0.34s var(--ease) both;
@@ -261,7 +288,7 @@ function toTop() {
 }
 /* 加载骨架：几道灰条从左往右扫一道光，比“加载中…”更像在等东西 */
 .skeleton {
-  max-width: 820px;
+  max-width: 768px;
   margin: 0 auto;
   padding-top: 40px;
   display: flex;
@@ -467,6 +494,59 @@ function toTop() {
 /* 回到顶部：只在窄屏出现，浮在右下角 */
 .to-top {
   display: none;
+}
+
+/* ===== 公式放大：点整行公式，按 1.45 倍看，长推导不用横向来回拖 ===== */
+.math-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(36, 26, 18, 0.52);
+  cursor: zoom-out;
+}
+.math-card {
+  max-width: min(92vw, 1040px);
+  max-height: 86vh;
+  overflow: auto;
+  padding: 26px 30px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fffdfa;
+  box-shadow: 0 34px 70px -34px rgba(36, 26, 18, 0.62);
+  cursor: default;
+  animation: mathing 0.24s var(--ease) both;
+}
+.math-body {
+  font-size: 1.45em;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+.math-hint {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+@keyframes mathing {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.mathzoom-enter-active,
+.mathzoom-leave-active {
+  transition: opacity 0.2s ease;
+}
+.mathzoom-enter-from,
+.mathzoom-leave-to {
+  opacity: 0;
 }
 
 @media (max-width: 900px) {
