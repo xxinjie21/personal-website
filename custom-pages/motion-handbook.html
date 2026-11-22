@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 71 个能跑的样子</title>
+<title>动效手册 · 77 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1087,6 +1087,74 @@ box-shadow:0 10px 18px -16px rgba(85,53,28,.7);
 transition:border-color .25s,box-shadow .25s}
 .otp i.cur{border-color:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.12)}
 
+/* ==== 3D 加深：立方体 / 翻转 / 视差 / 等轴测 / 挤出 ==== */
+.cub3d{width:64px;height:64px;perspective:420px}
+.cub{position:relative;width:64px;height:64px;transform-style:preserve-3d;
+transform:rotateX(-22deg);animation:cubspin 14s linear infinite}
+.cub i{position:absolute;inset:0;border-radius:5px;border:1px solid rgba(126,84,46,.22);
+background:linear-gradient(150deg,#fffdf8,#f7e8d5)}
+.cub i:nth-child(1){transform:translateZ(32px)}
+.cub i:nth-child(2){transform:rotateY(180deg) translateZ(32px)}
+.cub i:nth-child(3){transform:rotateY(90deg) translateZ(32px)}
+.cub i:nth-child(4){transform:rotateY(-90deg) translateZ(32px)}
+.cub i:nth-child(5){transform:rotateX(90deg) translateZ(32px)}
+.cub i:nth-child(6){transform:rotateX(-90deg) translateZ(32px)}
+.cub i.hot{background:linear-gradient(150deg,#f69a4d,#d9571a);border-color:rgba(180,60,10,.5)}
+@keyframes cubspin{to{transform:rotateX(-22deg) rotateY(-360deg)}}
+
+.flip{width:104px;height:66px;perspective:600px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s var(--ease)}
+.flip.on .flip-in,.flip:hover .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;border-radius:9px;display:grid;place-content:center;gap:4px;
+backface-visibility:hidden;text-align:center}
+.flip-f{background:linear-gradient(150deg,#fff8ef,#f6e2ca);border:1px solid rgba(126,84,46,.18);
+box-shadow:0 14px 24px -20px rgba(85,53,28,.8)}
+.flip-f b{font:600 11px/1 'Inter',sans-serif;color:#5b432c}
+.flip-f span{font:400 7.5px/1 var(--mono);letter-spacing:.16em;color:#b09a86;text-transform:uppercase}
+.flip-b{transform:rotateY(180deg);color:#f4ece2;
+background:linear-gradient(150deg,#33241a,#1c130d);border:1px solid rgba(255,255,255,.12)}
+.flip-b b{font:600 11px/1 'Inter',sans-serif}
+.flip-b span{font:400 7.5px/1 var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.58)}
+
+.pxy{position:relative;width:118px;height:86px;perspective:640px}
+.pxy i{position:absolute;left:0;right:0;margin:auto;border-radius:8px;
+transition:transform .5s var(--ease)}
+.pxy .p1{top:0;width:86px;height:40px;background:linear-gradient(150deg,#ffe6cf,#f0b98e);
+box-shadow:0 14px 24px -20px rgba(85,53,28,.85)}
+.pxy .p2{top:22px;width:104px;height:44px;background:linear-gradient(150deg,#fff,#f7e8d6);
+border:1px solid rgba(126,84,46,.16);box-shadow:0 18px 28px -22px rgba(85,53,28,.8)}
+.pxy .p3{top:46px;width:118px;height:38px;background:linear-gradient(150deg,#3a2a1f,#22170f);
+box-shadow:0 20px 30px -22px rgba(60,40,25,.9)}
+
+.iso{position:relative;width:196px;height:118px;overflow:hidden;
+-webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
+mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
+.iso-floor{position:absolute;left:50%;top:18%;width:180px;height:150px;margin-left:-90px;
+background:
+repeating-linear-gradient(90deg,rgba(217,87,26,.3) 0 1px,transparent 1px 20px),
+repeating-linear-gradient(0deg,rgba(126,84,46,.22) 0 1px,transparent 1px 20px),
+linear-gradient(180deg,#fff7ec,#f2dfc8);
+transform:perspective(180px) rotateX(62deg);transform-origin:50% 100%;
+animation:isodrift 6s linear infinite}
+@keyframes isodrift{from{background-position:0 0,0 0,0 0}to{background-position:0 0,0 20px,0 0}}
+.iso-haze{position:absolute;inset:auto 0 0;height:44px;
+background:linear-gradient(180deg,transparent,rgba(255,253,247,.9))}
+
+.x3-btn{position:relative;border:1px solid rgba(180,60,10,.5);border-radius:10px;cursor:pointer;
+padding:9px 18px;background:linear-gradient(150deg,#f8974e,#e05a1c);color:#fff;
+font:600 11px/1 'Inter',sans-serif;letter-spacing:.02em;
+box-shadow:0 4px 0 #c9622a,0 8px 0 #a94c1c,0 16px 26px -14px rgba(217,87,26,.66);
+transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.x3-btn:active{transform:translateY(4px);
+box-shadow:0 2px 0 #c9622a,0 4px 0 #a94c1c,0 8px 14px -10px rgba(217,87,26,.6)}
+
+.x3-word{font:700 34px/1 'Inter',sans-serif;letter-spacing:-.02em;color:#fff8ee;
+text-shadow:1px 1px 0 #f4e3ce,2px 2px 0 #ecd8bf,3px 3px 0 #e0c8a9,4px 4px 0 #d3b691,
+5px 5px 0 #c6a37c,6px 6px 0 #b78f66,7px 7px 0 #a87c52,8px 8px 0 #96683f;
+transition:text-shadow .45s var(--ease);cursor:default}
+.x3-word:hover{text-shadow:-1px 1px 0 #f4e3ce,-2px 2px 0 #ecd8bf,-3px 3px 0 #e0c8a9,-4px 4px 0 #d3b691,
+-5px 5px 0 #c6a37c,-6px 6px 0 #b78f66,-7px 7px 0 #a87c52,-8px 8px 0 #96683f}
+
 </style>
 </head>
 <body>
@@ -1102,9 +1170,9 @@ transition:border-color .25s,box-shadow .25s}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">71 个动效与组件、12 套工具，全部真跑。</p>
+      <p class="lead">77 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">71 effects · 12 tools</span>
+    <span class="ph-count">77 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1726,7 +1794,7 @@ transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感
 
   
   <!-- B 3D 与材质 -->
-  <div class="group"><h2>3D 与材质</h2><p>6 · css 3d / 材质</p></div>
+  <div class="group"><h2>3D 与材质</h2><p>12 · css 3d / 材质</p></div>
   <div class="grid">
     <article class="mcard" style="--i:0">
       <span class="badge">3d</span>
@@ -1803,6 +1871,84 @@ baseFrequency=".9" numOctaves="3"/&gt;&lt;/filter&gt;
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>linear-gradient(105deg,#e7caa6,#fffaf3 18%,#d8b28a 38%,#fff8ee 56%,#e0be98 76%)
 background-size:240% 100%; animation: 平移 background-position 0→240%</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:6">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="cub3d"><div class="cub"><i></i><i></i><i></i><i></i><i class="hot"></i><i></i></div></div></div>
+      <div class="info">
+        <div class="name"><b>CSS 立方体</b><span class="en">css cube</span></div>
+        <p class="say">六块面板各自转 90° 再推出半条边，父层给一次透视，整块匀速自转；记住 preserve-3d 要写在旋转的那一层，不是外面。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>六个面：前后 translateZ(32px)，左右 rotateY(±90deg)，上下 rotateX(±90deg)
+父层 perspective:420px；旋转层 transform-style:preserve-3d
+关键帧只改 rotateY，rotateX 固定 -22deg 才有俯视角度</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:7">
+      <span class="badge">hover</span>
+      <div class="demo"><div class="flip" id="flipDemo"><div class="flip-in"><div class="flip-f"><b>封面</b><span>front</span></div><div class="flip-b"><b>背面</b><span>data / 说明</span></div></div></div></div>
+      <div class="info">
+        <div class="name"><b>翻转卡片</b><span class="en">flip card</span></div>
+        <p class="say">正反两块贴在同一张卡上，各设 backface-visibility:hidden，整卡沿 Y 轴转 180°；手指点一下也能翻，别只做 hover。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.flip-in{transform-style:preserve-3d;transition:transform .55s}
+背面先 rotateY(180deg) 再摆内容，否则字是镜像的
+触屏补一个点击切 .on，不要依赖 hover</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:8">
+      <span class="badge">hover</span>
+      <div class="demo"><div class="pxy" id="pxyDemo"><i class="p1"></i><i class="p2"></i><i class="p3"></i></div></div>
+      <div class="info">
+        <div class="name"><b>鼠标视差层叠</b><span class="en">parallax stack</span></div>
+        <p class="say">三张卡按远近分三层，鼠标一动每层位移不同，远的慢近的快；离开范围回到原位，光标不动时还有一点缓慢漂浮。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>位移系数分别 .4 / .8 / 1.3，取鼠标相对容器的 -1~1
+用 translate3d 走合成层，不碰 left/top
+pointerleave 归零，触屏不启用</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:9">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="iso"><div class="iso-floor"></div><div class="iso-haze"></div></div></div>
+      <div class="info">
+        <div class="name"><b>等轴测地平线</b><span class="en">isometric floor</span></div>
+        <p class="say">一块地板平面 rotateX 62° 拉出透视，双向网格当背景并缓慢前行，远端用渐变遮住；不用三维库也有纵深感。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>transform:perspective(180px) rotateX(62deg)
+两向 repeating-linear-gradient 画 20px 网格
+background-position 缓慢偏移，远端 mask 渐隐</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:10">
+      <span class="badge">click</span>
+      <div class="demo"><button class="x3-btn" type="button">按下试试</button></div>
+      <div class="info">
+        <div class="name"><b>立体挤出按钮</b><span class="en">extruded button</span></div>
+        <p class="say">用三层同色投影堆出厚度，按下时按钮下沉、投影收短，松手弹回；厚度靠阴影，不靠图片和渐变描边。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>box-shadow:0 4px 0 #c9622a,0 8px 0 #a94c1c,0 14px 24px -12px rgba(217,87,26,.6)
+:active{transform:translateY(4px)} 同时把前两层阴影减到 2px / 4px
+transition 只给 transform 和 box-shadow，别加 all</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:11">
+      <span class="badge">hover</span>
+      <div class="demo"><div class="x3-word">depth</div></div>
+      <div class="info">
+        <div class="name"><b>立体字堆叠</b><span class="en">extruded text</span></div>
+        <p class="say">同一个字用 8 层错位的实色阴影堆出体积，颜色逐层变深；悬停时整束投影换方向，像光源挪了位置。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>text-shadow 每层 1px 递增，颜色从 #f6e6d2 走到 #8a4a1f
+只改 x/y 偏移就能转光，不要缩放字号
+层数 6–9 够了，再多只是变糊</pre></div>
       </div>
     </article>
   </div>
@@ -3243,6 +3389,29 @@ if (otpDemo) {
       c.classList.toggle('cur', n === oi)
     })
   }, 700)
+}
+
+
+/* 翻转卡片：点击也能翻 */
+var flipDemo = document.getElementById('flipDemo')
+if (flipDemo) {
+  flipDemo.addEventListener('click', function () { flipDemo.classList.toggle('on') })
+}
+/* 视差层叠：指针带动三层不同位移 */
+var pxyDemo = document.getElementById('pxyDemo')
+if (pxyDemo) {
+  var pxyLayers = Array.prototype.slice.call(pxyDemo.querySelectorAll('i'))
+  var pxyK = [4, 8, 13]
+  var pxyMove = function (dx, dy) {
+    pxyLayers.forEach(function (el, n) {
+      el.style.transform = 'translate3d(' + (dx * pxyK[n]) + 'px,' + (dy * pxyK[n]) + 'px,0)'
+    })
+  }
+  pxyDemo.addEventListener('pointermove', function (e) {
+    var r = pxyDemo.getBoundingClientRect()
+    pxyMove((e.clientX - r.left - r.width / 2) / (r.width / 2), (e.clientY - r.top - r.height / 2) / (r.height / 2))
+  })
+  pxyDemo.addEventListener('pointerleave', function () { pxyMove(0, 0) })
 }
 
 /* 分段滑块：切页签后重算位置 */
