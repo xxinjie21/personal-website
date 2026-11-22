@@ -59,11 +59,14 @@ body {
     var(--bg);
   background-attachment: fixed;
   color: var(--text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
-    'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+  /* 全站同一套字体：拉丁用 Inter，中文优先思源/鸿蒙/苹方，Windows 落回更饱满的微软雅黑正文体 */
+  font-family: 'Inter', 'Segoe UI Variable Text', -apple-system, BlinkMacSystemFont,
+    'MiSans', 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 1.68;
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: 0.008em;
   /* Windows 上 antialiased 会把字磨薄，改成自动渲染更清晰 */
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;

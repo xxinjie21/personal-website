@@ -1,7 +1,8 @@
 /* 笔记正文排版（Obsidian 阅读模式风格） */
 .markdown {
-  font-size: 15.5px;
-  line-height: 1.84;
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
   color: var(--text);
   word-break: break-word;
 }
@@ -12,20 +13,20 @@
   scroll-margin-top: calc(var(--nav-height) + 12px);
 }
 .markdown h1 {
-  font-size: 22px;
+  font-size: 23px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 6px;
 }
 .markdown h2 {
-  font-size: 18.5px;
+  font-size: 20px;
 }
 .markdown h3 {
-  font-size: 16.5px;
+  font-size: 17.5px;
 }
 .markdown h4,
 .markdown h5,
 .markdown h6 {
-  font-size: 15.5px;
+  font-size: 16.5px;
   color: var(--text-muted);
 }
 
@@ -47,8 +48,8 @@
   background: rgba(217, 87, 26, 0.055);
   /* 引用块用正文色而不是次级灰，例题与推导都在里面，先保证看得清 */
   color: #33251a;
-  font-size: 15.5px;
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.85;
   border-radius: 0 8px 8px 0;
 }
 .markdown blockquote p {
@@ -169,6 +170,11 @@
 }
 
 /* 公式 */
+/* 引用块里的推导公式再放大一档，例题本来就是拿来对着算的 */
+.markdown blockquote .md-math-block {
+  font-size: 1.15em;
+  margin: 8px 0 10px;
+}
 /* 整行公式可点开放大，光标先给提示 */
 .markdown .md-math-block {
   overflow-x: auto;
@@ -180,11 +186,14 @@
 }
 .markdown .katex-display {
   margin: 10px 0;
-  font-size: 1.05em;
+  font-size: 1.15em;
 }
 .markdown .katex {
-  font-size: 1.02em;
+  /* 公式默认太细：整体放大一档，再用极细描边补笔画，Windows 上不至于糊成灰线 */
+  font-size: 1.1em;
   color: inherit;
+  text-rendering: geometricPrecision;
+  -webkit-text-stroke: 0.3px currentColor;
 }
 .markdown .md-math-block:hover {
   background: rgba(217, 87, 26, 0.05);

@@ -389,7 +389,7 @@ const onBrandClick = () => {
   opacity: 0.7;
 }
 .nav-link span {
-  font-size: 13.5px;
+  font-size: 14px;
 }
 .nav-link em {
   font-style: normal;

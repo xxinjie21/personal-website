@@ -98,7 +98,7 @@ export default { name: 'NoteTreeNode' }
   border-radius: 5px;
   background: transparent;
   color: var(--text-dim);
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.6;
   text-align: left;
   cursor: pointer;
@@ -124,7 +124,7 @@ export default { name: 'NoteTreeNode' }
 
 /* 目录比文件亮一档、厚一档：层级先靠颜色拉开，再靠缩进 */
 .dir.d1 .dir-name {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--text);
 }
