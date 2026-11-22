@@ -132,7 +132,6 @@ transition:grid-template-rows .44s var(--ease),opacity .3s ease}
 .detail ul{padding:0 14px 13px;display:grid;gap:7px}
 .detail li{font-size:11.5px;line-height:1.8;color:#5f574e;display:flex;gap:8px}
 .detail li i{flex:none;width:4px;height:4px;border-radius:50%;background:rgba(217,87,26,.45);margin-top:8px}
-.detail-skill{padding:0 12px 12px}
 .detail-refs{padding:0 13px 12px}
 .detail-refs ul{display:grid;gap:6px;padding:0}
 .detail-refs li{display:flex;flex-direction:column;gap:1px;font-size:10.5px;line-height:1.55}
@@ -144,23 +143,6 @@ transition:grid-template-rows .44s var(--ease),opacity .3s ease}
 .detail .detail-refs{padding:0;display:grid;gap:5px}
 .detail .detail-refs li{display:flex;flex-direction:column;gap:1px;font-size:10.5px;line-height:1.55}
 
-/* skill 并入 */
-.skillbox{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,253,250,.8);padding:12px 13px}
-.sk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.sk-name{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--accent-cream)}
-.badge{font-size:9px;letter-spacing:.3px;padding:1px 6px;border-radius:20px;color:#ab4712;
-background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
-.sk-link{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28)}
-.sk-one{font-size:11.5px;color:#5f574e;line-height:1.7;margin-top:7px}
-.sk-row{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-.sk-why{font-size:11px;color:var(--muted);line-height:1.7;margin-top:7px}
-.sk-tip{font-size:10px;color:#a08f7e;line-height:1.6;margin-top:4px}
-.sk-note{font-size:11.5px;color:#6b5b4d;line-height:1.75;padding:2px 2px 0}
-.sk-row .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#b9a48f;min-width:22px;padding-top:3px}
-.sk-row .v{flex:1;font-size:11px;color:var(--text-dim);line-height:1.65}
-.cmd{font-family:var(--mono);font-size:10.5px;color:var(--accent-cream);background:rgba(217,87,26,.06);
-border:1px solid rgba(217,87,26,.16);border-radius:6px;padding:2px 6px;display:inline-block;margin:2px 3px 2px 0;word-break:break-all}
-.copy{flex:none;border:1px solid var(--line);background:rgba(255,255,255,.8);border-radius:999px;
 font-size:10px;padding:3px 9px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;transition:all .24s var(--ease)}
 .copy:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
 .copy.done{background:rgba(217,87,26,.12);border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
@@ -325,7 +307,7 @@ const STAGES = [
       '规则文件名按工具：Claude Code 用 CLAUDE.md，Codex 用 AGENTS.md，Cursor 用 .cursorrules 或 .cursor/rules；内容不用为工具改。',
       '上下文看 /context：超过六成先 compact 或开新会话；跑偏用 rewind 回退，Esc 随时打断，别让错误滚雪球。'
     ],
-    skill: { note: '该阶段没有对口 skill。环境问题看官方文档，别让 AI 猜版本号。' },
+
     prompt: `你是我的 Vibe Coding 搭档，现在在第 1 阶段「备环境」。这一阶段不写业务代码，只把工具链和开发宪法配好。
 先问我 5 件事：用什么语言和框架、操作系统与已装版本、用哪个 AI 编程工具（Claude Code / Cursor / Codex / Trae）、仓库是新建还是已有、有没有域名。
 答完按顺序给：按我的语言给运行时安装命令（Windows / macOS 各一份）、.gitignore 内容、规则文件全文（按我选的工具给对应文件名）、第一个 commit 的命令。
@@ -347,7 +329,7 @@ const STAGES = [
       { do: '列页面清单，最多五页，每页补「从哪进、看什么、下一步去哪」。', note: '手写，不用工具', gain: '页面清单（≤5）' },
       { do: '功能分 P0 / P1 / P2，P0 不超过三条，先跑通再谈扩展。', note: '手写，不用工具', gain: '优先级表' },
       { do: '写三条「明确不做」，把范围钉死，挡住临时加需求。', gain: '「不做」边界' },
-      { do: '每条需求配一个可观测验收：点一下出现什么、刷新后还剩什么。', tool: ['doc-coauthoring', 'https://github.com/anthropics/skills'], gain: 'PRD.md' }
+      { do: '每条需求配一个可观测验收：点一下出现什么、刷新后还剩什么，收成 PRD。', note: '用交付模板填', gain: 'PRD.md' }
     ],
     checks: [
       '每页都有入口和下一步，孤页能说清为什么留',
@@ -362,13 +344,6 @@ const STAGES = [
       '验收写成「点一下 → 出现什么」；写不出现象的需求，开发阶段一定扯皮。',
       'PRD 三段就够：目标与用户、页面与功能、验收与不做；给 AI 的提示词按「角色 + 目标 + 约束 + 输出格式」四段写。'
     ],
-    skill: {
-      name: 'doc-coauthoring',
-      badge: '开源',
-      repo: 'https://github.com/anthropics/skills',
-      cmds: ['/plugin marketplace add anthropics/skills', '/plugin install document-skills@anthropic-agent-skills'],
-      why: '把零散回答收成结构化 PRD：目标、范围、验收各一节，改起来不用重写全文。'
-    },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 2 阶段「定需求」，产出 PRD.md，不写代码、不画界面。
 先一次问我 3 个问题（每题给 2–3 个选项并说明影响）：给谁用、做几页、最想先跑通哪三件事；我答完再问下一组，最多三轮。
 问清后先复述目标与验收口径，等我确认，再按「用户与场景 / 页面清单 / P0-P2 / 不做 / 验收」五节写 PRD。
@@ -407,7 +382,7 @@ const STAGES = [
       '需求变更先改 SDD 再改代码；文档落后一天，后面全靠猜。',
       '调性与动效清单分别从<a class="tlink" href="design-refs.html">设计参考</a>、<a class="tlink" href="motion-handbook.html">动效手册</a>里挑，写进 SDD 的设计约束；实现阶段只按清单做，不临场发明。'
     ],
-    skill: { note: 'SDD 是项目自身知识，skill 替不了。用 dbdiagram、OpenAPI 这类工具把结构固定下来。' },
+
     prompt: `你是我的 Vibe Coding 搭档，现在在第 3 阶段「写 SDD」。目标是把实现方案定稿，让编码阶段只做翻译，不做设计。这份 SDD 会直接交给 AI 批量编码（Spec Coding），接口和字段必须能被机器读懂。
 先问我 5 件事：技术栈有没有指定、数据库用哪个、要不要登录、部署在哪个平台、最窄要支持多少宽度。
 然后按六章产出：技术选型表（含理由与备选）、架构图（Mermaid）、目录树、数据库 schema、接口清单（OpenAPI 片段）、验收与测试点。
@@ -444,13 +419,6 @@ const STAGES = [
       '第一个 commit 前先写 .gitignore，否则密钥和构建产物跟着仓库走。',
       'build 通过再提交，别让基线一开始就带着警告；功能开发一律开分支（feat/xxx），提交信息写「动词 + 范围 + 结果」。'
     ],
-    skill: {
-      name: 'web-artifacts-builder',
-      badge: '开源',
-      repo: 'https://github.com/anthropics/skills',
-      cmds: ['/plugin marketplace add anthropics/skills', '/plugin install example-skills@anthropic-agent-skills'],
-      why: '从零拉一个能跑的前端骨架，目录、路由、占位页一次给全，省掉手搭脚手架。'
-    },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 4 阶段「起骨架」。只搭空壳，不写内容和样式。
 先确认三件事：用哪个脚手架、路由有哪几条、404 放哪个路径。然后按 SDD 的目录树建文件，给完整代码，不要省略。
 要求：每条路由可直接输 URL 打开；build 零报错；占位页有标题、一句占位、返回链接；提交前检查 .gitignore。
@@ -489,13 +457,6 @@ const STAGES = [
       '一页最多两个主动效，触屏不能只靠 hover；先从动效手册里挑名字再实现。',
       '设计参考只用来定调和对照，不照抄整站；动效手册里的每条都能真跑，挑名字前先点开看一眼再写进页面。'
     ],
-    skill: {
-      name: 'frontend-design',
-      badge: '开源',
-      repo: 'https://github.com/anthropics/skills',
-      cmds: ['/plugin install example-skills@anthropic-agent-skills'],
-      why: '按设计规范生成页面：层级、留白、字阶一次到位，减少「AI 味」的居中卡片。'
-    },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 5 阶段「搭界面」。先问清约束，再生成页面。
 问 6 项：调性（纸感 / 极简 / 科技）、主色、字体、圆角与间距偏好、三页哪页最重要、最窄要支持多少宽度。
 顺序：先给 design-tokens（只给 token，不给页面）→ 我确认 → 再逐页生成；所有颜色间距必须引用 token 名，禁止裸值。
@@ -534,7 +495,7 @@ const STAGES = [
       '数据访问收在 lib/api，页面里不出现 SQL 和表名，换库时只改一层。',
       '错误分三类给不同出口：未登录去登录、无权限说清原因、网络失败给重试。'
     ],
-    skill: { note: '该阶段没有对口 skill；表结构与权限是项目知识，交给数据库迁移与 ORM 更稳，按你的语言选驱动。' },
+
     prompt: `你是我的 Vibe Coding 搭档，现在在第 6 阶段「接数据」。
 先问我 5 件事：数据库用哪个、要不要登录、游客能看什么、数据谁写谁读、测试账号有没有。
 然后按顺序做：迁移脚本 → RLS 策略（默认拒绝，逐条放行）→ lib/api 封装 → 登录与受限页 → 空态错态 → env.example 与 README。
@@ -573,13 +534,6 @@ const STAGES = [
       '已知问题写进 issues，不用「以后再说」口头传；下阶段开始前先清一遍。',
       '验收时把<a class="tlink" href="motion-handbook.html">动效手册</a>当清单逐条触发：只写不跑、或跑了卡顿的动效，算没做。'
     ],
-    skill: {
-      name: 'webapp-testing',
-      badge: '开源',
-      repo: 'https://github.com/anthropics/skills',
-      cmds: ['/plugin install example-skills@anthropic-agent-skills'],
-      why: '按真实浏览器跑页面：点、填、断言一次写完，比手工清单稳定。'
-    },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 7 阶段「测试与评审」。目标是把「我看着没问题」换成可重跑的检查。
 先问我 5 件事：哪三条路径坏了最致命、单测覆盖哪些纯逻辑、e2e 用哪个框架还是手工、上线前必须手点哪十件事、已知问题哪些能留到下一版。
 然后依次给：回归清单 → 单测文件 → 3 条 e2e → 评审清单（只挑 bug / 安全 / 性能）→ 冒烟 10 条 → 已知问题 issue 模板。
@@ -618,7 +572,7 @@ const STAGES = [
       '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。',
       '完整产物清单：docs/PRD.md、docs/SDD.md、docs/tasks.md；四页源码；schema.sql 与权限策略；单测 + 3 条 e2e；CI 配置；线上地址。逐项打勾，缺一项都不算做完。'
     ],
-    skill: { note: '该阶段没有对口 skill；构建与部署的可重复性靠流水线，Coolify / Cloudflare 就够。' },
+
     prompt: `你是我的 Vibe Coding 搭档，现在在第 8 阶段「上线与迭代」。
 先问我 5 件事：部署到哪个平台、有没有域名、构建命令与输出目录、要不要登录后才能看、出问题谁来回滚。
 然后给：上线清单（逐条可勾）、CI 工作流全文、部署步骤（含平台截图位置）、域名与 HTTPS 顺序、监控三项、回滚步骤。
@@ -1012,26 +966,6 @@ function stepsMarkup(s) {
   }).join('')
 }
 
-function skillMarkup(s) {
-  const sk = s.skill || {}
-  if (sk.name) {
-    return `<section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
-        <span>本阶段 skill · ${sk.name}</span>${FOLD}
-      </button>
-      <div class="detail-body"><div class="detail-inner detail-skill"><div class="skillbox">
-        <div class="sk-top"><span class="sk-name">${sk.name}</span><span class="badge">${sk.badge || '开源'}</span>
-          <a class="sk-link" href="${sk.repo}" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
-        <p class="sk-why">${sk.why || ''}</p>
-        <p class="sk-tip">安装命令以 Claude Code 为例；Cursor / Codex / Trae 直接把该 skill 的说明贴进对话即可，不用为装插件换工具。</p>
-        <div class="sk-row"><span class="k">装</span><div class="v">${(sk.cmds || []).map((c) => `<code class="cmd">${c}</code>`).join('')}</div><button class="copy" type="button">复制</button></div>
-      </div></div></div></section>`
-  }
-  return `<section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
-      <span>本阶段 skill · 无对口 skill</span>${FOLD}
-    </button>
-    <div class="detail-body"><div class="detail-inner detail-skill"><p class="sk-note">${sk.note || '该阶段没有对口 skill。'}</p></div></div></section>`
-}
-
 function refsMarkup(s) {
   const refs = REFS[s.n] || []
   if (!refs.length) return ''
@@ -1052,7 +986,6 @@ function stageMarkup(s) {
         </button>
         <div class="detail-body"><div class="detail-inner"><ul>${s.details.map((t) => `<li><i></i><span>${t}</span></li>`).join('')}</ul>${refsMarkup(s)}</div></div>
       </section>
-      ${skillMarkup(s)}
     </div>`
 }
 
@@ -1063,7 +996,6 @@ function buildPrompt(s) {
   const flows = s.steps.map((st, i) => `${i + 1}. 做什么：${st.do}\n   ① ${toolLine(st)}\n   ② 产出：${st.gain}`)
   let text = s.prompt.trim()
   text += '\n\n执行流程（按顺序做，每步先说清用什么工具、产出什么，我确认后再下一步）：\n' + flows.join('\n')
-  if (s.skill?.name) text += `\n\n配套 skill：${s.skill.name}（按这个 skill 的工作流做，别自己另起一套）`
   text += '\n\n本阶段验收标准：\n' + s.checks.map((c, i) => `${i + 1}. ${c}`).join('\n')
   text += '\n\n需要你（用户）配合的事，别替我猜：\n' + s.user.map((t, i) => `${i + 1}. ${t}`).join('\n')
   text += '\n\n实践要点：\n' + s.details.map((t, i) => `${i + 1}. ${t}`).join('\n')
@@ -1210,6 +1142,7 @@ fromHash()
 </script>
 </body>
 </html>
+
 
 
 
