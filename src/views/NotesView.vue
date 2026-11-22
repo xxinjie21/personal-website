@@ -683,7 +683,7 @@ watch(
             :key="h.id"
             class="outline-item"
             :class="['lv' + h.level, { active: h.id === activeHeading }]"
-            :style="{ paddingLeft: (h.level - 1) * 16 + 3 + 'px' }"
+            :style="{ paddingLeft: (h.level - 1) * 8 + 'px' }"
             @click="scrollTo(h.id)"
           >
             <button
@@ -1267,8 +1267,8 @@ watch(
   display: flex;
   align-items: flex-start;
   gap: 3px;
-  margin: 0 4px;
-  padding: 3px 6px;
+  margin: 0 4px 0 0;
+  padding: 3px 6px 3px 0;
   border-radius: 4px;
   font-size: 12px;
   line-height: 1.55;
@@ -1278,7 +1278,7 @@ watch(
 }
 .outline-caret {
   flex: none;
-  width: 11px;
+  width: 10px;
   height: 13px;
   display: inline-flex;
   align-items: center;
