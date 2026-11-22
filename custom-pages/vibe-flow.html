@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../embed/frame.css">
 <style>
 :root{
   --bg:#f7f2ec;--panel-solid:#fffdfa;--text:#241a12;--text-dim:#564334;--muted:#8a7365;
@@ -22,22 +23,9 @@ radial-gradient(1000px 620px at 6% -14%,rgba(217,87,26,.08),transparent 64%),
 radial-gradient(820px 560px at 96% 2%,rgba(220,150,90,.06),transparent 68%),var(--bg);
 color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
 line-height:1.6;-webkit-font-smoothing:antialiased;padding:24px 22px 34px}
-.wrap{max-width:1180px;margin:0 auto}
+.wrap{max-width:1080px;margin:0 auto}
 
-/* 顶部：跨页导航 */
-.devnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:18px;
-font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
-.devnav span.lbl{color:#b9a48f;margin-right:4px}
-.devnav a{padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,250,.7);
-color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
-.devnav a:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
-.devnav a.here{color:var(--accent-cream);border-color:rgba(217,87,26,.3);background:rgba(217,87,26,.07)}
-
-header{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-soft)}
-h1{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:30px;margin-top:8px;letter-spacing:-.01em}
-.lead{font-size:12.5px;color:var(--muted);max-width:600px;margin-top:8px;line-height:1.75}
-.h-acts{margin-left:auto;align-self:flex-start;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:22px}
+/* 顶部：跨页导航与页头由 /embed/frame.css 统一提供 */
 .master{border:1px solid rgba(217,87,26,.3);background:rgba(217,87,26,.06);color:var(--accent-cream);
 border-radius:999px;padding:7px 14px;font:500 11.5px/1 'Inter',sans-serif;cursor:pointer;
 transition:all .26s var(--ease)}
@@ -45,7 +33,7 @@ transition:all .26s var(--ease)}
 
 /* 左卡右内容 */
 .shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:20px;align-items:start}
-.rail{position:sticky;top:18px;display:flex;flex-direction:column;gap:7px}
+.rail{position:sticky;top:64px;display:flex;flex-direction:column;gap:7px}
 .st{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;cursor:pointer;
 border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 12px 11px 14px;background:rgba(255,253,250,.7);
 color:inherit;font:inherit;transition:background .26s,border-color .24s,box-shadow .3s var(--ease),transform .26s var(--ease)}
@@ -145,8 +133,6 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 }
 @media (max-width:700px){
   body{padding:18px 14px 26px}
-  h1{font-size:25px}
-  .h-acts{margin-left:0}
   .rail{grid-template-columns:repeat(2,minmax(0,1fr))}
   .st{padding:9px 10px 9px 12px}
   .st-title{font-size:13.5px}
@@ -159,25 +145,30 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 </head>
 <body>
 <div class="wrap">
-  <nav class="devnav" aria-label="开发页导航">
-    <span class="lbl">开发</span>
-    <a href="vibe-flow.html" class="here">全流程</a>
-    <a href="motion-handbook.html">动效手册</a>
-    <a href="design-refs.html">设计参考</a>
-  </nav>
+  <div class="devbar" role="navigation" aria-label="开发页导航">
+    <span class="db-dot" aria-hidden="true"></span>
+    <span class="db-tag">development</span>
+    <span class="db-sep" aria-hidden="true"></span>
+    <span class="db-current">Vibe Coding 全流程</span>
+    <nav class="db-nav">
+      <a href="vibe-flow.html" class="here">全流程</a>
+      <a href="motion-handbook.html">动效手册</a>
+      <a href="design-refs.html">设计参考</a>
+    </nav>
+  </div>
 
-  <header>
-    <div>
+  <div class="page-head reveal">
+    <div class="ph-text">
       <p class="eyebrow">workflow · 6 stages</p>
       <h1>Vibe Coding 全流程</h1>
       <p class="lead">左边六个阶段，点一个，右边就是这一步的全部：做什么、用什么工具、得到什么、怎么判过关。每个阶段都能一键复制一段提示词，让 AI 先反问你，把需求问清再开工。</p>
     </div>
-    <div class="h-acts">
+    <div class="ph-side">
       <button class="master" type="button" id="copyMaster">复制六阶段总提示词</button>
     </div>
-  </header>
+  </div>
 
-  <div class="shell">
+  <div class="shell reveal">
     <aside class="rail" id="rail" aria-label="阶段">
       <button class="st on" type="button" data-stage="1" aria-selected="true">
         <span class="st-no">01</span>
@@ -544,6 +535,7 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
   </section>
 </div>
 
+<script src="../embed/frame.js" defer></script>
 <script>
 const railItems = [...document.querySelectorAll('.st')]
 const pane = document.getElementById('pane')
@@ -644,3 +636,5 @@ fromHash()
 </script>
 </body>
 </html>
+
+

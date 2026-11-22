@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../embed/frame.css">
 <style>
 :root{
   --bg:#f7f2ec;--panel-solid:#fffdfa;--text:#241a12;--text-dim:#564334;--muted:#8a7365;
@@ -22,11 +23,7 @@ radial-gradient(1100px 700px at 8% -12%,rgba(217,87,26,.1),transparent 62%),
 radial-gradient(900px 620px at 92% 4%,rgba(220,150,90,.08),transparent 66%),var(--bg);
 color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
 line-height:1.6;-webkit-font-smoothing:antialiased;padding:26px 22px 34px}
-.wrap{max-width:1060px;margin:0 auto}
-header{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:8px}
-.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-soft)}
-h1{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:30px;margin-top:8px;letter-spacing:-.01em}
-.lead{font-size:12.5px;color:var(--muted);max-width:600px;margin-top:8px;line-height:1.75}
+.wrap{max-width:1080px;margin:0 auto}
 .how{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 22px;font-size:11.5px;color:var(--text-dim)}
 .how span{border:1px solid var(--line);border-radius:20px;padding:5px 11px;background:rgba(255,253,250,.72)}
 .how b{color:var(--accent-cream);font-weight:600}
@@ -350,34 +347,33 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
 @media (max-width:900px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:820px){
   body{padding:18px 14px 26px}
-  h1{font-size:25px}
   .grid{grid-template-columns:1fr}
   .mcard:hover{transform:none}
 }
-.devnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px;
-font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
-.devnav .lbl{color:#b9a48f;margin-right:4px}
-.devnav a{padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,250,.7);
-color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
-.devnav a:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
-.devnav a.here{color:var(--accent-cream);border-color:rgba(217,87,26,.3);background:rgba(217,87,26,.07)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav class="devnav" aria-label="开发页导航">
-    <span class="lbl">开发</span>
-    <a href="vibe-flow.html">全流程</a>
-    <a href="motion-handbook.html" class="here">动效手册</a>
-    <a href="design-refs.html">设计参考</a>
-  </nav>
-  <header>
-    <div>
+  <div class="devbar" role="navigation" aria-label="开发页导航">
+    <span class="db-dot" aria-hidden="true"></span>
+    <span class="db-tag">development</span>
+    <span class="db-sep" aria-hidden="true"></span>
+    <span class="db-current">动效手册</span>
+    <nav class="db-nav">
+      <a href="vibe-flow.html">全流程</a>
+      <a href="motion-handbook.html" class="here">动效手册</a>
+      <a href="design-refs.html">设计参考</a>
+    </nav>
+  </div>
+
+  <div class="page-head reveal">
+    <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
       <p class="lead">27 个动效，每个都能在这里真跑一遍。说不清的时候，先说名字，再说放哪一块。</p>
     </div>
-  </header>
+    <span class="ph-count">27 motions · 6 tools</span>
+  </div>
 
   <div class="how">
     <span><b>1</b> 把鼠标放上去 / 点一下</span>
@@ -799,6 +795,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
   </section>
 </div>
 
+<script src="../embed/frame.js" defer></script>
 <script>
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
@@ -1183,4 +1180,5 @@ if (cv) {
 </script>
 </body>
 </html>
+
 

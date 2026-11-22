@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../embed/frame.css">
 <style>
 /* 与主站 src/style/theme.css 对齐 */
 :root{
@@ -28,12 +29,7 @@ animation:drift 24s ease-in-out infinite alternate}
 @keyframes drift{0%{transform:translate3d(-2%,-1.5%,0) scale(1)}
 50%{transform:translate3d(2.5%,2%,0) scale(1.05)}
 100%{transform:translate3d(-1%,1.5%,0) scale(1.02)}}
-.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:18px;min-height:calc(100vh - 48px);justify-content:center;position:relative}
-header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:2px;animation:fade .4s var(--ease) both}
-.brand h1{font-size:20px;font-weight:700;letter-spacing:.2px}
-.brand p{font-size:12px;color:var(--muted);margin-top:6px}
-.count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
-color:var(--muted);text-transform:uppercase}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:16px;min-height:calc(100vh - 48px);justify-content:flex-start;position:relative}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
 a.card{grid-column:auto}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
@@ -93,33 +89,32 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   .wrap{min-height:calc(100vh - 36px);justify-content:flex-start;gap:14px}
   .grid{grid-template-columns:1fr;gap:10px}
   a.card,a.card.wide{grid-column:auto;min-height:0;gap:6px;padding:15px 15px 14px}  .desc{line-height:1.75}
-  .brand h1{font-size:18px}
-  .count{display:none}
+  .ph-count{display:none}
 }
-.devnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;
-font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.1em;color:var(--muted)}
-.devnav .lbl{color:#b9a48f;margin-right:4px}
-.devnav a{padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,250,.7);
-color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
-.devnav a:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
-.devnav a.here{color:var(--accent-cream);border-color:rgba(217,87,26,.3);background:rgba(217,87,26,.07)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav class="devnav" aria-label="开发页导航">
-    <span class="lbl">开发</span>
-    <a href="vibe-flow.html">全流程</a>
-    <a href="motion-handbook.html">动效手册</a>
-    <a href="design-refs.html" class="here">设计参考</a>
-  </nav>
-  <header>
-    <div class="brand">
+  <div class="devbar" role="navigation" aria-label="开发页导航">
+    <span class="db-dot" aria-hidden="true"></span>
+    <span class="db-tag">development</span>
+    <span class="db-sep" aria-hidden="true"></span>
+    <span class="db-current">设计参考</span>
+    <nav class="db-nav">
+      <a href="vibe-flow.html">全流程</a>
+      <a href="motion-handbook.html">动效手册</a>
+      <a href="design-refs.html" class="here">设计参考</a>
+    </nav>
+  </div>
+
+  <div class="page-head reveal">
+    <div class="ph-text">
+      <p class="eyebrow">design references</p>
       <h1>设计灵感 · 参考站</h1>
-      <p>六个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆、拆细节。点卡片开原站，看到合适的搬回 custom-pages/。</p>
+      <p class="lead">六个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆、拆细节。点卡片开原站，看到合适的搬回 custom-pages/。</p>
     </div>
-    <span class="count">6 sites</span>
-  </header>
+    <span class="ph-count">6 sites</span>
+  </div>
 
   <div class="grid">
     <a class="card" style="--i:0" href="https://uiverse.io" target="_blank" rel="noopener noreferrer">
@@ -191,6 +186,7 @@ color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
 
   <footer>六个站都能免费浏览；Uiverse 的源码、VibeUI 的 prompt 都可直接复制。</footer>
 </div>
+<script src="../embed/frame.js" defer></script>
 <script>
 // 光标跟随光斑 + 轻微倾斜（只在鼠标上生效，触屏不抢滚动）
 document.querySelectorAll('.card').forEach((card) => {
