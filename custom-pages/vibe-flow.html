@@ -31,63 +31,73 @@ border-radius:999px;padding:7px 14px;font:500 11.5px/1 'Inter',sans-serif;cursor
 transition:all .26s var(--ease)}
 .master:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
 
-/* 左卡右内容 */
-.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:20px;align-items:start}
-.rail{position:sticky;top:64px;display:flex;flex-direction:column;gap:7px}
-.st{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;cursor:pointer;
-border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 12px 11px 14px;background:rgba(255,253,250,.7);
-color:inherit;font:inherit;transition:background .26s,border-color .24s,box-shadow .3s var(--ease),transform .26s var(--ease)}
-.st::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:2px;border-radius:2px;background:transparent;transition:background .24s}
-.st:hover{border-color:rgba(217,87,26,.32);background:#fffefb;transform:translateX(2px)}
-.st.on{background:#fffefb;border-color:rgba(217,87,26,.42);box-shadow:0 12px 26px -22px rgba(140,70,30,.6)}
-.st.on::before{background:var(--accent)}
-.st-no{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#b9a48f;padding-top:2px;transition:color .24s}
+/* 阶段步进条：横向 6 段，当前段压橙色下划线 */
+.shell{display:block}
+.rail{position:static;display:flex;gap:4px;flex-wrap:wrap;align-items:stretch;
+border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:11px}
+.st{position:relative;flex:1 1 0;min-width:118px;display:flex;align-items:baseline;gap:7px;text-align:left;cursor:pointer;
+border:0;border-bottom:2px solid transparent;border-radius:8px;padding:7px 9px 8px;background:none;
+color:inherit;font:inherit;transition:background .24s var(--ease),border-color .28s var(--ease),transform .24s var(--ease)}
+.st:hover{background:rgba(217,87,26,.05);transform:translateY(-1px)}
+.st.on{background:rgba(217,87,26,.07);border-bottom-color:var(--accent)}
+.st-no{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:#b9a48f;padding-top:0;transition:color .24s}
 .st.on .st-no{color:var(--accent)}
-.st-body{display:flex;flex-direction:column;gap:2px;min-width:0}
-.st-title{font-family:'Playfair Display','Noto Serif SC',serif;font-size:15px;font-weight:500;letter-spacing:.01em}
+.st-body{display:flex;flex-direction:column;gap:0;min-width:0}
+.st-title{font-family:'Playfair Display','Noto Serif SC',serif;font-size:13.5px;font-weight:500;letter-spacing:.01em;white-space:nowrap}
 .st.on .st-title{color:var(--accent-cream)}
-.st-goal{font-size:11px;color:var(--muted);line-height:1.5}
-.st-dot{margin-left:auto;width:5px;height:5px;border-radius:50%;background:rgba(217,87,26,.55);flex:none;margin-top:5px}
-.rail-note{margin-top:6px;font-size:10.5px;color:#a08f7e;line-height:1.7;padding:0 2px}
+.st-goal{display:none}
+.st-dot{display:none}
+.rail-note{margin:8px 0 0;font-size:10.5px;color:#a08f7e;line-height:1.7;padding:0 2px}
 
-/* 右侧面板 */
+/* 阶段面板：占满整行，正文分主 / 侧两栏 */
 .pane{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#fffdfa,#fdfaf5);
-box-shadow:0 20px 44px -36px rgba(85,53,28,.7);min-height:520px;overflow:hidden}
-.pane-head{display:flex;align-items:flex-start;gap:12px;padding:16px 20px 14px;border-bottom:1px dashed var(--line);
+box-shadow:0 20px 44px -36px rgba(85,53,28,.7);overflow:hidden}
+.pane-head{position:relative;display:flex;align-items:flex-start;gap:14px;padding:10px 22px 8px;border-bottom:1px dashed var(--line);
 background:rgba(217,87,26,.03)}
 .pno{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent)}
-.pane-head h2{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:21px;margin-top:4px}
-.pmeta{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:#a08f7e;margin-top:5px}
+.pane-head h2{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:21.5px;margin-top:2px}
+.pmeta{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#a08f7e;margin-top:4px}
+
+
 .copyp{margin-left:auto;flex:none;border:1px solid rgba(217,87,26,.3);background:rgba(217,87,26,.06);color:var(--accent-cream);
 border-radius:999px;padding:7px 13px;font:500 11px/1 'Inter',sans-serif;cursor:pointer;transition:all .26s var(--ease)}
 .copyp:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
 .copyp.done{background:rgba(217,87,26,.16);border-color:rgba(217,87,26,.5)}
-.pane-body{padding:4px 20px 22px}
-.sec{margin-top:16px}
+.pane-body{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);column-gap:30px;
+padding:10px 22px 8px}
+.pane-body>.scol{display:flex;flex-direction:column;min-width:0}
+.stage-nav{display:flex;align-items:center;gap:10px;padding:8px 22px 9px;border-top:1px dashed var(--line)}
+.navbtn{border:1px solid var(--line);background:rgba(255,253,250,.72);border-radius:999px;padding:6px 12px;
+font:500 11px/1 'Inter',sans-serif;color:var(--text-dim);cursor:pointer;transition:all .24s var(--ease)}
+.navbtn:hover:not(:disabled){border-color:rgba(217,87,26,.35);color:var(--accent-cream);transform:translateY(-1px)}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+.nav-count{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#a08f7e}
+.sec{margin-top:11px}
 .sec>h3{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:7px}
 .sec>p{font-size:12px;color:#5f574e;line-height:1.8}
 
-/* 步骤 */
-.steps{list-style:none;display:flex;flex-direction:column;margin-top:2px}
-.steps li{position:relative;display:flex;gap:10px;padding:8px 0 10px 18px;
-transition:background .28s var(--ease)}
-.steps li:hover{background:rgba(217,87,26,.035)}
-.steps li::before{content:"";position:absolute;left:4px;top:13px;width:5px;height:5px;border-radius:50%;
+/* 步骤：一行一张小卡，编号在左，产出在右 */
+.steps{list-style:none;display:grid;gap:5px;margin-top:3px}
+.steps li{position:relative;display:flex;gap:8px;padding:6px 9px 7px 23px;
+border:1px solid var(--line);border-radius:10px;background:rgba(255,253,250,.55);
+transition:background .26s var(--ease),border-color .26s var(--ease),transform .26s var(--ease),box-shadow .3s var(--ease)}
+.steps li:hover{background:#fffefb;border-color:rgba(217,87,26,.3);transform:translateY(-1px);
+box-shadow:0 10px 20px -20px rgba(140,70,30,.55)}
+.steps li::before{content:"";position:absolute;left:10px;top:14px;width:6px;height:6px;border-radius:50%;
 background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06);transition:box-shadow .3s var(--ease)}
-.steps li:hover::before{box-shadow:0 0 0 5px rgba(217,87,26,.12)}
-.steps li::after{content:"";position:absolute;left:6px;top:20px;bottom:-3px;width:1px;background:var(--line)}
-.steps li:last-child::after{display:none}
+.steps li:hover::before{box-shadow:0 0 0 5px rgba(217,87,26,.14)}
+.steps li::after{display:none}
 .n{font-family:var(--mono);font-size:9px;color:#b9a48f;padding-top:3px;flex:none}
-.do{font-size:12px;color:var(--text-dim);line-height:1.65}
-.out{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:5px;font-size:11px;color:var(--muted)}
+.do{font-size:11.5px;color:var(--text-dim);line-height:1.5}
+.out{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px;font-size:10.5px;color:var(--muted);line-height:1.5}
 .tlink{font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28);padding-bottom:1px}
 .tlink:hover{color:var(--accent-cream)}
 .gain{color:var(--text-dim)}
 .gain b{font-weight:600;color:var(--accent-cream)}
 
 /* 验收 */
-.check{list-style:none;display:flex;flex-direction:column;gap:6px}
-.check li{font-size:11.5px;color:#5f574e;display:flex;gap:7px;line-height:1.7}
+.check{list-style:none;display:flex;flex-direction:column;gap:5px}
+.check li{font-size:11.5px;color:#5f574e;display:flex;gap:7px;line-height:1.6}
 .check svg{width:12px;height:12px;flex:none;margin-top:4px;color:rgba(217,87,26,.6)}
 .trap{font-size:11.5px;color:#8a7365;padding:9px 11px;border-left:2px solid rgba(217,87,26,.35);
 background:rgba(217,87,26,.04);line-height:1.7}
@@ -108,6 +118,7 @@ transition:grid-template-rows .44s var(--ease),opacity .3s ease}
 .detail ul{padding:0 14px 13px;display:grid;gap:7px}
 .detail li{font-size:11.5px;line-height:1.8;color:#5f574e;display:flex;gap:8px}
 .detail li i{flex:none;width:4px;height:4px;border-radius:50%;background:rgba(217,87,26,.45);margin-top:8px}
+.detail-skill{padding:0 12px 12px}
 
 /* skill 并入 */
 .skillbox{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,253,250,.8);padding:12px 13px}
@@ -140,31 +151,17 @@ footer b{color:var(--accent-cream);font-weight:600}
 footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28)}
 footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 
-@media (min-width:901px){
-  /* 桌面端面板自己滚，页面高度固定在约一屏 */
-  .pane{display:flex;flex-direction:column;height:calc(100vh - 280px);min-height:470px;position:relative}
-  .pane-head{flex:none}
-  .pane-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:26px}
-}
-/* 没有滚动条，用底部渐隐交代「下面还有」；滚到底自动收起 */
-.pane-fade{display:none;position:absolute;left:1px;right:1px;bottom:1px;height:52px;border-radius:0 0 var(--radius) var(--radius);
-pointer-events:none;background:linear-gradient(rgba(255,253,250,0),rgba(255,253,250,.92));opacity:0;transition:opacity .3s var(--ease)}
-@media (min-width:901px){.pane.has-more .pane-fade{display:block;opacity:1}}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:14px}
-  .rail{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-  .st-goal{display:none}
-  .rail-note{grid-column:1/-1;margin-top:2px}
-  .pane{min-height:0}
+  .pane-body{grid-template-columns:1fr;column-gap:0;padding:10px 16px 8px}
+
+  .stage-nav{flex-wrap:wrap}
 }
 @media (max-width:700px){
-  body{padding:18px 14px 26px}
-  .rail{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .st{padding:9px 10px 9px 12px}
-  .st-title{font-size:13.5px}
+  .st{flex:1 1 40%;min-width:0;padding:8px 8px 9px}
+  .st-title{font-size:13px}
   .pane-head{padding:14px 14px 12px;flex-wrap:wrap}
   .copyp{margin-left:0}
-  .pane-body{padding:2px 14px 18px}
+  .pane-body{padding:8px 14px}
   footer .ap{margin-left:0}
 }
 </style>
@@ -229,6 +226,7 @@ pointer-events:none;background:linear-gradient(rgba(255,253,250,0),rgba(255,253,
 
     <main class="pane" id="pane" aria-live="polite">
       <div class="pane-head">
+        
         <div>
           <span class="pno" id="pno">STAGE 01</span>
           <h2 id="ptitle">定需求</h2>
@@ -237,7 +235,11 @@ pointer-events:none;background:linear-gradient(rgba(255,253,250,0),rgba(255,253,
         <button class="copyp" type="button" id="copyPrompt">复制本阶段提示词</button>
       </div>
       <div class="pane-body" id="paneBody"></div>
-      <div class="pane-fade" aria-hidden="true"></div>
+      <div class="stage-nav">
+        <button class="navbtn" type="button" id="prevStage">← 上一阶段</button>
+        <span class="nav-count" id="navCount">01 / 06</span>
+        <button class="navbtn" type="button" id="nextStage">下一阶段 →</button>
+      </div>
     </main>
   </div>
 
@@ -573,24 +575,13 @@ const paneBody = document.getElementById('paneBody')
 const copyPrompt = document.getElementById('copyPrompt')
 const copyMaster = document.getElementById('copyMaster')
 
+
+const navCount = document.getElementById('navCount')
+const prevStage = document.getElementById('prevStage')
+const nextStage = document.getElementById('nextStage')
+
 let current = 1
 let currentPrompt = ''
-
-// 面板不显示滚动条，用底部渐隐表示「还能往下看」
-function syncFade() {
-  const more = paneBody.scrollHeight - paneBody.scrollTop - paneBody.clientHeight > 6
-  pane.classList.toggle('has-more', more)
-}
-paneBody.addEventListener('scroll', syncFade, { passive: true })
-window.addEventListener('resize', syncFade, { passive: true })
-
-// 滚动条不占位，靠悬浮细条提示；frame.js 是 defer，等它到位再挂
-let paneOv = null
-window.addEventListener('DOMContentLoaded', () => {
-  paneOv = window.frameOverlay?.(paneBody, pane) || null
-  paneOv?.refresh()
-  syncFade()
-})
 
 const META = {
   1: '4 步 · 1 份 requirements.md',
@@ -701,6 +692,28 @@ function selectStage(n, pushHash = true, scroll = true) {
   if (trapSec) trapSec.after(detail)
   else paneBody.appendChild(detail)
 
+  // 本阶段 skill 也折叠起来，标题保留 skill 名字
+  const skillSec = [...paneBody.querySelectorAll('.sec')].find((s) =>
+    /skill/i.test(s.querySelector('h3')?.textContent || '')
+  )
+  if (skillSec) {
+    const label = skillSec.querySelector('h3')
+    const skillName = skillSec.querySelector('.sk-name')?.textContent.trim() || ''
+    const holder = document.createElement('div')
+    holder.className = 'detail-inner detail-skill'
+    ;[...skillSec.children].forEach((c) => {
+      if (c !== label) holder.appendChild(c)
+    })
+    skillSec.classList.add('detail')
+    skillSec.innerHTML = `<button class="detail-btn" type="button" aria-expanded="false">
+        <span>${skillName ? '本阶段 skill · ' + skillName : '本阶段 skill'}</span>
+        <svg class="fold-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="detail-body"></div>`
+    const body = skillSec.querySelector('.detail-body')
+    body.appendChild(holder)
+  }
+
   // 提示词补上本阶段验收标准，AI 拿到的是可判过的版本
   const checks = [...paneBody.querySelectorAll('.check li')]
     .map((li) => li.textContent.trim())
@@ -713,14 +726,30 @@ function selectStage(n, pushHash = true, scroll = true) {
     currentPrompt += '\n\n实践要点：\n' + tips.map((t, i) => `${i + 1}. ${t}`).join('\n')
   }
 
+  // 正文两栏：目标 / 步骤 在左，验收 / 翻车 / 细节 / skill 在右
+  const colMain = document.createElement('div')
+  const colSide = document.createElement('div')
+  colMain.className = 'scol main'
+  colSide.className = 'scol side'
+  ;[...paneBody.children].forEach((s) => {
+    const t = s.querySelector?.('h3')?.textContent.trim() || ''
+    const toSide = !(t.startsWith('目标') || t.startsWith('步骤'))
+    ;(toSide ? colSide : colMain).appendChild(s)
+  })
+  paneBody.appendChild(colMain)
+  paneBody.appendChild(colSide)
+
   // 逐段错峰入场，换阶段时内容是一层一层落下来的
   const secs = [...paneBody.querySelectorAll('.sec')]
   secs.forEach((s, i) => {
     s.classList.add('swap-in')
     s.style.animationDelay = i * 40 + 'ms'
   })
-  syncFade()
-  paneOv?.refresh()
+
+  
+  navCount.textContent = `0${n} / 06`
+  prevStage.disabled = n === 1
+  nextStage.disabled = n === 6
   if (pushHash) history.replaceState(null, '', '#stage-' + n)
   // 切换后把内容面板带回视野，避免停在上一阶段的滚动位置
   if (scroll && pane.getBoundingClientRect().top < -8) {
@@ -754,8 +783,6 @@ paneBody.addEventListener('click', (e) => {
     const box = fold.closest('.detail')
     const open = box.classList.toggle('open')
     fold.setAttribute('aria-expanded', String(open))
-    setTimeout(syncFade, 460)
-    setTimeout(() => paneOv?.refresh(), 460)
     return
   }
   const btn = e.target.closest('.copy')
@@ -764,6 +791,10 @@ paneBody.addEventListener('click', (e) => {
   const text = row ? row.querySelector('.v').innerText.trim() : ''
   copyText(text, btn)
 })
+
+// 上一阶段 / 下一阶段
+prevStage.addEventListener('click', () => { if (current > 1) selectStage(current - 1) })
+nextStage.addEventListener('click', () => { if (current < 6) selectStage(current + 1) })
 
 // #stage-N 直达
 const fromHash = () => {
@@ -775,5 +806,7 @@ fromHash()
 </script>
 </body>
 </html>
+
+
 
 

@@ -47,6 +47,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar { width: 
 @keyframes vtOut { to { opacity: 0; } }
 @keyframes vtIn { from { opacity: 0; transform: translateY(6px); } }
 
+/* 换页兜底：旧页淡出 → 新页淡入，浏览器不支持 View Transition 也不硬闪 */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.wrap { animation: pageIn 0.46s var(--ease) both; }
+html.leaving .wrap {
+  opacity: 0;
+  transform: translateY(-8px);
+  filter: blur(3px);
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+
 /* ── 顶栏：三页共用，吸顶 + 滚动加投影 ───────────────── */
 .devbar {
   position: sticky;
@@ -326,6 +339,14 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar { width: 
   }
   .db-dot {
     animation: none;
+  }
+  .wrap {
+    animation: none;
+  }
+  html.leaving .wrap {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 

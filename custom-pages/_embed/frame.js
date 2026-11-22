@@ -73,6 +73,19 @@
     onScroll()
   }
 
+  // 三页互跳时先淡出再换页，避免白闪直接砸到脸上
+  const calm = matchMedia('(prefers-reduced-motion: reduce)')
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.devbar a, .swap-link')
+    if (!link || link.target === '_blank' || e.metaKey || e.ctrlKey) return
+    const href = link.getAttribute('href')
+    if (!href || href.startsWith('#') || href === location.pathname.split('/').pop()) return
+    if (calm.matches) return
+    e.preventDefault()
+    document.documentElement.classList.add('leaving')
+    setTimeout(() => { location.href = link.href }, 210)
+  })
+
   const items = Array.from(document.querySelectorAll('.reveal'))
   if (!items.length) return
 
