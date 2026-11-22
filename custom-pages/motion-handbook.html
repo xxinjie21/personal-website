@@ -961,27 +961,28 @@ box-shadow:0 0 0 3px #fffdf7,0 4px 10px -8px rgba(85,53,28,.7);transition:all .4
 box-shadow:0 0 0 3px #fffdf7,0 0 0 8px rgba(217,87,26,.12),0 10px 18px -10px rgba(217,87,26,.9)}
 .stepper .st.done{color:#c04a18;border-color:rgba(217,87,26,.5);background:rgba(217,87,26,.06)}
 
-.price{width:186px;padding:11px 12px;border-radius:13px;display:grid;gap:5px;
+.price{width:200px;padding:10px 13px 11px;border-radius:14px;
 background:linear-gradient(180deg,#fff,#fbf3e9);border:1px solid rgba(126,84,46,.16);
 box-shadow:0 22px 36px -26px rgba(85,53,28,.5),inset 0 1px 0 #fff}
-.pr-head{display:flex;align-items:center;justify-content:space-between;min-height:11px}
-.pr-name{font:700 10px/1 var(--mono);letter-spacing:.18em;color:#b8480f}
-.pr-badge{font:600 8.5px/1 'Inter',sans-serif;color:#fff;padding:3px 7px;border-radius:999px;
-background:linear-gradient(120deg,#f08c42,#d9571a);opacity:0;transform:translateY(-3px);
-transition:opacity .3s,transform .3s;box-shadow:0 6px 12px -7px rgba(217,87,26,.9)}
-.pr-badge.on{opacity:1;transform:none}
-.price .ph{display:flex;align-items:baseline;gap:5px;margin-top:1px}
-.price .amt{font:700 21px/1 'Inter',sans-serif;color:#3f2a1a;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.pr-head{display:flex;align-items:center;justify-content:space-between;min-height:17px}
+.pr-name{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#b8480f}
+.price .sw{display:inline-flex;gap:1px;padding:1px;border-radius:999px;background:rgba(126,84,46,.08)}
+.price .sw button{border:0;background:none;padding:4px 9px;border-radius:999px;
+font:500 9px/1 'Inter',sans-serif;color:#8d7863;cursor:pointer;transition:background .2s,color .2s}
+.price .sw button.on{background:#fff;color:#b8480f;font-weight:600;box-shadow:0 2px 6px -4px rgba(85,53,28,.6)}
+.price .ph{display:flex;align-items:baseline;gap:4px;margin-top:6px}
+.price .amt{font:700 22px/1 'Inter',sans-serif;color:#3f2a1a;letter-spacing:-.02em;
+font-variant-numeric:tabular-nums}
 .price .unit{font:400 9.5px/1 var(--mono);color:#9b8571}
-.pr-note{margin:0;font:400 9.5px/1.35 'Inter',sans-serif;color:#8a7561}
-.pr-cta{height:26px;border:0;border-radius:9px;color:#fff;cursor:pointer;
-background:linear-gradient(120deg,#f08c42,#d7511a);font:600 11px/1 'Inter',sans-serif;
+.price .pr-badge{margin-left:auto;align-self:center;font:600 8.5px/1 'Inter',sans-serif;color:#b8480f;
+padding:4px 7px;border-radius:7px;background:rgba(217,87,26,.1);border:1px solid rgba(217,87,26,.2);
+opacity:0;transform:translateY(-3px);transition:opacity .3s,transform .3s}
+.price .pr-badge.on{opacity:1;transform:none}
+.pr-note{margin:5px 0 0;font:400 9.5px/1.5 'Inter',sans-serif;color:#8a7561}
+.pr-cta{margin-top:9px;width:100%;height:26px;border:0;border-radius:9px;color:#fff;cursor:pointer;
+background:linear-gradient(120deg,#f08c42,#d7511a);font:600 11.5px/1 'Inter',sans-serif;
 box-shadow:0 10px 18px -11px rgba(217,87,26,.95);transition:transform .2s,filter .2s}
 .pr-cta:active{transform:translateY(1px) scale(.995)}
-.price .sw{display:inline-flex;justify-self:center;gap:2px;padding:2px;border-radius:999px;background:rgba(126,84,46,.08)}
-.price .sw button{border:0;background:none;padding:4px 10px;border-radius:999px;
-font:500 9.5px/1 'Inter',sans-serif;color:#8a7260;cursor:pointer;transition:background .2s,color .2s}
-.price .sw button.on{background:#fff;color:#b8480f;font-weight:600;box-shadow:0 3px 8px -5px rgba(85,53,28,.6)}
 
 .quote{position:relative;width:206px;padding:13px 15px 12px;border-radius:13px;overflow:hidden;
 background:linear-gradient(160deg,#fff,#fbf2e7);border:1px solid rgba(126,84,46,.14);
@@ -1783,11 +1784,10 @@ pill.style.width=b.getBoundingClientRect().width+'px'
       <span class="badge">click</span>
       <div class="demo">
         <div class="price" id="priceDemo">
-          <div class="pr-head"><span class="pr-name">PRO</span><span class="pr-badge">省 17%</span></div>
-          <div class="ph"><span class="amt">￥39</span><span class="unit">/ 月</span></div>
+          <div class="pr-head"><span class="pr-name">PRO</span><div class="sw"><button class="on" type="button">月付</button><button type="button">年付</button></div></div>
+          <div class="ph"><span class="amt">￥39</span><span class="unit">/ 月</span><span class="pr-badge">省 17%</span></div>
           <p class="pr-note">不限笔记 · 图谱 · 多端同步</p>
           <button class="pr-cta" type="button">开始使用</button>
-          <div class="sw"><button class="on" type="button">月付</button><button type="button">年付</button></div>
         </div>
       </div>
       <div class="info">
