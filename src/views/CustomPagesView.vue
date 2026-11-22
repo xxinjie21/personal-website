@@ -680,6 +680,17 @@ code {
   .last {
     top: 8px;
     right: 8px;
+    background: #fffbf4;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  /* 触屏不保留 3D 图层：卡片文字不再发虚，滚动也不掉帧 */
+  .card {
+    transform-style: flat;
+    will-change: auto;
+  }
+  .card:hover {
+    transform: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

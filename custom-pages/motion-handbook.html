@@ -22,7 +22,7 @@ body{min-height:100%;background:
 radial-gradient(1100px 700px at 8% -12%,rgba(217,87,26,.1),transparent 62%),
 radial-gradient(900px 620px at 92% 4%,rgba(220,150,90,.08),transparent 66%),var(--bg);
 color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
-line-height:1.68;padding:18px 22px 22px}
+line-height:1.68;-webkit-font-smoothing:auto;-webkit-text-size-adjust:100%;overscroll-behavior-y:contain;padding:18px 22px 22px}
 .wrap{max-width:1080px;margin:0 auto}
 
 .group{margin:26px 0 12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -537,8 +537,8 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
 /* 回到顶部 */
 .mtop{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;width:40px;height:40px;
 display:none;place-items:center;border:1px solid var(--line);border-radius:50%;cursor:pointer;
-background:rgba(255,253,250,.94);color:#8a7663;box-shadow:0 10px 22px -14px rgba(60,38,18,.7);
--webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:opacity .25s,transform .25s}
+background:#fffdfa;color:#7a6455;box-shadow:0 10px 22px -14px rgba(60,38,18,.7);
+transition:opacity .25s,transform .25s}
 .mtop.on{display:grid}
 .mtop:active{transform:scale(.94);color:var(--accent)}
 .gsec{display:none}
@@ -552,11 +552,11 @@ background:rgba(255,253,250,.94);color:#8a7663;box-shadow:0 10px 22px -14px rgba
   .mcard:hover{transform:none}
   /* 页签吸附在顶：滑到第 40 张卡也能直接跳组 */
   .mbar{position:sticky;top:0;z-index:30;
-  margin:0 -6px 14px;padding:7px 6px 6px;background:rgba(253,249,242,.94);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(126,84,46,.16)}
+  margin:0 -6px 14px;padding:7px 6px 6px;background:#fbf7f0;
+  border-bottom:1px solid rgba(126,84,46,.22)}
   /* 12 个页签在窄屏换成一排可横向滑，不再折成四行 */
   .mtabs{flex-wrap:nowrap;overflow-x:auto;gap:5px;padding-bottom:2px;
-  scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:none}
   .mtabs::-webkit-scrollbar{display:none}
   .mtabs button{flex:0 0 auto;min-height:34px;padding:8px 13px;font-size:15px;scroll-snap-align:start}
   .mtabs button i{font-size:11.2px}

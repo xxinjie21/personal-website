@@ -1438,9 +1438,7 @@ watch(
     inset: 0;
     z-index: 55;
     display: block;
-    background: rgba(18, 12, 6, 0.34);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: rgba(18, 12, 6, 0.42);
   }
   .notes-view {
     height: calc(100dvh - var(--nav-height));
@@ -1455,9 +1453,14 @@ watch(
     width: min(84vw, 330px) !important;
     background: var(--bg-panel);
     box-shadow: 28px 0 60px -34px rgba(50, 32, 18, 0.6);
+    transform: translateX(0);
   }
+  /* 收起靠位移，不改宽度：不再每帧重排正文 */
   .pane-left.closed {
-    width: 0 !important;
+    width: min(84vw, 330px) !important;
+    transform: translateX(-102%);
+    opacity: 0;
+    pointer-events: none;
     box-shadow: none;
   }
   .pane-left .pane-body {
@@ -1478,10 +1481,31 @@ watch(
     width: min(84vw, 330px) !important;
     background: var(--bg-panel);
     box-shadow: -28px 0 60px -34px rgba(50, 32, 18, 0.6);
+    transform: translateX(0);
   }
   .pane-right.closed {
-    width: 0 !important;
+    width: min(84vw, 330px) !important;
+    transform: translateX(102%);
+    opacity: 0;
+    pointer-events: none;
     box-shadow: none;
+  }
+  /* 抽屉与吸顶页签：只用位移/改实底，不叠实时模糊 */
+  .notes-view .pane-left,
+  .notes-view .pane-right {
+    transition: transform 0.3s var(--ease), opacity 0.22s ease;
+    will-change: auto;
+  }
+  .tabbar {
+    background: #fdfaf6;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .tab-menu,
+  .lightbox {
+    background: #fffdfa;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .pane-right .pane-body {
     width: 100% !important;

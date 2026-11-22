@@ -568,6 +568,13 @@ const onBrandClick = () => {
     gap: 12px;
     padding: 0 14px;
     height: 54px;
+    /* 移动端不叠实时模糊：顶栏改实底，滚动不再整条重绘 */
+    background: #fdfaf6;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .topbar.lift {
+    background: #fffdfa;
   }
   .nav-link {
     padding: 11px 12px;

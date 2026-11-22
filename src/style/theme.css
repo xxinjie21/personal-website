@@ -462,6 +462,28 @@ body::after {
   :root {
     --nav-height: 54px;
   }
+  /* 移动端去模糊：全屏噪点混合层和小屏强制模糊都关掉 */
+  body::before,
+  body::after {
+    display: none;
+  }
+  body {
+    background-attachment: scroll;
+  }
+  .reveal,
+  .reveal-d1,
+  .reveal-d2,
+  .reveal-d3 {
+    animation: none;
+  }
+  .page-enter-active,
+  .page-leave-active {
+    transition: opacity 0.24s ease;
+  }
+  .page-enter-from,
+  .page-leave-to {
+    filter: none;
+  }
   html {
     -webkit-text-size-adjust: 100%;
   }
