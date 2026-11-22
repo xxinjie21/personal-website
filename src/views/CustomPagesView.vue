@@ -7,6 +7,10 @@ import Icon from '../components/Icon.vue'
 const pages = ref([])
 const route = useRoute()
 const slug = computed(() => route.params.page || '')
+// 记住最后打开的那个自定义页：列表页给一条「继续上次」，卡片上挂个角标
+const LAST_KEY = 'custom:last'
+const lastSlug = ref('')
+const lastPage = computed(() => pages.value.find((p) => p.slug === lastSlug.value) || null)
 
 onMounted(async () => {
   try {
@@ -15,7 +19,38 @@ onMounted(async () => {
   } catch {
     pages.value = []
   }
+  if (!slug.value) {
+    try {
+      lastSlug.value = localStorage.getItem(LAST_KEY) || ''
+    } catch {
+      lastSlug.value = ''
+    }
+  }
 })
+
+// 不管从卡片、导航还是直接敲地址进来，都算「最后打开的一页」
+watch(
+  slug,
+  (v) => {
+    if (!v) return
+    lastSlug.value = v
+    try {
+      localStorage.setItem(LAST_KEY, v)
+    } catch {
+      /* 隐私模式下写不进就算了 */
+    }
+  },
+  { immediate: true }
+)
+
+function remember(p) {
+  lastSlug.value = p.slug
+  try {
+    localStorage.setItem(LAST_KEY, p.slug)
+  } catch {
+    /* 隐私模式下写不进就算了，不影响打开 */
+  }
+}
 
 const current = computed(() => pages.value.find((p) => p.slug === slug.value) || null)
 // 副本文件名与路由同名会被 dev server 的 .html 回落抢占（/custom-pages/x 直接返回 x.html），
@@ -51,6 +86,11 @@ function spot(e) {
         生词本、刷题页、临时看板……把单页 HTML 丢进
         <code>custom-pages/</code>，构建时自动收进来，不用改路由。
       </p>
+      <router-link v-if="lastPage" class="resume" :to="`/custom-pages/${lastPage.slug}`">
+        <span class="dot" aria-hidden="true"></span>
+        <span>继续上次 · <b>{{ lastPage.title }}</b></span>
+        <Icon name="arrow-right" :size="13" />
+      </router-link>
     </header>
 
     <div v-if="pages.length" class="grid reveal reveal-d1">
@@ -60,8 +100,10 @@ function spot(e) {
         :to="`/custom-pages/${p.slug}`"
         class="card"
         @mousemove="spot"
+        @click="remember(p)"
       >
         <span class="idx mono">{{ String(i + 1).padStart(2, '0') }}</span>
+        <span v-if="p.slug === lastSlug" class="last mono">上次打开</span>
         <h2>{{ p.title }}</h2>
         <span class="file mono">{{ p.file }}</span>
         <Icon name="arrow-up-right" class="go" :size="15" />
@@ -130,6 +172,53 @@ function spot(e) {
   color: var(--text-dim);
   margin: 0;
 }
+/* 继续上次：从列表直接回到最后打开的那一页 */
+.resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 7px 11px 7px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 87, 26, 0.24);
+  background: rgba(255, 253, 249, 0.78);
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease),
+    background 0.3s var(--ease), box-shadow 0.3s var(--ease), color 0.3s;
+}
+.resume b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.resume .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(217, 87, 26, 0.4);
+  animation: liveDot 2.4s ease-out infinite;
+}
+@keyframes liveDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 87, 26, 0.35);
+  }
+  60% {
+    box-shadow: 0 0 0 7px rgba(217, 87, 26, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 87, 26, 0);
+  }
+}
+.resume:hover {
+  transform: translateY(-1px);
+  border-color: rgba(217, 87, 26, 0.44);
+  background: #fffefb;
+  box-shadow: 0 14px 28px -22px rgba(217, 87, 26, 0.6);
+}
+.resume:hover .dot {
+  background: var(--accent-cream);
+}
 code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11.5px;
@@ -193,6 +282,29 @@ code {
   font-size: 10px;
   letter-spacing: 0.16em;
   color: var(--muted);
+}
+.last {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid rgba(217, 87, 26, 0.26);
+  background: rgba(217, 87, 26, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  animation: lastIn 0.5s var(--ease) both;
+}
+@keyframes lastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .card h2 {
   font-size: 20px;

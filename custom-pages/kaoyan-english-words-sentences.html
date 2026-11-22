@@ -19494,6 +19494,37 @@ const navEl = document.getElementById('nav');
 const origEl = document.getElementById('origBox');
 const parseEl = document.getElementById('parse');
 
+/* 记住上次看到哪一句、哪些解析块展开、滚到哪：重开页面直接接上 */
+const POS_KEY = 'lsc.pos.v1';
+let posScroll = 0;
+function loadPos(){
+  try{
+    const o = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
+    if(!o) return;
+    if(Number.isInteger(o.idx) && o.idx >= 0 && o.idx < S.length) state.idx = o.idx;
+    if(o.mark === true) state.mark = true;
+    if(o.allOpen === true) state.allOpen = true;
+    if(o.open && typeof o.open === 'object') state.open = o.open;
+    if(o.only === true) state.only = true;
+    if(typeof o.scroll === 'number' && o.scroll > 0) posScroll = o.scroll;
+  }catch(e){}
+}
+function savePos(){
+  try{
+    localStorage.setItem(POS_KEY, JSON.stringify({
+      idx: state.idx, mark: state.mark, allOpen: state.allOpen,
+      only: state.only, open: state.open, scroll: parseEl.scrollTop
+    }));
+  }catch(e){}
+}
+let posTimer = 0;
+parseEl.addEventListener('scroll', () => {
+  clearTimeout(posTimer);
+  posTimer = setTimeout(savePos, 260);
+}, { passive: true });
+window.addEventListener('beforeunload', savePos);
+loadPos();
+
 let navOpen = null;
 const yrOf = p => String(p).split(' ')[0];
 const examOf = p => String(p).split(' ').slice(1).join(' ') || '全部';
@@ -19633,7 +19664,7 @@ function go(i){
   if(window.innerWidth <= 779) navOpen = new Set([yrOf(cur().part)]);
   else navOpen.add(yrOf(cur().part));
   state.open = openMap();
-  renderNav(); render(); syncBtns();
+  renderNav(); render(); syncBtns(); savePos();
 }
 function highlight(g){
   origEl.querySelectorAll('.seg.hi').forEach(x=>x.classList.remove('hi'));
@@ -19660,6 +19691,7 @@ document.getElementById('cnt').textContent = S.length;
 movePill();
 render._first = true;
 renderNav(); render(); syncBtns();
+if(posScroll){ parseEl.scrollTop = posScroll; }
 
 navEl.addEventListener('click', e=>{
   const yh = e.target.closest('.yh');
@@ -19688,6 +19720,7 @@ parseEl.addEventListener('click', e=>{
     const lay = lh.parentNode;
     lay.classList.toggle('open', state.open[k]);
     lh.querySelector('.c').textContent = state.open[k] ? '–' : '+';
+    savePos();
     return;
   }
   const li = e.target.closest('.mix li');
@@ -19697,11 +19730,11 @@ origEl.addEventListener('click', e=>{
   const seg = e.target.closest('.seg');
   if(seg && state.mark) highlight(Number(seg.dataset.g));
 });
-document.getElementById('btnMark').onclick = ()=>{ state.mark=!state.mark; render(true); syncBtns(); };
+document.getElementById('btnMark').onclick = ()=>{ state.mark=!state.mark; render(true); syncBtns(); savePos(); };
 document.getElementById('btnToggle').onclick = ()=>{
   state.allOpen = !state.allOpen;
   state.open = openMap();
-  render(true); syncBtns();
+  render(true); syncBtns(); savePos();
 };
 document.getElementById('btnRand').onclick = ()=>{ const L=vlist(); if(L.length) go(L[Math.floor(Math.random()*L.length)].i); };
 document.getElementById('btnPrev').onclick = ()=>goRel(-1);
@@ -19710,7 +19743,7 @@ document.getElementById('btnOnly').onclick = ()=>{
   state.only = !state.only;
   const L = vlist();
   if(L.length && L.findIndex(o=>o.i===state.idx) < 0){ go(L[0].i); }
-  else { renderNav(); render(true); syncBtns(); }
+  else { renderNav(); render(true); syncBtns(); savePos(); }
 };
 origEl.addEventListener('click', e=>{
   const fb = e.target.closest('#flagBtn');
