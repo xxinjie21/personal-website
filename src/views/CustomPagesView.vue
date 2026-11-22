@@ -18,12 +18,6 @@ onMounted(async () => {
 })
 
 const current = computed(() => pages.value.find((p) => p.slug === slug.value) || null)
-// 外部设计站：纯链接，新窗口打开（无 API、不做成 Skill）
-const links = [
-  { name: '21st.dev', url: 'https://21st.dev', host: '21st.dev · 现成组件', color: '#d9571a' },
-  { name: 'Variant', url: 'https://variant.com', host: 'variant.com · 界面参考', color: '#3d7a5f' },
-  { name: 'Awwwards', url: 'https://awwwards.com', host: 'awwwards.com · 获奖站点', color: '#1f4a86' },
-]
 // 副本文件名与路由同名会被 dev server 的 .html 回落抢占（/custom-pages/x 直接返回 x.html），
 // 所以静态副本放在 pagedocs/ 目录，路由保持 /custom-pages/<slug>
 const frameSrc = computed(() => `${import.meta.env.BASE_URL}pagedocs/${slug.value}.html`)
@@ -57,10 +51,6 @@ function spot(e) {
         生词本、刷题页、临时看板……把单页 HTML 丢进
         <code>custom-pages/</code>，构建时自动收进来，不用改路由。
       </p>
-      <p class="lede dim">
-        设计参考不在本地生成，直接去这几个站点翻：看中的组件、布局、动效，复制回
-        <code>custom-pages/</code> 改。
-      </p>
     </header>
 
     <div v-if="pages.length" class="grid reveal reveal-d1">
@@ -88,34 +78,6 @@ function spot(e) {
       </p>
       <p class="mono hint">custom-pages/ · 0 files</p>
     </div>
-
-    <!-- 外部设计站：一个节点包住常用入口，点一下新窗口打开 -->
-    <aside class="links-node reveal reveal-d2">
-      <div class="ln-head">
-        <p class="eyebrow">DESIGN REFERENCES</p>
-        <h2>设计灵感 · 外部站点</h2>
-        <p class="ln-sub">这几站没有 API，也不做成 Skill；新窗口打开，挑到合适的直接抄结构。</p>
-      </div>
-      <div class="ln-list">
-        <a
-          v-for="l in links"
-          :key="l.url"
-          class="lk"
-          :href="l.url"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span class="lk-mark" :style="{ '--lk': l.color }" aria-hidden="true">{{
-            l.name.slice(0, 1)
-          }}</span>
-          <span class="lk-text">
-            <b>{{ l.name }}</b>
-            <span class="lk-host mono">{{ l.host }}</span>
-          </span>
-          <Icon name="arrow-up-right" class="lk-go" :size="13" />
-        </a>
-      </div>
-    </aside>
   </section>
 </template>
 
@@ -239,7 +201,9 @@ code {
 .file {
   font-size: 10.5px;
   color: var(--muted);
-  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .go {
   position: absolute;
@@ -302,110 +266,6 @@ code {
   letter-spacing: 0.16em;
   color: var(--muted) !important;
   margin-top: 10px !important;
-}
-
-/* 外部设计站节点：一块带左沿的“节点”，里面是三个快捷入口 */
-.links-node {
-  margin-top: 26px;
-  padding: 18px 20px 20px;
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--accent);
-  border-radius: 14px;
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(252, 244, 234, 0.78));
-  box-shadow: 0 1px 2px rgba(85, 53, 28, 0.04);
-  animation: ln-in 0.34s var(--ease) both;
-}
-@keyframes ln-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.ln-head h2 {
-  font-size: 15px;
-  margin: 6px 0 4px;
-  letter-spacing: 0.01em;
-}
-.ln-sub {
-  font-size: 11.5px;
-  line-height: 1.7;
-  color: var(--text-muted);
-}
-.ln-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 8px;
-  margin-top: 14px;
-}
-.lk {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 9px 11px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--text);
-  transition: transform 0.22s var(--ease), border-color 0.22s var(--ease),
-    box-shadow 0.22s var(--ease), background 0.22s var(--ease);
-}
-.lk:hover {
-  transform: translateY(-2px);
-  border-color: rgba(217, 87, 26, 0.4);
-  background: #fffdfa;
-  box-shadow: 0 12px 24px -16px rgba(85, 53, 28, 0.45);
-}
-.lk:active {
-  transform: translateY(0) scale(0.995);
-}
-.lk-mark {
-  flex: none;
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--lk);
-  background: color-mix(in srgb, var(--lk) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lk) 24%, transparent);
-}
-.lk-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-.lk-text b {
-  font-size: 12.5px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-.lk-host {
-  font-size: 10.5px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.lk-go {
-  margin-left: auto;
-  flex: none;
-  color: var(--muted);
-  transition: color 0.2s var(--ease), transform 0.24s var(--ease);
-}
-.lk:hover .lk-go {
-  color: var(--accent);
-  transform: translate(1px, -1px);
-}
-.lede.dim {
-  margin-top: 8px;
-  color: var(--muted);
 }
 
 @media (max-width: 760px) {

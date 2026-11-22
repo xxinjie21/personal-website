@@ -3092,11 +3092,16 @@
   ],
   "customPages": [
     {
+      "file": "design-refs.html",
+      "slug": "design-refs",
+      "title": "设计灵感 · 参考站"
+    },
+    {
       "file": "kaoyan-english-words-sentences.html",
       "slug": "kaoyan-english-words-sentences",
       "title": "考研英语 · 单词与长难句"
     }
   ],
   "assetCount": 99,
-  "generatedAt": "2026-11-22T04:03:28.057Z"
+  "generatedAt": "2026-11-22T04:15:10.481Z"
 }
