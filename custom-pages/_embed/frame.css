@@ -20,6 +20,9 @@
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
+/* 内容比视口短时，兜住底色，别露出白边 */
+html { min-height: 100%; background: var(--bg); }
+
 /* ── 顶栏：三页共用，吸顶 + 滚动加投影 ───────────────── */
 .devbar {
   position: sticky;
