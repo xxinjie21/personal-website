@@ -59,6 +59,12 @@ body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto mi
 .flag{margin-left:auto;border:0;background:none;font-family:inherit;font-size:15px;line-height:1;color:#c4bcab;cursor:pointer;padding:2px 4px;min-height:26px;transition:color .18s,transform .18s}
 .flag:hover{transform:scale(1.12)}
 .flag.on{color:var(--accent)}
+/* 标记：按下横向撑开、纵向压扁，再回弹 */
+.flag.pop{animation:flagJelly .44s cubic-bezier(.34,1.56,.64,1)}
+@keyframes flagJelly{0%{transform:scale(1)}35%{transform:scale(1.2,.82)}65%{transform:scale(.94,1.08)}100%{transform:scale(1)}}
+/* 标上时飘几颗小点，六颗封顶 */
+.spark{position:fixed;z-index:9000;width:4px;height:4px;border-radius:50%;background:var(--accent);pointer-events:none;animation:sparkFly .62s cubic-bezier(.22,.8,.2,1) forwards}
+@keyframes sparkFly{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.35)}}
 .it .d{flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);align-self:center}
 .nav .empty{font-size:11.5px;color:var(--muted);padding:3px 2px;margin:0;line-height:1.5;letter-spacing:.2px}
 .nav:has(.empty){padding:4px 12px;align-items:center;border-bottom-color:var(--line)}
@@ -101,11 +107,14 @@ main.nav-narrow .nav .yh .yn,main.nav-narrow .nav .yh .k{display:none}
 .en{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.72;color:#121a24}
 /* 换句：原句与解析块轻微上浮淡入，跟图谱跳转一个手感 */
 @keyframes swapIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.orig.swap .meta,.orig.swap .en{animation:swapIn .3s cubic-bezier(.22,.9,.28,1) both}
-.parse.swap > .layer{animation:swapIn .32s cubic-bezier(.22,.9,.28,1) both}
-.parse.swap > .layer:nth-child(2){animation-delay:.04s}
-.parse.swap > .layer:nth-child(3){animation-delay:.08s}
-.parse.swap > .p-hint{animation:swapIn .32s cubic-bezier(.22,.9,.28,1) both;animation-delay:.1s}
+/* 换句：遮罩自上而下揭开，像把上一句盖过去 */
+@keyframes wipeDown{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.orig.swap .meta{animation:swapIn .26s cubic-bezier(.22,.9,.28,1) both}
+.orig.swap .en{animation:wipeDown .44s cubic-bezier(.22,.9,.28,1) both}
+.parse.swap > .layer{animation:wipeDown .44s cubic-bezier(.22,.9,.28,1) both}
+.parse.swap > .layer:nth-child(2){animation-delay:.06s}
+.parse.swap > .layer:nth-child(3){animation-delay:.12s}
+.parse.swap > .p-hint{animation:swapIn .3s cubic-bezier(.22,.9,.28,1) both;animation-delay:.14s}
 .seg{border-bottom:3px solid transparent;padding-bottom:1px}
 .seg .sl{color:#b9b2a4;margin-left:2px}
 .seg .no{font-size:9px;color:#a8a296;margin-right:3px;vertical-align:super}
@@ -128,8 +137,10 @@ main.nav-narrow .nav .yh .yn,main.nav-narrow .nav .yh .k{display:none}
 .lhead:hover{background:rgba(126,84,46,.06)}
 .lhead .c{margin-left:auto;font-weight:400;font-size:15px;color:var(--muted);line-height:1;transition:transform .28s cubic-bezier(.4,0,.2,1),color .18s}
 .layer.open .lhead .c{transform:rotate(45deg);color:var(--accent)}
-.lb{max-height:0;opacity:0;overflow:hidden;transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .24s ease,transform .32s cubic-bezier(.4,0,.2,1);transform:translateY(-3px)}
-.layer.open .lb{max-height:1500px;opacity:1;transform:none;margin-top:5px}
+/* 折叠展开：0fr → 1fr，按内容真实高度过渡，不再用 1500px 的假上限 */
+.lb{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;transform:translateY(-3px);transition:grid-template-rows .34s cubic-bezier(.22,.9,.28,1),opacity .22s ease,margin-top .34s cubic-bezier(.22,.9,.28,1),transform .34s cubic-bezier(.22,.9,.28,1)}
+.lb>.lbi{overflow:hidden;min-height:0}
+.layer.open .lb{grid-template-rows:1fr;opacity:1;transform:none;margin-top:5px}
 /* 三块都收起时给一句提示，避免右边看着像坏了 */
 .parse .p-hint{display:none;margin:2px 0 0;padding:10px 12px;border:1px dashed var(--line);border-radius:8px;font-size:12px;line-height:1.6;color:var(--muted);background:rgba(255,253,250,.6)}
 .parse:not(:has(.layer.open)) .p-hint{display:block}
@@ -19662,7 +19673,7 @@ function layer(k,s){
   const open = !!state.open[k];
   return '<div class="layer'+(open?' open':'')+'" data-k="'+k+'">'
     + '<button class="lhead" data-k="'+k+'">'+esc(def[1])+'<span class="c">+</span></button>'
-    + '<div class="lb">'+body(k,s)+'</div></div>';
+    + '<div class="lb"><div class="lbi">'+body(k,s)+'</div></div></div>';
 }
 
 function render(keepScroll){
@@ -19678,7 +19689,7 @@ function render(keepScroll){
   if(!render._first){
     origEl.classList.add('swap'); parseEl.classList.add('swap');
     clearTimeout(render._t);
-    render._t = setTimeout(function(){ origEl.classList.remove('swap'); parseEl.classList.remove('swap'); }, 420);
+    render._t = setTimeout(function(){ origEl.classList.remove('swap'); parseEl.classList.remove('swap'); }, 640);
   }
   render._first = false;
 }
@@ -19782,7 +19793,17 @@ document.getElementById('btnMark').onclick = ()=>{ state.mark=!state.mark; rende
 document.getElementById('btnToggle').onclick = ()=>{
   state.allOpen = !state.allOpen;
   state.open = openMap();
-  render(true); syncBtns(); savePos();
+  /* 原地开合，三块依次错开 35ms，避免整页重排 */
+  parseEl.querySelectorAll('.layer').forEach((lay,i)=>{
+    const on = !!state.open[lay.dataset.k];
+    const lb = lay.querySelector('.lb');
+    if(lb) lb.style.transitionDelay = (state.allOpen ? i*0.035 : 0)+'s';
+    lay.classList.toggle('open', on);
+    const c = lay.querySelector('.lhead .c');
+    if(c) c.textContent = on ? '–' : '+';
+    setTimeout(()=>{ if(lb) lb.style.transitionDelay = ''; }, 620);
+  });
+  syncBtns(); savePos();
 };
 document.getElementById('btnRand').onclick = ()=>{ const L=vlist(); if(L.length) go(L[Math.floor(Math.random()*L.length)].i); };
 document.getElementById('btnPrev').onclick = ()=>goRel(-1);
@@ -19793,12 +19814,36 @@ document.getElementById('btnOnly').onclick = ()=>{
   if(L.length && L.findIndex(o=>o.i===state.idx) < 0){ go(L[0].i); }
   else { renderNav(); render(true); syncBtns(); savePos(); }
 };
+function sparkle(el){
+  const r = el.getBoundingClientRect();
+  const cx = r.left + r.width/2, cy = r.top + r.height/2;
+  for(let i=0;i<6;i++){
+    const s = document.createElement('span');
+    s.className = 'spark';
+    const a = -Math.PI/2 + (i-2.5)*0.42;
+    const d = 15 + Math.random()*9;
+    s.style.left = (cx-2)+'px';
+    s.style.top = (cy-2)+'px';
+    s.style.setProperty('--tx', (Math.cos(a)*d).toFixed(1)+'px');
+    s.style.setProperty('--ty', (Math.sin(a)*d).toFixed(1)+'px');
+    s.style.animationDelay = (i*0.02)+'s';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 900);
+  }
+}
 origEl.addEventListener('click', e=>{
   const fb = e.target.closest('#flagBtn');
   if(!fb) return;
   const id = cur().id;
-  if(flagSet.has(id)) flagSet.delete(id); else flagSet.add(id);
-  saveFlag(); render(true); renderNav(); syncBtns();
+  const on = !flagSet.has(id);
+  if(on) flagSet.add(id); else flagSet.delete(id);
+  saveFlag(); renderNav(); syncBtns(); savePos();
+  /* 原地更新，不重绘，才能让果冻和粒子播完 */
+  fb.classList.toggle('on', on);
+  fb.textContent = on ? '★' : '☆';
+  fb.setAttribute('aria-pressed', on ? 'true' : 'false');
+  fb.classList.remove('pop'); void fb.offsetWidth; fb.classList.add('pop');
+  if(on) sparkle(fb);
 });
 function ensureFrame(){
   const f = document.getElementById('mmFrame');
