@@ -207,7 +207,7 @@ watch(
 .tree-body {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 4px 24px 4px;
+  padding: 10px 4px 24px 0;
 }
 .empty {
   padding: 12px;
