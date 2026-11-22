@@ -122,6 +122,16 @@ transition:grid-template-rows .44s var(--ease),opacity .3s ease}
 .detail li{font-size:11.5px;line-height:1.8;color:#5f574e;display:flex;gap:8px}
 .detail li i{flex:none;width:4px;height:4px;border-radius:50%;background:rgba(217,87,26,.45);margin-top:8px}
 .detail-skill{padding:0 12px 12px}
+.detail-refs{padding:0 13px 12px}
+.detail-refs ul{display:grid;gap:6px;padding:0}
+.detail-refs li{display:flex;flex-direction:column;gap:1px;font-size:10.5px;line-height:1.55}
+.detail-refs a{font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none}
+.detail-refs a:hover{color:var(--accent-cream)}
+.detail-refs span{color:var(--muted)}
+.refs-wrap{margin:8px 14px 12px;padding-top:8px;border-top:1px dashed var(--line)}
+.refs-h{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#b9a48f;margin-bottom:5px}
+.detail .detail-refs{padding:0;display:grid;gap:5px}
+.detail .detail-refs li{display:flex;flex-direction:column;gap:1px;font-size:10.5px;line-height:1.55}
 
 /* skill 并入 */
 .skillbox{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,253,250,.8);padding:12px 13px}
@@ -245,7 +255,7 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
   </div>
 
   <footer>
-    <span>规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。流程参考 <a href="https://yun.itheima.com/course/1100.html" target="_blank" rel="noopener noreferrer">黑马 Vibe Coding · SDD 全流程 ↗</a>。</span>
+    <span>规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。流程参考 <a href="https://yun.itheima.com/course/1100.html" target="_blank" rel="noopener noreferrer">黑马 SDD</a> · <a href="https://github.com/github/spec-kit" target="_blank" rel="noopener noreferrer">Spec Kit</a> · <a href="https://github.com/bmad-code-org/BMAD-METHOD" target="_blank" rel="noopener noreferrer">BMAD</a>。</span>
     <span class="ap">做完站点想顺手做条宣传片：<a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener noreferrer">MoneyPrinterTurbo ↗</a>（开源，给主题自动出短视频）</span>
   </footer>
 </div>
@@ -356,7 +366,7 @@ const STAGES = [
     n: 3,
     title: '写 SDD',
     meta: '6 步 · 1 份 SDD',
-    deliver: ['SDD.md', 'schema.sql', 'openapi.yaml', '架构图'],
+    deliver: ['SDD.md', 'tasks.md', 'schema.sql', 'openapi.yaml'],
     goal: '把「怎么实现」先写死：架构、目录、表、接口、验收；AI 只照文档写代码。',
     steps: [
       { do: '技术选型表：框架、UI、数据库、部署、理由，每项只留一个主选一个备选。', note: '表格，手写', gain: '选型表' },
@@ -599,6 +609,49 @@ const STAGES = [
   }
 ]
 
+const REFS = {
+  1: [
+    { name: 'Spec Kit · constitution', url: 'https://github.com/github/spec-kit', note: '先把项目原则写成文件，后面每步都拿它对照' },
+    { name: 'BMAD · workflow-init', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '初始化流程状态，先定轨道再开工' },
+    { name: 'AGENTS.md', url: 'https://agents.md', note: '跨工具的规则文件标准，不绑定某一个 AI 工具' }
+  ],
+  2: [
+    { name: 'Spec Kit · specify / clarify', url: 'https://github.com/github/spec-kit', note: '只写 what / why，含糊处先 clarify 再往下' },
+    { name: 'BMAD · PRD', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: 'PM 角色出 PRD，再拆 epic 与 story' },
+    { name: '黑马 · 需求梳理', url: 'https://yun.itheima.com/course/1100.html', note: '需求 → SDD → 编码的起点，先定验收再动手' }
+  ],
+  3: [
+    { name: 'Spec Kit · plan', url: 'https://github.com/github/spec-kit', note: '产出 plan.md / data-model.md / contracts，技术决策要写理由' },
+    { name: 'BMAD · architecture', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '架构师角色单独出架构文档，再进开发' },
+    { name: '黑马 · SDD 六章', url: 'https://yun.itheima.com/course/1100.html', note: '选型、架构、目录、数据、接口、验收' }
+  ],
+  4: [
+    { name: 'Spec Kit · tasks', url: 'https://github.com/github/spec-kit', note: '把计划拆成有依赖顺序的 tasks.md，再 implement' },
+    { name: 'BMAD · create-story', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: 'SM 把 epic 拆成可单独开发的故事' },
+    { name: 'Git 分支策略', url: 'https://git-scm.com/book/zh/v2', note: 'feat / fix 分支，一个故事一个分支' }
+  ],
+  5: [
+    { name: 'BMAD · UX Designer', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '先出 UX 设计与界面清单，再让 AI 写页面' },
+    { name: 'Spec Kit · plan 里的 UI 约束', url: 'https://github.com/github/spec-kit', note: '把断点、tokens、组件库写进计划，不靠临场发挥' },
+    { name: 'shadcn/ui', url: 'https://ui.shadcn.com', note: 'JS 栈的组件参考；非 JS 栈用本栈等价组件库' }
+  ],
+  6: [
+    { name: 'Spec Kit · data-model / contracts', url: 'https://github.com/github/spec-kit', note: '实体与接口契约先定，代码只做实现' },
+    { name: 'BMAD · dev-story', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '一个故事一次实现，做完更新 sprint 状态' },
+    { name: 'Supabase RLS', url: 'https://supabase.com/docs/guides/auth/row-level-security', note: '默认拒绝、逐条放行的权限写法示例' }
+  ],
+  7: [
+    { name: 'Spec Kit · analyze / checklist', url: 'https://github.com/github/spec-kit', note: '编码前做跨文档一致性门禁，缺项先补' },
+    { name: 'BMAD · QA / TEA + code-review', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '测试架构师与开发分开评审，红绿重构' },
+    { name: '黑马 · 测试与评审', url: 'https://yun.itheima.com/course/1100.html', note: '单测、e2e、人工评审、冒烟四件套' }
+  ],
+  8: [
+    { name: 'Spec Kit · implement → converge', url: 'https://github.com/github/spec-kit', note: '实现后跑 converge，没收敛就继续改，不靠感觉收工' },
+    { name: 'BMAD · correct-course', url: 'https://github.com/bmad-code-org/BMAD-METHOD', note: '范围变更走正式流程，不临时插需求' },
+    { name: 'GitHub Actions', url: 'https://github.com/features/actions', note: '构建、测试、部署分开，失败就停' }
+  ]
+}
+
 const PROMPT_TAIL = `
 
 输出要求：
@@ -655,6 +708,12 @@ function skillMarkup(s) {
     <div class="detail-body"><div class="detail-inner detail-skill"><p class="sk-note">${sk.note || '该阶段没有对口 skill。'}</p></div></div></section>`
 }
 
+function refsMarkup(s) {
+  const refs = REFS[s.n] || []
+  if (!refs.length) return ''
+  return `<div class="refs-wrap"><p class="refs-h">同一件事，其他工作流怎么做</p><ul class="detail-refs">${refs.map((r) => `<li><a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.name} ↗</a><span>${r.note}</span></li>`).join('')}</ul></div>`
+}
+
 function stageMarkup(s) {
   return `<div class="scol main">
       <section class="sec"><h3>目标</h3><p>${s.goal}</p></section>
@@ -667,7 +726,7 @@ function stageMarkup(s) {
       <section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
           <span>展开细节 · 容易忽略的地方</span>${FOLD}
         </button>
-        <div class="detail-body"><div class="detail-inner"><ul>${s.details.map((t) => `<li><i></i><span>${t}</span></li>`).join('')}</ul></div></div>
+        <div class="detail-body"><div class="detail-inner"><ul>${s.details.map((t) => `<li><i></i><span>${t}</span></li>`).join('')}</ul>${refsMarkup(s)}</div></div>
       </section>
       ${skillMarkup(s)}
     </div>`
@@ -725,7 +784,7 @@ railItems.forEach((btn) => {
 copyPrompt.addEventListener('click', () => copyText(currentPrompt, copyPrompt))
 
 copyMaster.addEventListener('click', () => {
-  const master = `我要从零做一个网站，请你按 Vibe Coding 的 8 个阶段带我走一遍：备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代。
+  const master = `我要从零做一个网站，请你按 Vibe Coding 的 8 个阶段带我走一遍：备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代；每一步可参照 Spec Kit 或 BMAD 的对应环节，不用只磕一套。
 工具和语言都按我指定的来（Claude Code / Cursor / Codex / Trae；JS/TS、Python、Java、Go、PHP 都可能），不要默认 Claude Code，也不要默认 Node 那套；给命令时换成本语言的等价工具，别要求我为了某个插件或框架换技术栈。
 规则：
 1. 每个阶段开始前，先说明要用哪些工具 / 网站、需要我提供什么（仓库、域名、账号、参考截图），再给步骤；
@@ -768,6 +827,7 @@ fromHash()
 </script>
 </body>
 </html>
+
 
 
 
