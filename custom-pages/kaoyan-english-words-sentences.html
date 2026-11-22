@@ -60,7 +60,8 @@ body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto mi
 .flag:hover{transform:scale(1.12)}
 .flag.on{color:var(--accent)}
 .it .d{flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);align-self:center}
-.nav .empty{font-size:12px;color:var(--muted);padding:6px 9px;line-height:1.6}
+.nav .empty{font-size:11.5px;color:var(--muted);padding:3px 2px;margin:0;line-height:1.5;letter-spacing:.2px}
+.nav:has(.empty){padding:4px 12px;align-items:center;border-bottom-color:var(--line)}
 #btnPrev,#btnNext{min-width:34px;justify-content:center;font-size:16px;line-height:1}
 #btnPrev:disabled,#btnNext:disabled{opacity:.34;cursor:default}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;padding-top:7px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--muted)}
@@ -19578,7 +19579,7 @@ const examOf = p => String(p).split(' ').slice(1).join(' ') || '全部';
 function renderNav(){
   const L = vlist();
   if(!L.length){
-    navEl.innerHTML = '<p class="empty">还没有标记的句子。点原句右侧的 ☆ 标为没吃透。</p>';
+    navEl.innerHTML = '<p class="empty">还没有标记的句子 · 点原句右侧的 ☆ 标为没吃透</p>';
     return;
   }
   if(!navOpen) navOpen = new Set([yrOf(cur().part)]);
