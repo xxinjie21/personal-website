@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 66 个能跑的样子</title>
+<title>动效手册 · 65 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -950,15 +950,15 @@ box-shadow:0 8px 16px -10px rgba(85,53,28,.6),inset 0 1px 0 #fff;
 transition:left .34s var(--ease),width .34s var(--ease);z-index:1}
 
 .stepper{position:relative;display:flex;align-items:center;justify-content:space-between;width:216px}
-.stepper .bar{position:absolute;left:14px;right:14px;top:50%;height:2.5px;transform:translateY(-50%);
+.stepper .bar{position:absolute;left:14px;right:14px;top:50%;height:2px;transform:translateY(-50%);
 background:rgba(126,84,46,.16);border-radius:2px}
 .stepper .bar i{display:block;height:100%;width:0;border-radius:2px;
 background:linear-gradient(90deg,#ec9350,#d9571a);transition:width .6s var(--ease)}
 .stepper .st{position:relative;z-index:2;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
 font:600 11px/1 var(--mono);color:#a08b77;background:#fffdf8;border:1px solid rgba(126,84,46,.22);
-box-shadow:0 4px 10px -8px rgba(85,53,28,.7);transition:all .4s var(--ease)}
+box-shadow:0 0 0 3px #fffdf7,0 4px 10px -8px rgba(85,53,28,.7);transition:all .4s var(--ease)}
 .stepper .st.on{background:linear-gradient(140deg,#f08c42,#d9571a);border-color:transparent;color:#fff;
-box-shadow:0 0 0 5px rgba(217,87,26,.13),0 10px 18px -10px rgba(217,87,26,.9)}
+box-shadow:0 0 0 3px #fffdf7,0 0 0 8px rgba(217,87,26,.12),0 10px 18px -10px rgba(217,87,26,.9)}
 .stepper .st.done{color:#c04a18;border-color:rgba(217,87,26,.5);background:rgba(217,87,26,.06)}
 
 .price{width:186px;padding:11px 12px;border-radius:13px;display:grid;gap:5px;
@@ -1023,29 +1023,6 @@ border-bottom:1px solid rgba(126,84,46,.1)}
 .foot-bot span{font:400 8.5px/1 var(--mono);color:#b09a86}
 .fb-sync{color:#a38c76}
 
-.mcard.wide{grid-column:1/-1}
-.tool-matrix{width:442px;padding:11px 18px 12px;border-radius:14px;color:#eef2fa;
-background:
-radial-gradient(90% 120% at 88% 4%,rgba(122,172,255,.2),transparent 60%),
-radial-gradient(70% 90% at 4% 96%,rgba(255,146,96,.14),transparent 62%),
-linear-gradient(150deg,#1c2b46,#0c1422);
-border:1px solid rgba(255,255,255,.13);
-box-shadow:0 26px 46px -28px rgba(18,28,48,.8),inset 0 1px 0 rgba(255,255,255,.14)}
-.tm-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.tm-badge{width:30px;height:32px;border-radius:8px;background:#fffdf8;display:grid;place-items:center;align-content:center;
-gap:1px;box-shadow:0 8px 16px -9px rgba(0,0,0,.7)}
-.tm-badge b{font:700 19px/1 'Inter',sans-serif;color:#16233d}
-.tm-badge span{font:600 5.5px/1 var(--mono);letter-spacing:.14em;color:#16233d;opacity:.6}
-.tm-eye{font:600 7.5px/1 var(--mono);letter-spacing:.24em;color:rgba(255,255,255,.48);margin:0 0 4px}
-.tm-h{font:700 14.5px/1 'Inter',sans-serif;color:#fff;margin:0}
-.tm-rows{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.tm-row{display:block;padding:4px 9px 4.5px;border-radius:8px;
-background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
-transition:background .25s,border-color .25s}
-.tm-row:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22)}
-.tm-row b{display:block;font:600 9.5px/1.2 'Inter',sans-serif;color:#fff;white-space:nowrap}
-.tm-row span{display:block;margin-top:2px;font:400 8px/1.2 'Inter',sans-serif;color:rgba(255,255,255,.58);white-space:nowrap}
-@media (max-width:900px){.tm-rows{grid-template-columns:repeat(2,1fr)}.tool-matrix{width:100%;max-width:442px}}
 
 </style>
 </head>
@@ -1062,9 +1039,9 @@ transition:background .25s,border-color .25s}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">66 个动效与组件、12 套工具，全部真跑。</p>
+      <p class="lead">65 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">66 effects · 12 tools</span>
+    <span class="ph-count">65 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1768,7 +1745,7 @@ background-size:240% 100%; animation: 平移 background-position 0→240%</pre><
   </div>
 
   <!-- C 组件与版式 -->
-  <div class="group"><h2>组件与版式</h2><p>7 · 组件 / 版式</p></div>
+  <div class="group"><h2>组件与版式</h2><p>6 · 组件 / 版式</p></div>
   <div class="grid">
 
     <article class="mcard" style="--i:0">
@@ -1884,38 +1861,6 @@ pill.style.width=b.getBoundingClientRect().width+'px'
       </div>
     </article>
 
-    <article class="mcard wide" style="--i:6">
-      <span class="badge">layout</span>
-      <div class="demo">
-        <div class="tool-matrix">
-          <div class="tm-head">
-            <div class="tm-badge"><b>8</b><span>TOOLS</span></div>
-            <div>
-              <p class="tm-eye">VIBECODING TOOLKIT</p>
-              <p class="tm-h">让灵感，成为作品</p>
-            </div>
-          </div>
-          <div class="tm-rows">
-            <div class="tm-row"><b>Three.js</b><span>三维场景</span></div>
-            <div class="tm-row"><b>Anime.js</b><span>动作编排</span></div>
-            <div class="tm-row"><b>Tween.js</b><span>缓动过渡</span></div>
-            <div class="tm-row"><b>Ammo.js</b><span>物理模拟</span></div>
-            <div class="tm-row"><b>TSL Textures</b><span>表面纹理</span></div>
-            <div class="tm-row"><b>SuperCollider</b><span>声音合成</span></div>
-            <div class="tm-row"><b>Remotion</b><span>代码制片</span></div>
-            <div class="tm-row"><b>FFmpeg</b><span>处理与导出</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="info">
-        <div class="name"><b>工具矩阵版式</b><span class="en">tool matrix</span></div>
-        <p class="say">深底加两处冷暖光斑，白色数字徽标压左上，两列四行的条目用半透玻璃块；一张卡把工具栈讲完，不再加副标题。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>两层 radial-gradient 光斑叠深色 linear-gradient
-徽标 28×34 白底，数字 18px 700
-条目 rgba(255,255,255,.07) + 1px 白 10% 边框</pre></div>
-      </div>
-    </article>
   </div>
 
   
