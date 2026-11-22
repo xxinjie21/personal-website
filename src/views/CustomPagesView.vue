@@ -291,17 +291,28 @@ code {
   overflow: hidden;
   transform-style: preserve-3d;
   will-change: transform;
+  --mx: 78%;
+  --my: 16%;
   transition: transform 0.45s var(--ease), border-color 0.45s var(--ease),
     box-shadow 0.45s var(--ease);
 }
+/* 大团暖光跟着光标走（用 transform 平移，不重绘渐变） */
 .card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 320px;
+  height: 320px;
+  margin: -160px 0 0 -160px;
+  border-radius: 50%;
+  pointer-events: none;
   opacity: 0;
-  background: radial-gradient(120% 80% at 80% 0%, rgba(217, 87, 26, 0.22), transparent 60%);
+  background: radial-gradient(closest-side, rgba(217, 87, 26, 0.15), rgba(217, 87, 26, 0.06) 48%, transparent 72%);
+  transform: translate3d(var(--mx), var(--my), 0);
   transition: opacity 0.45s var(--ease);
+  will-change: transform;
 }
 .card:hover {
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
@@ -318,10 +329,10 @@ code {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 200, 160, 0.14), transparent 70%);
+  background: radial-gradient(170px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 205, 165, 0.2), transparent 70%);
   transition: opacity 0.4s var(--ease);
 }
 .card:hover::after {
