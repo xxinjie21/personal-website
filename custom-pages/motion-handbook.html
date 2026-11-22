@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 59 个能跑的样子</title>
+<title>动效手册 · 60 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -647,6 +647,23 @@ font-size:17px;background:linear-gradient(150deg,#ffe3c9,#ffc79a)}
 .fcols .brand{font:700 12px/1 var(--sans);color:#c04a18;margin-bottom:6px}
 .fcols .note{display:block;margin-top:6px;color:#b3a190}
 
+
+.tool-matrix{width:100%;padding:10px 11px 11px;border-radius:14px;background:rgba(255,255,255,.56);
+border:1px solid rgba(126,84,46,.16);backdrop-filter:blur(6px);box-shadow:0 12px 24px rgba(126,84,46,.1)}
+.tm-head{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.tm-badge{width:34px;height:42px;border-radius:8px;background:#fffdf8;display:grid;place-items:center;
+box-shadow:0 4px 10px rgba(126,84,46,.14);line-height:1}
+.tm-badge b{font:700 18px/1 var(--sans);color:#c04a18}
+.tm-badge span{font:600 6px/1 var(--mono);letter-spacing:.1em;color:#b09a86}
+.tm-eye{font:600 7px/1 var(--mono);letter-spacing:.16em;color:#b09a86;margin:0 0 3px}
+.tm-h{font:700 13px/1 var(--sans);color:#5b432c;margin:0;letter-spacing:.01em}
+.tm-sub{font:400 8px/1.4 var(--sans);color:#a08b77;margin:3px 0 0}
+.tm-rows{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.tm-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:3.5px 6px;border-radius:5px;
+background:rgba(217,87,26,.06);border:1px solid rgba(217,87,26,.1)}
+.tm-row b{font:600 8.5px/1 var(--sans);color:#8a4a22;white-space:nowrap}
+.tm-row span{font:400 7.5px/1 var(--sans);color:#a5886f;white-space:nowrap}
+
 </style>
 </head>
 <body>
@@ -662,9 +679,9 @@ font-size:17px;background:linear-gradient(150deg,#ffe3c9,#ffc79a)}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">59 个动效与组件、6 套工具，全部真跑。</p>
+      <p class="lead">60 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">59 effects · 6 tools</span>
+    <span class="ph-count">60 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1368,7 +1385,7 @@ background-size:240% 100%; animation: 平移 background-position 0→240%</pre><
   </div>
 
   <!-- C 组件与版式 -->
-  <div class="group"><h2>组件与版式</h2><p>6 · 组件 / 版式</p></div>
+  <div class="group"><h2>组件与版式</h2><p>7 · 组件 / 版式</p></div>
   <div class="grid">
     <article class="mcard" style="--i:0">
       <span class="badge">click</span>
@@ -1466,11 +1483,45 @@ pill.style.width=b.getBoundingClientRect().width+'px'
 底部一行版权用更浅的颜色，不加 border-top</pre></div>
       </div>
     </article>
-  </div>
+  
+    <article class="mcard" style="--i:6">
+      <span class="badge">layout</span>
+      <div class="demo">
+        <div class="tool-matrix">
+          <div class="tm-head">
+            <div class="tm-badge"><b>8</b><span>TOOLS</span></div>
+            <div>
+              <p class="tm-eye">VIBECODING TOOLKIT</p>
+              <p class="tm-h">让灵感，成为作品</p>
+              <p class="tm-sub">三维 · 动效 · 物理 · 纹理 · 声音 · 制片</p>
+            </div>
+          </div>
+          <div class="tm-rows">
+            <div class="tm-row"><b>Three.js</b><span>三维场景</span></div>
+            <div class="tm-row"><b>Anime.js</b><span>动作编排</span></div>
+            <div class="tm-row"><b>Tween.js</b><span>缓动过渡</span></div>
+            <div class="tm-row"><b>Ammo.js</b><span>物理模拟</span></div>
+            <div class="tm-row"><b>TSL Textures</b><span>表面纹理</span></div>
+            <div class="tm-row"><b>SuperCollider</b><span>声音合成</span></div>
+            <div class="tm-row"><b>Remotion</b><span>代码制片</span></div>
+            <div class="tm-row"><b>FFmpeg</b><span>处理与导出</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>工具矩阵版式</b><span class="en">tool matrix</span></div>
+        <p class="say">八件工具排两列四行，左边名字右边用途，顶上放一个数字徽标加一句主张，比拉一长串清单更像作品页的引言。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>徽标 34×42 圆角 8，数字 18px 700、标签 6px 加字距
+矩阵 grid-template-columns:1fr 1fr，行高 20−22px
+每行 flex 两端对齐：名 600 字重，用途 400 且更浅</pre></div>
+      </div>
+    </article>
+</div>
 
   <!-- 工具分层 -->
   <section class="tools-sec">
-    <div class="group"><h2>实现工具，分三层</h2><p>6 · 免费优先</p></div>
+    <div class="group"><h2>工具，按层级挑</h2><p>12 · 免费优先</p></div>
     <div class="tool-grid">
       <article class="tcard">
         <p class="tkind">交互 · 第 1 级</p><h3>CSS + 原生 JS</h3>
@@ -1519,7 +1570,56 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tnote">个人免费 · 演示为示意，非真实渲染</p>
         <a href="https://github.com/remotion-dev/remotion" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
-    </div>
+    
+      <article class="tcard">
+        <p class="tkind">动效 · 第 2 级</p><h3>Anime.js</h3>
+        <p><b>什么时候用</b>：多元素错峰出现的编排，一条 timeline 排完，不用手写一堆 delay。</p>
+        <p><b>不满意查什么</b>：timeline 的偏移、easing 曲线，以及 stagger 的起点与方向。</p>
+        <div class="tdemo"><div class="seq"><i></i><i></i><i></i></div></div>
+        <p class="tnote">开源 · 个人免费</p>
+        <a href="https://github.com/juliangarnier/anime" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+      <article class="tcard">
+        <p class="tkind">过渡 · 第 1 级</p><h3>Tween.js</h3>
+        <p><b>什么时候用</b>：给物体属性做数值补间，位置、颜色、进度都能过渡，比写关键帧自由。</p>
+        <p><b>不满意查什么</b>：补间的对象是不是同一个引用，onUpdate 里有没有反复新建对象。</p>
+        <div class="tdemo"><span class="mini"></span></div>
+        <p class="tnote">开源 · 个人免费</p>
+        <a href="https://github.com/tweenjs/tween.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+      <article class="tcard">
+        <p class="tkind">三维 · 第 3 级</p><h3>Ammo.js</h3>
+        <p><b>什么时候用</b>：要真的物理——碰撞、重力、堆叠，不是靠缓动假装。</p>
+        <p><b>不满意查什么</b>：重力步长固定 1/60、碰撞体形状与模型缩放有没有对齐。</p>
+        <div class="tdemo"><span class="mini"></span></div>
+        <p class="tnote">开源 · 个人免费</p>
+        <a href="https://github.com/kripken/ammo.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+      <article class="tcard">
+        <p class="tkind">纹理 · 第 3 级</p><h3>TSL Textures</h3>
+        <p><b>什么时候用</b>：程序化生成表面质感，省掉贴图文件和 UV 那堆麻烦。</p>
+        <p><b>不满意查什么</b>：节点接线的坐标系、颜色空间，以及噪声的缩放假象。</p>
+        <div class="tdemo"><span class="mini"></span></div>
+        <p class="tnote">开源 · 随 Three.js</p>
+        <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+      <article class="tcard">
+        <p class="tkind">声音 · 第 3 级</p><h3>SuperCollider</h3>
+        <p><b>什么时候用</b>：程序化合成音效与环境声，比塞一堆音频文件轻得多。</p>
+        <p><b>不满意查什么</b>：采样率、buffer 有没有释放，包络的起落时长。</p>
+        <div class="tdemo"><div class="seq"><i></i><i></i><i></i></div></div>
+        <p class="tnote">开源 · GPL</p>
+        <a href="https://github.com/supercollider/supercollider" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+      <article class="tcard">
+        <p class="tkind">制片 · 第 3 级</p><h3>FFmpeg</h3>
+        <p><b>什么时候用</b>：拼接、转码、抽帧、压字幕这些离线处理，脚本里跑最稳。</p>
+        <p><b>不满意查什么</b>：crf 与 preset 取值，时间基与帧率有没有对齐。</p>
+        <div class="tdemo"><span class="mini"></span></div>
+        <p class="tnote">开源 · LGPL / GPL</p>
+        <a href="https://github.com/FFmpeg/FFmpeg" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </article>
+</div>
   </section>
 </div>
 
