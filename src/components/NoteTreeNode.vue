@@ -23,11 +23,11 @@ const isOpen = computed(() => !!props.openPaths[props.node.path])
       :class="'d' + Math.min(depth, 3)"
       type="button"
       :title="node.path"
-      :style="{ paddingLeft: depth * 16 + 'px' }"
+      :style="{ paddingLeft: depth * 6 + 'px' }"
       @click="emit('toggle', node.path)"
     >
-      <Icon name="chevron-right" class="caret" :class="{ open: isOpen }" :size="10" :weight="1.9" />
-      <Icon name="folder" class="ico folder" :size="12" />
+      <Icon name="chevron-right" class="caret" :class="{ open: isOpen }" :size="9" :weight="1.9" />
+      <Icon name="folder" class="ico folder" :size="11" />
       <span class="dir-name">{{ node.name }}</span>
     </button>
     <Transition name="fold">
@@ -49,7 +49,7 @@ const isOpen = computed(() => !!props.openPaths[props.node.path])
         class="file"
         :class="{ active: note.slug === activeSlug }"
         :title="note.rel"
-        :style="{ paddingLeft: (node.name ? (depth + 1) * 16 + 21 : 9) + 'px' }"
+        :style="{ paddingLeft: (node.name ? (depth + 1) * 6 + 12 : 7) + 'px' }"
         @click="emit('select', note.slug)"
       >
         <Icon name="file" class="ico fileico" :size="11" />
@@ -73,7 +73,7 @@ export default { name: 'NoteTreeNode' }
 .group.nest::before {
   content: '';
   position: absolute;
-  left: calc(var(--depth) * 16px - 5px);
+  left: calc(var(--depth) * 6px - 4px);
   top: 3px;
   bottom: 3px;
   width: 1px;
@@ -91,9 +91,9 @@ export default { name: 'NoteTreeNode' }
   position: relative;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
   width: 100%;
-  padding: 2px 6px;
+  padding: 2px 6px 2px 0;
   border: 0;
   border-radius: 5px;
   background: transparent;
