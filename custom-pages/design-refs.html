@@ -111,7 +111,7 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
     <div class="ph-text">
       <p class="eyebrow">design references</p>
       <h1>设计灵感 · 参考站</h1>
-      <p class="lead">六个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆、拆细节。点卡片开原站，看到合适的搬回 custom-pages/。</p>
+      <p class="lead">六个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆、拆细节。点卡片开原站；下面每个站都能复制一段提示词，粘给 agent 让它照着做。</p>
     </div>
     <span class="ph-count">6 sites</span>
   </div>
@@ -204,6 +204,40 @@ document.querySelectorAll('.card').forEach((card) => {
     card.style.setProperty('--ry', '0deg');
   });
 });
+
+// 每个站配一段可直接粘给 agent 的提示词
+const REF_PROMPTS = {
+  'uiverse.io': `在 custom-pages/ 里加一个纯 CSS 组件：先打开 uiverse.io 挑一个开关或 loader（只用 HTML + CSS，不要 JS），把配色换成本站 token（底 #fffdfa、强调 #d9571a、圆角 12–18px），hover / focus / 选中三态齐全。
+交付：完整代码块 + 应放进哪个文件 + 390 宽怎么验；不要新增依赖。`,
+  'hover.dev': `参考 hover.dev 的卡片写法，给现有卡片加「指针跟随光斑」：用 CSS 变量 --mx / --my 驱动 radial-gradient，pointermove 更新；同时做不超过 9° 的 rotateX / rotateY 倾斜；触屏不启用、不抢滚动。
+交付：改动代码 + 验证步骤（鼠标划过和触屏点击各怎么验）。`,
+  'vibeui.online': `打开 vibeui.online，挑一条和我当前页面用途最接近的版式 prompt（hero / 定价 / bento 网格），改写成这套 token 的版式：先给两种排法并用一句话说明差异，我选一个你再实现。
+约束：不引新依赖，配色只从现有 token 取。`,
+  'variant.com': `用 variant.com 的思路给当前页面出三个版式方向，每个方向一句话说明差异（信息密度 / 视觉重心 / 首屏节奏），我选一个后你再实现。
+约束：只改布局不动文案，配色只从现有 token 取，改完给桌面和 390 宽两张截图。`,
+  'awwwards.com': `打开 awwwards.com 找三个和我同类的站点，各提炼一个可借鉴手法（版式 / 动效 / 字体），并指出哪一个最适合我现在的页面；我确认后按那个实现，不要整站照搬。
+交付：借鉴点清单 + 落地改动 + 一句验收标准。`,
+  'detail.design': `打开 detail.design 找一个我能直接用的细节（按钮、表单、播放器或某个动效），写清它的具体参数（尺寸 / 时长 / 缓动），然后用本站 token 在现有页面复刻。
+交付：改前改后两张截图 + 关键 CSS 片段；不要新增依赖。`
+}
+
+const grid = document.querySelector('.grid')
+grid.querySelectorAll('a.card').forEach((card) => {
+  const host = card.querySelector('.host')?.textContent.trim()
+  const text = REF_PROMPTS[host]
+  if (!text) return
+  const wrap = document.createElement('div')
+  wrap.className = 'ref'
+  card.parentNode.insertBefore(wrap, card)
+  wrap.appendChild(card)
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'pbtn'
+  btn.textContent = '复制提示词'
+  btn.dataset.label = '复制提示词'
+  btn.addEventListener('click', () => window.frameCopy(text, btn))
+  wrap.appendChild(btn)
+})
 </script>
 </body>
 </html>

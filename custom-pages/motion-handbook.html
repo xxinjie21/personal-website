@@ -370,7 +370,7 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">27 个动效，每个都能在这里真跑一遍。说不清的时候，先说名字，再说放哪一块。</p>
+      <p class="lead">27 个动效，每个都能在这里真跑一遍。说不清的时候，先说名字，再说放哪一块。每张卡都能复制一段提示词，直接粘给 agent 就能实现。</p>
     </div>
     <span class="ph-count">27 motions · 6 tools</span>
   </div>
@@ -378,7 +378,7 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
   <div class="how">
     <span><b>1</b> 把鼠标放上去 / 点一下</span>
     <span><b>2</b> 记住名字</span>
-    <span><b>3</b> 复制那句话给 AI</span>
+    <span><b>3</b> 复制提示词给 agent</span>
   </div>
 
   <!-- A 首屏 -->
@@ -390,7 +390,7 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
       <div class="info">
         <div class="name"><b>悬停下划线生长</b><span class="en">hover underline</span></div>
         <p class="say">鼠标停上去，线从左长出来；移开时往右收走，不是原路缩回。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>a::after{transform:scaleX(0);transform-origin:right;transition:transform .38s ease}
 a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       </div>
@@ -403,7 +403,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>箭头推移 · 文字换行</b><span class="en">arrow nudge</span></div>
         <p class="say">箭头往右推一下，文字从下面换上来，别让它整块抖动。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>两段文字叠在同一格里，hover 时 .a 上移 100%、.b 从 100% 归 0</pre></div>
       </div>
     </article>
@@ -415,7 +415,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>下拉菜单</b><span class="en">dropdown</span></div>
         <p class="say">悬停或点击展开一层菜单，出现要轻，别把页面顶下去。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>.panel{opacity:0;transform:translateY(-6px);pointer-events:none}
 .parent:hover .panel{opacity:1;transform:none}</pre></div>
       </div>
@@ -427,7 +427,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>磁吸按钮</b><span class="en">magnetic button</span></div>
         <p class="say">鼠标靠近，按钮被吸过来一点；划动时字比按钮动得更多，拉开就弹回。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>pointermove: dx=(x - 中心x)*0.2，限制在 ±8px 内，pointerleave 归零</pre></div>
       </div>
     </article>
@@ -438,7 +438,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>跟随鼠标转动</b><span class="en">pointer tilt</span></div>
         <p class="say">鼠标在左边，产品就转向左边，像在看着你。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>rotateY=((x/w)-.5)*22deg，rotateX=((y/h)-.5)*-14deg</pre></div>
       </div>
     </article>
@@ -454,7 +454,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>自定义光标</b><span class="en">custom cursor</span></div>
         <p class="say">系统箭头换成一个小点加一个慢半拍的圆圈，碰到按钮圆圈变大。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>区域 cursor:none；点即时跟随，圈用 lerp 0.18 追赶；hover 时圈放大</pre></div>
       </div>
     </article>
@@ -465,7 +465,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>指针响应背景</b><span class="en">reactive background</span></div>
         <p class="say">鼠标划过去，附近的点被推开、变亮，离开再弹回去。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>逐点算距离 d&lt;90 时 scale=(1-d/90)*0.8+0.2，颜色转 accent</pre></div>
       </div>
     </article>
@@ -476,7 +476,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>光标拖尾</b><span class="en">cursor trail</span></div>
         <p class="say">鼠标后面拖一条尾巴，停下它就收回去，别留一屏的小点。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>每次 pointermove 生成一个圆，300ms 内缩放为 0 并移除</pre></div>
       </div>
     </article>
@@ -491,7 +491,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>倾斜卡片</b><span class="en">tilt card</span></div>
         <p class="say">鼠标在右上角，那一角往下沉，表面还有一道反光跟着走。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>perspective(820px) rotateX/rotateY，最大 ±9deg，反光用 radial-gradient 跟 --mx/--my</pre></div>
       </div>
     </article>
@@ -503,7 +503,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>悬停显现</b><span class="en">hover reveal</span></div>
         <p class="say">隐藏的小图标和说明，鼠标放上去才出现。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>.extra{opacity:0;transform:translateY(6px) scale(.8)} .card:hover .extra{opacity:1;transform:none}</pre></div>
       </div>
     </article>
@@ -515,7 +515,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>提示气泡</b><span class="en">tooltip</span></div>
         <p class="say">专业词旁边浮一个小框解释，带小三角，别做成整段弹窗。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>绝对定位在词上方 8px，opacity + translateY(-4px) 过渡，箭头用 border 三角</pre></div>
       </div>
     </article>
@@ -526,7 +526,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>光标聚光灯</b><span class="en">cursor spotlight</span></div>
         <p class="say">暗色页面上，光圈跟着鼠标走，靠近的那段边框也亮起来。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>radial-gradient 圆跟随指针；点阵层反向位移 4px，制造视差</pre></div>
       </div>
     </article>
@@ -541,7 +541,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>共享元素转场</b><span class="en">shared element</span></div>
         <p class="say">点卡片，卡片里的图和名字一路飞到详情页再放大；关掉时原路飞回。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>先量起始矩形，再用 transform 把终态映射回去，animate 到 identity；返回时反向</pre></div>
       </div>
     </article>
@@ -559,7 +559,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>轮播</b><span class="en">carousel</span></div>
         <p class="say">商品图左右翻，下面的小圆点跟着走，点箭头或直接拖都能翻。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>track{display:flex} 每张 flex:0 0 100%；切页改 transform:translateX(-n*100%)</pre></div>
       </div>
     </article>
@@ -573,7 +573,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>标签切换</b><span class="en">tab switch</span></div>
         <p class="say">点哪个标签，下面那条线滑到哪个下面，内容跟着滑过来。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>一条共享下划线，按按钮的 offsetLeft / offsetWidth 设置 transform 与 width</pre></div>
       </div>
     </article>
@@ -587,7 +587,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>图标形变</b><span class="en">icon morph</span></div>
         <p class="say">播放的三角形缩下去、暂停的两条竖弹出来，不是硬换图。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>两个 SVG 叠在同一格里，切换时 opacity + scale，各 380ms</pre></div>
       </div>
     </article>
@@ -602,7 +602,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>点击涟漪</b><span class="en">click ripple</span></div>
         <p class="say">从手指落下去的位置扩散一圈水波，按下有反馈才知道点到了。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>按 offsetX/Y 定位一个圆，scale 0→1、opacity 1→0，400ms 后移除</pre></div>
       </div>
     </article>
@@ -616,7 +616,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>成功对勾</b><span class="en">success check</span></div>
         <p class="say">按钮转一圈变成对勾，停一下再变回来，这一下成了。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>loading 态显示转圈 → 400ms 后加 .done，对勾用 stroke-dashoffset 画出来</pre></div>
       </div>
     </article>
@@ -627,7 +627,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>数字滚动</b><span class="en">number roll</span></div>
         <p class="say">购物袋角标从 0 滚到 1，像老式计数器一位一位滚过去。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>0–9 竖排成一列，外层 overflow:hidden，改 translateY(-n*行高)</pre></div>
       </div>
     </article>
@@ -639,7 +639,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>轻提示</b><span class="en">toast</span></div>
         <p class="say">旁边滑出一条小提示，底下一条细线走完它自己收走。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>底部滑入 + 2.2s 进度线 linear；结束前 200ms 淡出，别等用户点关闭</pre></div>
       </div>
     </article>
@@ -653,7 +653,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>抽屉</b><span class="en">drawer</span></div>
         <p class="say">从右边滑出一块面板，后面页面变暗，点空白关掉。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>面板 translateX(100%)→0，遮罩 opacity 0→.18，遮罩点击关闭</pre></div>
       </div>
     </article>
@@ -664,7 +664,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>布局过渡</b><span class="en">layout transition</span></div>
         <p class="say">删掉中间一件，剩下的平滑挪到新位置，不是突然跳过去。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>flex-grow 各 1，移走一项后其余 flex 变化的 transition 就是位移</pre></div>
       </div>
     </article>
@@ -682,7 +682,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>折叠展开</b><span class="en">accordion</span></div>
         <p class="say">点一个问题答案展开，加号变减号；点另一个，前一个自己收起来。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>一次只开一个；内容用 max-height 过渡，别硬 display:none</pre></div>
       </div>
     </article>
@@ -695,7 +695,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>骨架屏</b><span class="en">skeleton</span></div>
         <p class="say">内容没到先放灰块，一道光扫过去，别让页面看着像卡死。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>灰块 + background-size 200% 的斜向渐变，1.4s 循环；数据到了换真内容</pre></div>
       </div>
     </article>
@@ -709,7 +709,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>弹窗</b><span class="en">modal</span></div>
         <p class="say">中间弹出一块，后面变暗变模糊，Esc 和点空白都能关。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>遮罩 backdrop-filter:blur(2px)；面板 scale(.94)→1 + 6px 上浮</pre></div>
       </div>
     </article>
@@ -721,7 +721,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>错误反馈</b><span class="en">error feedback</span></div>
         <p class="say">输错了框左右抖两下，下面出一行红字；改对再点变绿。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>正则校验；失败加 .bad 触发 shake 关键帧，成功加 .ok 并把提示转绿</pre></div>
       </div>
     </article>
@@ -734,7 +734,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       <div class="info">
         <div class="name"><b>页面转场</b><span class="en">page transition</span></div>
         <p class="say">换页时一块幕布从下面升上来，字的笔画浮出，幕布再往上扫走。</p>
-        <div class="acts"><button class="copy" type="button">复制这句话</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>幕布 translateY(100%)→0→(-100%)，两段共 900ms；字延迟 80/160ms 出现</pre></div>
       </div>
     </article>
@@ -800,17 +800,22 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
 
-/* 复制 & 查看实现 */
+/* 复制提示词：每张卡自动长成一段可直接粘给 agent 的实现指令 */
+const motionPrompt = (card) => {
+  const name = card.querySelector('.name b')?.textContent.trim() || '自定义动效'
+  const say = card.querySelector('.say')?.textContent.trim() || ''
+  return `在这套 Vue 3 + Vite 个人站里实现一个动效：「${name}」。
+效果：${say}
+约束：只用 CSS 与原生 JS（站内已有 motion 库可用，但不新增依赖）；时长 300–450ms，缓动 cubic-bezier(.22,.8,.2,1)；桌面鼠标悬停与触屏点击都能触发，触屏不能只靠 hover；不抢滚动、不改变布局占位；390 宽无横向溢出。
+交付：改动文件 + 关键代码 + 一句验证方法（分别说明 hover 和点击怎么验）。`
+}
 $$('.copy').forEach((btn) => {
-  btn.addEventListener('click', async () => {
+  btn.textContent = '复制提示词'
+  btn.dataset.label = '复制提示词'
+  btn.addEventListener('click', () => {
     const card = btn.closest('.mcard')
-    const text = card ? card.querySelector('.say').innerText.trim() : ''
-    try { await navigator.clipboard.writeText(text) } catch (err) {
-      const ta = document.createElement('textarea'); ta.value = text
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove()
-    }
-    btn.textContent = '已复制'; btn.classList.add('done')
-    setTimeout(() => { btn.textContent = '复制这句话'; btn.classList.remove('done') }, 1400)
+    if (!card) return
+    window.frameCopy(motionPrompt(card), btn)
   })
 })
 $$('.toggle').forEach((btn) => {
@@ -1180,5 +1185,6 @@ if (cv) {
 </script>
 </body>
 </html>
+
 
 

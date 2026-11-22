@@ -1,6 +1,32 @@
-/* 三张开发页共用的交互层：顶栏投影 + 入场错峰
+/* 三张开发页共用的交互层：顶栏投影 + 入场错峰 + 复制提示词
    由 custom-pages/_embed/frame.js 提供，构建后位于 /embed/frame.js */
 (() => {
+  // 统一复制：按钮变「已复制」1.4 秒，失败时退回 execCommand
+  window.frameCopy = async function (text, btn, doneLabel = '已复制') {
+    if (!text) return
+    const body = text.trim()
+    try {
+      await navigator.clipboard.writeText(body)
+    } catch (err) {
+      const ta = document.createElement('textarea')
+      ta.value = body
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      ta.remove()
+    }
+    if (!btn) return
+    const old = btn.dataset.label || btn.textContent
+    btn.textContent = doneLabel
+    btn.classList.add('done')
+    setTimeout(() => {
+      btn.textContent = old
+      btn.classList.remove('done')
+    }, 1400)
+  }
+
   const bar = document.querySelector('.devbar')
   if (bar) {
     const onScroll = () => bar.classList.toggle('lifted', (window.scrollY || 0) > 8)
