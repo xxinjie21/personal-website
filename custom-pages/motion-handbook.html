@@ -551,10 +551,6 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
     <span class="db-tag">development</span>
     <span class="db-sep" aria-hidden="true"></span>
     <span class="db-current">动效手册</span>
-    <nav class="db-nav">
-      <a href="motion-handbook.html" class="here">动效手册</a>
-      <a href="design-refs.html">设计参考</a>
-    </nav>
   </div>
 
   <div class="page-head reveal">
@@ -567,9 +563,9 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
   </div>
 
   <!-- A 首屏 -->
-  <div class="group"><h2>首屏</h2><p>5 · hover</p></div>
+    <div class="group"><h2>首屏</h2><p>9 · hover / 入场</p></div>
   <div class="grid">
-    <article class="mcard" style="--i:0">
+    <article class="mcard" style="--i:1">
       <span class="badge">hover</span>
       <div class="demo"><nav class="d-nav"><a class="u-link" href="#">首页</a><a class="u-link" href="#">笔记</a><a class="u-link" href="#">关于</a></nav></div>
       <div class="info">
@@ -581,7 +577,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       </div>
     </article>
 
-    <article class="mcard" style="--i:1">
+    <article class="mcard" style="--i:2">
       <span class="badge">hover</span>
       <div class="demo"><button class="swap-btn" type="button"><span class="swap-text"><span class="a">查看参数</span><span class="b">看完整规格</span></span>
         <span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h12"/><path d="M12 6l6 6-6 6"/></svg></span></button></div>
@@ -593,7 +589,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       </div>
     </article>
 
-    <article class="mcard" style="--i:2">
+    <article class="mcard" style="--i:3">
       <span class="badge">hover</span>
       <div class="demo"><div class="dd"><button class="dd-trigger" type="button">键帽套装 ▾</button>
         <div class="dd-panel"><div class="dd-item"><span>淘土</span><span>¥199</span></div><div class="dd-item"><span>雪蓝</span><span>¥219</span></div><div class="dd-item"><span>夜航</span><span>¥239</span></div></div></div></div>
@@ -606,7 +602,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       </div>
     </article>
 
-    <article class="mcard" style="--i:3">
+    <article class="mcard" style="--i:4">
       <span class="badge">pointer</span>
       <div class="demo"><div class="magnet-wrap"><button class="magnet" type="button">立即选购</button></div></div>
       <div class="info">
@@ -617,7 +613,7 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
       </div>
     </article>
 
-    <article class="mcard" style="--i:4">
+    <article class="mcard" style="--i:5">
       <span class="badge">pointer</span>
       <div class="demo"><div class="follow-stage"><div class="kb" id="kb"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
       <div class="info">
@@ -627,308 +623,8 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
         <div class="src"><pre>rotateY=((x/w)-.5)*22deg，rotateX=((y/h)-.5)*-14deg</pre></div>
       </div>
     </article>
-  </div>
 
-  <!-- B 光标 -->
-  <div class="group"><h2>光标</h2><p>3 · cursor</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">cursor</span>
-      <div class="demo"><div class="cursor-stage" id="cursorStage"><span class="d-btn">把鼠标移进来</span>
-        <span class="cursor-ring" id="cRing"></span><span class="cursor-dot" id="cDot"></span></div></div>
-      <div class="info">
-        <div class="name"><b>自定义光标</b><span class="en">custom cursor</span></div>
-        <p class="say">系统箭头换成一个小点加一个慢半拍的圆圈，碰到按钮圆圈变大。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>区域 cursor:none；点即时跟随，圈用 lerp 0.18 追赶；hover 时圈放大</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">pointer</span>
-      <div class="demo"><div class="dots" id="dotGrid"></div></div>
-      <div class="info">
-        <div class="name"><b>指针响应背景</b><span class="en">reactive background</span></div>
-        <p class="say">鼠标划过去，附近的点被推开、变亮，离开再弹回去。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>逐点算距离 d&lt;90 时 scale=(1-d/90)*0.8+0.2，颜色转 accent</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">cursor</span>
-      <div class="demo"><div class="trail-stage" id="trailStage"><span class="d-btn">快速划过这里</span></div></div>
-      <div class="info">
-        <div class="name"><b>光标拖尾</b><span class="en">cursor trail</span></div>
-        <p class="say">鼠标后面拖一条尾巴，停下它就收回去，别留一屏的小点。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>每次 pointermove 生成一个圆，300ms 内缩放为 0 并移除</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- C 卡片 -->
-  <div class="group"><h2>卡片</h2><p>4 · hover</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">hover</span>
-      <div class="demo"><div class="tilt-card" id="tiltCard">3D 倾斜卡片</div></div>
-      <div class="info">
-        <div class="name"><b>倾斜卡片</b><span class="en">tilt card</span></div>
-        <p class="say">鼠标在右上角，那一角往下沉，表面还有一道反光跟着走。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>perspective(820px) rotateX/rotateY，最大 ±9deg，反光用 radial-gradient 跟 --mx/--my</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">hover</span>
-      <div class="demo"><div class="reveal-card"><span class="plus"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
-        <span>卖点卡片</span><span class="reveal-tip">平时藏着，鼠标停上来才露</span></div></div>
-      <div class="info">
-        <div class="name"><b>悬停显现</b><span class="en">hover reveal</span></div>
-        <p class="say">隐藏的小图标和说明，鼠标放上去才出现。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>.extra{opacity:0;transform:translateY(6px) scale(.8)} .card:hover .extra{opacity:1;transform:none}</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">hover</span>
-      <div class="demo"><span class="tip-host">键程
-        <span class="tip-bubble">按键从顶按到底走过的距离，单位毫米，<b>常见 3.6–4.0</b>。</span></span></div>
-      <div class="info">
-        <div class="name"><b>提示气泡</b><span class="en">tooltip</span></div>
-        <p class="say">专业词旁边浮一个小框解释，带小三角，别做成整段弹窗。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>绝对定位在词上方 8px，opacity + translateY(-4px) 过渡，箭头用 border 三角</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:3">
-      <span class="badge">pointer</span>
-      <div class="demo dark"><div class="spot" id="spotStage"><span class="spot-dots"></span><span class="spot-light" id="spotLight"></span><span class="spot-card">暗色卡片</span></div></div>
-      <div class="info">
-        <div class="name"><b>光标聚光灯</b><span class="en">cursor spotlight</span></div>
-        <p class="say">暗色页面上，光圈跟着鼠标走，靠近的那段边框也亮起来。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>radial-gradient 圆跟随指针；点阵层反向位移 4px，制造视差</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- D 换场 -->
-  <div class="group"><h2>页面换场</h2><p>1 · shared element</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">click</span>
-      <div class="demo"><div class="se-stage" id="seStage"><div class="se-thumb" id="seThumb">键帽</div></div></div>
-      <div class="info">
-        <div class="name"><b>共享元素转场</b><span class="en">shared element</span></div>
-        <p class="say">点卡片，卡片里的图和名字一路飞到详情页再放大；关掉时原路飞回。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>先量起始矩形，再用 transform 把终态映射回去，animate 到 identity；返回时反向</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- E 详情 -->
-  <div class="group"><h2>详情页</h2><p>3 · click</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">click</span>
-      <div class="demo"><div class="car" id="car">
-        <div class="car-view"><div class="car-track" id="carTrack"><div>正面</div><div>俯视</div><div>侧面</div><div>背面</div></div></div>
-        <div class="car-bar"><button type="button" data-car="-1">‹</button><span class="car-dots" id="carDots"><i class="on"></i><i></i><i></i><i></i></span><button type="button" data-car="1">›</button></div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>轮播</b><span class="en">carousel</span></div>
-        <p class="say">商品图左右翻，下面的小圆点跟着走，点箭头或直接拖都能翻。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>track{display:flex} 每张 flex:0 0 100%；切页改 transform:translateX(-n*100%)</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">click</span>
-      <div class="demo"><div class="tabx" id="tabx">
-        <div class="tabbar"><button class="on" type="button">规格</button><button type="button">手感</button><button type="button">包装</button><span class="tab-ink" id="tabInk"></span></div>
-        <div class="tabpanes"><p class="on">尺寸 320×110mm，重量 780g，六排布局。</p><p>有刻度的键帽，段落感明显，敲起来偏脆。</p><p>键盘本体、数据线、拔键器、说明书。</p></div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>标签切换</b><span class="en">tab switch</span></div>
-        <p class="say">点哪个标签，下面那条线滑到哪个下面，内容跟着滑过来。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>一条共享下划线，按按钮的 offsetLeft / offsetWidth 设置 transform 与 width</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">click</span>
-      <div class="demo"><button class="morph-btn" id="morphBtn" type="button" aria-label="播放">
-        <svg class="play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
-        <svg class="pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.6" height="14" rx="1"/><rect x="13.4" y="5" width="3.6" height="14" rx="1"/></svg>
-      </button></div>
-      <div class="info">
-        <div class="name"><b>图标形变</b><span class="en">icon morph</span></div>
-        <p class="say">播放的三角形缩下去、暂停的两条竖弹出来，不是硬换图。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>两个 SVG 叠在同一格里，切换时 opacity + scale，各 380ms</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- F 操作反馈 -->
-  <div class="group"><h2>操作反馈</h2><p>6 · click</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">click</span>
-      <div class="demo"><button class="d-btn btn-primary rip" id="ripBtn" type="button" style="background:linear-gradient(135deg,#ef8a3f,#d7561c);border-color:transparent;color:#fffaf4;font-weight:600">加入购物袋</button></div>
-      <div class="info">
-        <div class="name"><b>点击涟漪</b><span class="en">click ripple</span></div>
-        <p class="say">从手指落下去的位置扩散一圈水波，按下有反馈才知道点到了。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>按 offsetX/Y 定位一个圆，scale 0→1、opacity 1→0，400ms 后移除</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">click</span>
-      <div class="demo"><button class="d-btn btn-primary ok-btn" id="okBtn" type="button" style="background:linear-gradient(135deg,#ef8a3f,#d7561c);border-color:transparent;color:#fffaf4;font-weight:600">
-        <span class="label">加入购物袋</span><span class="spin"></span>
-        <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
-      </button></div>
-      <div class="info">
-        <div class="name"><b>成功对勾</b><span class="en">success check</span></div>
-        <p class="say">按钮转一圈变成对勾，停一下再变回来，这一下成了。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>loading 态显示转圈 → 400ms 后加 .done，对勾用 stroke-dashoffset 画出来</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">click</span>
-      <div class="demo"><div class="roll" id="roll" role="button" tabindex="0" aria-label="数字滚动"><span>0</span><span>1</span><span>2</span></div></div>
-      <div class="info">
-        <div class="name"><b>数字滚动</b><span class="en">number roll</span></div>
-        <p class="say">购物袋角标从 0 滚到 1，像老式计数器一位一位滚过去。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>0–9 竖排成一列，外层 overflow:hidden，改 translateY(-n*行高)</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:3">
-      <span class="badge">click</span>
-      <div class="demo"><div class="toast-demo"><button class="d-btn" id="toastBtn" type="button">加入购物袋</button>
-        <div class="toast" id="toast">已加入购物袋</div></div></div>
-      <div class="info">
-        <div class="name"><b>轻提示</b><span class="en">toast</span></div>
-        <p class="say">旁边滑出一条小提示，底下一条细线走完它自己收走。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>底部滑入 + 2.2s 进度线 linear；结束前 200ms 淡出，别等用户点关闭</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:4">
-      <span class="badge">click</span>
-      <div class="demo"><div class="drawer-demo" id="drawerDemo"><button class="d-btn" id="drawerBtn" type="button">查看购物袋</button>
-        <div class="drawer-back" id="drawerBack"></div>
-        <div class="drawer"><span class="d-title">购物袋</span><span>键帽 ×1</span><span>键盘 ×1</span><span style="margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--accent)">合计 ¥418</span></div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>抽屉</b><span class="en">drawer</span></div>
-        <p class="say">从右边滑出一块面板，后面页面变暗，点空白关掉。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>面板 translateX(100%)→0，遮罩 opacity 0→.18，遮罩点击关闭</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:5">
-      <span class="badge">click</span>
-      <div class="demo"><div class="layoutx" id="layoutx"><i>键帽</i><i>线性轴</i><i>拔键器</i></div></div>
-      <div class="info">
-        <div class="name"><b>布局过渡</b><span class="en">layout transition</span></div>
-        <p class="say">删掉中间一件，剩下的平滑挪到新位置，不是突然跳过去。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>flex-grow 各 1，移走一项后其余 flex 变化的 transition 就是位移</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- G 收尾 -->
-  <div class="group"><h2>收尾细节</h2><p>5 · click / scroll</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">click</span>
-      <div class="demo"><div class="acc" id="acc">
-        <div class="acc-item on"><button class="acc-q" type="button">轴体怎么选<span class="pm"></span></button><div class="acc-a"><p>先定手感：段落轴偏脆，线性轴偏顺，静音轴适合办公室。</p></div></div>
-        <div class="acc-item"><button class="acc-q" type="button">键帽会不会打油<span class="pm"></span></button><div class="acc-a"><p>PBT 比 ABS 耐磨，用久了轻微发亮属正常。</p></div></div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>折叠展开</b><span class="en">accordion</span></div>
-        <p class="say">点一个问题答案展开，加号变减号；点另一个，前一个自己收起来。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>一次只开一个；内容用 max-height 过渡，别硬 display:none</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">auto</span>
-      <div class="demo"><div class="sk" id="sk"><div class="sk-row"><span class="sk-blk sk-thumb"></span><div class="sk-line"><span class="sk-blk" style="width:70%"></span><span class="sk-blk" style="width:45%"></span></div></div>
-        <div class="sk-row"><span class="sk-blk sk-thumb"></span><div class="sk-line"><span class="sk-blk" style="width:60%"></span><span class="sk-blk" style="width:38%"></span></div></div>
-        <p class="sk-real">评价 · 用了两周，键程干净，敲久了不累。</p></div></div>
-      <div class="info">
-        <div class="name"><b>骨架屏</b><span class="en">skeleton</span></div>
-        <p class="say">内容没到先放灰块，一道光扫过去，别让页面看着像卡死。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>灰块 + background-size 200% 的斜向渐变，1.4s 循环；数据到了换真内容</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">click</span>
-      <div class="demo"><div class="modal-demo" id="modalDemo"><button class="d-btn" id="modalBtn" type="button">不知道选哪个轴</button>
-        <div class="modal-back" id="modalBack"></div>
-        <div class="modal"><b>先试手感</b>三种轴各敲一周，留下最顺手的那个。别按参数盲选。</div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>弹窗</b><span class="en">modal</span></div>
-        <p class="say">中间弹出一块，后面变暗变模糊，Esc 和点空白都能关。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>遮罩 backdrop-filter:blur(2px)；面板 scale(.94)→1 + 6px 上浮</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:3">
-      <span class="badge">input</span>
-      <div class="demo"><div class="errx"><div class="err-line" id="errLine"><input id="errInput" type="text" placeholder="邮箱" aria-label="邮箱"><button id="errBtn" type="button">订阅</button></div>
-        <p class="err-msg" id="errMsg"></p></div></div>
-      <div class="info">
-        <div class="name"><b>错误反馈</b><span class="en">error feedback</span></div>
-        <p class="say">输错了框左右抖两下，下面出一行红字；改对再点变绿。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>正则校验；失败加 .bad 触发 shake 关键帧，成功加 .ok 并把提示转绿</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:4">
-      <span class="badge">click</span>
-      <div class="demo"><div class="pt-demo" id="ptDemo"><button class="d-btn" id="ptBtn" type="button">去结算</button>
-        <div class="pt-curtain" id="ptCurtain"><span>X</span><span>X</span><span>J</span></div>
-      </div></div>
-      <div class="info">
-        <div class="name"><b>页面转场</b><span class="en">page transition</span></div>
-        <p class="say">换页时一块幕布从下面升上来，字的笔画浮出，幕布再往上扫走。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>幕布 translateY(100%)→0→(-100%)，两段共 900ms；字延迟 80/160ms 出现</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- C 本站已有 -->
-  <div class="group"><h2>本站已在用</h2><p>5 · 从这套站里搬出来的</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
+    <article class="mcard" style="--i:6">
       <span class="badge">auto</span>
       <div class="demo"><div class="gbar" id="gbar"><span class="gd"></span><span class="gl"></span><span class="gl"></span><span class="gl"></span><span class="gt">点击收缩</span></div></div>
       <div class="info">
@@ -940,7 +636,7 @@ transition: all .44s cubic-bezier(.22,.8,.2,1)   /* 别用 ease-in-out，会软 
       </div>
     </article>
 
-    <article class="mcard" style="--i:1">
+    <article class="mcard" style="--i:7">
       <span class="badge">click</span>
       <div class="demo">
         <svg class="gsvg" id="graphIn" viewBox="0 0 180 98" aria-label="图谱入场演示">
@@ -967,53 +663,141 @@ line: stroke-dashoffset 160→0，animation .72s
       </div>
     </article>
 
-    <article class="mcard" style="--i:2">
-      <span class="badge">click</span>
-      <div class="demo"><div class="sdot" id="sdotDemo"><i></i><span class="sl">未开始</span></div></div>
+    <article class="mcard" style="--i:8">
+      <span class="badge">auto</span>
+      <div class="demo"><span class="shine">motion, please.</span></div>
       <div class="info">
-        <div class="name"><b>学习状态点</b><span class="en">status dot</span></div>
-        <p class="say">灰、黄、绿三态切换，靠底色加一圈同色低透明度光晕，不要换图标。点一下切一次。</p>
+        <div class="name"><b>文字扫光</b><span class="en">text shimmer</span></div>
+        <p class="say">标题上扫一道高光，比整块发光克制。只给关键词用，正文别用。</p>
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>颜色过渡 .34s；光晕用 box-shadow 0 0 0 4px 同色 16% 透明度
-不写 scale 动画，否则一排点会显得参差不齐</pre></div>
+        <div class="src"><pre>linear-gradient 三段色 + background-clip:text + color:transparent
+background-size:210% 100%，background-position 120%→-120% 循环</pre></div>
       </div>
     </article>
 
-    <article class="mcard" style="--i:3">
+    <article class="mcard" style="--i:9">
       <span class="badge">auto</span>
-      <div class="demo"><div class="sync" id="syncBadge"><span class="sd"></span><span class="st">已同步</span></div></div>
+      <div class="demo"><div class="aurora"><i></i><i></i><i></i></div></div>
       <div class="info">
-        <div class="name"><b>同步徽标呼吸</b><span class="en">sync badge</span></div>
-        <p class="say">在线时小绿点轻轻呼吸，表示"还在；"断线就停掉动画、变灰、文案改成"本地模式"，别闪红。</p>
+        <div class="name"><b>渐变背景漂移</b><span class="en">aurora blobs</span></div>
+        <p class="say">三个模糊色团慢慢游动，像极光。放在卡片底、标题后，别盖住正文。</p>
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>.sd{animation:pulseDot 1.8s ease-in-out infinite}
-离线：animation:none + 变灰 + 文案切换
-断线状态下不要用红色，红色留给真错误</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:4">
-      <span class="badge">auto</span>
-      <div class="demo">
-        <div class="ring-wrap" id="ringWrap">
-          <svg viewBox="0 0 104 104"><circle class="ring-track" cx="52" cy="52" r="45"/><circle class="ring-fill" id="ringFill" cx="52" cy="52" r="45"/></svg>
-          <div class="ring-num"><b id="ringNum">27</b><span>days left</span></div>
-        </div>
-      </div>
-      <div class="info">
-        <div class="name"><b>倒计时环形进度</b><span class="en">ring countdown</span></div>
-        <p class="say">数字和圆环一起走：数字用 rAF 补间，圆环用 dashoffset，两者同一条缓动，不能各走各的。点一下重跑。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>stroke-dasharray = 2πr ≈ 283；offset 283→0 表示 0%→100%
-数字用 requestAnimationFrame 补间，别用 setInterval 一格格跳</pre></div>
+        <div class="src"><pre>三个 border-radius:50% 的色团，filter:blur(16px)，opacity .5
+animation: driftBlob 6.5s ease-in-out infinite alternate，互相错开 2.2s</pre></div>
       </div>
     </article>
   </div>
 
-  <!-- D GitHub 热门 -->
-  <div class="group"><h2>GitHub 上常见的</h2><p>7 · 开源项目里高频出现</p></div>
+  <div class="group"><h2>光标</h2><p>5 · cursor</p></div>
   <div class="grid">
-    <article class="mcard" style="--i:0">
+    <article class="mcard" style="--i:1">
+      <span class="badge">cursor</span>
+      <div class="demo"><div class="cursor-stage" id="cursorStage"><span class="d-btn">把鼠标移进来</span>
+        <span class="cursor-ring" id="cRing"></span><span class="cursor-dot" id="cDot"></span></div></div>
+      <div class="info">
+        <div class="name"><b>自定义光标</b><span class="en">custom cursor</span></div>
+        <p class="say">系统箭头换成一个小点加一个慢半拍的圆圈，碰到按钮圆圈变大。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>区域 cursor:none；点即时跟随，圈用 lerp 0.18 追赶；hover 时圈放大</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">pointer</span>
+      <div class="demo"><div class="dots" id="dotGrid"></div></div>
+      <div class="info">
+        <div class="name"><b>指针响应背景</b><span class="en">reactive background</span></div>
+        <p class="say">鼠标划过去，附近的点被推开、变亮，离开再弹回去。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>逐点算距离 d&lt;90 时 scale=(1-d/90)*0.8+0.2，颜色转 accent</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">cursor</span>
+      <div class="demo"><div class="trail-stage" id="trailStage"><span class="d-btn">快速划过这里</span></div></div>
+      <div class="info">
+        <div class="name"><b>光标拖尾</b><span class="en">cursor trail</span></div>
+        <p class="say">鼠标后面拖一条尾巴，停下它就收回去，别留一屏的小点。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每次 pointermove 生成一个圆，300ms 内缩放为 0 并移除</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">hover</span>
+      <div class="demo"><span class="gtext" data-spot>hover gradient</span></div>
+      <div class="info">
+        <div class="name"><b>渐变文字跟随</b><span class="en">gradient follow</span></div>
+        <p class="say">颜色不是整体渐变，而是跟着鼠标走的一团光，字越靠光越暖。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>background: radial-gradient(140px circle at var(--mx) var(--my), 暖色, 灰)
+-webkit-background-clip:text + color:transparent；每帧只改两个变量</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">pointer</span>
+      <div class="demo"><div class="img-trail" id="imgTrail"></div></div>
+      <div class="info">
+        <div class="name"><b>图像拖尾</b><span class="en">image trail</span></div>
+        <p class="say">鼠标划过留下一串渐隐的色块，像烟。Hover.dev 用的是缩略图序列，换成色块就是纯 CSS 版。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>移动超过 12px 才生成一枚；WAAPI 从 scale(.6) opacity 1 → scale(.2) opacity 0
+duration 480ms，onfinish 移除；生成太多会卡，节流看距离不看时间</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="group"><h2>卡片</h2><p>7 · hover</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:1">
+      <span class="badge">hover</span>
+      <div class="demo"><div class="tilt-card" id="tiltCard">3D 倾斜卡片</div></div>
+      <div class="info">
+        <div class="name"><b>倾斜卡片</b><span class="en">tilt card</span></div>
+        <p class="say">鼠标在右上角，那一角往下沉，表面还有一道反光跟着走。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>perspective(820px) rotateX/rotateY，最大 ±9deg，反光用 radial-gradient 跟 --mx/--my</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">hover</span>
+      <div class="demo"><div class="reveal-card"><span class="plus"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        <span>卖点卡片</span><span class="reveal-tip">平时藏着，鼠标停上来才露</span></div></div>
+      <div class="info">
+        <div class="name"><b>悬停显现</b><span class="en">hover reveal</span></div>
+        <p class="say">隐藏的小图标和说明，鼠标放上去才出现。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.extra{opacity:0;transform:translateY(6px) scale(.8)} .card:hover .extra{opacity:1;transform:none}</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">hover</span>
+      <div class="demo"><span class="tip-host">键程
+        <span class="tip-bubble">按键从顶按到底走过的距离，单位毫米，<b>常见 3.6–4.0</b>。</span></span></div>
+      <div class="info">
+        <div class="name"><b>提示气泡</b><span class="en">tooltip</span></div>
+        <p class="say">专业词旁边浮一个小框解释，带小三角，别做成整段弹窗。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>绝对定位在词上方 8px，opacity + translateY(-4px) 过渡，箭头用 border 三角</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">pointer</span>
+      <div class="demo dark"><div class="spot" id="spotStage"><span class="spot-dots"></span><span class="spot-light" id="spotLight"></span><span class="spot-card">暗色卡片</span></div></div>
+      <div class="info">
+        <div class="name"><b>光标聚光灯</b><span class="en">cursor spotlight</span></div>
+        <p class="say">暗色页面上，光圈跟着鼠标走，靠近的那段边框也亮起来。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>radial-gradient 圆跟随指针；点阵层反向位移 4px，制造视差</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
       <span class="badge">auto</span>
       <div class="demo"><div class="beam-card"><span>border beam</span></div></div>
       <div class="info">
@@ -1026,132 +810,7 @@ line: stroke-dashoffset 160→0，animation .72s
       </div>
     </article>
 
-    <article class="mcard" style="--i:1">
-      <span class="badge">auto</span>
-      <div class="demo"><span class="shine">motion, please.</span></div>
-      <div class="info">
-        <div class="name"><b>文字扫光</b><span class="en">text shimmer</span></div>
-        <p class="say">标题上扫一道高光，比整块发光克制。只给关键词用，正文别用。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>linear-gradient 三段色 + background-clip:text + color:transparent
-background-size:210% 100%，background-position 120%→-120% 循环</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">auto</span>
-      <div class="demo"><div class="aurora"><i></i><i></i><i></i></div></div>
-      <div class="info">
-        <div class="name"><b>渐变背景漂移</b><span class="en">aurora blobs</span></div>
-        <p class="say">三个模糊色团慢慢游动，像极光。放在卡片底、标题后，别盖住正文。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>三个 border-radius:50% 的色团，filter:blur(16px)，opacity .5
-animation: driftBlob 6.5s ease-in-out infinite alternate，互相错开 2.2s</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:3">
-      <span class="badge">click</span>
-      <div class="demo"><div class="reveal-mask" id="revealMask"></div></div>
-      <div class="info">
-        <div class="name"><b>遮罩揭示</b><span class="en">clip-path reveal</span></div>
-        <p class="say">图从中心一个圆往外炸开整张，比淡入更有"揭幕"感。点一下切换。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>clip-path:circle(26% at 50% 50%) → circle(118% at 50% 50%)
-transition .62s cubic-bezier(.22,.9,.28,1)；别配 opacity，两者一起会发灰</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:4">
-      <span class="badge">drag</span>
-      <div class="demo"><div class="sort-row" id="sortRow"><span class="chip">政治</span><span class="chip">英语</span><span class="chip">数学</span><span class="chip">专业课</span></div></div>
-      <div class="info">
-        <div class="name"><b>拖拽排序</b><span class="en">sortable + FLIP</span></div>
-        <p class="say">拖动交换位置时，其他块不是瞬移，而是从旧位置滑到新位置——这就是 FLIP。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>1 记录所有块旧位置 → 2 改 DOM 顺序 → 3 新位置与旧位置差值
-4 先 transform 反向偏移并关过渡 → 5 下一帧开过渡、transform 归零</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:5">
-      <span class="badge">auto</span>
-      <div class="demo"><div class="tw"><span id="twText"></span><span class="caret"></span></div></div>
-      <div class="info">
-        <div class="name"><b>打字机</b><span class="en">typewriter</span></div>
-        <p class="say">一个字一个字敲出来，光标保持闪。只在短句上用，长段落会让人等得不耐烦。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>每 90ms 截取一个字符；打完停 1.6s，再删到 0
-光标用 steps(1) 的 infinite 闪烁，别用 ease</pre></div>
-      </div>
-    </article>
-
     <article class="mcard" style="--i:6">
-      <span class="badge">click</span>
-      <div class="demo"><div class="burst-stage" id="burstStage"><button class="burst-btn" id="burstBtn" type="button">点我爆</button></div></div>
-      <div class="info">
-        <div class="name"><b>粒子爆裂</b><span class="en">confetti burst</span></div>
-        <p class="say">点一下就撒一把彩纸，短、散、马上消失。用在收藏成功、打卡完成这类小确幸时刻。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>每次生成 16 个粒子，随机角度 + 随机距离
-WAAPI: translate(x,y) rotate + opacity 1→0，duration 520–780ms，easing ease-out
-onfinish 移除节点，别留着堆内存</pre></div>
-      </div>
-    </article>
-  </div>
-
-  <!-- E 外部资源 -->
-  <div class="group"><h2>外部仓库里搬来的</h2><p>8 · Uiverse / Hover.dev 一类</p></div>
-  <div class="grid">
-    <article class="mcard" style="--i:0">
-      <span class="badge">auto</span>
-      <div class="demo"><div class="ldr"><i></i><i></i><i></i></div></div>
-      <div class="info">
-        <div class="name"><b>三点跳动加载</b><span class="en">dot loader</span></div>
-        <p class="say">三个点错相位上下跳，比转圈更"轻"。Uiverse 上最常被复制的一种加载态。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>三个点 animation: 1.1s ease-in-out infinite，delay 分别 0 / .16s / .32s
-关键帧只动 translateY(-7px) 与 opacity，别加 scale，否则像果冻</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:1">
-      <span class="badge">click</span>
-      <div class="demo"><button class="jelly" type="button">按一下试试</button></div>
-      <div class="info">
-        <div class="name"><b>果冻按钮</b><span class="en">jelly press</span></div>
-        <p class="say">按下时横向撑开、纵向压扁，松开用回弹曲线弹回来——手感全在那条 cubic-bezier。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>:active{transform:scale(1.06,.88)}
-transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感 */</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:2">
-      <span class="badge">click</span>
-      <div class="demo"><div class="sw" id="swDemo"><i></i></div></div>
-      <div class="info">
-        <div class="name"><b>拟物开关</b><span class="en">toggle switch</span></div>
-        <p class="say">按住时滑块被拉长一点，松开再归位——这点形变是拟物的关键，纯位移会显得塑料。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>滑块 translateX(21px) 切换；:active 时 width 20px→24px
-轨道背景色同步 .32s，两个动画时长要错开一点</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:3">
-      <span class="badge">focus</span>
-      <div class="demo"><input class="ginput" type="text" placeholder="聚焦我看光边"></div>
-      <div class="info">
-        <div class="name"><b>聚焦光边</b><span class="en">focus ring</span></div>
-        <p class="say">聚焦时边框变色，外面再套一圈低透明度同色光——比纯 border 变色更"活"。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>box-shadow: 0 0 0 3px 同色12% , 0 8px 18px -14px 同色80%
-不要 outline:none 了事，键盘用户会失去焦点提示</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:4">
       <span class="badge">hover</span>
       <div class="demo"><div class="spot-card" data-spot><span>spotlight</span></div></div>
       <div class="info">
@@ -1160,30 +819,6 @@ transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>pointermove 写 --mx/--my；两层都用 radial-gradient(130px circle at var(--mx) var(--my))
 描边层用 padding:1.2px + mask-composite:exclude 掏空中间，只剩 1.2px 边</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:5">
-      <span class="badge">hover</span>
-      <div class="demo"><span class="gtext" data-spot>hover gradient</span></div>
-      <div class="info">
-        <div class="name"><b>渐变文字跟随</b><span class="en">gradient follow</span></div>
-        <p class="say">颜色不是整体渐变，而是跟着鼠标走的一团光，字越靠光越暖。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>background: radial-gradient(140px circle at var(--mx) var(--my), 暖色, 灰)
--webkit-background-clip:text + color:transparent；每帧只改两个变量</pre></div>
-      </div>
-    </article>
-
-    <article class="mcard" style="--i:6">
-      <span class="badge">pointer</span>
-      <div class="demo"><div class="img-trail" id="imgTrail"></div></div>
-      <div class="info">
-        <div class="name"><b>图像拖尾</b><span class="en">image trail</span></div>
-        <p class="say">鼠标划过留下一串渐隐的色块，像烟。Hover.dev 用的是缩略图序列，换成色块就是纯 CSS 版。</p>
-        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>移动超过 12px 才生成一枚；WAAPI 从 scale(.6) opacity 1 → scale(.2) opacity 0
-duration 480ms，onfinish 移除；生成太多会卡，节流看距离不看时间</pre></div>
       </div>
     </article>
 
@@ -1199,6 +834,350 @@ duration 480ms，onfinish 移除；生成太多会卡，节流看距离不看时
       </div>
     </article>
   </div>
+
+  <div class="group"><h2>页面换场</h2><p>2 · shared element</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo"><div class="se-stage" id="seStage"><div class="se-thumb" id="seThumb">键帽</div></div></div>
+      <div class="info">
+        <div class="name"><b>共享元素转场</b><span class="en">shared element</span></div>
+        <p class="say">点卡片，卡片里的图和名字一路飞到详情页再放大；关掉时原路飞回。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>先量起始矩形，再用 transform 把终态映射回去，animate 到 identity；返回时反向</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">click</span>
+      <div class="demo"><div class="reveal-mask" id="revealMask"></div></div>
+      <div class="info">
+        <div class="name"><b>遮罩揭示</b><span class="en">clip-path reveal</span></div>
+        <p class="say">图从中心一个圆往外炸开整张，比淡入更有"揭幕"感。点一下切换。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>clip-path:circle(26% at 50% 50%) → circle(118% at 50% 50%)
+transition .62s cubic-bezier(.22,.9,.28,1)；别配 opacity，两者一起会发灰</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="group"><h2>详情页</h2><p>7 · click / 数据</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo"><div class="car" id="car">
+        <div class="car-view"><div class="car-track" id="carTrack"><div>正面</div><div>俯视</div><div>侧面</div><div>背面</div></div></div>
+        <div class="car-bar"><button type="button" data-car="-1">‹</button><span class="car-dots" id="carDots"><i class="on"></i><i></i><i></i><i></i></span><button type="button" data-car="1">›</button></div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>轮播</b><span class="en">carousel</span></div>
+        <p class="say">商品图左右翻，下面的小圆点跟着走，点箭头或直接拖都能翻。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>track{display:flex} 每张 flex:0 0 100%；切页改 transform:translateX(-n*100%)</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">click</span>
+      <div class="demo"><div class="tabx" id="tabx">
+        <div class="tabbar"><button class="on" type="button">规格</button><button type="button">手感</button><button type="button">包装</button><span class="tab-ink" id="tabInk"></span></div>
+        <div class="tabpanes"><p class="on">尺寸 320×110mm，重量 780g，六排布局。</p><p>有刻度的键帽，段落感明显，敲起来偏脆。</p><p>键盘本体、数据线、拔键器、说明书。</p></div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>标签切换</b><span class="en">tab switch</span></div>
+        <p class="say">点哪个标签，下面那条线滑到哪个下面，内容跟着滑过来。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>一条共享下划线，按按钮的 offsetLeft / offsetWidth 设置 transform 与 width</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">click</span>
+      <div class="demo"><button class="morph-btn" id="morphBtn" type="button" aria-label="播放">
+        <svg class="play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
+        <svg class="pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.6" height="14" rx="1"/><rect x="13.4" y="5" width="3.6" height="14" rx="1"/></svg>
+      </button></div>
+      <div class="info">
+        <div class="name"><b>图标形变</b><span class="en">icon morph</span></div>
+        <p class="say">播放的三角形缩下去、暂停的两条竖弹出来，不是硬换图。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>两个 SVG 叠在同一格里，切换时 opacity + scale，各 380ms</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="sync" id="syncBadge"><span class="sd"></span><span class="st">已同步</span></div></div>
+      <div class="info">
+        <div class="name"><b>同步徽标呼吸</b><span class="en">sync badge</span></div>
+        <p class="say">在线时小绿点轻轻呼吸，表示"还在；"断线就停掉动画、变灰、文案改成"本地模式"，别闪红。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.sd{animation:pulseDot 1.8s ease-in-out infinite}
+离线：animation:none + 变灰 + 文案切换
+断线状态下不要用红色，红色留给真错误</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">auto</span>
+      <div class="demo">
+        <div class="ring-wrap" id="ringWrap">
+          <svg viewBox="0 0 104 104"><circle class="ring-track" cx="52" cy="52" r="45"/><circle class="ring-fill" id="ringFill" cx="52" cy="52" r="45"/></svg>
+          <div class="ring-num"><b id="ringNum">27</b><span>days left</span></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>倒计时环形进度</b><span class="en">ring countdown</span></div>
+        <p class="say">数字和圆环一起走：数字用 rAF 补间，圆环用 dashoffset，两者同一条缓动，不能各走各的。点一下重跑。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>stroke-dasharray = 2πr ≈ 283；offset 283→0 表示 0%→100%
+数字用 requestAnimationFrame 补间，别用 setInterval 一格格跳</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:6">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="tw"><span id="twText"></span><span class="caret"></span></div></div>
+      <div class="info">
+        <div class="name"><b>打字机</b><span class="en">typewriter</span></div>
+        <p class="say">一个字一个字敲出来，光标保持闪。只在短句上用，长段落会让人等得不耐烦。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每 90ms 截取一个字符；打完停 1.6s，再删到 0
+光标用 steps(1) 的 infinite 闪烁，别用 ease</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:7">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="ldr"><i></i><i></i><i></i></div></div>
+      <div class="info">
+        <div class="name"><b>三点跳动加载</b><span class="en">dot loader</span></div>
+        <p class="say">三个点错相位上下跳，比转圈更"轻"。Uiverse 上最常被复制的一种加载态。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>三个点 animation: 1.1s ease-in-out infinite，delay 分别 0 / .16s / .32s
+关键帧只动 translateY(-7px) 与 opacity，别加 scale，否则像果冻</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="group"><h2>操作反馈</h2><p>12 · click</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo"><button class="d-btn btn-primary rip" id="ripBtn" type="button" style="background:linear-gradient(135deg,#ef8a3f,#d7561c);border-color:transparent;color:#fffaf4;font-weight:600">加入购物袋</button></div>
+      <div class="info">
+        <div class="name"><b>点击涟漪</b><span class="en">click ripple</span></div>
+        <p class="say">从手指落下去的位置扩散一圈水波，按下有反馈才知道点到了。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>按 offsetX/Y 定位一个圆，scale 0→1、opacity 1→0，400ms 后移除</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">click</span>
+      <div class="demo"><button class="d-btn btn-primary ok-btn" id="okBtn" type="button" style="background:linear-gradient(135deg,#ef8a3f,#d7561c);border-color:transparent;color:#fffaf4;font-weight:600">
+        <span class="label">加入购物袋</span><span class="spin"></span>
+        <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+      </button></div>
+      <div class="info">
+        <div class="name"><b>成功对勾</b><span class="en">success check</span></div>
+        <p class="say">按钮转一圈变成对勾，停一下再变回来，这一下成了。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>loading 态显示转圈 → 400ms 后加 .done，对勾用 stroke-dashoffset 画出来</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">click</span>
+      <div class="demo"><div class="roll" id="roll" role="button" tabindex="0" aria-label="数字滚动"><span>0</span><span>1</span><span>2</span></div></div>
+      <div class="info">
+        <div class="name"><b>数字滚动</b><span class="en">number roll</span></div>
+        <p class="say">购物袋角标从 0 滚到 1，像老式计数器一位一位滚过去。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>0–9 竖排成一列，外层 overflow:hidden，改 translateY(-n*行高)</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">click</span>
+      <div class="demo"><div class="toast-demo"><button class="d-btn" id="toastBtn" type="button">加入购物袋</button>
+        <div class="toast" id="toast">已加入购物袋</div></div></div>
+      <div class="info">
+        <div class="name"><b>轻提示</b><span class="en">toast</span></div>
+        <p class="say">旁边滑出一条小提示，底下一条细线走完它自己收走。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>底部滑入 + 2.2s 进度线 linear；结束前 200ms 淡出，别等用户点关闭</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">click</span>
+      <div class="demo"><div class="drawer-demo" id="drawerDemo"><button class="d-btn" id="drawerBtn" type="button">查看购物袋</button>
+        <div class="drawer-back" id="drawerBack"></div>
+        <div class="drawer"><span class="d-title">购物袋</span><span>键帽 ×1</span><span>键盘 ×1</span><span style="margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--accent)">合计 ¥418</span></div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>抽屉</b><span class="en">drawer</span></div>
+        <p class="say">从右边滑出一块面板，后面页面变暗，点空白关掉。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>面板 translateX(100%)→0，遮罩 opacity 0→.18，遮罩点击关闭</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:6">
+      <span class="badge">click</span>
+      <div class="demo"><div class="layoutx" id="layoutx"><i>键帽</i><i>线性轴</i><i>拔键器</i></div></div>
+      <div class="info">
+        <div class="name"><b>布局过渡</b><span class="en">layout transition</span></div>
+        <p class="say">删掉中间一件，剩下的平滑挪到新位置，不是突然跳过去。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>flex-grow 各 1，移走一项后其余 flex 变化的 transition 就是位移</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:7">
+      <span class="badge">click</span>
+      <div class="demo"><div class="sdot" id="sdotDemo"><i></i><span class="sl">未开始</span></div></div>
+      <div class="info">
+        <div class="name"><b>学习状态点</b><span class="en">status dot</span></div>
+        <p class="say">灰、黄、绿三态切换，靠底色加一圈同色低透明度光晕，不要换图标。点一下切一次。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>颜色过渡 .34s；光晕用 box-shadow 0 0 0 4px 同色 16% 透明度
+不写 scale 动画，否则一排点会显得参差不齐</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:8">
+      <span class="badge">drag</span>
+      <div class="demo"><div class="sort-row" id="sortRow"><span class="chip">政治</span><span class="chip">英语</span><span class="chip">数学</span><span class="chip">专业课</span></div></div>
+      <div class="info">
+        <div class="name"><b>拖拽排序</b><span class="en">sortable + FLIP</span></div>
+        <p class="say">拖动交换位置时，其他块不是瞬移，而是从旧位置滑到新位置——这就是 FLIP。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>1 记录所有块旧位置 → 2 改 DOM 顺序 → 3 新位置与旧位置差值
+4 先 transform 反向偏移并关过渡 → 5 下一帧开过渡、transform 归零</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:9">
+      <span class="badge">click</span>
+      <div class="demo"><div class="burst-stage" id="burstStage"><button class="burst-btn" id="burstBtn" type="button">点我爆</button></div></div>
+      <div class="info">
+        <div class="name"><b>粒子爆裂</b><span class="en">confetti burst</span></div>
+        <p class="say">点一下就撒一把彩纸，短、散、马上消失。用在收藏成功、打卡完成这类小确幸时刻。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每次生成 16 个粒子，随机角度 + 随机距离
+WAAPI: translate(x,y) rotate + opacity 1→0，duration 520–780ms，easing ease-out
+onfinish 移除节点，别留着堆内存</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:10">
+      <span class="badge">click</span>
+      <div class="demo"><button class="jelly" type="button">按一下试试</button></div>
+      <div class="info">
+        <div class="name"><b>果冻按钮</b><span class="en">jelly press</span></div>
+        <p class="say">按下时横向撑开、纵向压扁，松开用回弹曲线弹回来——手感全在那条 cubic-bezier。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>:active{transform:scale(1.06,.88)}
+transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感 */</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:11">
+      <span class="badge">click</span>
+      <div class="demo"><div class="sw" id="swDemo"><i></i></div></div>
+      <div class="info">
+        <div class="name"><b>拟物开关</b><span class="en">toggle switch</span></div>
+        <p class="say">按住时滑块被拉长一点，松开再归位——这点形变是拟物的关键，纯位移会显得塑料。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>滑块 translateX(21px) 切换；:active 时 width 20px→24px
+轨道背景色同步 .32s，两个动画时长要错开一点</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:12">
+      <span class="badge">focus</span>
+      <div class="demo"><input class="ginput" type="text" placeholder="聚焦我看光边"></div>
+      <div class="info">
+        <div class="name"><b>聚焦光边</b><span class="en">focus ring</span></div>
+        <p class="say">聚焦时边框变色，外面再套一圈低透明度同色光——比纯 border 变色更"活"。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>box-shadow: 0 0 0 3px 同色12% , 0 8px 18px -14px 同色80%
+不要 outline:none 了事，键盘用户会失去焦点提示</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="group"><h2>收尾细节</h2><p>5 · click / scroll</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo"><div class="acc" id="acc">
+        <div class="acc-item on"><button class="acc-q" type="button">轴体怎么选<span class="pm"></span></button><div class="acc-a"><p>先定手感：段落轴偏脆，线性轴偏顺，静音轴适合办公室。</p></div></div>
+        <div class="acc-item"><button class="acc-q" type="button">键帽会不会打油<span class="pm"></span></button><div class="acc-a"><p>PBT 比 ABS 耐磨，用久了轻微发亮属正常。</p></div></div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>折叠展开</b><span class="en">accordion</span></div>
+        <p class="say">点一个问题答案展开，加号变减号；点另一个，前一个自己收起来。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>一次只开一个；内容用 max-height 过渡，别硬 display:none</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="sk" id="sk"><div class="sk-row"><span class="sk-blk sk-thumb"></span><div class="sk-line"><span class="sk-blk" style="width:70%"></span><span class="sk-blk" style="width:45%"></span></div></div>
+        <div class="sk-row"><span class="sk-blk sk-thumb"></span><div class="sk-line"><span class="sk-blk" style="width:60%"></span><span class="sk-blk" style="width:38%"></span></div></div>
+        <p class="sk-real">评价 · 用了两周，键程干净，敲久了不累。</p></div></div>
+      <div class="info">
+        <div class="name"><b>骨架屏</b><span class="en">skeleton</span></div>
+        <p class="say">内容没到先放灰块，一道光扫过去，别让页面看着像卡死。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>灰块 + background-size 200% 的斜向渐变，1.4s 循环；数据到了换真内容</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">click</span>
+      <div class="demo"><div class="modal-demo" id="modalDemo"><button class="d-btn" id="modalBtn" type="button">不知道选哪个轴</button>
+        <div class="modal-back" id="modalBack"></div>
+        <div class="modal"><b>先试手感</b>三种轴各敲一周，留下最顺手的那个。别按参数盲选。</div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>弹窗</b><span class="en">modal</span></div>
+        <p class="say">中间弹出一块，后面变暗变模糊，Esc 和点空白都能关。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>遮罩 backdrop-filter:blur(2px)；面板 scale(.94)→1 + 6px 上浮</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">input</span>
+      <div class="demo"><div class="errx"><div class="err-line" id="errLine"><input id="errInput" type="text" placeholder="邮箱" aria-label="邮箱"><button id="errBtn" type="button">订阅</button></div>
+        <p class="err-msg" id="errMsg"></p></div></div>
+      <div class="info">
+        <div class="name"><b>错误反馈</b><span class="en">error feedback</span></div>
+        <p class="say">输错了框左右抖两下，下面出一行红字；改对再点变绿。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>正则校验；失败加 .bad 触发 shake 关键帧，成功加 .ok 并把提示转绿</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">click</span>
+      <div class="demo"><div class="pt-demo" id="ptDemo"><button class="d-btn" id="ptBtn" type="button">去结算</button>
+        <div class="pt-curtain" id="ptCurtain"><span>X</span><span>X</span><span>J</span></div>
+      </div></div>
+      <div class="info">
+        <div class="name"><b>页面转场</b><span class="en">page transition</span></div>
+        <p class="say">换页时一块幕布从下面升上来，字的笔画浮出，幕布再往上扫走。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>幕布 translateY(100%)→0→(-100%)，两段共 900ms；字延迟 80/160ms 出现</pre></div>
+      </div>
+    </article>
+  </div>
+
 
   <!-- 工具分层 -->
   <section class="tools-sec">
