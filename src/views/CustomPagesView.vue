@@ -93,11 +93,11 @@ function thumbLoaded(p) {
 
   <section v-else class="pages-view">
     <header class="head reveal">
-      <p class="eyebrow">CUSTOM PAGES — HTML TOOLS</p>
-      <h1>自己写的小工具，<em>都在这儿。</em></h1>
+      <p class="eyebrow">CUSTOM PAGES — SINGLE-FILE TOOLS</p>
+      <h1>一页一件小事，<em>都放在这里。</em></h1>
       <p class="lede">
-        生词本、刷题页、临时看板……把单页 HTML 丢进
-        <code>custom-pages/</code>，构建时自动收进来，不用改路由。
+        背单词、刷题、临时对照……每件小事写成一个独立 HTML，丢进
+        <code>custom-pages/</code> 就会自动收进来，不用配路由；鼠标停上去先看一眼，点开就是原页。
       </p>
       <router-link v-if="lastPage" class="resume" :to="`/custom-pages/${lastPage.slug}`">
         <span class="dot" aria-hidden="true"></span>
