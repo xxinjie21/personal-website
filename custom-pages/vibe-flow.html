@@ -112,11 +112,7 @@ border-radius:var(--radius-sm);background:rgba(255,253,250,.6);font-size:11.5px;
 .empty b{color:var(--text-dim);font-weight:600}
 .empty a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.3)}
 
-/* 提示词 */
-.pblock{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:10.5px;line-height:1.85;
-color:#5b4a3c;background:rgba(255,253,250,.85);border:1px solid var(--line);border-left:2px solid rgba(217,87,26,.3);
-border-radius:var(--radius-sm);padding:12px 13px;max-height:260px;overflow:auto}
-.say-by{font-size:10.5px;color:#a08f7e;margin-top:6px}
+/* 提示词只在复制按钮里，不渲染到页面上 */
 
 footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);
 line-height:1.9;display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
@@ -126,7 +122,7 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 
 @media (min-width:901px){
   /* 桌面端面板自己滚，页面高度固定在约一屏 */
-  .pane{display:flex;flex-direction:column;height:calc(100vh - 300px);min-height:470px;position:relative}
+  .pane{display:flex;flex-direction:column;height:calc(100vh - 280px);min-height:470px;position:relative}
   .pane-head{flex:none}
   .pane-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:26px}
 }
@@ -617,7 +613,10 @@ function selectStage(n, pushHash = true, scroll = true) {
   pmeta.textContent = META[n] || ''
   paneBody.innerHTML = sd.innerHTML
   paneBody.scrollTop = 0
-  currentPrompt = (paneBody.querySelector('.pblock')?.textContent || '').trim()
+  // 提示词只进按钮，不在页面上摊开
+  const promptEl = paneBody.querySelector('.pblock')
+  currentPrompt = (promptEl?.textContent || '').trim()
+  promptEl?.closest('.sec')?.remove()
   window.frameSwap?.(paneBody)
   syncFade()
   paneOv?.refresh()
