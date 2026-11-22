@@ -70,7 +70,20 @@ const onBrandClick = () => {
     >
       <span class="mark"><i></i></span>
       <span class="brand-text">
-        <b>XXJ</b>
+        <!-- 描线生长动效参考 Uiverse.io by SelfMadeSystem (https://uiverse.io/SelfMadeSystem/pretty-treefrog-77, MIT)；字形与配色为本站自绘 -->
+        <svg class="wordmark" viewBox="0 0 100 30" role="img" aria-label="XXJ">
+          <defs>
+            <linearGradient id="xxj-grad" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#d9571a" />
+              <stop offset="1" stop-color="#ffb067" />
+            </linearGradient>
+          </defs>
+          <path class="stroke s1" pathLength="100" d="M4 6 L18 24" />
+          <path class="stroke s1" pathLength="100" d="M18 6 L4 24" />
+          <path class="stroke s2" pathLength="100" d="M28 6 L42 24" />
+          <path class="stroke s2" pathLength="100" d="M42 6 L28 24" />
+          <path class="stroke s3" pathLength="100" d="M54 6 V18 C54 25 49 27.5 44.5 23.5" />
+        </svg>
       </span>
     </router-link>
 
@@ -225,30 +238,57 @@ const onBrandClick = () => {
   align-self: stretch;
   line-height: 1;
 }
-/* 品牌字：暖橙光带自左向右扫过，8 秒一次，不抢注意力 */
-.brand-text b {
+/* 品牌字：三笔描线，像手写一样一笔笔长出来，6 秒一轮；线条本身有暖橙渐变 */
+.wordmark {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: 0.2em;
-  font-weight: 500;
-  color: var(--text);
-  background-image: linear-gradient(
-    100deg,
-    var(--text) 0%,
-    var(--text) 38%,
-    var(--accent-cream) 48%,
-    var(--accent) 52%,
-    var(--text) 62%,
-    var(--text) 100%
-  );
-  background-size: 260% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: brand-sweep 7.5s ease-in-out 1.2s infinite,
+  width: 67px;
+  height: 20px;
+  overflow: visible;
+}
+.wordmark .stroke {
+  fill: none;
+  stroke: url(#xxj-grad);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: xxj-draw 6s cubic-bezier(0.22, 0.9, 0.28, 1) infinite,
     brand-breathe 3.9s ease-in-out infinite;
+}
+/* 三笔错峰：X、X、J 依次落笔 */
+.wordmark .s1 {
+  animation-delay: 0s, 0s;
+}
+.wordmark .s2 {
+  animation-delay: 0.26s, 0s;
+}
+.wordmark .s3 {
+  animation-delay: 0.52s, 0s;
+}
+@keyframes xxj-draw {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  26% {
+    stroke-dashoffset: 0;
+  }
+  86% {
+    stroke-dashoffset: 0;
+  }
+  94% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+  96.5%,
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
 }
 /* 字也跟着同一口气起伏：从 88% 到不透明的极轻变化，和圆环同频 */
 @keyframes brand-breathe {
@@ -260,30 +300,20 @@ const onBrandClick = () => {
     opacity: 1;
   }
 }
-@keyframes brand-sweep {
-  0%,
-  72% {
-    background-position: 140% 0;
-  }
-  100% {
-    background-position: -60% 0;
-  }
+/* 指针停在品牌上：落笔提速，让人知道这里可以点 */
+.brand:hover .wordmark .stroke {
+  animation-duration: 3s, 2.2s;
 }
-/* 指针停在品牌上：扫光提速，让人知道这里可以点 */
-.brand:hover .brand-text b {
-  animation-duration: 2.6s, 2.2s;
+/* 点击触发：整字快速重写一遍，作为“回首页”的动作反馈 */
+.brand.sweeping .wordmark .stroke {
+  animation: xxj-draw 1.1s ease-out 1 both;
+  animation-delay: 0s;
 }
-/* 点击触发：一次完整扫光，作为“回首页”的动作反馈 */
-.brand.sweeping .brand-text b {
-  animation: brand-sweep-once 0.9s var(--ease) 1 both;
+.brand.sweeping .wordmark .s2 {
+  animation-delay: 0.18s;
 }
-@keyframes brand-sweep-once {
-  0% {
-    background-position: 140% 0;
-  }
-  100% {
-    background-position: -60% 0;
-  }
+.brand.sweeping .wordmark .s3 {
+  animation-delay: 0.36s;
 }
 /* 核心点：hover 时更亮更实，点击回收 */
 .brand:hover .mark i {

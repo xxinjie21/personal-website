@@ -140,6 +140,19 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
     </div>
 
     <p class="stage-note mono">MOVE THE CURSOR · THE RIBBON BREATHES</p>
+
+    <!-- 毛毛虫爬行：走线思路参考 Uiverse.io by Novaxlo (https://uiverse.io/Novaxlo/kind-snail-5, MIT)，动物与身体结构为本站自绘 -->
+    <div class="crawl-track" aria-hidden="true">
+      <div class="crawler">
+        <span class="c-seg" style="--k: 3"></span>
+        <span class="c-seg" style="--k: 2"></span>
+        <span class="c-seg" style="--k: 1"></span>
+        <span class="c-seg" style="--k: 0"></span>
+        <span class="c-head">
+          <span class="c-eye"></span>
+        </span>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -171,6 +184,176 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
   position: relative;
   z-index: 3;
 max-width: 560px;
+}
+/* 毛毛虫：沿 hero 底部的虚线从左爬到右 */
+.crawl-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9px;
+  height: 26px;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.crawl-track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(126, 84, 46, 0.26) 0 7px,
+    transparent 7px 15px
+  );
+}
+.crawler {
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  transform: scale(1.3);
+  transform-origin: bottom left;
+  animation: crawl-x 23s linear infinite;
+}
+@keyframes crawl-x {
+  0% {
+    left: -54px;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+/* 身体分段：越靠尾越细，一节节上下拱 */
+.c-seg {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #e9a163, #b26a33 72%, #8a4b22);
+  box-shadow: 0 2px 3px -2px rgba(90, 50, 20, 0.5);
+  animation: seg-wave 0.52s ease-in-out infinite alternate;
+  animation-delay: calc(var(--k) * -0.09s);
+}
+.c-seg:nth-child(1) {
+  width: 6.5px;
+  height: 6.5px;
+  opacity: 0.8;
+}
+.c-seg:nth-child(2) {
+  width: 7.5px;
+  height: 7.5px;
+  opacity: 0.9;
+}
+.c-seg:nth-child(3) {
+  width: 8.5px;
+  height: 8.5px;
+}
+/* 每节的腿：两根细线交替摆，像真的在蹬 */
+.c-seg::before,
+.c-seg::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 1.6px;
+  height: 5px;
+  border-radius: 2px;
+  background: #8a5528;
+  transform-origin: top center;
+  animation: leg-swing 0.52s ease-in-out infinite alternate;
+  animation-delay: calc(var(--k) * -0.09s);
+}
+.c-seg::before {
+  left: 1px;
+}
+.c-seg::after {
+  right: 1px;
+  animation-delay: calc(var(--k) * -0.09s - 0.26s);
+}
+@keyframes seg-wave {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-1.6px) rotate(2deg);
+  }
+}
+@keyframes leg-swing {
+  from {
+    transform: rotate(-22deg);
+  }
+  to {
+    transform: rotate(24deg);
+  }
+}
+/* 头：比身体略大，两根触须探路 */
+.c-head {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  margin-left: 1px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #f0b276, #a75f2c 74%, #7f4520);
+  animation: head-bob 0.52s ease-in-out infinite alternate;
+}
+@keyframes head-bob {
+  from {
+    transform: translateY(-1px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(1px) rotate(3deg);
+  }
+}
+.c-head::before,
+.c-head::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 1.5px;
+  height: 6px;
+  border-radius: 2px;
+  background: #8a5528;
+  transform-origin: bottom center;
+  animation: antenna 1.3s ease-in-out infinite alternate;
+}
+.c-head::before {
+  left: 3px;
+  transform: rotate(-24deg);
+}
+.c-head::after {
+  right: 3px;
+  transform: rotate(24deg);
+  animation-delay: -0.65s;
+}
+@keyframes antenna {
+  from {
+    rotate: -7deg;
+  }
+  to {
+    rotate: 9deg;
+  }
+}
+.c-eye {
+  position: absolute;
+  top: 3px;
+  right: 2.5px;
+  width: 2.6px;
+  height: 2.6px;
+  border-radius: 50%;
+  background: #2a1a10;
+  box-shadow: 0 0 0 0.6px rgba(255, 232, 210, 0.7);
 }
 .live {
   display: inline-block;
