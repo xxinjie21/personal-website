@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 65 个能跑的样子</title>
+<title>动效手册 · 71 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1025,6 +1025,68 @@ border-bottom:1px solid rgba(126,84,46,.1)}
 .fb-sync{color:#a38c76}
 
 
+/* ==== 版式与细节（新增） ==== */
+.ed{width:216px;padding:11px 14px 12px;border-radius:12px;background:#fff;
+border:1px solid rgba(126,84,46,.14);box-shadow:0 18px 32px -26px rgba(85,53,28,.45)}
+.ed-k{font:600 7.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#b09a86}
+.ed h3{margin:7px 0 0;font:600 15px/1.3 Georgia,"Times New Roman","Songti SC",serif;
+color:#2f2118;letter-spacing:-.01em}
+.ed-meta{display:flex;gap:10px;margin-top:7px;padding-top:7px;border-top:1px solid rgba(126,84,46,.12)}
+.ed-meta span{font:400 7.5px/1 var(--mono);letter-spacing:.1em;color:#a08b77}
+.ed p{margin:7px 0 0;font:400 9px/1.6 'Inter',sans-serif;color:#7c6650;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.big{position:relative;width:214px}
+.big-k{margin:0 0 7px;font:600 7.5px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#b09a86}
+.big h3{margin:0;font:700 31px/1.02 'Inter',sans-serif;letter-spacing:-.03em;color:#231710}
+.big h3 em{font-style:normal;color:#d9571a}
+.big-n{position:absolute;right:0;bottom:2px;font:500 7.5px/1 var(--mono);letter-spacing:.1em;color:#b09a86}
+
+.mq{width:236px;height:30px;display:flex;align-items:center;overflow:hidden;
+border-top:1px solid rgba(126,84,46,.16);border-bottom:1px solid rgba(126,84,46,.16);
+-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;align-items:center;gap:12px;white-space:nowrap;padding-left:2px;
+animation:mqmove 15s linear infinite}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-track span{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#6f5744}
+.mq-track i{font-style:normal;font-size:9px;color:#d9571a}
+@keyframes mqmove{to{transform:translateX(-50%)}}
+
+.gal{width:198px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.gal figure{margin:0}
+.gal i{display:block;height:40px;border-radius:7px;background:linear-gradient(140deg,var(--g1),var(--g2));
+box-shadow:0 10px 16px -14px rgba(85,53,28,.9);transition:transform .32s var(--ease),box-shadow .32s}
+.gal figure:hover i{transform:scale(1.05) translateY(-2px);box-shadow:0 14px 20px -14px rgba(85,53,28,.85)}
+.gal figcaption{margin-top:5px;font:500 7.5px/1 'Inter',sans-serif;color:#a08b77;transition:color .25s}
+.gal figure:hover figcaption{color:#b8480f}
+
+.pl{width:220px;padding:10px 12px;border-radius:12px;display:flex;align-items:center;gap:11px;background:#fff;
+border:1px solid rgba(126,84,46,.14);box-shadow:0 16px 30px -26px rgba(85,53,28,.45)}
+.pl-btn{width:28px;height:28px;flex:0 0 auto;border:0;border-radius:50%;cursor:pointer;display:grid;place-items:center;
+background:linear-gradient(140deg,#f08c42,#d9571a);box-shadow:0 8px 16px -10px rgba(217,87,26,.95);
+transition:transform .2s}
+.pl-btn:active{transform:scale(.96)}
+.pl-btn span{display:block;width:0;height:0;border-left:7px solid #fff;
+border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;margin-left:2px}
+.pl-btn.pause span{width:3px;height:8px;border:0;margin:0;background:#fff;box-shadow:5px 0 0 #fff}
+.pl-body{flex:1;min-width:0}
+.pl-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.pl-top b{font:600 9.5px/1 'Inter',sans-serif;color:#5b432c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-top span{font:400 7.5px/1 var(--mono);color:#a08b77;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pl-bar{height:3px;border-radius:2px;background:rgba(126,84,46,.14);overflow:hidden}
+.pl-bar i{display:block;height:100%;width:0;border-radius:2px;
+background:linear-gradient(90deg,#f0a468,#d9571a);animation:plrun 18s linear infinite}
+.pl.pause .pl-bar i{animation-play-state:paused}
+@keyframes plrun{from{width:0}to{width:100%}}
+
+.otp{display:flex;gap:7px}
+.otp i{width:26px;height:32px;border-radius:7px;display:grid;place-items:center;
+font:600 13px/1 var(--mono);color:#4a3626;background:#fff;border:1px solid rgba(126,84,46,.2);
+box-shadow:0 10px 18px -16px rgba(85,53,28,.7);
+transition:border-color .25s,box-shadow .25s}
+.otp i.cur{border-color:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.12)}
+
 </style>
 </head>
 <body>
@@ -1040,9 +1102,9 @@ border-bottom:1px solid rgba(126,84,46,.1)}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">65 个动效与组件、12 套工具，全部真跑。</p>
+      <p class="lead">71 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">65 effects · 12 tools</span>
+    <span class="ph-count">71 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1996,6 +2058,125 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <div class="src"><pre>条目原文存 data-t，过滤时重建 &lt;mark&gt;，别直接改 innerHTML 丢原串
 无命中时插入一行 .nores，清空输入再移除
 输入框 :focus 加 3px 低透明度光环，不加 outline</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- E 版式与细节 -->
+  <div class="group"><h2>版式与细节</h2><p>6 · 版式 / 细节</p></div>
+  <div class="grid">
+
+    <article class="mcard" style="--i:0">
+      <span class="badge">static</span>
+      <div class="demo">
+        <div class="ed">
+          <div class="ed-k">essay · 017</div>
+          <h3>把笔记摊开成<br>可以读的站点</h3>
+          <div class="ed-meta"><span>2026 · 春</span><span>8 分钟</span></div>
+          <p>写作时不用想字号与留白，模板替你决定，你只负责把话说完。</p>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>编辑式文章版式</b><span class="en">editorial</span></div>
+        <p class="say">小字眉题压在上，衬线大标题占两行，元信息用发丝线与正文隔开；正文两行就够，读起来像一本装订过的册子。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>标题 16px / 1.35 衬线，平级信息一律 7.5px 等宽字
+眉题与正文都靠左，元信息行加 border-top 1px
+正文两行截断，宁可留白也不要凑字数</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">layout</span>
+      <div class="demo">
+        <div class="big">
+          <p class="big-k">motion handbook</p>
+          <h3>让动效<br><em>先说结论</em></h3>
+          <span class="big-n">01 / 07</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>超大标题首屏</b><span class="en">big type</span></div>
+        <p class="say">标题直接拉到 31px、行高压到 1.02、字距收紧，第一行给主体、第二行给判断；右下角一枚小页码收住画面。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>font:700 31px/1.02，letter-spacing:-.03em
+第二行只换颜色不换字重，重音落在一个词上
+页码绝对定位右下，7.5px 等宽字</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">auto</span>
+      <div class="demo">
+        <div class="mq">
+          <div class="mq-track"><span>ui 细节</span><i>·</i><span>动效参考</span><i>·</i><span>版式灵感</span><i>·</i><span>组件拆解</span><i>·</i><span>ui 细节</span><i>·</i><span>动效参考</span><i>·</i><span>版式灵感</span><i>·</i><span>组件拆解</span><i>·</i></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>跑马灯字幕</b><span class="en">marquee</span></div>
+        <p class="say">一条贯穿整个宽度的字带，上下各一条发丝线，两端淡出；内容复制一份接在后面就能无缝循环，鼠标移上去会停下让你读。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>track 放两份相同内容，动画到 translateX(-50%) 正好接上
+14s linear infinite，hover 时 animation-play-state:paused
+两端用 mask-image 线性渐变做 8% 淡出</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">static</span>
+      <div class="demo">
+        <div class="gal">
+          <figure><i style="--g1:#ffdcbd;--g2:#e07a34"></i><figcaption>笔记站</figcaption></figure>
+          <figure><i style="--g1:#e8e1d6;--g2:#a68d74"></i><figcaption>图谱</figcaption></figure>
+          <figure><i style="--g1:#ffe9d4;--g2:#c9743a"></i><figcaption>长文</figcaption></figure>
+          <figure><i style="--g1:#e7ded2;--g2:#8d735c"></i><figcaption>读书页</figcaption></figure>
+          <figure><i style="--g1:#ffe3c9;--g2:#d9571a"></i><figcaption>作品集</figcaption></figure>
+          <figure><i style="--g1:#ece3d7;--g2:#b09477"></i><figcaption>关于</figcaption></figure>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>作品集网格</b><span class="en">gallery grid</span></div>
+        <p class="say">三列两排的小缩略，靠渐变区分项目而不是靠真图；悬停时缩略上浮 2px 并放大一点，标题才转成主色，安静但会回应你。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>缩略 40px 高、圆角 7，渐变用两组自定义属性控制
+hover: scale(1.05) translateY(-2px)，标题 color 转主色
+列间距 6px，行间距用 figcaption 撑出来</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">auto</span>
+      <div class="demo">
+        <div class="pl" id="plDemo">
+          <button class="pl-btn" type="button" aria-label="播放"><span></span></button>
+          <div class="pl-body">
+            <div class="pl-top"><b>现场录音 · 03</b><span>09:12 / 24:30</span></div>
+            <div class="pl-bar"><i></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>播放器控件</b><span class="en">player bar</span></div>
+        <p class="say">圆形主按钮只有 28px，靠阴影浮起来；右边一条 3px 细进度槽，时长用等宽小字压在右上，听起来比看起来更重要。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>进度是 CSS 动画，18s 线性走满，点击暂停只切 animation-play-state
+按钮图标用 border 三角形，暂停态换成两根 3px 竖条
+时间用 tabular-nums 等宽，走字时不抖</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">click</span>
+      <div class="demo">
+        <div class="otp" id="otpDemo"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="info">
+        <div class="name"><b>验证码输入</b><span class="en">otp input</span></div>
+        <p class="say">六个独立格子，当前格只加一圈淡光环，填满才转实线；一格一格往前跳，比整块输入框更清楚现在填到第几位。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每格 26×32，:focus 用 0 0 0 3px 低透明度光环
+输入一位就 focus 下一格，退格回上一格
+填满后整组边框统一转主色，再给一次成功反馈</pre></div>
       </div>
     </article>
   </div>
@@ -3039,6 +3220,31 @@ document.querySelectorAll('#priceDemo .sw button').forEach(function (b, i) {
 
 </script>
 <script>
+
+/* 播放器：点击暂停 */
+var plDemo = document.getElementById('plDemo')
+if (plDemo) {
+  var plBtn = plDemo.querySelector('.pl-btn')
+  plBtn.addEventListener('click', function () {
+    plDemo.classList.toggle('pause')
+    plBtn.classList.toggle('pause', plDemo.classList.contains('pause'))
+  })
+}
+/* 验证码：一格一格往前跳 */
+var otpDemo = document.getElementById('otpDemo')
+if (otpDemo) {
+  var otpCells = Array.prototype.slice.call(otpDemo.children)
+  var otpDigits = ['4', '8', '2', '7', '9', '1']
+  var oi = 0
+  setInterval(function () {
+    oi = (oi + 1) % (otpCells.length + 1)
+    otpCells.forEach(function (c, n) {
+      c.textContent = n < oi ? otpDigits[n] : ''
+      c.classList.toggle('cur', n === oi)
+    })
+  }, 700)
+}
+
 /* 分段滑块：切页签后重算位置 */
 function syncSegs() {
   document.querySelectorAll('.seg').forEach(function (seg) {
