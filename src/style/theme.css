@@ -317,22 +317,26 @@ button {
 }
 
 /* ===== 页面切换：离场轻收、入场缓落，像翻过一页纸 ===== */
-.page-enter-active {
-  transition: opacity 0.34s var(--ease), transform 0.42s var(--ease), filter 0.3s ease;
+/* ===== 页面转场：View Transitions，旧页轻轻退场，新页从下方落进来 ===== */
+::view-transition-old(root) {
+  animation: vt-out 0.22s ease both;
 }
-.page-leave-active {
-  transition: opacity 0.2s ease, transform 0.24s var(--ease), filter 0.18s ease;
+::view-transition-new(root) {
+  animation: vt-in 0.36s var(--ease) both;
 }
-.page-enter-from {
-  opacity: 0;
-  transform: translateY(10px) scale(0.997);
-  filter: blur(3px);
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.998);
+  }
 }
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(-4px) scale(0.999);
-  filter: blur(2px);
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
+
 
 /* ===== 点击涟漪：固定覆盖层，纯装饰，不参与布局也不吃事件 ===== */
 .ripple-layer {

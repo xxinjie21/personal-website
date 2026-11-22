@@ -27,4 +27,31 @@ router.afterEach(() => {
   document.title = 'XXJ'
 })
 
+// 页面转场：用 View Transitions 让旧页淡出、新页上浮，替掉原来 out-in 的空白间隔
+// 浏览器不支持时不做转场，直接切换
+const canViewTransition = typeof document.startViewTransition === 'function'
+
+if (canViewTransition) {
+  let running = false
+  for (const method of ['push', 'replace']) {
+    const original = router[method].bind(router)
+    router[method] = (to, ...rest) => {
+      // 只有换页面才转场，同一个页面里换笔记直接切
+      const path = router.resolve(to).path
+      if (running || path === router.currentRoute.value.path) return original(to, ...rest)
+      running = true
+      let nav
+      const vt = document.startViewTransition(() => {
+        nav = original(to, ...rest)
+        return nav
+      })
+      return vt.finished
+        .finally(() => {
+          running = false
+        })
+        .then(() => nav)
+    }
+  }
+}
+
 export default router
