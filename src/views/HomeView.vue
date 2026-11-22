@@ -94,6 +94,7 @@ function magnetReset(e) {
 }
 
 onMounted(async () => {
+  try {
     const mod = await import('../data/site-manifest.json')
     manifest.value = mod.default
   } catch (err) {
