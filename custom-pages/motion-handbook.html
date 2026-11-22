@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 27 个能跑的名字</title>
+<title>动效手册 · 39 个能跑的名字</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -345,6 +345,112 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
 
 .mcard:not([data-inview]) .demo *{animation-play-state:paused!important}
 
+/* ==== 本站真实用到的动效（后面新增的两组） ==== */
+/* 28 玻璃导航滚动收缩 */
+.gbar{width:172px;height:46px;border-radius:12px;border:1px solid var(--line);background:rgba(255,253,250,.68);
+backdrop-filter:blur(7px);display:flex;align-items:center;gap:7px;padding:0 12px;cursor:pointer;
+box-shadow:0 10px 26px -24px rgba(85,53,28,.7);transition:height .44s var(--ease),background .44s var(--ease),box-shadow .44s var(--ease),transform .44s var(--ease)}
+.gbar .gd{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;transition:transform .44s var(--ease)}
+.gbar .gl{height:6px;border-radius:3px;background:rgba(126,84,46,.2);transition:width .44s var(--ease),background .44s var(--ease)}
+.gbar .gl:nth-child(2){width:34px}
+.gbar .gl:nth-child(3){width:26px}
+.gbar .gl:nth-child(4){width:20px}
+.gbar .gt{margin-left:auto;font-family:var(--mono);font-size:9px;color:#b9a48f;letter-spacing:.08em}
+.gbar.on{height:32px;background:rgba(255,253,250,.95);box-shadow:0 14px 26px -18px rgba(85,53,28,.6)}
+.gbar.on .gl{background:rgba(126,84,46,.1)}
+.gbar.on .gd{transform:scale(.85)}
+.gbar.on .gl:nth-child(2){width:24px}
+.gbar.on .gl:nth-child(3){width:18px}
+
+/* 29 图谱入场：点先亮、线后连 */
+.gsvg{width:180px;height:98px;overflow:visible;cursor:pointer}
+.gsvg line{stroke:rgba(74,85,104,.45);stroke-width:1;stroke-dasharray:160;stroke-dashoffset:160}
+.gsvg circle{fill:#a08f7e;transform-box:fill-box;transform-origin:center;transform:scale(.001);
+transition:transform .52s var(--ease),fill .4s}
+.gsvg.play line{animation:drawline .72s var(--ease) forwards}
+@keyframes drawline{to{stroke-dashoffset:0}}
+.gsvg.play circle{transform:scale(1)}
+
+/* 30 学习状态点 */
+.sdot{display:flex;align-items:center;gap:16px;cursor:pointer}
+.sdot i{width:13px;height:13px;border-radius:50%;background:#8a8f98;position:relative;
+transition:background .34s var(--ease),box-shadow .34s var(--ease)}
+.sdot i::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid transparent;transition:border-color .34s}
+.sdot.learning i{background:#e0a83d;box-shadow:0 0 0 4px rgba(224,168,61,.16)}
+.sdot.mastered i{background:#57a869;box-shadow:0 0 0 4px rgba(87,168,105,.16)}
+.sdot .sl{font-size:11px;color:var(--muted)}
+
+/* 31 同步徽标呼吸 */
+.sync{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;
+border:1px solid var(--line);background:#fffdfa;font-size:11px;color:var(--muted);cursor:pointer;
+transition:border-color .3s,color .3s}
+.sync .sd{width:6px;height:6px;border-radius:50%;background:#57a869;animation:pulseDot 1.8s ease-in-out infinite}
+.sync.off{border-color:rgba(138,143,152,.34);color:#8a8f98}
+.sync.off .sd{background:#8a8f98;animation:none}
+@keyframes pulseDot{0%,100%{opacity:.5;transform:scale(.88)}50%{opacity:1;transform:scale(1.15)}}
+
+/* 32 倒计时环形进度 */
+.ring-wrap{position:relative;width:104px;height:104px;cursor:pointer;display:grid;place-items:center}
+.ring-wrap svg{position:absolute;inset:0;width:100%;height:100%}
+.ring-track{stroke:rgba(126,84,46,.16);stroke-width:6;fill:none}
+.ring-fill{stroke:var(--accent);stroke-width:6;fill:none;stroke-linecap:round;
+stroke-dasharray:283;stroke-dashoffset:283}
+.ring-num{position:relative;text-align:center;line-height:1.2}
+.ring-num b{display:block;font-family:'Playfair Display',serif;font-size:24px;font-weight:500}
+.ring-num span{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:#b9a48f}
+
+/* 33 边框流光 */
+.beam-card{position:relative;width:132px;height:66px;border-radius:13px;overflow:hidden;
+background:#fffdfa;display:grid;place-items:center;font-size:11px;color:var(--muted);isolation:isolate}
+.beam-card::before{content:"";position:absolute;inset:-55%;z-index:-1;
+background:conic-gradient(from 0deg,transparent 0 38%,rgba(217,87,26,.62) 47%,rgba(217,87,26,.12) 52%,transparent 60% 100%);
+animation:beamSpin 3.4s linear infinite}
+.beam-card::after{content:"";position:absolute;inset:1.5px;border-radius:11.5px;background:#fffdfa;z-index:-1}
+.beam-card span{position:relative;z-index:1}
+@keyframes beamSpin{to{transform:rotate(360deg)}}
+
+/* 34 文字扫光 */
+.shine{font-family:'Playfair Display',serif;font-weight:600;font-size:17px;letter-spacing:.02em;
+background:linear-gradient(100deg,#9a8272 18%,#d9571a 42%,#9a8272 66%);
+background-size:210% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+animation:shineSweep 2.9s linear infinite}
+@keyframes shineSweep{from{background-position:120% 0}to{background-position:-120% 0}}
+
+/* 35 渐变背景漂移 */
+.aurora{position:relative;width:150px;height:78px;border-radius:12px;overflow:hidden;
+background:#fffdf7;border:1px solid var(--line)}
+.aurora i{position:absolute;width:92px;height:92px;border-radius:50%;filter:blur(16px);opacity:.5;
+animation:driftBlob 6.5s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:#f3a971;left:-12px;top:-16px}
+.aurora i:nth-child(2){background:#aebde4;right:-18px;top:6px;animation-delay:-2.2s}
+.aurora i:nth-child(3){background:#ecd3a6;left:34px;bottom:-26px;animation-delay:-4.4s}
+@keyframes driftBlob{to{transform:translate(16px,10px) scale(1.18)}}
+
+/* 36 遮罩揭示 */
+.reveal-mask{width:150px;height:80px;border-radius:12px;cursor:pointer;
+background:radial-gradient(circle at 28% 32%,#f0a868,#d9571a 52%,#7c3611);
+clip-path:circle(26% at 50% 50%);transition:clip-path .62s cubic-bezier(.22,.9,.28,1)}
+.reveal-mask.open{clip-path:circle(118% at 50% 50%)}
+
+/* 37 拖拽排序 */
+.sort-row{display:flex;gap:7px;cursor:default}
+.sort-row .chip{padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:#fffdfa;
+font-size:11px;color:var(--text-dim);cursor:grab;user-select:none;
+box-shadow:0 6px 14px -14px rgba(85,53,28,.6);transition:box-shadow .28s var(--ease),transform .36s var(--ease),opacity .28s}
+.sort-row .chip.drag{box-shadow:0 16px 26px -16px rgba(85,53,28,.65);opacity:.92;transform:scale(1.04)}
+
+/* 38 打字机 */
+.tw{display:flex;align-items:center;gap:2px;font-family:var(--mono);font-size:11.5px;color:#564334;min-height:18px}
+.tw .caret{width:1px;height:13px;background:var(--accent);animation:blinkCaret 1s steps(1) infinite}
+@keyframes blinkCaret{50%{opacity:0}}
+
+/* 39 粒子爆裂 */
+.burst-stage{position:relative;width:152px;height:78px;display:grid;place-items:center;overflow:hidden}
+.burst-btn{padding:8px 15px;border-radius:999px;border:none;background:var(--accent);color:#fff;
+font-size:11.5px;cursor:pointer;transition:transform .24s var(--ease),box-shadow .24s}
+.burst-btn:active{transform:scale(.96)}
+.burst i{position:absolute;width:5px;height:5px;border-radius:2px;pointer-events:none}
+
 @keyframes rise{from{opacity:0;transform:translateY(12px) scale(.985);filter:blur(4px)}to{opacity:1;transform:none;filter:blur(0)}}
 @media (max-width:900px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
@@ -376,7 +482,6 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
     <span class="db-sep" aria-hidden="true"></span>
     <span class="db-current">动效手册</span>
     <nav class="db-nav">
-      <a href="vibe-flow.html">全流程</a>
       <a href="motion-handbook.html" class="here">动效手册</a>
       <a href="design-refs.html">设计参考</a>
     </nav>
@@ -386,9 +491,9 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">27 个动效、6 套工具，全部真跑。</p>
+      <p class="lead">39 个动效、6 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">27 motions · 6 tools</span>
+    <span class="ph-count">39 motions · 6 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -750,6 +855,181 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
     </article>
   </div>
 
+  <!-- C 本站已有 -->
+  <div class="group"><h2>本站已在用</h2><p>5 · 从这套站里搬出来的</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:0">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="gbar" id="gbar"><span class="gd"></span><span class="gl"></span><span class="gl"></span><span class="gl"></span><span class="gt">点击收缩</span></div></div>
+      <div class="info">
+        <div class="name"><b>玻璃导航收缩</b><span class="en">blur shrink</span></div>
+        <p class="say">往下滚时导航从 46px 收到 32px，背景更实一点，模糊更重一点——收的是高度，不是透明度。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>height 46px→32px + backdrop-filter blur(7px)→blur(12px)
+transition: all .44s cubic-bezier(.22,.8,.2,1)   /* 别用 ease-in-out，会软 */</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo">
+        <svg class="gsvg" id="graphIn" viewBox="0 0 180 98" aria-label="图谱入场演示">
+          <line x1="90" y1="49" x2="90" y2="16"/><line x1="90" y1="49" x2="152" y2="33"/>
+          <line x1="90" y1="49" x2="147" y2="72"/><line x1="90" y1="49" x2="90" y2="84"/>
+          <line x1="90" y1="49" x2="33" y2="72"/><line x1="90" y1="49" x2="28" y2="33"/>
+          <line x1="90" y1="16" x2="152" y2="33"/><line x1="33" y1="72" x2="90" y2="84"/>
+          <circle cx="90" cy="49" r="5.5" style="transition-delay:0s"/>
+          <circle cx="90" cy="16" r="4" style="transition-delay:.06s"/>
+          <circle cx="152" cy="33" r="3.4" style="transition-delay:.12s"/>
+          <circle cx="147" cy="72" r="3.4" style="transition-delay:.18s"/>
+          <circle cx="90" cy="84" r="3.4" style="transition-delay:.24s"/>
+          <circle cx="33" cy="72" r="3.4" style="transition-delay:.3s"/>
+          <circle cx="28" cy="33" r="3.4" style="transition-delay:.36s"/>
+        </svg>
+      </div>
+      <div class="info">
+        <div class="name"><b>图谱入场</b><span class="en">graph reveal</span></div>
+        <p class="say">节点先由中心依次弹开，连线再用描边生长接上——先有点，再有关系。点一下重放。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>circle: scale(.001)→1，transition-delay 每节点 +60ms
+line: stroke-dashoffset 160→0，animation .72s
+重放 = 移除 play → 强制 reflow → 再加 play</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">click</span>
+      <div class="demo"><div class="sdot" id="sdotDemo"><i></i><span class="sl">未开始</span></div></div>
+      <div class="info">
+        <div class="name"><b>学习状态点</b><span class="en">status dot</span></div>
+        <p class="say">灰、黄、绿三态切换，靠底色加一圈同色低透明度光晕，不要换图标。点一下切一次。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>颜色过渡 .34s；光晕用 box-shadow 0 0 0 4px 同色 16% 透明度
+不写 scale 动画，否则一排点会显得参差不齐</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="sync" id="syncBadge"><span class="sd"></span><span class="st">已同步</span></div></div>
+      <div class="info">
+        <div class="name"><b>同步徽标呼吸</b><span class="en">sync badge</span></div>
+        <p class="say">在线时小绿点轻轻呼吸，表示"还在；"断线就停掉动画、变灰、文案改成"本地模式"，别闪红。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.sd{animation:pulseDot 1.8s ease-in-out infinite}
+离线：animation:none + 变灰 + 文案切换
+断线状态下不要用红色，红色留给真错误</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">auto</span>
+      <div class="demo">
+        <div class="ring-wrap" id="ringWrap">
+          <svg viewBox="0 0 104 104"><circle class="ring-track" cx="52" cy="52" r="45"/><circle class="ring-fill" id="ringFill" cx="52" cy="52" r="45"/></svg>
+          <div class="ring-num"><b id="ringNum">27</b><span>days left</span></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>倒计时环形进度</b><span class="en">ring countdown</span></div>
+        <p class="say">数字和圆环一起走：数字用 rAF 补间，圆环用 dashoffset，两者同一条缓动，不能各走各的。点一下重跑。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>stroke-dasharray = 2πr ≈ 283；offset 283→0 表示 0%→100%
+数字用 requestAnimationFrame 补间，别用 setInterval 一格格跳</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- D GitHub 热门 -->
+  <div class="group"><h2>GitHub 上常见的</h2><p>7 · 开源项目里高频出现</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:0">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="beam-card"><span>border beam</span></div></div>
+      <div class="info">
+        <div class="name"><b>边框流光</b><span class="en">border beam</span></div>
+        <p class="say">一道光沿卡片边缘跑圈，卡面本身不动。适合"正在生成/处理中"这类进行中状态。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>::before = conic-gradient 光带，inset:-55%，rotate 3.4s linear infinite
+::after = 内层白底 inset:1.5px，盖出 1.5px 边框
+两层都用 z-index:-1，卡内容在 z-index:1</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">auto</span>
+      <div class="demo"><span class="shine">motion, please.</span></div>
+      <div class="info">
+        <div class="name"><b>文字扫光</b><span class="en">text shimmer</span></div>
+        <p class="say">标题上扫一道高光，比整块发光克制。只给关键词用，正文别用。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>linear-gradient 三段色 + background-clip:text + color:transparent
+background-size:210% 100%，background-position 120%→-120% 循环</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="aurora"><i></i><i></i><i></i></div></div>
+      <div class="info">
+        <div class="name"><b>渐变背景漂移</b><span class="en">aurora blobs</span></div>
+        <p class="say">三个模糊色团慢慢游动，像极光。放在卡片底、标题后，别盖住正文。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>三个 border-radius:50% 的色团，filter:blur(16px)，opacity .5
+animation: driftBlob 6.5s ease-in-out infinite alternate，互相错开 2.2s</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">click</span>
+      <div class="demo"><div class="reveal-mask" id="revealMask"></div></div>
+      <div class="info">
+        <div class="name"><b>遮罩揭示</b><span class="en">clip-path reveal</span></div>
+        <p class="say">图从中心一个圆往外炸开整张，比淡入更有"揭幕"感。点一下切换。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>clip-path:circle(26% at 50% 50%) → circle(118% at 50% 50%)
+transition .62s cubic-bezier(.22,.9,.28,1)；别配 opacity，两者一起会发灰</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">drag</span>
+      <div class="demo"><div class="sort-row" id="sortRow"><span class="chip">政治</span><span class="chip">英语</span><span class="chip">数学</span><span class="chip">专业课</span></div></div>
+      <div class="info">
+        <div class="name"><b>拖拽排序</b><span class="en">sortable + FLIP</span></div>
+        <p class="say">拖动交换位置时，其他块不是瞬移，而是从旧位置滑到新位置——这就是 FLIP。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>1 记录所有块旧位置 → 2 改 DOM 顺序 → 3 新位置与旧位置差值
+4 先 transform 反向偏移并关过渡 → 5 下一帧开过渡、transform 归零</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="tw"><span id="twText"></span><span class="caret"></span></div></div>
+      <div class="info">
+        <div class="name"><b>打字机</b><span class="en">typewriter</span></div>
+        <p class="say">一个字一个字敲出来，光标保持闪。只在短句上用，长段落会让人等得不耐烦。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每 90ms 截取一个字符；打完停 1.6s，再删到 0
+光标用 steps(1) 的 infinite 闪烁，别用 ease</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:6">
+      <span class="badge">click</span>
+      <div class="demo"><div class="burst-stage" id="burstStage"><button class="burst-btn" id="burstBtn" type="button">点我爆</button></div></div>
+      <div class="info">
+        <div class="name"><b>粒子爆裂</b><span class="en">confetti burst</span></div>
+        <p class="say">点一下就撒一把彩纸，短、散、马上消失。用在收藏成功、打卡完成这类小确幸时刻。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>每次生成 16 个粒子，随机角度 + 随机距离
+WAAPI: translate(x,y) rotate + opacity 1→0，duration 520–780ms，easing ease-out
+onfinish 移除节点，别留着堆内存</pre></div>
+      </div>
+    </article>
+  </div>
+
   <!-- 工具分层 -->
   <section class="tools-sec">
     <div class="group"><h2>实现工具，分三层</h2><p>6 · 免费优先</p></div>
@@ -789,8 +1069,8 @@ a:hover::after{transform:scaleX(1);transform-origin:left}</pre></div>
         <p class="tkind">画面 · 3D</p><h3>Three.js</h3>
         <p><b>什么时候用</b>：要自由换视角、打灯、物体真的翻折，而不是放一张图假装立体。</p>
         <p><b>不满意查什么</b>：物体有没有跟着面一起转、遮挡关系对不对、灯光位置对不对。</p>
-        <div class="tdemo"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-        <p class="tnote">开源 · 演示为 CSS 3D 示意</p>
+        <div class="tdemo"><div class="cube-stage"><div class="cube-tilt"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
+        <p class="tnote">开源 · 演示为 CSS 3D 示意（透视 + 逐面受光）</p>
         <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
       <article class="tcard">
@@ -1202,6 +1482,150 @@ if (ptBtn) {
   ptBtn.addEventListener('click', () => {
     ptDemo.classList.add('cover')
     setTimeout(() => ptDemo.classList.remove('cover'), 1200)
+  })
+}
+
+/* 28 玻璃导航收缩 */
+const gbar = $('#gbar')
+if (gbar) gbar.addEventListener('click', () => {
+  gbar.classList.toggle('on')
+  const tag = $('.gt', gbar)
+  if (tag) tag.textContent = gbar.classList.contains('on') ? '已收缩' : '点击收缩'
+})
+
+/* 29 图谱入场 */
+const graphIn = $('#graphIn')
+if (graphIn) {
+  const replay = () => {
+    graphIn.classList.remove('play')
+    void graphIn.getBoundingClientRect()
+    graphIn.classList.add('play')
+  }
+  graphIn.addEventListener('click', replay)
+  const gio = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { replay(); gio.disconnect() } })
+  }, { threshold: .3 })
+  gio.observe(graphIn)
+}
+
+/* 30 学习状态点 */
+const sdotDemo = $('#sdotDemo')
+if (sdotDemo) {
+  const states = [['', '未开始'], ['learning', '学习中'], ['mastered', '已掌握']]
+  let k = 0
+  sdotDemo.addEventListener('click', () => {
+    sdotDemo.classList.remove('learning', 'mastered')
+    k = (k + 1) % 3
+    if (states[k][0]) sdotDemo.classList.add(states[k][0])
+    const label = $('.sl', sdotDemo)
+    if (label) label.textContent = states[k][1]
+  })
+}
+
+/* 31 同步徽标呼吸 */
+const syncBadge = $('#syncBadge')
+if (syncBadge) syncBadge.addEventListener('click', () => {
+  const off = syncBadge.classList.toggle('off')
+  const label = $('.st', syncBadge)
+  if (label) label.textContent = off ? '本地模式' : '已同步'
+})
+
+/* 32 倒计时环形进度 */
+const ringWrap = $('#ringWrap'), ringFill = $('#ringFill'), ringNum = $('#ringNum')
+if (ringWrap && ringFill && ringNum) {
+  const C = 2 * Math.PI * 45
+  ringFill.style.strokeDasharray = C
+  let raf = 0
+  const runRing = () => {
+    cancelAnimationFrame(raf)
+    const t0 = performance.now(), D = 1500, days = 27
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / D)
+      const e = 1 - Math.pow(1 - p, 3)
+      ringFill.style.strokeDashoffset = C * (1 - e)
+      ringNum.textContent = Math.round(days * e)
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+  }
+  ringWrap.addEventListener('click', runRing)
+  const rio = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { runRing(); rio.disconnect() } })
+  }, { threshold: .3 })
+  rio.observe(ringWrap)
+}
+
+/* 36 遮罩揭示 */
+const revealMask = $('#revealMask')
+if (revealMask) revealMask.addEventListener('click', () => revealMask.classList.toggle('open'))
+
+/* 37 拖拽排序（FLIP） */
+const sortRow = $('#sortRow')
+if (sortRow) {
+  let dragEl = null
+  const chips = () => $$('.chip', sortRow)
+  chips().forEach((chip) => {
+    chip.draggable = true
+    chip.addEventListener('dragstart', () => { dragEl = chip; chip.classList.add('drag') })
+    chip.addEventListener('dragend', () => { chip.classList.remove('drag'); dragEl = null })
+    chip.addEventListener('dragover', (e) => {
+      e.preventDefault()
+      if (!dragEl || dragEl === chip) return
+      const before = chips().map((c) => [c, c.getBoundingClientRect()])
+      const r = chip.getBoundingClientRect()
+      const after = e.clientX > r.left + r.width / 2
+      sortRow.insertBefore(dragEl, after ? chip.nextSibling : chip)
+      before.forEach(([el, rect]) => {
+        const nr = el.getBoundingClientRect()
+        const dx = rect.left - nr.left, dy = rect.top - nr.top
+        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+          el.style.transition = 'none'
+          el.style.transform = `translate(${dx}px,${dy}px)`
+          requestAnimationFrame(() => {
+            el.style.transition = 'transform .38s cubic-bezier(.22,.8,.2,1)'
+            el.style.transform = ''
+          })
+        }
+      })
+    })
+  })
+}
+
+/* 38 打字机 */
+const twText = $('#twText')
+if (twText) {
+  const lines = ['meets · notes · graph', '笔记 → 站 → 你']
+  let li = 0, ci = 0, del = false
+  const stepTw = () => {
+    const s = lines[li]
+    twText.textContent = s.slice(0, ci)
+    if (!del) {
+      if (ci < s.length) { ci += 1; setTimeout(stepTw, 92) }
+      else { del = true; setTimeout(stepTw, 1500) }
+    } else if (ci > 0) { ci -= 1; setTimeout(stepTw, 46) }
+    else { del = false; li = (li + 1) % lines.length; setTimeout(stepTw, 320) }
+  }
+  stepTw()
+}
+
+/* 39 粒子爆裂 */
+const burstStage = $('#burstStage'), burstBtn = $('#burstBtn')
+if (burstStage && burstBtn) {
+  const colors = ['#d9571a', '#e0a83d', '#57a869', '#7c9eeb', '#b8641f']
+  burstBtn.addEventListener('click', () => {
+    for (let i = 0; i < 16; i += 1) {
+      const p = document.createElement('i')
+      p.style.background = colors[i % colors.length]
+      p.style.left = '50%'
+      p.style.top = '50%'
+      burstStage.appendChild(p)
+      const a = (Math.PI * 2 * i) / 16 + Math.random() * .5
+      const d = 26 + Math.random() * 34
+      p.animate([
+        { transform: 'translate(-50%,-50%) translate(0,0) rotate(0deg)', opacity: 1 },
+        { transform: `translate(-50%,-50%) translate(${Math.cos(a) * d}px,${Math.sin(a) * d}px) rotate(${Math.random() * 240 - 120}deg)`, opacity: 0 },
+      ], { duration: 520 + Math.random() * 280, easing: 'ease-out' }).onfinish = () => p.remove()
+    }
   })
 }
 
