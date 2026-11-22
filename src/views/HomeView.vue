@@ -6,6 +6,11 @@ import RibbonScene from '../components/RibbonScene.vue'
 import Icon from '../components/Icon.vue'
 
 const router = useRouter()
+const q = ref('')
+
+function goSearch() {
+  router.push(q.value ? { path: '/notes', query: { q: q.value } } : { path: '/notes' })
+}
 
 const manifest = ref({ notes: [], edges: [], tags: [] })
 
@@ -119,6 +124,12 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
           GitHub <Icon name="arrow-up-right" class="arw" :size="12" />
         </a>
       </div>
+
+      <form class="hero-search reveal reveal-d3" @submit.prevent="goSearch">
+        <Icon name="search" :size="14" :weight="1.7" />
+        <input v-model.trim="q" type="search" placeholder="搜笔记：标题、标签、关键字" aria-label="搜索笔记" />
+        <button type="submit" class="mono">搜索</button>
+      </form>
 
       <div class="vol-row reveal reveal-d3">
         <button
@@ -303,6 +314,10 @@ max-width: 560px;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 34px;
+}
+/* 首屏搜索只在窄屏出现，桌面仍用图谱和目录 */
+.hero-search {
+  display: none;
 }
 .cta .arw {
   color: currentColor;
@@ -542,12 +557,55 @@ max-width: 560px;
   }
   .cta {
     gap: 10px;
-    margin-bottom: 26px;
+    margin-bottom: 14px;
   }
   .cta .btn {
     flex: 1 1 0;
     justify-content: center;
     min-height: 46px;
+  }
+  /* 手机上没有目录栏，先在首屏给一个直接搜索入口 */
+  .hero-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    margin: 0 0 22px;
+    padding: 0 6px 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-panel);
+  }
+  .hero-search :deep(svg) {
+    flex: 0 0 auto;
+    opacity: 0.55;
+  }
+  .hero-search input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: none;
+    outline: none;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .hero-search input::placeholder {
+    color: var(--text-muted);
+  }
+  .hero-search button {
+    flex: 0 0 auto;
+    height: 32px;
+    padding: 0 13px;
+    border: 1px solid rgba(217, 87, 26, 0.28);
+    border-radius: 999px;
+    background: rgba(217, 87, 26, 0.08);
+    color: var(--accent-cream);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+  }
+  .hero-search button:active {
+    background: rgba(217, 87, 26, 0.16);
   }
   .vol-row {
     grid-template-columns: 1fr;

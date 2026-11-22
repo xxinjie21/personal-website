@@ -35,7 +35,7 @@ const cache = new Map()
 
 const tabs = ref([])
 const activeSlug = ref('')
-const keyword = ref('')
+const keyword = ref(String(route.query.q || ''))
 const lightbox = ref(null)
 
 function noteTitle(slug) {
@@ -353,6 +353,20 @@ function togglePane(side) {
   else rightOpen.value = !rightOpen.value
 }
 
+const paneLeftEl = ref(null)
+
+// 窄屏：点工具栏放大镜，拉开目录抽屉并把光标放进筛选框
+async function openSearch() {
+  leftOpen.value = true
+  await nextTick()
+  paneLeftEl.value?.querySelector('.tree-search input')?.focus()
+}
+
+function closeDrawers() {
+  leftOpen.value = false
+  rightOpen.value = false
+}
+
 // 拖动：按住分隔条横向拉，拉到很窄就吸附收起，从收起处往回拖就重新展开
 const MIN_LEFT = 190
 const MAX_LEFT = 460
@@ -523,7 +537,12 @@ watch(
       <span><Icon name="chevron-right" :size="12" :weight="1.9" /></span>
     </button>
 
-    <div class="pane pane-left" :class="{ closed: !leftOpen }" :style="{ width: leftOpen ? leftW + 'px' : '0px' }">
+    <div
+      class="pane pane-left"
+      :class="{ closed: !leftOpen }"
+      :style="{ width: leftOpen ? leftW + 'px' : '0px' }"
+      ref="paneLeftEl"
+    >
       <NoteTree
         class="pane-body"
         :style="{ width: leftW + 'px' }"
@@ -535,7 +554,7 @@ watch(
       />
     </div>
 
-    <div v-if="leftOpen" class="drawer-scrim" @click="leftOpen = false" />
+    <div v-if="leftOpen || rightOpen" class="drawer-scrim" @click="closeDrawers" />
 
     <div
       class="splitter"
@@ -561,6 +580,14 @@ watch(
             <rect x="2.5" y="4" width="15" height="12" rx="2" />
             <line x1="7.5" y1="4" x2="7.5" y2="16" />
           </svg>
+        </button>
+        <button
+          type="button"
+          class="pane-toggle search-btn"
+          title="搜索 / 筛选笔记"
+          @click="openSearch"
+        >
+          <Icon name="search" :size="15" :weight="1.7" />
         </button>
         <span class="tabs-brand">
           <i>LIBRARY</i>
@@ -1430,10 +1457,24 @@ watch(
   .splitter {
     display: none;
   }
-  /* 右栏（大纲 / 链接）在窄屏让位给正文 */
-  .pane-right,
-  .edge-handle.right {
-    display: none;
+  /* 右栏（大纲 / 链接）同样改成右侧抽屉 */
+  .pane-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: auto;
+    bottom: 0;
+    z-index: 60;
+    width: min(84vw, 330px) !important;
+    background: var(--bg-panel);
+    box-shadow: -28px 0 60px -34px rgba(50, 32, 18, 0.6);
+  }
+  .pane-right.closed {
+    width: 0 !important;
+    box-shadow: none;
+  }
+  .pane-right .pane-body {
+    width: 100% !important;
   }
   .center {
     width: 100%;
@@ -1441,6 +1482,19 @@ watch(
   .tabs {
     padding: 6px 8px;
     gap: 4px;
+  }
+  /* 窄屏横向滑动时，两个抽屉按钮吸附在两端，随时可点 */
+  .tabs > .pane-toggle:first-of-type {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    background: var(--bg-panel);
+  }
+  .tabs > .pane-toggle:last-of-type {
+    position: sticky;
+    right: 0;
+    z-index: 6;
+    background: var(--bg-panel);
   }
   .tabs-brand {
     padding: 0 8px 0 2px;
@@ -1457,17 +1511,14 @@ watch(
     min-width: 36px;
     min-height: 34px;
   }
-  /* 右栏已隐藏，第二个切换按钮也就没用了 */
-  .tabs > .pane-toggle:nth-of-type(2) {
-    display: none;
-  }
   .edge-handle {
     width: 10px;
   }
 }
 
 @media (max-width: 560px) {
-  .pane-left {
+  .pane-left,
+  .pane-right {
     width: 84vw !important;
   }
   .tabs-brand,

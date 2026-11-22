@@ -110,15 +110,30 @@ defineExpose({ bindBody })
 
 // 阅读进度：容器滚动比例，喂给顶部那条 2px 暖橙细线
 const prog = ref(0)
+const readerEl = ref(null)
 function onScroll(e) {
   const el = e.currentTarget
   const total = el.scrollHeight - el.clientHeight
   prog.value = total > 8 ? Math.min(1, Math.max(0, el.scrollTop / total)) : 0
 }
+function toTop() {
+  readerEl.value?.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
-  <div class="reader" @scroll="onScroll">
+  <div class="reader" ref="readerEl" @scroll="onScroll">
+    <button
+      v-if="prog > 0.1"
+      type="button"
+      class="to-top"
+      title="回到顶部"
+      @click="toTop"
+    >
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </button>
     <span class="read-bar" :style="{ transform: `scaleX(${prog})` }" aria-hidden="true"></span>
     <div v-if="loading" class="skeleton" aria-hidden="true">
       <span class="sk-line sk-title"></span>
@@ -388,6 +403,35 @@ function onScroll(e) {
   border-radius: 999px;
   border: 1px solid var(--border);
   color: var(--text-muted);
+}
+
+/* 回到顶部：只在窄屏出现，浮在右下角 */
+.to-top {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .to-top {
+    position: fixed;
+    right: 14px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--bg-panel);
+    color: var(--text-muted);
+    box-shadow: 0 8px 18px -10px rgba(60, 38, 18, 0.5);
+  }
+  .to-top:active {
+    color: var(--accent);
+    border-color: rgba(217, 87, 26, 0.35);
+  }
 }
 
 /* 手机：收窄到 18px 边距，标题降一档，正文行宽更适合竖屏 */

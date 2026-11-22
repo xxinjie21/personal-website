@@ -17,6 +17,8 @@ const SET = {
   close: ['M6.5 6.5l11 11', 'M17.5 6.5l-11 11'],
   folder: ['M3.6 7.5A2 2 0 0 1 5.6 5.4h3.6l1.9 2.1h7.3a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2H5.6a2 2 0 0 1-2-2z'],
   file: ['M7 3.6h6.2L17 7.4v13H7z', 'M13.1 3.6v3.8h3.8'],
+  search: ['M10.6 4.6a6 6 0 1 0 0 12a6 6 0 0 0 0-12', 'M15.4 15.4L20 20'],
+  'arrow-up': ['M12 19V5', 'M6 11l6-6 6 6'],
 }
 const paths = computed(() => SET[props.name] || [])
 const box = computed(() => `${props.size}px`)
