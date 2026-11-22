@@ -30,7 +30,7 @@ animation:drift 24s ease-in-out infinite alternate}
 50%{transform:translate3d(2.5%,2%,0) scale(1.05)}
 100%{transform:translate3d(-1%,1.5%,0) scale(1.02)}}
 .wrap{max-width:1080px;margin:0 auto;display:block;min-height:calc(100vh - 48px);justify-content:flex-start;position:relative}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-content:start;grid-auto-rows:1fr}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start;grid-auto-rows:1fr}
 a.card{grid-column:auto;height:100%}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
 border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
@@ -106,9 +106,9 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
     <div class="ph-text">
       <p class="eyebrow">design references</p>
       <h1>设计灵感 · 参考站</h1>
-      <p class="lead">7 个参考站：零件、微交互、结构、方向、版式、细节、AI 提示词。</p>
+      <p class="lead">6 个参考站：零件、微交互、方向、版式、细节、AI 提示词。</p>
     </div>
-    <span class="ph-count">7 sites</span>
+    <span class="ph-count">6 sites</span>
   </div>
 
   <div class="grid">
@@ -134,19 +134,8 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
       <div class="tagrow"><span class="tag">光标交互</span><span class="tag">微交互</span><span class="tag">CSS · JS</span></div>
     </a>
 
-    <a class="card" style="--i:2" href="https://vibeui.online" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">03</span><span class="flag">免费 · 免账号</span>
-        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
-      </div>
-      <h2>VibeUI</h2>
-      <p class="host">vibeui.online</p>
-      <p class="desc"><b>版式提示词库</b>：92 个页面结构（登录、定价、hero、bento 格），每个都写成一段能直接复制的 prompt。</p>
-      <p class="desc">拿它做什么：想加某块内容又说不清长什么样，复制那条 prompt，再附一张截图定风格。</p>
-      <div class="tagrow"><span class="tag">prompt 可复制</span><span class="tag">版式结构</span><span class="tag">免登录</span></div>
-    </a>
-
-    <a class="card wide" style="--i:3" href="https://variant.com" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">04</span><span class="flag">AI 方向探索</span>
+    <a class="card" style="--i:2" href="https://variant.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">03</span><span class="flag">AI 方向探索</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
       <h2>Variant</h2>
@@ -156,8 +145,8 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
       <div class="tagrow"><span class="tag">灵感发散</span><span class="tag">布局 · 配色</span><span class="tag">导出 HTML</span></div>
     </a>
 
-    <a class="card wide" style="--i:4" href="https://www.awwwards.com" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">05</span><span class="flag">免费浏览</span>
+    <a class="card" style="--i:3" href="https://www.awwwards.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">04</span><span class="flag">免费浏览</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
       <h2>Awwwards</h2>
@@ -167,8 +156,8 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
       <div class="tagrow"><span class="tag">网页设计</span><span class="tag">奖项画廊</span><span class="tag">动效参考</span></div>
     </a>
 
-    <a class="card" style="--i:5" href="https://detail.design" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">06</span><span class="flag">免费浏览</span>
+    <a class="card" style="--i:4" href="https://detail.design" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">05</span><span class="flag">免费浏览</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
       <h2>Detail</h2>
@@ -178,8 +167,8 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
       <div class="tagrow"><span class="tag">UI 细节</span><span class="tag">交互拆解</span><span class="tag">免费浏览</span></div>
     </a>
 
-    <a class="card" style="--i:6" href="https://motionsites.ai" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">07</span><span class="flag">付费 · 部分免费</span>
+    <a class="card" style="--i:5" href="https://motionsites.ai" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">06</span><span class="flag">付费 · 部分免费</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
       <h2>MotionSites.ai</h2>
@@ -190,7 +179,7 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
     </a>
   </div>
 
-  <footer>前六个站可免费浏览与复制；MotionSites 部分案例免费，完整 Prompt 库需付费。</footer>
+  <footer>前五个站可免费浏览与复制；MotionSites 部分案例免费，完整 Prompt 库需付费。</footer>
 </div>
 <script src="../embed/frame.js" defer></script>
 <script>
@@ -217,14 +206,14 @@ const REF_PROMPTS = {
 交付：完整代码块 + 应放进哪个文件 + 390 宽怎么验；不要新增依赖。`,
   'hover.dev': `参考 hover.dev 的卡片写法，给现有卡片加「指针跟随光斑」：用 CSS 变量 --mx / --my 驱动 radial-gradient，pointermove 更新；同时做不超过 9° 的 rotateX / rotateY 倾斜；触屏不启用、不抢滚动。
 交付：改动代码 + 验证步骤（鼠标划过和触屏点击各怎么验）。`,
-  'vibeui.online': `打开 vibeui.online，挑一条和我当前页面用途最接近的版式 prompt（hero / 定价 / bento 网格），改写成这套 token 的版式：先给两种排法并用一句话说明差异，我选一个你再实现。
-约束：不引新依赖，配色只从现有 token 取。`,
   'variant.com': `用 variant.com 的思路给当前页面出三个版式方向，每个方向一句话说明差异（信息密度 / 视觉重心 / 首屏节奏），我选一个后你再实现。
 约束：只改布局不动文案，配色只从现有 token 取，改完给桌面和 390 宽两张截图。`,
   'awwwards.com': `打开 awwwards.com 找三个和我同类的站点，各提炼一个可借鉴手法（版式 / 动效 / 字体），并指出哪一个最适合我现在的页面；我确认后按那个实现，不要整站照搬。
 交付：借鉴点清单 + 落地改动 + 一句验收标准。`,
   'detail.design': `打开 detail.design 找一个我能直接用的细节（按钮、表单、播放器或某个动效），写清它的具体参数（尺寸 / 时长 / 缓动），然后用本站 token 在现有页面复刻。
-交付：改前改后两张截图 + 关键 CSS 片段；不要新增依赖。`
+交付：改前改后两张截图 + 关键 CSS 片段；不要新增依赖。`,
+  'motionsites.ai': `卡在版式或动效时，用 motionsites.ai 的思路：先用一句话说明页面类型与调性，再给一份可直接交给 AI 的生成提示（布局、字体层级、配色、动效触发与时长、390 宽布局），不照抄案例文案。
+交付：提示词全文 + 生成后要改的三处 + 验收口径。`
 }
 
 const grid = document.querySelector('.grid')
