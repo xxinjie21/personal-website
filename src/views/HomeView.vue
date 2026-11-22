@@ -83,10 +83,9 @@ function volSpot(e) {
 // 磁吸按钮：手册 04 那条，按钮被光标吸过去一点，划开弹回
 function magnetMove(e) {
   if (e.pointerType !== 'mouse') return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   const r = e.currentTarget.getBoundingClientRect()
-  const dx = Math.max(-9, Math.min(9, (e.clientX - (r.left + r.width / 2)) * 0.22))
-  const dy = Math.max(-7, Math.min(7, (e.clientY - (r.top + r.height / 2)) * 0.22))
+  const dx = Math.max(-12, Math.min(12, (e.clientX - (r.left + r.width / 2)) * 0.3))
+  const dy = Math.max(-9, Math.min(9, (e.clientY - (r.top + r.height / 2)) * 0.3))
   e.currentTarget.style.transform = `translate(${dx}px, ${dy}px)`
 }
 function magnetReset(e) {
