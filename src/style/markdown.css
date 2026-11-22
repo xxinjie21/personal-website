@@ -178,11 +178,23 @@
 /* 整行公式可点开放大，光标先给提示 */
 .markdown .md-math-block {
   overflow-x: auto;
-  padding: 4px 0;
+  padding: 4px 0 8px;
   margin-bottom: 12px;
   cursor: zoom-in;
   border-radius: 8px;
   transition: background 0.18s ease;
+  overscroll-behavior-x: contain;
+  /* 公式块始终留一条细滚动槽，长推导能看出还能往右拖 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(126, 84, 46, 0.32) transparent;
+}
+/* KaTeX 默认居中会把超宽公式两头都裁掉：改成按内容宽度排，短公式仍居中，长公式从左边起可滚 */
+.markdown .md-math-block .katex-display {
+  width: max-content;
+  min-width: 100%;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
 }
 .markdown .katex-display {
   margin: 10px 0;
