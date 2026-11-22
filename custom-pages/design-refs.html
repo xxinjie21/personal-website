@@ -30,7 +30,7 @@ header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:
 .brand p{font-size:12px;color:var(--muted);margin-top:6px}
 .count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
 color:var(--muted);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
 border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
 text-decoration:none;overflow:hidden;isolation:isolate;transform-style:preserve-3d;will-change:transform;
@@ -54,6 +54,8 @@ a.card:active{transform:perspective(820px) translateY(-1px) scale(.992)}
 .idx{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:1.2px;color:#b9a48f;
 transition:color .24s,letter-spacing .34s var(--ease)}
 a.card:hover .idx{color:var(--accent);letter-spacing:2px}
+.flag{display:inline-flex;align-items:center;line-height:1.4;font-size:9.5px;letter-spacing:.3px;padding:2px 7px;border-radius:20px;color:#ab4712;
+background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
 .go{margin-left:auto;display:flex;align-items:center;justify-content:center;gap:4px;width:26px;height:26px;padding:0;
 border:1px solid var(--line);border-radius:8px;color:#8a7f74;overflow:hidden;
 transition:width .3s var(--ease),color .2s,border-color .2s,background .22s,box-shadow .26s}
@@ -97,36 +99,47 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   <header>
     <div class="brand">
       <h1>设计灵感 · 参考站</h1>
-      <p>两个常去的地方，点卡片直接开原站，看到合适的就搬回 custom-pages/。</p>
+      <p>三个免费站，分工不重：找零件、找微交互、找动效编排。点卡片开原站，看到合适的搬回 custom-pages/。</p>
     </div>
-    <span class="count">2 sites</span>
+    <span class="count">3 sites</span>
   </header>
 
   <div class="grid">
-    <a class="card" style="--i:0" href="https://21st.dev" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">01</span>
+    <a class="card" style="--i:0" href="https://uiverse.io" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">01</span><span class="flag">免费 · MIT</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
-      <h2>21st.dev</h2>
-      <p class="host">21st.dev</p>
-      <p class="desc"><b>现成组件市场</b>：AI 生成 / 社区投稿的 React、Tailwind 组件与区块，卡片式浏览，点开就能看源码。</p>
-      <p class="desc">拿它做什么：缺按钮组、卡片、侧栏这类现成结构时，整段复制再按本站配色改。</p>
-      <div class="tagrow"><span class="tag">组件库</span><span class="tag">源码可复制</span><span class="tag">React · Tailwind</span></div>
+      <h2>Uiverse.io</h2>
+      <p class="host">uiverse.io</p>
+      <p class="desc"><b>现成小零件</b>：按钮、开关、加载、输入框，整个站都是纯 HTML + CSS，没有框架依赖。</p>
+      <p class="desc">拿它做什么：缺一个像样的开关或 loader，复制一段贴进单页，改两个颜色就能用。</p>
+      <div class="tagrow"><span class="tag">纯 CSS</span><span class="tag">组件零件</span><span class="tag">复制即用</span></div>
     </a>
 
-    <a class="card" style="--i:1" href="https://variant.com" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">02</span>
+    <a class="card" style="--i:1" href="https://hover.dev" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">02</span><span class="flag">免费画廊</span>
         <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
       </div>
-      <h2>Variant</h2>
-      <p class="host">variant.com</p>
-      <p class="desc"><b>AI 设计方向探索</b>：输入一句想法（比如「一个极简博客」），往下滚就是一屏接一屏的不同方案，不用反复写提示词。</p>
-      <p class="desc">拿它做什么：定不下版式、配色时先来这里滚几屏找方向，选中一套再动手做。</p>
-      <div class="tagrow"><span class="tag">灵感发散</span><span class="tag">布局 / 配色</span><span class="tag">导出 HTML · React</span></div>
+      <h2>Hover.dev</h2>
+      <p class="host">hover.dev</p>
+      <p class="desc"><b>悬停与光标</b>：光标跟随的光斑、磁吸按钮、拖尾、3D 倾斜，切成一个个小 demo，配源码。</p>
+      <p class="desc">拿它做什么：本站卡片的光斑和倾斜就是这一路写法，想再加花样时来这儿挑一个。</p>
+      <div class="tagrow"><span class="tag">光标交互</span><span class="tag">微交互</span><span class="tag">CSS · JS</span></div>
+    </a>
+
+    <a class="card" style="--i:2" href="https://motion.dev" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">03</span><span class="flag">开源 · MIT</span>
+        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Motion</h2>
+      <p class="host">motion.dev</p>
+      <p class="desc"><b>动效编排</b>：弹簧曲线、列表进出场、共享元素转场，官方示例都是能直接跑的最小 demo。</p>
+      <p class="desc">拿它做什么：页面怎么长出来、怎么缩回去，照示例调参数；Vue 侧用 motion-v。</p>
+      <div class="tagrow"><span class="tag">转场 / spring</span><span class="tag">动效库</span><span class="tag">motion-v</span></div>
     </a>
   </div>
 
-  <footer>纯外链，不在本站内嵌预览；两个站都能直接用浏览器打开。</footer>
+  <footer>三站都能免费浏览；Uiverse 与 Motion 的源码可直接拿去改。</footer>
 </div>
 <script>
 // 光标跟随光斑 + 轻微倾斜（只在鼠标上生效，触屏不抢滚动）
