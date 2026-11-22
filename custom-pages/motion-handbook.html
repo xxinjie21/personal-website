@@ -22,12 +22,8 @@ body{min-height:100%;background:
 radial-gradient(1100px 700px at 8% -12%,rgba(217,87,26,.1),transparent 62%),
 radial-gradient(900px 620px at 92% 4%,rgba(220,150,90,.08),transparent 66%),var(--bg);
 color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-line-height:1.6;-webkit-font-smoothing:antialiased;padding:18px 22px 28px}
+line-height:1.6;-webkit-font-smoothing:antialiased;padding:18px 22px 22px}
 .wrap{max-width:1080px;margin:0 auto}
-.how{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 16px;font-size:11.5px;color:var(--text-dim)}
-@media (min-width:901px){.how{display:none}}
-.how span{border:1px solid var(--line);border-radius:20px;padding:5px 11px;background:rgba(255,253,250,.72)}
-.how b{color:var(--accent-cream);font-weight:600}
 
 .group{margin:26px 0 12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .group h2{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:19px;position:relative;width:fit-content}
@@ -349,7 +345,7 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
 @media (max-width:900px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* 分组标签：一次只看一组，页面不被 27 张卡拉长 */
-.mtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.mtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
 .mtabs button{display:inline-flex;align-items:baseline;gap:5px;border:1px solid var(--line);border-radius:999px;
 padding:5px 11px;background:rgba(255,253,250,.75);color:var(--muted);font:500 11px/1.2 'Inter',sans-serif;cursor:pointer;
 transition:color .22s,border-color .22s,background .24s var(--ease),transform .24s var(--ease)}
@@ -386,15 +382,9 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">27 个动效，每个都能在这里真跑一遍。说不清的时候，先说名字，再说放哪一块。每张卡都能复制一段提示词，直接粘给 agent 就能实现。</p>
+      <p class="lead">27 个动效、6 套工具，全部真跑。</p>
     </div>
     <span class="ph-count">27 motions · 6 tools</span>
-  </div>
-
-  <div class="how">
-    <span><b>1</b> 把鼠标放上去 / 点一下</span>
-    <span><b>2</b> 记住名字</span>
-    <span><b>3</b> 复制提示词给 agent</span>
   </div>
 
   <!-- A 首屏 -->
@@ -863,7 +853,7 @@ sections.forEach((sec, i) => {
   btn.addEventListener('click', () => show(i))
   tabbar.appendChild(btn)
 })
-document.querySelector('.how').after(tabbar)
+document.querySelector('.page-head').after(tabbar)
 
 function show(i) {
   sections.forEach((s, n) => s.classList.toggle('on', n === i))
