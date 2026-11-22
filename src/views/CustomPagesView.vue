@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, watch, nextTick } from 'vue'
+import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Icon from '../components/Icon.vue'
 
@@ -17,8 +17,25 @@ const lastPage = computed(() => pages.value.find((p) => p.slug === lastSlug.valu
 const shellEl = ref(null)
 const enterFrom = ref(null)
 const frameStyle = ref({})
+// 离场时缩回的落点（进入时那张卡片的缩略窗位置）
+const exitTo = ref(null)
+let stopGuard = null
+let exiting = false
 
 onMounted(async () => {
+  // 从自定义页回列表时，先让整页缩回卡片再放行导航，形成反向共享元素
+  stopGuard = router.beforeEach(async (to, from) => {
+    if (!from.params?.page) return true
+    if (to.path !== '/custom-pages' && to.path !== '/custom-pages/') return true
+    if (exiting) return true
+    const frame = shellEl.value?.querySelector('.page-frame')
+    const toRect = exitTo.value
+    if (!frame || !toRect) return true
+    exiting = true
+    await shrinkFrame(frame, toRect)
+    exiting = false
+    return true
+  })
   try {
     const mod = await import('../data/site-manifest.json')
     pages.value = mod.default.customPages || []
@@ -33,6 +50,27 @@ onMounted(async () => {
     }
   }
 })
+
+onUnmounted(() => {
+  if (stopGuard) stopGuard()
+})
+
+// 整页缩回卡片缩略窗的位置
+function shrinkFrame(frame, to) {
+  return new Promise((resolve) => {
+    const from = frame.getBoundingClientRect()
+    if (!from.width || !from.height) return resolve()
+    frame.style.transformOrigin = '0 0'
+    frame.style.transform = 'none'
+    void frame.offsetWidth
+    requestAnimationFrame(() => {
+      frame.style.transition = 'transform 0.44s cubic-bezier(.4,0,.2,1), border-radius 0.44s ease'
+      frame.style.transform = `translate(${to.x - from.left}px, ${to.y - from.top}px) scale(${to.w / from.width}, ${to.h / from.height})`
+      frame.style.borderRadius = '12px'
+      setTimeout(resolve, 460)
+    })
+  })
+}
 
 // 不管从卡片、导航还是直接敲地址进来，都算「最后打开的一页」
 watch(
@@ -88,6 +126,7 @@ function openPage(p, e) {
   e.preventDefault()
   const r = thumb.getBoundingClientRect()
   enterFrom.value = { x: r.left, y: r.top, w: r.width, h: r.height }
+  exitTo.value = { ...enterFrom.value }
   remember(p)
   router.push(`/custom-pages/${p.slug}`)
 }
