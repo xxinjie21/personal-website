@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skill 清单</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M8 16h16M16 8v16' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* 设计令牌与主站 src/style/theme.css 保持一致 */
+:root{
+  --bg:#f7f2ec;--bg-deep:#efe6da;--panel-solid:#fffdfa;
+  --text:#241a12;--text-dim:#564334;--muted:#8a7365;
+  --line:rgba(126,84,46,.16);--line-strong:rgba(126,84,46,.32);
+  --accent:#d9571a;--accent-soft:#b8641f;--accent-cream:#7c3611;
+  --radius:18px;--radius-sm:12px;--ease:cubic-bezier(.22,.8,.2,1);
+  --shadow:0 24px 60px -32px rgba(85,53,28,.3);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100%;background:
+radial-gradient(1100px 700px at 8% -12%,rgba(217,87,26,.1),transparent 62%),
+radial-gradient(900px 620px at 92% 4%,rgba(220,150,90,.08),transparent 66%),
+var(--bg);
+color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+line-height:1.6;-webkit-font-smoothing:antialiased;padding:26px 22px 34px}
+body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.03;mix-blend-mode:multiply;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:960px;margin:0 auto;position:relative;z-index:2}
+
+header{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:18px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-soft)}
+h1{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:30px;letter-spacing:-.01em;margin-top:8px}
+.lead{font-size:12.5px;color:var(--muted);max-width:520px;margin-top:8px;line-height:1.75}
+.count{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* 先去找：索引入口 */
+.index-strip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px;border:1px solid var(--line);
+border-radius:var(--radius-sm);background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(255,250,244,.86));
+box-shadow:var(--shadow);margin-bottom:22px;animation:rise .7s cubic-bezier(.16,1,.3,1) both}
+.index-strip b{font-size:12.5px;font-weight:600}
+.index-strip span{font-size:12px;color:var(--text-dim)}
+.index-strip a{font-family:var(--mono);font-size:11.5px;color:var(--accent);border-bottom:1px solid rgba(217,87,26,.35);padding-bottom:1px}
+.index-strip a:hover{color:var(--accent-cream)}
+
+/* 阶段时间线 */
+.flow{position:relative;display:flex;flex-direction:column;gap:16px;padding-left:34px}
+.flow::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;
+background:linear-gradient(180deg,rgba(217,87,26,.45),rgba(126,84,46,.16) 55%,rgba(126,84,46,.06))}
+.stage{position:relative;animation:rise .72s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i) * 70ms + 80ms)}
+.stage::before{content:"";position:absolute;left:-30px;top:16px;width:9px;height:9px;border-radius:50%;
+background:var(--panel-solid);border:1px solid rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.07)}
+.stage.on::before{background:var(--accent);border-color:var(--accent)}
+.stage-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:4px 0 9px}
+.no{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#b9a48f}
+.stage.on .no{color:var(--accent)}
+.stage-head h2{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:18px;letter-spacing:.01em}
+.goal{font-size:12px;color:var(--muted);margin-left:auto;text-align:right;max-width:52%}
+
+/* skill 卡 */
+.card{position:relative;display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:var(--radius-sm);
+background:linear-gradient(180deg,#fffdfa,#fdfaf4);padding:14px 15px;cursor:pointer;isolation:isolate;overflow:hidden;
+transform-style:preserve-3d;will-change:transform;box-shadow:0 14px 32px -30px rgba(85,53,28,.7);
+transition:transform .3s var(--ease),border-color .25s,box-shadow .3s,background .25s;color:inherit;font:inherit}
+.card+.card{margin-top:9px}
+.card::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;opacity:0;
+background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%),rgba(217,87,26,.13),transparent 66%);
+transition:opacity .32s ease}
+.card>*{position:relative;z-index:1}
+.card:hover,.card:focus-visible{transform:perspective(860px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-3px);
+border-color:rgba(217,87,26,.42);background:#fffefb;box-shadow:0 24px 44px -32px rgba(140,70,30,.5);outline:none}
+.card:hover::before,.card:focus-visible::before{opacity:1}
+.card:active{transform:perspective(860px) translateY(-1px) scale(.994)}
+.card-top{display:flex;align-items:center;gap:8px}
+.skill{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text)}
+.card.open .skill{color:var(--accent-cream)}
+.badge{font-size:9.5px;letter-spacing:.3px;padding:2px 7px;border-radius:20px;color:#ab4712;
+background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
+.chev{margin-left:auto;width:20px;height:20px;flex:none;display:grid;place-items:center;color:#a08f7e;
+transition:transform .32s var(--ease),color .24s}
+.chev svg{width:12px;height:12px}
+.card.open .chev{transform:rotate(180deg);color:var(--accent)}
+.one{font-size:12.5px;color:#5f574e;margin-top:6px;line-height:1.7}
+.out{font-size:11.5px;color:var(--muted);margin-top:6px}
+.out b{color:var(--accent-cream);font-weight:600}
+.more{display:none;opacity:0}
+.card.open .more{display:block;opacity:1;animation:fadein .3s var(--ease)}
+.more-in{padding-top:11px;margin-top:10px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:8px;align-items:flex-start}
+.k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:#b9a48f;text-transform:uppercase;min-width:26px;padding-top:2px}
+.v{font-size:11.5px;color:var(--text-dim);line-height:1.65;flex:1}
+.cmd{font-family:var(--mono);font-size:11px;color:var(--accent-cream);background:rgba(217,87,26,.06);
+border:1px solid rgba(217,87,26,.16);border-radius:6px;padding:4px 7px;display:inline-block;word-break:break-all}
+.copy{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;font-size:10px;
+padding:3px 9px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;transition:all .26s var(--ease);flex:none}
+.copy:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
+.copy.done{background:rgba(217,87,26,.1);border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
+
+/* 空阶段说明 */
+.empty{display:flex;gap:9px;align-items:center;padding:12px 15px;border:1px dashed var(--line-strong);border-radius:var(--radius-sm);
+background:rgba(255,253,250,.6);font-size:12px;color:var(--muted)}
+.empty b{color:var(--text-dim);font-weight:600}
+.empty svg{width:14px;height:14px;flex:none;color:#b9a48f}
+.empty a{color:var(--accent);border-bottom:1px solid rgba(217,87,26,.3)}
+
+footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.9}
+footer b{color:var(--text-dim);font-weight:600}
+@keyframes fadein{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px) scale(.985);filter:blur(4px)}to{opacity:1;transform:none;filter:blur(0)}}
+@media (max-width:700px){
+  body{padding:18px 14px 26px}
+  h1{font-size:25px}
+  .count{display:none}
+  .flow{padding-left:24px}
+  .stage::before{left:-20px}
+  .goal{max-width:100%;text-align:left;margin-left:0}
+  .card:hover{transform:translateY(-2px)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <p class="eyebrow">workflow × skills</p>
+      <h1>Skill 清单</h1>
+      <p class="lead">不按仓库排，按写一个站点的顺序排。每一阶段挂该阶段真正用得上的 skill，没有对口的就写「暂无」，不凑数。</p>
+    </div>
+    <span class="count">6 stages · 4 skills</span>
+  </header>
+
+  <div class="index-strip">
+    <b>先知道有哪些</b>
+    <span>不知道有什么 skill 可装时，翻索引：</span>
+    <a href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener noreferrer">VoltAgent / awesome-agent-skills ↗</a>
+  </div>
+
+  <div class="flow">
+    <!-- ① -->
+    <section class="stage on" style="--i:0">
+      <div class="stage-head"><span class="no">STAGE 01</span><h2>定需求</h2><p class="goal">把一句话需求拆成页面清单和可判定的验收</p></div>
+      <div class="card" role="button" tabindex="0" aria-expanded="false">
+        <div class="card-top"><span class="skill">doc-coauthoring</span><span class="badge">开源</span>
+          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <p class="one">和 AI 一起把需求文档写出来：先问清边界，再逐节对齐，最后成稿。</p>
+        <p class="out"><b>交付</b> requirements.md 的骨架与验收清单</p>
+        <div class="more"><div class="more-in">
+          <div class="row"><span class="k">装</span><span class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code> <code class="cmd">/plugin install document-skills@anthropic-agent-skills</code></span><button class="copy" type="button">复制</button></div>
+          <div class="row"><span class="k">用</span><span class="v">「用 doc-coauthoring 和我一起写这份需求，每节先问再写」</span></div>
+          <div class="row"><span class="k">坑</span><span class="v">它擅长长文协作，不是用来出代码的；需求没边界时它会反问很多轮，别指望一句话出稿。</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ② -->
+    <section class="stage on" style="--i:1">
+      <div class="stage-head"><span class="no">STAGE 02</span><h2>起骨架</h2><p class="goal">目录、路由、第一个能跑的页面</p></div>
+      <div class="card" role="button" tabindex="0" aria-expanded="false">
+        <div class="card-top"><span class="skill">web-artifacts-builder</span><span class="badge">开源</span>
+          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <p class="one">直接生成可运行的前端产物：HTML、样式、脚本成套给出，而不是一段段碎片。</p>
+        <p class="out"><b>交付</b> 首页、列表、详情、404 四条路由的空壳</p>
+        <div class="more"><div class="more-in">
+          <div class="row"><span class="k">装</span><span class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code> <code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></span><button class="copy" type="button">复制</button></div>
+          <div class="row"><span class="k">用</span><span class="v">「用 web-artifacts-builder 搭四条路由的空壳，先不写内容」</span></div>
+          <div class="row"><span class="k">坑</span><span class="v">它偏爱单文件产物；要真实工程结构时得明确说「用 Vite + 多文件目录」。</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ③ -->
+    <section class="stage on" style="--i:2">
+      <div class="stage-head"><span class="no">STAGE 03</span><h2>搭界面</h2><p class="goal">先把版式与 token 定死，再让 AI 生成页面</p></div>
+      <div class="card" role="button" tabindex="0" aria-expanded="false">
+        <div class="card-top"><span class="skill">frontend-design</span><span class="badge">开源</span>
+          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <p class="one">界面结构、组件形态、排版节奏这一层的判断力，避免生成千篇一律的模板脸。</p>
+        <p class="out"><b>交付</b> 三页的界面结构方案，配色与圆角仍从主站 token 取</p>
+        <div class="more"><div class="more-in">
+          <div class="row"><span class="k">装</span><span class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></span><button class="copy" type="button">复制</button></div>
+          <div class="row"><span class="k">用</span><span class="v">「用 frontend-design 定版式，参考站内已有的间距和圆角」</span></div>
+          <div class="row"><span class="k">坑</span><span class="v">它给的是设计判断，不是 token；token 要自己先落下，否则每个页面各写一套数值。</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ④ -->
+    <section class="stage" style="--i:3">
+      <div class="stage-head"><span class="no">STAGE 04</span><h2>接数据</h2><p class="goal">表、权限、登录，三样都要能用</p></div>
+      <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+        <span><b>该阶段暂无对口 skill。</b>表结构与权限是项目自身的知识，交给 <a href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a> 的迁移与 SDK 更稳，别让 skill 猜你的业务规则。</span></div>
+    </section>
+
+    <!-- ⑤ -->
+    <section class="stage" style="--i:4">
+      <div class="stage-head"><span class="no">STAGE 05</span><h2>上线</h2><p class="goal">CI、部署、深链回退</p></div>
+      <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+        <span><b>该阶段暂无对口 skill。</b>构建与部署的可重复性靠流水线保证，见 <a href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a>；skill 在这里帮不上忙。</span></div>
+    </section>
+
+    <!-- ⑥ -->
+    <section class="stage on" style="--i:5">
+      <div class="stage-head"><span class="no">STAGE 06</span><h2>验收</h2><p class="goal">让 AI 自己点页面、截图、断言</p></div>
+      <div class="card" role="button" tabindex="0" aria-expanded="false">
+        <div class="card-top"><span class="skill">webapp-testing</span><span class="badge">开源</span>
+          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <p class="one">驱动浏览器真的打开页面、点按钮、读状态、截图，把「看起来没问题」变成可重跑的断言。</p>
+        <p class="out"><b>交付</b> 核心路径的 e2e 用例与截图</p>
+        <div class="more"><div class="more-in">
+          <div class="row"><span class="k">装</span><span class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></span><button class="copy" type="button">复制</button></div>
+          <div class="row"><span class="k">用</span><span class="v">「用 webapp-testing 跑一遍进入列表、开详情、返回首页，截图给我」</span></div>
+          <div class="row"><span class="k">坑</span><span class="v">它会真开浏览器，本机没有 Playwright 依赖时会报错；先装依赖再让它跑。</span></div>
+        </div></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <b>写自己的</b>：官方仓里带 <code style="font-family:var(--mono);font-size:11px">skill-creator</code>，照着它把项目内的固定流程写成 SKILL.md 即可。<br>
+    <b>克制一点</b>：同一阶段挂超过两个 skill 会互相抢上下文，宁可少装。
+  </footer>
+</div>
+
+<script>
+// 卡片展开 / 收起（键盘可操作）
+document.querySelectorAll('.card').forEach((card) => {
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.copy')) return
+    const open = card.classList.toggle('open')
+    card.setAttribute('aria-expanded', String(open))
+  })
+  card.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    e.preventDefault()
+    const open = card.classList.toggle('open')
+    card.setAttribute('aria-expanded', String(open))
+  })
+})
+
+// 指针光斑 + 轻微倾斜（倾斜比列表页小，卡片里有正文）
+document.querySelectorAll('.card').forEach((card) => {
+  card.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return
+    const r = card.getBoundingClientRect()
+    const x = e.clientX - r.left, y = e.clientY - r.top
+    card.style.setProperty('--mx', x + 'px')
+    card.style.setProperty('--my', y + 'px')
+    card.style.setProperty('--rx', ((y / r.height) - 0.5) * -5 + 'deg')
+    card.style.setProperty('--ry', ((x / r.width) - 0.5) * 5 + 'deg')
+  })
+  card.addEventListener('pointerleave', () => {
+    card.style.setProperty('--rx', '0deg')
+    card.style.setProperty('--ry', '0deg')
+  })
+})
+
+// 复制命令
+document.querySelectorAll('.copy').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const row = btn.closest('.row')
+    const text = row ? row.querySelector('.v').innerText.replace(/复制/g, '').trim() : ''
+    try { await navigator.clipboard.writeText(text) } catch (err) {
+      const ta = document.createElement('textarea')
+      ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove()
+    }
+    const old = btn.textContent
+    btn.textContent = '已复制'; btn.classList.add('done')
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('done') }, 1400)
+  })
+})
+</script>
+</body>
+</html>
+
+
+

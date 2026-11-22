@@ -3100,8 +3100,23 @@
       "file": "kaoyan-english-words-sentences.html",
       "slug": "kaoyan-english-words-sentences",
       "title": "考研英语 · 单词与长难句"
+    },
+    {
+      "file": "motion-handbook.html",
+      "slug": "motion-handbook",
+      "title": "动效手册 · 27 个能跑的名字"
+    },
+    {
+      "file": "skill-list.html",
+      "slug": "skill-list",
+      "title": "Skill 清单"
+    },
+    {
+      "file": "vibe-flow.html",
+      "slug": "vibe-flow",
+      "title": "Vibe Coding 全流程"
     }
   ],
   "assetCount": 99,
-  "generatedAt": "2026-11-22T06:36:45.836Z"
+  "generatedAt": "2026-11-22T07:35:29.814Z"
 }

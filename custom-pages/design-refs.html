@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>设计灵感 · 参考站</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M9 23l6-14 2 9 6-5' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* 与主站 src/style/theme.css 对齐 */
 :root{
-  --ink:#1c1917;--muted:#8a7f74;--line:#e7ddcf;--white:#fffdf9;--paper:#f7f2ec;
-  --accent:#d9571a;--ease:cubic-bezier(.22,.9,.28,1);
+  --ink:#241a12;--muted:#8a7365;--line:rgba(126,84,46,.16);--white:#fffdfa;--paper:#f7f2ec;
+  --accent:#d9571a;--ease:cubic-bezier(.22,.8,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{min-height:100%}
 body{background:
 radial-gradient(900px 420px at 88% -12%,rgba(217,87,26,.07),transparent 70%),
 radial-gradient(700px 380px at -8% 108%,rgba(217,87,26,.05),transparent 70%),var(--paper);
-color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
 -webkit-font-smoothing:antialiased;padding:22px 20px 26px}
 body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;
 background:radial-gradient(closest-side at 32% 34%,rgba(217,87,26,.09),transparent 72%),
@@ -30,10 +34,8 @@ header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:
 .brand p{font-size:12px;color:var(--muted);margin-top:6px}
 .count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
 color:var(--muted);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-content:start}
-/* 前三张每行三列（各占 2 份），后两张各占 3 份，正好铺满第二行 */
-a.card{grid-column:span 2}
-a.card.wide{grid-column:span 3}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
+a.card{grid-column:auto}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
 border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
 text-decoration:none;overflow:hidden;isolation:isolate;transform-style:preserve-3d;will-change:transform;
@@ -69,7 +71,7 @@ a.card:hover .go,a.card:focus-visible .go{width:62px;color:#fff;border-color:var
 box-shadow:0 10px 20px -12px rgba(217,87,26,.75);transform:none}
 a.card:hover .go .gl,a.card:focus-visible .go .gl{max-width:34px;opacity:1}
 a.card:hover .go svg,a.card:focus-visible .go svg{transform:translate(1px,-1px)}
-h2{font-size:17px;font-weight:700;letter-spacing:.1px;width:fit-content;position:relative}
+h2{font-family:'Playfair Display','Noto Serif SC',serif;font-size:18px;font-weight:500;letter-spacing:.01em;width:fit-content;position:relative}
 h2::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;border-radius:2px;background:var(--accent);
 transition:width .36s var(--ease)}
 a.card:hover h2::after,a.card:focus-visible h2::after{width:100%}
@@ -90,8 +92,7 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   body{padding:16px 14px 20px}
   .wrap{min-height:calc(100vh - 36px);justify-content:flex-start;gap:14px}
   .grid{grid-template-columns:1fr;gap:10px}
-  a.card,a.card.wide{grid-column:auto;min-height:0;gap:6px;padding:15px 15px 14px}
-  .desc{line-height:1.75}
+  a.card,a.card.wide{grid-column:auto;min-height:0;gap:6px;padding:15px 15px 14px}  .desc{line-height:1.75}
   .brand h1{font-size:18px}
   .count{display:none}
 }
@@ -102,9 +103,9 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   <header>
     <div class="brand">
       <h1>设计灵感 · 参考站</h1>
-      <p>五个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆。点卡片开原站，看到合适的搬回 custom-pages/。</p>
+      <p>六个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆、拆细节。点卡片开原站，看到合适的搬回 custom-pages/。</p>
     </div>
-    <span class="count">5 sites</span>
+    <span class="count">6 sites</span>
   </header>
 
   <div class="grid">
@@ -162,9 +163,20 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
       <p class="desc">拿它做什么：想看「做得比自己好一档」的页面长什么样时来翻，评奖维度本身就是一份改稿清单。</p>
       <div class="tagrow"><span class="tag">网页设计</span><span class="tag">奖项画廊</span><span class="tag">动效参考</span></div>
     </a>
+
+    <a class="card" style="--i:5" href="https://detail.design" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">06</span><span class="flag">免费浏览</span>
+        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Detail</h2>
+      <p class="host">detail.design</p>
+      <p class="desc"><b>界面细节拆解</b>：登录、表单、按钮、文案、动效、播放器，一块一块拆开讲清大厂是怎么处理的。</p>
+      <p class="desc">拿它做什么：某块总觉得差一点又说不出差在哪，来这儿对照，找到那句能跟 AI 说清的话。</p>
+      <div class="tagrow"><span class="tag">UI 细节</span><span class="tag">交互拆解</span><span class="tag">免费浏览</span></div>
+    </a>
   </div>
 
-  <footer>五个站都能免费浏览；Uiverse 的源码、VibeUI 的 prompt 都可直接复制。</footer>
+  <footer>六个站都能免费浏览；Uiverse 的源码、VibeUI 的 prompt 都可直接复制。</footer>
 </div>
 <script>
 // 光标跟随光斑 + 轻微倾斜（只在鼠标上生效，触屏不抢滚动）
@@ -186,3 +198,4 @@ document.querySelectorAll('.card').forEach((card) => {
 </script>
 </body>
 </html>
+
