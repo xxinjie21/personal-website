@@ -641,6 +641,40 @@ const PROMPT_TAIL = `
 4. 结尾给验证方法：命令或点击路径，能重跑一遍；
 5. 有不确定的地方直接说不确定，别编。`
 
+// AI 照着这一步一步做，工具、产出、要用户配合的事都写死
+const USER_TASKS = {
+  1: [
+    '回答我第一轮 3 个问题：给谁用、做几页、最想先跑通哪三件事；',
+    '补充「明确不做」的三条边界，并确认页面清单（≤5 页）；',
+    '确认我复述的目标与验收口径，回一句「就按这个做」再让我产出。'
+  ],
+  2: [
+    '定技术栈与部署平台（不确定就选我给的默认方案）；',
+    '给我 GitHub 仓库地址与分支名，确认仓库是新建还是已有；',
+    '如果有域名，现在告诉我域名；没有就先用平台默认域名。'
+  ],
+  3: [
+    '给参考站或截图（1–3 个），说明喜欢的是配色、字体还是布局；',
+    '拍板主色、字体、圆角、间距四组 token 取值；',
+    '看桌面与 390 宽两张截图，指出要改的页面与位置。'
+  ],
+  4: [
+    '注册 / 登录我指定的数据库平台，把项目 URL 与匿名 key 给我；',
+    '确认数据实体与字段（谁、什么、什么时候、状态），不确定就说「按你的建议」；',
+    '提供测试账号，或同意先用匿名只读路径验证。'
+  ],
+  5: [
+    '授权部署平台读取仓库，确认构建命令与输出目录；',
+    '绑定域名并按提示加 DNS 记录（CNAME / A）；',
+    '点一次发布，把线上链接发我，我按清单验一遍。'
+  ],
+  6: [
+    '按冒烟清单实际点 10 条，把出问题的页面和操作步骤发我；',
+    '给测试账号（登录、受限页各一个）；',
+    '确认「已知问题」清单，同意哪些进 issues、哪些这版不修。'
+  ]
+}
+
 async function copyText(text, btn, doneLabel = '已复制') {
   try { await navigator.clipboard.writeText(text) }
   catch (err) {
@@ -714,12 +748,48 @@ function selectStage(n, pushHash = true, scroll = true) {
     body.appendChild(holder)
   }
 
+  // 把页面上的步骤翻译成 AI 可执行的流程：步骤 + 工具/网站 + 产出
+  const flows = [...paneBody.querySelectorAll('.steps li')].map((li, i) => {
+    const act = (li.querySelector('.do')?.textContent || '').trim().replace(/\s+/g, ' ')
+    const tool = (li.querySelector('.tlink')?.textContent || '').trim()
+    const toolUrl = li.querySelector('.tlink')?.href || ''
+    const note = [...li.querySelectorAll('.out > span')]
+      .find((s) => !s.classList.contains('gain'))
+      ?.textContent.trim() || ''
+    const gain = ([...li.querySelectorAll('.gain')].map((g) => g.textContent.trim())
+      .join(' ')
+      .replace(/→\s*/, '')
+      .replace(/得到\s*/g, '')
+      .replace(/·/g, '，').replace(/\s*，\s*/g, '，')
+      .trim())
+    const fallback = n <= 2 ? '不拉外部工具，直接在对话里产出文档或文件' : '不新增外部服务，用项目已有工具'
+    const toolLine = tool
+      ? `工具/网站：${tool}${toolUrl ? '（' + toolUrl + '）' : ''}`
+      : note
+        ? `工具/网站：${note}`
+        : `工具/网站：${fallback}`
+    return `${i + 1}. 做什么：${act}\n   ① ${toolLine}\n   ② 产出：${gain || '结论写进对话，不落文件'}`
+  })
+  if (flows.length) {
+    currentPrompt += '\n\n执行流程（按顺序做，每步先说清用什么工具、产出什么，我确认后再下一步）：\n' + flows.join('\n')
+  }
+
+  // 配套 skill：有就点名，让 AI 按它的流程走
+  const skillName = paneBody.querySelector('.sk-name')?.textContent.trim()
+  if (skillName) {
+    currentPrompt += `\n\n配套 skill：${skillName}（按这个 skill 的工作流做，别自己另起一套）`
+  }
+
   // 提示词补上本阶段验收标准，AI 拿到的是可判过的版本
   const checks = [...paneBody.querySelectorAll('.check li')]
     .map((li) => li.textContent.trim())
     .filter(Boolean)
   if (checks.length) {
     currentPrompt += '\n\n本阶段验收标准：\n' + checks.map((c, i) => `${i + 1}. ${c}`).join('\n')
+  }
+  const userTasks = USER_TASKS[n] || []
+  if (userTasks.length) {
+    currentPrompt += '\n\n需要你（用户）配合的事，别替我猜：\n' + userTasks.map((t, i) => `${i + 1}. ${t}`).join('\n')
   }
   const tips = DETAILS[n] || []
   if (tips.length) {
@@ -769,8 +839,9 @@ copyMaster.addEventListener('click', () => {
 规则：
 1. 每个阶段开始前，先用提问的方式问清需求：一次最多 3 个问题，每个问题给 2–3 个选项并说明影响；我答完再问下一组。
 2. 我回答含糊（「好看」「流畅」「差不多」）时继续追问，直到能验收。
-3. 问清后先用 200 字复述该阶段目标与验收口径，等我确认再产出。
-4. 每个阶段结束给我「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走。
+3. 先说明这个阶段要用哪些工具 / 网站、需要我提供什么（仓库、域名、账号、参考截图），再给步骤。
+4. 问清后先用 200 字复述该阶段目标与验收口径，等我确认再产出。
+5. 每个阶段结束给我「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走。
 
 现在从第 1 阶段开始，先问我第一批问题。`
   copyText(master + PROMPT_TAIL, copyMaster)
@@ -806,6 +877,7 @@ fromHash()
 </script>
 </body>
 </html>
+
 
 
 
