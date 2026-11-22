@@ -729,6 +729,85 @@ transition:border-color .2s,box-shadow .2s}
 .sbox li.nores:hover{background:none}
 .sbox mark{background:rgba(217,87,26,.16);color:#a9430f;border-radius:2px;padding:0 1px}
 
+
+/* ==== 工具卡的真实演示 ==== */
+.td-css{padding:5px 11px;border-radius:8px;border:1px solid rgba(217,87,26,.32);background:#fffdf8;
+color:#b8480f;font:600 10px/1 var(--sans);cursor:pointer;
+transition:transform .5s var(--ease),background .5s,color .5s,border-color .5s}
+.td-css.on{transform:translateX(24px) rotate(4deg);background:#d9571a;color:#fff;border-color:#d9571a}
+
+.td-spring{display:flex;gap:7px}
+.td-spring i{width:12px;height:12px;border-radius:4px;background:#e2803c;
+animation:tdSpring 1.5s cubic-bezier(.34,1.56,.64,1) infinite}
+.td-spring i:nth-child(2){animation-delay:.12s}
+.td-spring i:nth-child(3){animation-delay:.24s}
+.td-spring i:nth-child(4){animation-delay:.36s}
+@keyframes tdSpring{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.14)}}
+
+.td-scroll{width:150px;display:grid;gap:6px}
+.td-scroll .strip{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.td-scroll .strip::-webkit-scrollbar{display:none}
+.td-scroll .strip i{flex:none;width:44px;height:24px;border-radius:6px;display:grid;place-items:center;
+font:600 8px/1 var(--mono);color:#b8480f;background:rgba(217,87,26,.1);border:1px solid rgba(217,87,26,.2)}
+.td-scroll .pb{height:3px;border-radius:2px;background:rgba(126,84,46,.14);overflow:hidden}
+.td-scroll .pb b{display:block;height:100%;width:0;background:#d9571a;border-radius:2px}
+
+canvas.td-cv{width:150px;height:54px;display:block;border-radius:6px}
+
+.td-remotion{display:flex;align-items:center;gap:10px}
+.td-remotion .stage{width:42px;height:32px;border-radius:6px;display:grid;place-items:center;
+font:700 12px/1 var(--mono);color:#b8480f;background:rgba(217,87,26,.12);border:1px solid rgba(217,87,26,.28);
+transition:background .3s,color .3s}
+.td-remotion .keys{display:flex;gap:4px;align-items:center}
+.td-remotion .keys i{display:block;width:5px;height:18px;border-radius:3px;background:rgba(126,84,46,.16);transition:background .25s}
+.td-remotion .keys i.on{background:#d9571a}
+
+.td-stagger{display:flex;align-items:flex-end;gap:6px;height:36px}
+.td-stagger i{display:block;width:12px;border-radius:4px;background:linear-gradient(180deg,#f2b184,#d9571a);
+animation:tdStagger 1.8s var(--ease) infinite}
+.td-stagger i:nth-child(1){height:12px;animation-delay:0s}
+.td-stagger i:nth-child(2){height:24px;animation-delay:.14s}
+.td-stagger i:nth-child(3){height:18px;animation-delay:.28s}
+.td-stagger i:nth-child(4){height:30px;animation-delay:.42s}
+@keyframes tdStagger{0%,100%{transform:translateY(0);opacity:.9}45%{transform:translateY(-10px);opacity:1}}
+
+.td-tw{width:150px}
+.td-tw .track{position:relative;height:26px;border-radius:8px;background:rgba(126,84,46,.08);border:1px solid rgba(126,84,46,.1)}
+.td-tw .ball{position:absolute;top:50%;left:6px;width:14px;height:14px;margin-top:-7px;border-radius:50%;
+background:linear-gradient(140deg,#ffb277,#d9571a);box-shadow:0 3px 8px rgba(217,87,26,.28)}
+.td-tw .tnum{position:absolute;right:9px;top:50%;transform:translateY(-50%);font:600 8px/1 var(--mono);color:#b8480f}
+
+.td-audio{display:flex;align-items:center;gap:9px}
+.td-play{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+border:1px solid rgba(217,87,26,.35);background:#fffdf8;color:#b8480f;font-size:9px}
+.td-play:active{transform:scale(.94)}
+.td-audio .wave{display:flex;align-items:center;gap:3px;height:26px}
+.td-audio .wave i{display:block;width:3px;height:6px;border-radius:2px;background:#e2a074;transition:height .12s}
+.td-audio.playing .wave i{animation:twave .48s ease-in-out infinite alternate}
+.td-audio .wave i:nth-child(2){animation-delay:.06s}
+.td-audio .wave i:nth-child(3){animation-delay:.12s}
+.td-audio .wave i:nth-child(4){animation-delay:.18s}
+.td-audio .wave i:nth-child(5){animation-delay:.09s}
+.td-audio .wave i:nth-child(6){animation-delay:.21s}
+.td-audio .wave i:nth-child(7){animation-delay:.15s}
+.td-audio .wave i:nth-child(8){animation-delay:.03s}
+@keyframes twave{from{height:4px}to{height:24px}}
+
+.td-film{width:150px;display:grid;gap:6px}
+.td-film .strip{display:flex;gap:4px;overflow:hidden}
+.td-film .strip i{flex:none;width:22px;height:26px;border-radius:3px;
+background:linear-gradient(140deg,#f9e0c9,#e9bd96);border:1px solid rgba(217,87,26,.18);
+animation:tdFilm 4s linear infinite}
+.td-film .strip i:nth-child(2){animation-delay:-.5s}
+.td-film .strip i:nth-child(3){animation-delay:-1s}
+.td-film .strip i:nth-child(4){animation-delay:-1.5s}
+.td-film .strip i:nth-child(5){animation-delay:-2s}
+.td-film .strip i:nth-child(6){animation-delay:-2.5s}
+@keyframes tdFilm{0%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-6px) scaleY(.92)}100%{transform:translateX(0) scaleY(1)}}
+.td-film .prg{height:3px;border-radius:2px;background:rgba(126,84,46,.14);overflow:hidden}
+.td-film .prg b{display:block;height:100%;background:#d9571a;border-radius:2px;animation:tprg 4s linear infinite}
+@keyframes tprg{from{width:0}to{width:100%}}
+
 </style>
 </head>
 <body>
@@ -1729,14 +1808,14 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">交互 · 第 1 级</p><h3>CSS + 原生 JS</h3>
         <p><b>什么时候用</b>：悬停、过渡、位移这类单点效果，写好前后样式就行，不值得引库。</p>
         <p><b>不满意查什么</b>：transition 的时长与缓动曲线，以及 transform-origin 对不对。</p>
-        <div class="tdemo"><span class="mini"></span></div>
+        <div class="tdemo"><button class="td-css" type="button">点一下</button></div>
         <p class="tnote">免费 · 零依赖</p>
       </article>
       <article class="tcard">
         <p class="tkind">交互 · 第 2 级</p><h3>Motion</h3>
         <p><b>什么时候用</b>：卡片增删、排序、展开收起这类布局变化，它自己算位置。</p>
         <p><b>不满意查什么</b>：layout 动画的 spring 参数，和 layoutId 有没有复用。</p>
-        <div class="tdemo"><div class="seq"><i></i><i></i><i></i></div></div>
+        <div class="tdemo"><div class="td-spring"><i></i><i></i><i></i><i></i></div></div>
         <p class="tnote">开源 · 个人免费</p>
         <a href="https://github.com/motiondivision/motion" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1744,7 +1823,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">交互 · 第 3 级</p><h3>GSAP + ScrollTrigger</h3>
         <p><b>什么时候用</b>：多个动作排在同一条时间线，或动画要跟着滚动走。</p>
         <p><b>不满意查什么</b>：时间线的先后顺序、每个 tween 的起点，以及 trigger 的 start/end。</p>
-        <div class="tdemo"><div class="seq play"><i></i><i></i><i></i></div></div>
+        <div class="tdemo"><div class="td-scroll"><div class="strip"><i>01</i><i>02</i><i>03</i><i>04</i><i>05</i></div><div class="pb"><b></b></div></div></div>
         <p class="tnote">2025 年后含插件全免费 · 演示为示意</p>
         <a href="https://github.com/greensock/GSAP" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1752,7 +1831,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">画面 · 2D</p><h3>Canvas</h3>
         <p><b>什么时候用</b>：一堆图或文字叠层、换图转视角，本质是画到一张布上。</p>
         <p><b>不满意查什么</b>：分层顺序、每层的缩放与位移，以及重绘是否每帧都在跑。</p>
-        <div class="tdemo"><canvas id="miniCanvas" width="150" height="56"></canvas></div>
+        <div class="tdemo"><canvas class="td-cv" id="cvParticles" width="150" height="54" aria-label="粒子画布"></canvas></div>
         <p class="tnote">免费 · 原生 API</p>
         <a href="https://developer.mozilla.org/docs/Web/API/Canvas_API" target="_blank" rel="noopener noreferrer">文档 ↗</a>
       </article>
@@ -1760,7 +1839,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">画面 · 3D</p><h3>Three.js</h3>
         <p><b>什么时候用</b>：要自由换视角、打灯、物体真的翻折，而不是放一张图假装立体。</p>
         <p><b>不满意查什么</b>：物体有没有跟着面一起转、遮挡关系对不对、灯光位置对不对。</p>
-        <div class="tdemo"><div class="cube-stage"><div class="cube-tilt"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
+        <div class="tdemo"><canvas class="td-cv" id="cvCube" width="150" height="54" aria-label="三维立方体投影"></canvas></div>
         <p class="tnote">开源 · 演示为 CSS 3D 示意（透视 + 逐面受光）</p>
         <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1768,7 +1847,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">成片</p><h3>Remotion</h3>
         <p><b>什么时候用</b>：口播卡、片头、需要反复复用的视频模板，用代码排每一帧。</p>
         <p><b>不满意查什么</b>：元素在第几帧出现、持续几帧，以及换内容后时长有没有对齐。</p>
-        <div class="tdemo"><div class="frames"><i></i><i></i><i></i></div></div>
+        <div class="tdemo"><div class="td-remotion"><b class="stage">01</b><div class="keys"><i class="on"></i><i></i><i></i><i></i></div></div></div>
         <p class="tnote">个人免费 · 演示为示意，非真实渲染</p>
         <a href="https://github.com/remotion-dev/remotion" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1777,7 +1856,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">动效 · 第 2 级</p><h3>Anime.js</h3>
         <p><b>什么时候用</b>：多元素错峰出现的编排，一条 timeline 排完，不用手写一堆 delay。</p>
         <p><b>不满意查什么</b>：timeline 的偏移、easing 曲线，以及 stagger 的起点与方向。</p>
-        <div class="tdemo"><div class="seq"><i></i><i></i><i></i></div></div>
+        <div class="tdemo"><div class="td-stagger"><i></i><i></i><i></i><i></i></div></div>
         <p class="tnote">开源 · 个人免费</p>
         <a href="https://github.com/juliangarnier/anime" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1785,7 +1864,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">过渡 · 第 1 级</p><h3>Tween.js</h3>
         <p><b>什么时候用</b>：给物体属性做数值补间，位置、颜色、进度都能过渡，比写关键帧自由。</p>
         <p><b>不满意查什么</b>：补间的对象是不是同一个引用，onUpdate 里有没有反复新建对象。</p>
-        <div class="tdemo"><span class="mini"></span></div>
+        <div class="tdemo"><div class="td-tw"><div class="track"><span class="ball"></span><span class="tnum">0</span></div></div></div>
         <p class="tnote">开源 · 个人免费</p>
         <a href="https://github.com/tweenjs/tween.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1793,7 +1872,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">三维 · 第 3 级</p><h3>Ammo.js</h3>
         <p><b>什么时候用</b>：要真的物理——碰撞、重力、堆叠，不是靠缓动假装。</p>
         <p><b>不满意查什么</b>：重力步长固定 1/60、碰撞体形状与模型缩放有没有对齐。</p>
-        <div class="tdemo"><span class="mini"></span></div>
+        <div class="tdemo"><canvas class="td-cv" id="cvPhys" width="150" height="54" aria-label="重力弹跳画布"></canvas></div>
         <p class="tnote">开源 · 个人免费</p>
         <a href="https://github.com/kripken/ammo.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1801,7 +1880,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">纹理 · 第 3 级</p><h3>TSL Textures</h3>
         <p><b>什么时候用</b>：程序化生成表面质感，省掉贴图文件和 UV 那堆麻烦。</p>
         <p><b>不满意查什么</b>：节点接线的坐标系、颜色空间，以及噪声的缩放假象。</p>
-        <div class="tdemo"><span class="mini"></span></div>
+        <div class="tdemo"><canvas class="td-cv" id="cvNoise" width="150" height="54" aria-label="程序化纹理"></canvas></div>
         <p class="tnote">开源 · 随 Three.js</p>
         <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1809,7 +1888,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">声音 · 第 3 级</p><h3>SuperCollider</h3>
         <p><b>什么时候用</b>：程序化合成音效与环境声，比塞一堆音频文件轻得多。</p>
         <p><b>不满意查什么</b>：采样率、buffer 有没有释放，包络的起落时长。</p>
-        <div class="tdemo"><div class="seq"><i></i><i></i><i></i></div></div>
+        <div class="tdemo"><div class="td-audio"><button class="td-play" type="button">▶</button><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
         <p class="tnote">开源 · GPL</p>
         <a href="https://github.com/supercollider/supercollider" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -1817,7 +1896,7 @@ pill.style.width=b.getBoundingClientRect().width+'px'
         <p class="tkind">制片 · 第 3 级</p><h3>FFmpeg</h3>
         <p><b>什么时候用</b>：拼接、转码、抽帧、压字幕这些离线处理，脚本里跑最稳。</p>
         <p><b>不满意查什么</b>：crf 与 preset 取值，时间基与帧率有没有对齐。</p>
-        <div class="tdemo"><span class="mini"></span></div>
+        <div class="tdemo"><div class="td-film"><div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="prg"><b></b></div></div></div>
         <p class="tnote">开源 · LGPL / GPL</p>
         <a href="https://github.com/FFmpeg/FFmpeg" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </article>
@@ -2581,6 +2660,171 @@ if (sbox) {
     }
   })
 }
+
+</script>
+<script>
+
+/* 工具卡演示：全部真实运行 */
+document.querySelectorAll('.td-css').forEach(function (b) {
+  b.addEventListener('click', function () { b.classList.toggle('on') })
+})
+
+document.querySelectorAll('.td-scroll').forEach(function (w) {
+  var st = w.querySelector('.strip'), pb = w.querySelector('.pb b')
+  var up = function () {
+    var max = st.scrollWidth - st.clientWidth
+    pb.style.width = (max > 0 ? (st.scrollLeft / max) * 100 : 0) + '%'
+  }
+  st.addEventListener('scroll', up)
+  up()
+})
+
+document.querySelectorAll('.td-remotion').forEach(function (w) {
+  var stage = w.querySelector('.stage'), keys = Array.prototype.slice.call(w.querySelectorAll('.keys i'))
+  var i = 0
+  setInterval(function () {
+    i = (i + 1) % keys.length
+    keys.forEach(function (k, n) { k.classList.toggle('on', n === i) })
+    stage.textContent = '0' + (i + 1)
+  }, 900)
+})
+
+document.querySelectorAll('.td-tw').forEach(function (w) {
+  var ball = w.querySelector('.ball'), num = w.querySelector('.tnum')
+  var t = 0
+  var ease = function (p) { return p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2 }
+  function tick() {
+    t = (t + .008) % 2
+    var p = t < 1 ? t : 2 - t
+    var k = ease(p)
+    ball.style.left = (6 + k * 112) + 'px'
+    num.textContent = Math.round(k * 100)
+    requestAnimationFrame(tick)
+  }
+  tick()
+})
+
+document.querySelectorAll('.td-audio').forEach(function (w) {
+  var btn = w.querySelector('.td-play'), ctx = null
+  btn.addEventListener('click', function () {
+    w.classList.add('playing')
+    setTimeout(function () { w.classList.remove('playing') }, 760)
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)()
+      var o = ctx.createOscillator(), g = ctx.createGain()
+      o.type = 'sine'
+      o.frequency.setValueAtTime(320, ctx.currentTime)
+      o.frequency.exponentialRampToValueAtTime(780, ctx.currentTime + .5)
+      g.gain.setValueAtTime(.0001, ctx.currentTime)
+      g.gain.exponentialRampToValueAtTime(.12, ctx.currentTime + .06)
+      g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + .7)
+      o.connect(g); g.connect(ctx.destination)
+      o.start(); o.stop(ctx.currentTime + .75)
+    } catch (e) {}
+  })
+})
+
+/* Canvas：粒子场 */
+;(function () {
+  var c = document.getElementById('cvParticles')
+  if (!c) return
+  var x = c.getContext('2d'), P = []
+  for (var i = 0; i < 18; i++) P.push({ x: Math.random() * 150, y: Math.random() * 54, r: Math.random() * 1.6 + .7, vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5 })
+  function f() {
+    x.clearRect(0, 0, 150, 54)
+    x.fillStyle = 'rgba(217,87,26,.55)'
+    P.forEach(function (p) {
+      p.x += p.vx; p.y += p.vy
+      if (p.x < 0 || p.x > 150) p.vx *= -1
+      if (p.y < 0 || p.y > 54) p.vy *= -1
+      x.beginPath(); x.arc(p.x, p.y, p.r, 0, 7); x.fill()
+    })
+    requestAnimationFrame(f)
+  }
+  f()
+})()
+
+/* Canvas：三维立方体投影 */
+;(function () {
+  var c = document.getElementById('cvCube')
+  if (!c) return
+  var x = c.getContext('2d')
+  var V = [[-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]
+  var E = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]]
+  var a = 0
+  function f() {
+    a += .011
+    x.clearRect(0, 0, 150, 54)
+    var s = Math.sin(a), co = Math.cos(a), s2 = Math.sin(a * .55), c2 = Math.cos(a * .55)
+    var pts = V.map(function (v) {
+      var X = v[0] * co + v[2] * s
+      var Z = -v[0] * s + v[2] * co
+      var Y = v[1] * c2 - Z * s2
+      var Z2 = v[1] * s2 + Z * c2
+      var d = 3.4 / (Z2 + 5)
+      return [75 + X * 30 * d, 27 - Y * 30 * d]
+    })
+    x.strokeStyle = 'rgba(217,87,26,.55)'
+    x.lineWidth = 1
+    E.forEach(function (e) {
+      x.beginPath()
+      x.moveTo(pts[e[0]][0], pts[e[0]][1])
+      x.lineTo(pts[e[1]][0], pts[e[1]][1])
+      x.stroke()
+    })
+    V.forEach(function (v, n) {
+      x.beginPath(); x.arc(pts[n][0], pts[n][1], 1.6, 0, 7); x.fillStyle = 'rgba(192,74,24,.7)'; x.fill()
+    })
+    requestAnimationFrame(f)
+  }
+  f()
+})()
+
+/* Canvas：重力弹跳（简化积分） */
+;(function () {
+  var c = document.getElementById('cvPhys')
+  if (!c) return
+  var x = c.getContext('2d')
+  var y = 12, vy = 0, bx = 40, bvx = 1.6
+  function f() {
+    x.clearRect(0, 0, 150, 54)
+    vy += 1.1
+    y += vy
+    if (y > 40) { y = 40; vy = -vy * .74; if (Math.abs(vy) < 1.2) vy = -6 }
+    bx += bvx
+    if (bx > 140 || bx < 10) bvx *= -1
+    x.strokeStyle = 'rgba(126,84,46,.22)'
+    x.beginPath(); x.moveTo(0, 48); x.lineTo(150, 48); x.stroke()
+    x.beginPath(); x.ellipse(bx, 48, 7, 2, 0, 0, 7); x.fillStyle = 'rgba(126,84,46,.18)'; x.fill()
+    var g = x.createLinearGradient(bx - 7, y - 7, bx + 7, y + 7)
+    g.addColorStop(0, '#ffb277')
+    g.addColorStop(1, '#d9571a')
+    x.beginPath(); x.arc(bx, y, 7, 0, 7); x.fillStyle = g; x.fill()
+    requestAnimationFrame(f)
+  }
+  f()
+})()
+
+/* Canvas：程序化纹理 */
+;(function () {
+  var c = document.getElementById('cvNoise')
+  if (!c) return
+  var x = c.getContext('2d')
+  var w = 150, h = 54
+  var img = x.createImageData(w, h)
+  for (var yy = 0; yy < h; yy++) {
+    for (var xx = 0; xx < w; xx++) {
+      var n = .5 + .5 * Math.sin(xx * .18 + Math.sin(yy * .11) * 2.2) * Math.cos(yy * .14 + Math.sin(xx * .07) * 1.6)
+      var v = Math.round(196 + n * 48)
+      var k = (yy * w + xx) * 4
+      img.data[k] = v
+      img.data[k + 1] = Math.round(v * .74)
+      img.data[k + 2] = Math.round(v * .52)
+      img.data[k + 3] = 255
+    }
+  }
+  x.putImageData(img, 0, 0)
+})()
 
 </script>
 </body>
