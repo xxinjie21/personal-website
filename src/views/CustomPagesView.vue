@@ -1,16 +1,22 @@
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, onMounted, watch, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import Icon from '../components/Icon.vue'
 
 // 页面清单由 build-script/parse.mjs 扫描 custom-pages/ 生成到 src/data/site-manifest.json
 const pages = ref([])
 const route = useRoute()
+const router = useRouter()
 const slug = computed(() => route.params.page || '')
 // 记住最后打开的那个自定义页：列表页给一条「继续上次」，卡片上挂个角标
 const LAST_KEY = 'custom:last'
 const lastSlug = ref('')
 const lastPage = computed(() => pages.value.find((p) => p.slug === lastSlug.value) || null)
+
+// 点卡片时记下缩略窗的位置，交给页面框架做共享元素转场的起点
+const shellEl = ref(null)
+const enterFrom = ref(null)
+const frameStyle = ref({})
 
 onMounted(async () => {
   try {
@@ -31,17 +37,60 @@ onMounted(async () => {
 // 不管从卡片、导航还是直接敲地址进来，都算「最后打开的一页」
 watch(
   slug,
-  (v) => {
-    if (!v) return
+  async (v) => {
+    if (!v) {
+      enterFrom.value = null
+      frameStyle.value = {}
+      return
+    }
     lastSlug.value = v
     try {
       localStorage.setItem(LAST_KEY, v)
     } catch {
       /* 隐私模式下写不进就算了 */
     }
+    if (!enterFrom.value) return
+    // 共享元素转场：页面框架先从卡片缩略窗的位置长到整页，再归位
+    await nextTick()
+    const frame = shellEl.value?.querySelector('.page-frame')
+    const from = enterFrom.value
+    enterFrom.value = null
+    if (!frame) return
+    const to = frame.getBoundingClientRect()
+    if (!to.width || !to.height) return
+    frameStyle.value = {
+      opacity: 1,
+      transformOrigin: '0 0',
+      transform: `translate(${from.x - to.left}px, ${from.y - to.top}px) scale(${from.w / to.width}, ${from.h / to.height})`,
+      borderRadius: '12px',
+      transition: 'none',
+    }
+    // 先让起始姿态真正落到 DOM 上，再切到终态，否则两帧并成一帧就没有过渡
+    await nextTick()
+    void frame.offsetWidth
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
+    frameStyle.value = {
+      opacity: 1,
+      transformOrigin: '0 0',
+      transform: 'none',
+      borderRadius: '0 0 12px 12px',
+      transition: 'transform 0.52s cubic-bezier(.22,.9,.28,1), border-radius 0.52s ease',
+    }
   },
   { immediate: true }
 )
+
+// 点卡片时记下缩略窗的位置，交给页面框架做转场起点
+function openPage(p, e) {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+  const thumb = e.currentTarget.querySelector('.thumb')
+  if (!thumb) return
+  e.preventDefault()
+  const r = thumb.getBoundingClientRect()
+  enterFrom.value = { x: r.left, y: r.top, w: r.width, h: r.height }
+  remember(p)
+  router.push(`/custom-pages/${p.slug}`)
+}
 
 function remember(p) {
   lastSlug.value = p.slug
@@ -66,8 +115,8 @@ function spot(e) {
   const y = e.clientY - r.top
   e.currentTarget.style.setProperty('--mx', `${x}px`)
   e.currentTarget.style.setProperty('--my', `${y}px`)
-  e.currentTarget.style.setProperty('--rx', `${((y / r.height) - 0.5) * -5}deg`)
-  e.currentTarget.style.setProperty('--ry', `${((x / r.width) - 0.5) * 5}deg`)
+  e.currentTarget.style.setProperty('--rx', `${((y / r.height) - 0.5) * -9}deg`)
+  e.currentTarget.style.setProperty('--ry', `${((x / r.width) - 0.5) * 9}deg`)
 }
 function untilt(e) {
   e.currentTarget.style.setProperty('--rx', '0deg')
@@ -89,12 +138,13 @@ function thumbLoaded(p) {
 </script>
 
 <template>
-  <section v-if="slug" class="page-shell">
+  <section v-if="slug" ref="shellEl" class="page-shell">
     <iframe
       :src="frameSrc"
       :title="current?.title || slug"
       class="page-frame"
       :class="{ ready: frameReady }"
+      :style="frameStyle"
       @load="frameReady = true"
     />
   </section>
@@ -122,7 +172,7 @@ function thumbLoaded(p) {
         class="card"
         @mousemove="spot"
         @pointerleave="untilt"
-        @click="remember(p)"
+        @click="openPage(p, $event)"
         @pointerenter="warmThumb(p)"
         @focusin="warmThumb(p)"
       >
