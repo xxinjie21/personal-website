@@ -69,9 +69,12 @@ border-radius:999px;padding:7px 13px;font:500 11px/1 'Inter',sans-serif;cursor:p
 
 /* 步骤 */
 .steps{list-style:none;display:flex;flex-direction:column;margin-top:2px}
-.steps li{position:relative;display:flex;gap:10px;padding:8px 0 10px 18px}
+.steps li{position:relative;display:flex;gap:10px;padding:8px 0 10px 18px;
+transition:background .28s var(--ease)}
+.steps li:hover{background:rgba(217,87,26,.035)}
 .steps li::before{content:"";position:absolute;left:4px;top:13px;width:5px;height:5px;border-radius:50%;
-background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06)}
+background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06);transition:box-shadow .3s var(--ease)}
+.steps li:hover::before{box-shadow:0 0 0 5px rgba(217,87,26,.12)}
 .steps li::after{content:"";position:absolute;left:6px;top:20px;bottom:-3px;width:1px;background:var(--line)}
 .steps li:last-child::after{display:none}
 .n{font-family:var(--mono);font-size:9px;color:#b9a48f;padding-top:3px;flex:none}
@@ -88,6 +91,23 @@ background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06)}
 .check svg{width:12px;height:12px;flex:none;margin-top:4px;color:rgba(217,87,26,.6)}
 .trap{font-size:11.5px;color:#8a7365;padding:9px 11px;border-left:2px solid rgba(217,87,26,.35);
 background:rgba(217,87,26,.04);line-height:1.7}
+
+/* 细节折叠：默认收起，展开时高度、箭头、正文一起动 */
+.detail{border:1px dashed var(--line-strong);border-radius:var(--radius-sm);background:rgba(255,253,250,.6);
+overflow:hidden;transition:border-color .3s var(--ease),background .3s var(--ease)}
+.detail.open{border-style:solid;border-color:rgba(217,87,26,.28);background:rgba(255,253,250,.9)}
+.detail-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 13px;border:0;background:none;cursor:pointer;
+font:500 11.5px/1.2 'Inter',sans-serif;color:var(--accent-cream);text-align:left}
+.detail-btn:hover{background:rgba(217,87,26,.05)}
+.detail-btn .fold-ico{margin-left:auto;width:13px;height:13px;flex:none;color:var(--accent);transition:transform .36s var(--ease)}
+.detail.open .fold-ico{transform:rotate(180deg)}
+.detail-body{display:grid;grid-template-rows:0fr;opacity:0;
+transition:grid-template-rows .44s var(--ease),opacity .3s ease}
+.detail.open .detail-body{grid-template-rows:1fr;opacity:1}
+.detail-inner{overflow:hidden}
+.detail ul{padding:0 14px 13px;display:grid;gap:7px}
+.detail li{font-size:11.5px;line-height:1.8;color:#5f574e;display:flex;gap:8px}
+.detail li i{flex:none;width:4px;height:4px;border-radius:50%;background:rgba(217,87,26,.45);margin-top:8px}
 
 /* skill 并入 */
 .skillbox{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,253,250,.8);padding:12px 13px}
@@ -581,6 +601,55 @@ const META = {
   6: '5 步 · 2 套测试'
 }
 
+// 每阶段默认收起的细节：给用户看，不在折叠时占版面
+const DETAILS = {
+  1: [
+    '总目标只写一句：谁、在哪个页面、做成什么、怎么算成功。这句话写不出来，说明需求还没定。',
+    '页面清单每页补三样：从哪进、看什么、下一步去哪。缺一样的两页就该合并。',
+    '形容词换成数字：「快」写成「首屏 1.5s 内出现主内容」，「好看」写成「字号、间距、圆角都有固定值」。',
+    '「不做」至少三条（登录、搜索、多语言），写下来才挡得住临时加需求。'
+  ],
+  2: [
+    '目录先定死：pages / components / lib / styles，路由表单独一份，后三个阶段都按它放文件。',
+    '占位页放标题、一句占位、返回链接；空路由会被当成 404 排查半天。',
+    '第一个 commit 之前先写 .gitignore（node_modules、dist、.env），否则密钥跟着仓库走。',
+    'build 通过再提交，别让基线一开始就带着警告。'
+  ],
+  3: [
+    'token 只留必要项：底、面、主色、强调、四级文字、线、圆角、间距取 4 的倍数；按用途命名，不按颜色命名。',
+    '断点三档就够：≤720 单列、721–1080 两列、>1080 主栏 720 加侧栏；每档只调列数和间距。',
+    '内容先落：首页讲清是谁、列表能扫读、详情能读完；没真内容先用占位文案，不要 lorem。',
+    '一页最多两个主动效，300–450ms，触屏不能只靠 hover；先从动效手册里挑名字再实现。'
+  ],
+  4: [
+    'schema 先写实体和关系，再写字段；页面要的字段最后补，表结构不要跟着 UI 变形。',
+    '权限默认拒绝，逐表逐操作放行；用匿名 key 真跑一次，别只看本地登录态。',
+    '数据访问收在 lib/api，页面里不出现 SQL 和表名，换库时只改一层。',
+    '错误分三类给不同出口：未登录去登录、无权限说清原因、网络失败给重试。'
+  ],
+  5: [
+    '上线清单：env 变量齐、域名解析生效、HTTPS 正常、404 页能开、favicon 不 404。',
+    '构建和部署分开：CI 只跑 build 和类型检查，部署交给平台钩子，别在服务器上手敲命令。',
+    '留一条回滚路：保留上一个构建产物或上一版部署，出问题先回滚再查。',
+    '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。'
+  ],
+  6: [
+    '只测会回归的：解析、格式化、计算走单测；e2e 留 3 条主路径（进入、登录、增删一条数据）。',
+    '冒烟清单 10 条，每次上线照着点：首页、列表、详情、登录、登出、空态、404、刷新保持、390 宽、慢网。',
+    '上线后 24 小时盯 console error 和 5xx，比等用户反馈快一步。',
+    '已知问题写进 issues，不用「以后再说」口头传；下阶段开始前先清一遍。'
+  ]
+}
+
+const PROMPT_TAIL = `
+
+输出要求：
+1. 先用一句话复述目标与验收口径，等我确认再动手；
+2. 列要新增 / 修改的文件（路径 + 作用），我确认后再写；
+3. 代码或文档给完整内容，不用「其余同上」省略；
+4. 结尾给验证方法：命令或点击路径，能重跑一遍；
+5. 有不确定的地方直接说不确定，别编。`
+
 async function copyText(text, btn, doneLabel = '已复制') {
   try { await navigator.clipboard.writeText(text) }
   catch (err) {
@@ -615,9 +684,41 @@ function selectStage(n, pushHash = true, scroll = true) {
   paneBody.scrollTop = 0
   // 提示词只进按钮，不在页面上摊开
   const promptEl = paneBody.querySelector('.pblock')
-  currentPrompt = (promptEl?.textContent || '').trim()
+  currentPrompt = ((promptEl?.textContent || '').trim() + PROMPT_TAIL).trim()
   promptEl?.closest('.sec')?.remove()
-  window.frameSwap?.(paneBody)
+
+  // 细节折叠：放在「常见翻车」后面，默认收起
+  const detail = document.createElement('section')
+  detail.className = 'sec detail'
+  detail.innerHTML = `<button class="detail-btn" type="button" aria-expanded="false">
+      <span>展开细节 · 容易忽略的地方</span>
+      <svg class="fold-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="detail-body"><div class="detail-inner"><ul>${(DETAILS[n] || [])
+      .map((t) => `<li><i></i><span>${t}</span></li>`)
+      .join('')}</ul></div></div>`
+  const trapSec = paneBody.querySelector('.trap')?.closest('.sec')
+  if (trapSec) trapSec.after(detail)
+  else paneBody.appendChild(detail)
+
+  // 提示词补上本阶段验收标准，AI 拿到的是可判过的版本
+  const checks = [...paneBody.querySelectorAll('.check li')]
+    .map((li) => li.textContent.trim())
+    .filter(Boolean)
+  if (checks.length) {
+    currentPrompt += '\n\n本阶段验收标准：\n' + checks.map((c, i) => `${i + 1}. ${c}`).join('\n')
+  }
+  const tips = DETAILS[n] || []
+  if (tips.length) {
+    currentPrompt += '\n\n实践要点：\n' + tips.map((t, i) => `${i + 1}. ${t}`).join('\n')
+  }
+
+  // 逐段错峰入场，换阶段时内容是一层一层落下来的
+  const secs = [...paneBody.querySelectorAll('.sec')]
+  secs.forEach((s, i) => {
+    s.classList.add('swap-in')
+    s.style.animationDelay = i * 40 + 'ms'
+  })
   syncFade()
   paneOv?.refresh()
   if (pushHash) history.replaceState(null, '', '#stage-' + n)
@@ -643,11 +744,20 @@ copyMaster.addEventListener('click', () => {
 4. 每个阶段结束给我「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走。
 
 现在从第 1 阶段开始，先问我第一批问题。`
-  copyText(master, copyMaster)
+  copyText(master + PROMPT_TAIL, copyMaster)
 })
 
 // 面板里的复制按钮（skill 的安装命令）
 paneBody.addEventListener('click', (e) => {
+  const fold = e.target.closest('.detail-btn')
+  if (fold) {
+    const box = fold.closest('.detail')
+    const open = box.classList.toggle('open')
+    fold.setAttribute('aria-expanded', String(open))
+    setTimeout(syncFade, 460)
+    setTimeout(() => paneOv?.refresh(), 460)
+    return
+  }
   const btn = e.target.closest('.copy')
   if (!btn) return
   const row = btn.closest('.sk-row')
