@@ -411,6 +411,28 @@ const onBrandClick = () => {
   opacity: 0.8;
   transform: translateY(0);
 }
+/* 悬停下划线：从左往右长出来（动效手册 · 悬停下划线生长） */
+.nav-link::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), rgba(217, 87, 26, 0.25));
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0.75;
+  transition: transform 0.34s var(--ease), opacity 0.34s var(--ease);
+  pointer-events: none;
+}
+.nav-link:hover::before {
+  transform: scaleX(1);
+}
+/* 当前页已有中线，悬停线让位 */
+.nav-link.router-link-active::before {
+  display: none;
+}
 .nav-link.router-link-active {
   color: var(--accent-cream);
 }

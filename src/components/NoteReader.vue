@@ -136,6 +136,7 @@ function toTop() {
     </button>
     <span class="read-bar" :style="{ transform: `scaleX(${prog})` }" aria-hidden="true"></span>
     <div v-if="loading" class="skeleton" aria-hidden="true">
+      <div class="sk-dots"><i></i><i></i><i></i></div>
       <span class="sk-line sk-title"></span>
       <span class="sk-line"></span>
       <span class="sk-line w80"></span>
@@ -279,6 +280,42 @@ function toTop() {
   background-size: 220% 100%;
   animation: sk-sweep 1.5s ease-in-out infinite;
 }
+/* 骨架屏上的三点跳动：告诉人正文在读，而不是卡住 */
+.sk-dots {
+  display: flex;
+  gap: 7px;
+  height: 8px;
+  margin-bottom: 2px;
+}
+.sk-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #f6a468, #d9571a);
+  animation: sk-hop 0.42s cubic-bezier(0.22, 0.8, 0.2, 1) infinite;
+  opacity: 0.6;
+}
+.sk-dots i:nth-child(2) {
+  animation-delay: 0.085s;
+}
+.sk-dots i:nth-child(3) {
+  animation-delay: 0.17s;
+}
+@keyframes sk-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  38% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+  68% {
+    transform: translateY(0);
+    opacity: 0.75;
+  }
+}
 .sk-title {
   height: 26px;
   width: 46%;
@@ -405,6 +442,28 @@ function toTop() {
   color: var(--text-muted);
 }
 
+/* 正文链接：悬停时下划线从左长到右（动效手册 · 悬停下划线生长） */
+.reader :deep(.markdown a) {
+  color: var(--accent-cream);
+  background-image: linear-gradient(90deg, var(--accent), rgba(217, 87, 26, 0.3));
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  background-position: 0 100%;
+  transition: background-size 0.34s var(--ease);
+  padding-bottom: 1px;
+}
+.reader :deep(.markdown a:hover) {
+  background-size: 100% 1px;
+}
+/* 正文图片：悬停轻微推近，点开进灯箱 */
+.reader :deep(.markdown .md-img) {
+  transition: transform 0.34s var(--ease), box-shadow 0.34s var(--ease);
+}
+.reader :deep(.markdown .md-img:hover) {
+  transform: scale(1.012);
+  box-shadow: 0 18px 36px -26px rgba(85, 53, 28, 0.6);
+}
+
 /* 回到顶部：只在窄屏出现，浮在右下角 */
 .to-top {
   display: none;
@@ -435,8 +494,7 @@ function toTop() {
 }
 
 /* 手机：收窄到 18px 边距，标题降一档，正文行宽更适合竖屏 */
-@media (max-width: 640px) {
-  .reader {
+@media (max-width: 640px) {  .reader {
     padding: 0 18px 64px;
   }
   .read-bar {
@@ -454,6 +512,14 @@ function toTop() {
   .meta {
     gap: 5px;
     margin-bottom: 14px;
+  }
+}
+
+/* 系统要求减少动效时，三点加载只留静止的点 */
+@media (prefers-reduced-motion: reduce) {
+  .sk-dots i {
+    animation: none;
+    opacity: 0.8;
   }
 }
 </style>

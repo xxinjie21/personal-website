@@ -92,6 +92,16 @@ a {
   text-decoration: none;
 }
 
+/* 键盘聚焦统一一道暖色光边（动效手册 · 聚焦光边） */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid rgba(217, 87, 26, 0.5);
+  outline-offset: 2px;
+}
+:where(input, textarea, select):focus-visible {
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px rgba(217, 87, 26, 0.1);
+}
+
 button {
   font-family: inherit;
   color: inherit;

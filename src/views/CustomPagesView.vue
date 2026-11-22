@@ -178,6 +178,7 @@ function thumbLoaded(p) {
 
 <template>
   <section v-if="slug" ref="shellEl" class="page-shell">
+    <div v-if="!frameReady" class="frame-loading" aria-hidden="true"><i></i><i></i><i></i></div>
     <iframe
       :src="frameSrc"
       :title="current?.title || slug"
@@ -257,11 +258,52 @@ function thumbLoaded(p) {
 
 <style scoped>
 .page-shell {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: calc(100vh - var(--nav-height));
   box-sizing: border-box;
   padding: 0 10px 8px;
+}
+/* 内嵌页加载时先给三点跳动，别让人对着空白等 */
+.frame-loading {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+.frame-loading i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #f6a468, #d9571a);
+  animation: frame-hop 0.42s cubic-bezier(0.22, 0.8, 0.2, 1) infinite;
+  opacity: 0.65;
+}
+.frame-loading i:nth-child(2) {
+  animation-delay: 0.085s;
+}
+.frame-loading i:nth-child(3) {
+  animation-delay: 0.17s;
+}
+@keyframes frame-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  38% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+  68% {
+    transform: translateY(0);
+    opacity: 0.75;
+  }
 }
 .page-frame {
   flex: 1;
@@ -638,6 +680,12 @@ code {
   .last {
     top: 8px;
     right: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .frame-loading i {
+    animation: none;
+    opacity: 0.8;
   }
 }
 </style>
