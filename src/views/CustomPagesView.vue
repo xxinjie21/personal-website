@@ -59,11 +59,19 @@ const frameSrc = computed(() => `${import.meta.env.BASE_URL}pagedocs/${slug.valu
 // iframe 首帧出来后淡入，避免白屏硬切
 const frameReady = ref(false)
 watch(slug, () => (frameReady.value = false))
-// 卡片聚光：跟随光标的暖光斑（Uiverse spotlight card）
+// 卡片聚光 + 轻微倾斜：光标位置决定暖光斑和高光角度（Uiverse spotlight card）
 function spot(e) {
   const r = e.currentTarget.getBoundingClientRect()
-  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
-  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+  const x = e.clientX - r.left
+  const y = e.clientY - r.top
+  e.currentTarget.style.setProperty('--mx', `${x}px`)
+  e.currentTarget.style.setProperty('--my', `${y}px`)
+  e.currentTarget.style.setProperty('--rx', `${((y / r.height) - 0.5) * -5}deg`)
+  e.currentTarget.style.setProperty('--ry', `${((x / r.width) - 0.5) * 5}deg`)
+}
+function untilt(e) {
+  e.currentTarget.style.setProperty('--rx', '0deg')
+  e.currentTarget.style.setProperty('--ry', '0deg')
 }
 
 // 悬停实时预览：第一次指向卡片才加载该页的 iframe，之后复用
@@ -113,6 +121,7 @@ function thumbLoaded(p) {
         :to="`/custom-pages/${p.slug}`"
         class="card"
         @mousemove="spot"
+        @pointerleave="untilt"
         @click="remember(p)"
         @pointerenter="warmThumb(p)"
         @focusin="warmThumb(p)"
@@ -280,6 +289,8 @@ code {
   border: 1px solid var(--line);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(252, 244, 234, 0.86));
   overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
   transition: transform 0.45s var(--ease), border-color 0.45s var(--ease),
     box-shadow 0.45s var(--ease);
 }
@@ -293,9 +304,11 @@ code {
   transition: opacity 0.45s var(--ease);
 }
 .card:hover {
-  transform: translateY(-4px);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
   border-color: rgba(217, 87, 26, 0.42);
   box-shadow: 0 26px 50px -26px rgba(217, 87, 26, 0.4);
+  transition: transform 0.16s ease-out, border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
 }
 .card:hover::before {
   opacity: 1;
