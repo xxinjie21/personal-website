@@ -8,194 +8,108 @@
 <style>
 :root{
   --ink:#1c1917;--muted:#8a7f74;--line:#e7ddcf;--white:#fffdf9;--paper:#f7f2ec;
-  --accent:#d9571a;--accent-soft:#f0a578;--ease:cubic-bezier(.22,.9,.28,1);
+  --accent:#d9571a;--ease:cubic-bezier(.22,.9,.28,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;overflow:hidden}
-body{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);
-font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
--webkit-font-smoothing:antialiased}
-header{flex:none;padding:10px 14px 11px;background:linear-gradient(180deg,#fffdf9,#fbf7f0);border-bottom:1px solid var(--line);
-display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand h1{font-size:15px;font-weight:700;letter-spacing:.2px}
-.brand p{font-size:11px;color:var(--muted);margin-top:3px}
-.tabs{display:flex;gap:5px;background:#efe9dd;border-radius:12px;padding:4px;margin-left:auto}
-.htools{display:flex;gap:6px;flex:none}
-.tab{height:32px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:#6f665c;font-family:inherit;
-font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s,transform .18s}
-.tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(30,40,54,.12)}
-.tab:active{transform:scale(.97)}
-.tool{height:30px;padding:0 11px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:#5f574e;
-font-family:inherit;font-size:12px;cursor:pointer;white-space:nowrap;transition:background .16s,color .16s,transform .12s,box-shadow .16s}
-.tool:hover{color:var(--accent);border-color:rgba(217,87,26,.34);box-shadow:0 6px 16px -12px rgba(85,53,28,.5)}
-.tool:active{transform:scale(.97)}
-main{flex:1;position:relative;min-height:0}
-.pane{position:absolute;inset:0;display:none;flex-direction:column;padding:10px 12px 12px}
-.pane.on{display:flex;animation:paneIn .24s var(--ease) both}
-@keyframes paneIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.pane-bar{flex:none;display:flex;align-items:center;gap:9px;padding:0 4px 8px;font-size:11.5px;color:var(--muted);min-height:26px}
-.pane-bar b{color:var(--ink);font-size:12.5px}
-.pane-bar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
-.pane-bar .host{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px}
-.pane-bar .open{margin-left:auto}
-.frame-wrap{position:relative;flex:1;min-height:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--white);
-box-shadow:0 18px 40px -34px rgba(85,53,28,.6)}
-iframe{width:100%;height:100%;border:0;display:block;background:#fff}
-.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--muted);
-background:linear-gradient(180deg,#fffdf9,#f9f4ec);transition:opacity .3s ease;pointer-events:none}
-.loading i{width:14px;height:14px;border:2px solid #eadfcf;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(1turn)}}
-.loading.gone{opacity:0}
-/* 明确禁止嵌入的站：给一张说明卡，直接新窗口打开 */
-.blocked{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-border:1px dashed rgba(217,87,26,.28);border-radius:14px;background:rgba(255,253,249,.7);padding:26px;text-align:center;overflow:auto}
-.blocked h2{font-size:17px}
-.blocked p{font-size:12.5px;line-height:1.8;color:var(--muted);max-width:440px}
-.blocked .warn{font-size:11px;line-height:1.7;color:#9a7654}
-.blocked .warn b{color:#b45309}
-.copy{border:0;background:none;padding:0 2px;font-family:inherit;font-size:11px;color:var(--accent);cursor:pointer;
-border-bottom:1px solid rgba(217,87,26,.4);line-height:1.4;transition:color .16s,border-color .16s}
-.copy:hover{color:#a8420f;border-color:#a8420f}
-.copy.done{color:#3d7a5f;border-color:#3d7a5f}
-.blocked .go{height:36px;padding:0 16px;border:0;border-radius:10px;background:var(--ink);color:#fffdf9;font-family:inherit;
-font-size:12.5px;cursor:pointer;transition:transform .16s,background .16s}
-.blocked .go:hover{background:#000;transform:translateY(-1px)}
-/* 第三方截图：站点不让嵌时至少能看到首页长什么样 */
-.shot{position:relative;width:min(660px,100%);margin-top:2px;border:1px solid var(--line);border-radius:12px;overflow:hidden;
-background:#fff;box-shadow:0 18px 40px -32px rgba(85,53,28,.6)}
-.shot img{display:block;width:100%;height:auto}
-.shot span{position:absolute;left:8px;bottom:8px;padding:3px 8px;border-radius:6px;background:rgba(28,25,23,.78);color:#fff;
-font-size:10px;letter-spacing:.2px}
-.ghost{font-size:11px;color:var(--muted)}
-.hint{margin-top:8px;font-size:11px;color:var(--muted);text-align:center}
-@media (max-width:779px){
-  header{gap:8px;padding:9px 10px 10px}
-  .brand h1{font-size:14px}
-  .tabs{order:3;width:100%;margin-left:0}
-  .tab{flex:1;padding:0 6px}
-  .htools{order:2;margin-left:auto}
-  .pane{padding:8px}
+html,body{min-height:100%}
+body{background:
+radial-gradient(900px 420px at 88% -12%,rgba(217,87,26,.07),transparent 70%),
+radial-gradient(700px 380px at -8% 108%,rgba(217,87,26,.05),transparent 70%),var(--paper);
+color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+-webkit-font-smoothing:antialiased;padding:22px 20px 26px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:18px;min-height:calc(100vh - 48px);justify-content:center}
+header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:2px;animation:fade .4s var(--ease) both}
+.brand h1{font-size:20px;font-weight:700;letter-spacing:.2px}
+.brand p{font-size:12px;color:var(--muted);margin-top:6px}
+.count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
+color:var(--muted);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
+a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
+border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
+text-decoration:none;overflow:hidden;isolation:isolate;
+box-shadow:0 14px 32px -30px rgba(85,53,28,.7);
+transition:transform .22s var(--ease),border-color .22s,box-shadow .3s,background .22s;
+animation:cardIn .5s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 80ms)}
+a.card::after{content:"";position:absolute;inset:auto -40% -60% auto;width:220px;height:220px;border-radius:50%;
+background:radial-gradient(circle,rgba(217,87,26,.16),transparent 62%);opacity:0;transform:scale(.7);
+transition:opacity .34s,transform .42s var(--ease);z-index:-1}
+a.card:hover,a.card:focus-visible{transform:translateY(-3px);border-color:rgba(217,87,26,.42);
+box-shadow:0 22px 44px -32px rgba(140,70,30,.55);background:#fffefb;outline:none}
+a.card:hover::after,a.card:focus-visible::after{opacity:1;transform:scale(1)}
+a.card:active{transform:translateY(-1px) scale(.995)}
+.top{display:flex;align-items:center;gap:8px}
+.idx{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:1.2px;color:#b9a48f}
+.go{margin-left:auto;width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;
+color:#8a7f74;transition:color .2s,border-color .2s,transform .26s var(--ease),background .2s}
+.go svg{width:13px;height:13px}
+a.card:hover .go{color:var(--accent);border-color:rgba(217,87,26,.42);background:#fff;transform:translate(2px,-2px) rotate(0.001deg)}
+h2{font-size:17px;font-weight:700;letter-spacing:.1px}
+.host{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;color:#a08f7e;letter-spacing:.2px}
+.desc{font-size:12.5px;line-height:1.85;color:#5f574e}
+.desc b{font-weight:600;color:var(--ink)}
+.tagrow{margin-top:auto;display:flex;flex-wrap:wrap;gap:5px;padding-top:8px}
+.tag{font-size:10px;color:#8a7f74;border:1px solid var(--line);border-radius:20px;padding:3px 8px;background:rgba(255,253,249,.8)}
+.tip{font-size:10.5px;color:#a08f7e;border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;padding-top:2px;animation:fade .5s var(--ease) .3s both}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (max-width:820px){
+  body{padding:16px 14px 20px}
+  .wrap{min-height:calc(100vh - 36px);justify-content:flex-start;gap:14px}
+  .grid{grid-template-columns:1fr;gap:10px}
+  a.card{min-height:0;gap:6px;padding:15px 15px 14px}
+  .desc{line-height:1.75}
+  .brand h1{font-size:18px}
+  .count{display:none}
 }
-@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">
-    <h1>设计灵感 · 参考站</h1>
-    <p>看组件、布局、动效，选中就复制回 custom-pages/</p>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>设计灵感 · 参考站</h1>
+      <p>三个常去的地方，点卡片直接开原站，看到合适的就搬回 custom-pages/。</p>
+    </div>
+    <span class="count">3 sites</span>
+  </header>
+
+  <div class="grid">
+    <a class="card" style="--i:0" href="https://21st.dev" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">01</span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>21st.dev</h2>
+      <p class="host">21st.dev</p>
+      <p class="desc"><b>现成组件市场</b>：AI 生成 / 社区投稿的 React、Tailwind 组件与区块，卡片式浏览，点开就能看源码。</p>
+      <p class="desc">拿它做什么：缺按钮组、卡片、侧栏这类现成结构时，整段复制再按本站配色改。</p>
+      <div class="tagrow"><span class="tag">组件库</span><span class="tag">源码可复制</span><span class="tag">React · Tailwind</span></div>
+    </a>
+
+    <a class="card" style="--i:1" href="https://variant.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">02</span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Variant</h2>
+      <p class="host">variant.com</p>
+      <p class="desc"><b>AI 设计方向探索</b>：输入一句想法（比如「一个极简博客」），往下滚就是一屏接一屏的不同方案，不用反复写提示词。</p>
+      <p class="desc">拿它做什么：定不下版式、配色时先来这里滚几屏找方向，选中一套再动手做。</p>
+      <div class="tagrow"><span class="tag">灵感发散</span><span class="tag">布局 / 配色</span><span class="tag">导出 HTML · React</span></div>
+    </a>
+
+    <a class="card" style="--i:2" href="https://www.awwwards.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">03</span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Awwwards</h2>
+      <p class="host">awwwards.com</p>
+      <p class="desc"><b>获奖网站集合</b>：每日 / 每月评出的优秀站点，整体创意、动效节奏、排版完成度都在成品级。</p>
+      <p class="desc">拿它做什么：想看「做到最好长什么样」时翻案例，找动效和首屏的处理方式。</p>
+      <p class="tip">这个站风控较严，若打开只显示 Forbidden，换 Chrome / Edge 再开。</p>
+    </a>
   </div>
-  <div class="tabs" id="tabs"></div>
-  <div class="htools">
-    <button class="tool" id="reload" type="button" title="重新载入当前站">刷新</button>
-    <button class="tool" id="openAll" type="button" title="在新窗口打开当前站">新窗口打开</button>
-  </div>
-</header>
-<main id="main"></main>
-<p class="hint">有的站禁止被嵌进 iframe，会显示说明卡；点「新窗口打开」照样能看。</p>
-<script>
-const SITES = [
-  { id:'21st', name:'21st.dev', url:'https://21st.dev', host:'21st.dev · 现成组件 / 模板', embed:true,
-    note:'AI 生成的前端组件市场，React / Tailwind 为主，看中复制结构再改。' },
-  { id:'variant', name:'Variant', url:'https://variant.com', host:'variant.com · 界面与设计参考', embed:true,
-    note:'界面细节与产品视觉的参考站，适合挑排版、留白和动效节奏。' },
-  { id:'awwwards', name:'Awwwards', url:'https://www.awwwards.com', host:'awwwards.com · 获奖站点', embed:false,
-    note:'该站返回 X-Frame-Options: DENY，不能嵌入，直接新窗口打开看获奖案例。' },
-];
 
-const tabsEl = document.getElementById('tabs');
-const mainEl = document.getElementById('main');
-let cur = 0;
-
-SITES.forEach((s, i) => {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'tab' + (i === 0 ? ' on' : '');
-  b.textContent = s.name;
-  b.dataset.i = i;
-  b.addEventListener('click', () => switchTo(i));
-  tabsEl.appendChild(b);
-
-  const pane = document.createElement('section');
-  pane.className = 'pane' + (i === 0 ? ' on' : '');
-  pane.dataset.i = i;
-
-  const bar = document.createElement('div');
-  bar.className = 'pane-bar';
-  bar.innerHTML = '<span class="dot"></span><b>' + s.name + '</b><span class="host">' + s.host + '</span>' +
-    '<button class="tool open" type="button" data-open="' + s.url + '">打开原站</button>';
-  pane.appendChild(bar);
-
-  if (s.embed) {
-    const wrap = document.createElement('div');
-    wrap.className = 'frame-wrap';
-    const loading = document.createElement('div');
-    loading.className = 'loading';
-    loading.innerHTML = '<i></i>正在打开 ' + s.name + '…';
-    const f = document.createElement('iframe');
-    f.dataset.src = s.url;
-    f.title = s.name;
-    f.setAttribute('loading', 'lazy');
-    f.referrerPolicy = 'no-referrer';
-    f.addEventListener('load', () => { loading.classList.add('gone'); setTimeout(() => loading.remove(), 500); });
-    wrap.appendChild(f);
-    wrap.appendChild(loading);
-    pane.appendChild(wrap);
-  } else {
-    const block = document.createElement('div');
-    block.className = 'blocked';
-    block.innerHTML = '<h2>' + s.name + ' 不允许被嵌入</h2><p>' + s.note + '</p>' +
-      '<button class="go" type="button" data-open="' + s.url + '">在新窗口打开 ' + s.name + '</button>' +
-      '<p class="warn">若新窗口只显示 <b>Forbidden</b>，是该站风控挡了这个浏览器，换 Chrome / Edge 或稍后再试，也可以 <button class="copy" type="button" data-copy="' + s.url + '">复制链接</button> 去别的浏览器粘贴。</p>' +
-      '<div class="shot"><img alt="' + s.name + ' 首页预览" loading="lazy" referrerpolicy="no-referrer" ' +
-      'src="https://s0.wp.com/mshots/v1/' + encodeURIComponent(s.url) + '?w=1200" ' +
-      'onerror="this.closest(\'.shot\').remove()"><span>第三方截图预览 · 仅看首页</span></div>';
-    pane.appendChild(block);
-  }
-  mainEl.appendChild(pane);
-});
-
-function ensureFrame(pane) {
-  const f = pane.querySelector('iframe[data-src]');
-  if (f && !f.src) f.src = f.dataset.src;
-}
-
-function switchTo(i) {
-  cur = i;
-  tabsEl.querySelectorAll('.tab').forEach((b) => b.classList.toggle('on', +b.dataset.i === i));
-  mainEl.querySelectorAll('.pane').forEach((p) => {
-    const on = +p.dataset.i === i;
-    p.classList.toggle('on', on);
-    if (on) ensureFrame(p);
-  });
-}
-
-document.addEventListener('click', (e) => {
-  const b = e.target.closest('[data-open]');
-  if (b) window.open(b.dataset.open, '_blank', 'noopener,noreferrer');
-  const c = e.target.closest('[data-copy]');
-  if (c) {
-    const url = c.dataset.copy;
-    const done = () => { c.classList.add('done'); c.textContent = '已复制'; setTimeout(() => { c.classList.remove('done'); c.textContent = '复制链接'; }, 1600); };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(done, () => prompt('复制这个链接：', url));
-    } else prompt('复制这个链接：', url);
-  }
-});
-
-document.getElementById('reload').addEventListener('click', () => {
-  const pane = mainEl.querySelector('.pane[data-i="' + cur + '"]');
-  const f = pane.querySelector('iframe[data-src]');
-  if (!f) { switchTo(cur); return; }
-  const src = f.dataset.src;
-  f.src = 'about:blank';
-  setTimeout(() => { f.src = src; }, 60);
-});
-document.getElementById('openAll').addEventListener('click', () => {
-  window.open(SITES[cur].url, '_blank', 'noopener,noreferrer');
-});
-
-switchTo(0);
-</script>
+  <footer>纯外链，不在本站内嵌预览；三站都能直接用浏览器打开。</footer>
+</div>
 </body>
 </html>
