@@ -863,6 +863,8 @@ watch(
 .pane-body {
   flex: none;
   height: 100%;
+  /* 目录内容保持原宽：拖窄时由栏边裁切，而不是让文字提前变成省略号 */
+  min-width: 190px;
 }
 
 /* 分隔条：一条细线 + 中间的抓手点，hover 才亮起来 */
