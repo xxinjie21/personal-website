@@ -80,8 +80,20 @@ function volSpot(e) {
   e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
 }
 
+// 磁吸按钮：手册 04 那条，按钮被光标吸过去一点，划开弹回
+function magnetMove(e) {
+  if (e.pointerType !== 'mouse') return
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const r = e.currentTarget.getBoundingClientRect()
+  const dx = Math.max(-9, Math.min(9, (e.clientX - (r.left + r.width / 2)) * 0.22))
+  const dy = Math.max(-7, Math.min(7, (e.clientY - (r.top + r.height / 2)) * 0.22))
+  e.currentTarget.style.transform = `translate(${dx}px, ${dy}px)`
+}
+function magnetReset(e) {
+  e.currentTarget.style.transform = ''
+}
+
 onMounted(async () => {
-  try {
     const mod = await import('../data/site-manifest.json')
     manifest.value = mod.default
   } catch (err) {
@@ -112,7 +124,12 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
       </p>
 
       <div class="cta reveal reveal-d3">
-        <button class="btn btn-primary" @click="goNotes">
+        <button
+          class="btn btn-primary"
+          @click="goNotes"
+          @pointermove="magnetMove"
+          @pointerleave="magnetReset"
+        >
           进入笔记库 <Icon name="arrow-up-right" class="arw" :size="12" />
         </button>
         <a
@@ -329,6 +346,12 @@ max-width: 560px;
 }
 .more:hover .more-arw {
   transform: translateX(3px);
+}
+.cta .btn-primary {
+  /* 磁吸要跟手，比全局 .btn 的 .35s 收短 */
+  transition: transform 0.2s cubic-bezier(0.22, 0.9, 0.28, 1),
+    background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  will-change: transform;
 }
 .cta .btn:hover .arw {
   transform: translate(2px, -2px);
