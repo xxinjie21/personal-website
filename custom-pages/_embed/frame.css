@@ -23,6 +23,24 @@
 /* 内容比视口短时，兜住底色，别露出白边 */
 html { min-height: 100%; background: var(--bg); }
 
+/* 滚动条零宽：只在滚轮/触控板里存在，不占版心也不挤压内容 */
+html, body, * { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar { width: 0; height: 0; }
+
+/* 切面板：淡入 + 8px 上浮，给「内容换了」一个明确的交代 */
+@keyframes swapIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.swap-in { animation: swapIn 0.42s var(--ease) both; }
+
+/* 三页互跳：同源文档之间走 View Transition，整页交叉淡入而不是硬闪 */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 0.28s ease both vtOut; }
+::view-transition-new(root) { animation: 0.4s var(--ease) both vtIn; }
+@keyframes vtOut { to { opacity: 0; } }
+@keyframes vtIn { from { opacity: 0; transform: translateY(6px); } }
+
 /* ── 顶栏：三页共用，吸顶 + 滚动加投影 ───────────────── */
 .devbar {
   position: sticky;
@@ -136,7 +154,7 @@ html { min-height: 100%; background: var(--bg); }
   align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
-  margin: 6px 0 18px;
+  margin: 4px 0 12px;
 }
 .ph-text {
   min-width: 0;
@@ -221,6 +239,29 @@ html { min-height: 100%; background: var(--bg); }
   min-width: 0;
 }
 
+/* 面板悬浮滚动条：不占宽度，鼠标进面板或滚动时才浮出 */
+.ovs {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 3px;
+  width: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+.ovs.on {
+  opacity: 1;
+}
+.ovs-thumb {
+  position: absolute;
+  left: 0;
+  width: 4px;
+  min-height: 24px;
+  border-radius: 4px;
+  background: rgba(126, 84, 46, 0.32);
+}
+
 /* ── 入场过渡：同一个节奏，按顺序错峰 ─────────────────── */
 .reveal {
   opacity: 0;
@@ -238,6 +279,13 @@ html { min-height: 100%; background: var(--bg); }
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .swap-in {
+    animation: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
   .db-dot {
     animation: none;

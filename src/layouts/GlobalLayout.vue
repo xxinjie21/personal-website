@@ -4,16 +4,66 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 // 顶栏：页面一滚就加投影，跟内容分层（阅读区内部滚动也要算，用捕获阶段接）
 const lifted = ref(false)
-const onScroll = () => {
+const scrubEl = ref(null)
+const scrubThumb = ref(null)
+let scrubTimer = 0
+// 滚动条零宽后，用右侧一条 3px 悬浮条交代进度：滚动时浮出，鼠标贴近右缘也能看到
+const drawScrub = (scroller) => {
+  const el = scrubEl.value
+  const thumb = scrubThumb.value
+  if (!el || !thumb) return
+  let sh = document.documentElement.scrollHeight
+  let vh = window.innerHeight
+  let st = window.scrollY || 0
+  let top = 0
+  let box = vh
+  if (scroller && scroller.scrollHeight - scroller.clientHeight > 8) {
+    const r = scroller.getBoundingClientRect()
+    sh = scroller.scrollHeight
+    vh = scroller.clientHeight
+    st = scroller.scrollTop
+    top = r.top
+    box = Math.min(r.height, window.innerHeight)
+  }
+  if (sh - vh < 8) {
+    el.classList.remove('on')
+    return
+  }
+  const th = Math.max(28, (box * box) / sh)
+  thumb.style.height = th + 'px'
+  thumb.style.top = top + (st / (sh - vh)) * (box - th) + 'px'
+  el.classList.add('on')
+  clearTimeout(scrubTimer)
+  scrubTimer = setTimeout(() => el.classList.remove('on'), 900)
+}
+const onScroll = (e) => {
   const reader = document.querySelector('.reader')
   const y = Math.max(window.scrollY || 0, reader ? reader.scrollTop : 0)
   lifted.value = y > 8
+  const t = e && e.target
+  drawScrub(t && t.scrollTop !== undefined ? t : null)
+}
+let scrubRaf = 0
+const onMove = (e) => {
+  if (window.innerWidth - e.clientX > 20) return
+  if (scrubRaf) return
+  scrubRaf = requestAnimationFrame(() => {
+    scrubRaf = 0
+    const reader = document.querySelector('.reader')
+    const inner = reader && reader.scrollHeight - reader.clientHeight > 8 ? reader : null
+    drawScrub(inner)
+  })
 }
 onMounted(() => {
   onScroll()
   document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+  window.addEventListener('mousemove', onMove, { passive: true })
 })
-onBeforeUnmount(() => document.removeEventListener('scroll', onScroll, true))
+onBeforeUnmount(() => {
+  document.removeEventListener('scroll', onScroll, true)
+  window.removeEventListener('mousemove', onMove)
+  clearTimeout(scrubTimer)
+})
 
 const links = [
   { to: '/', label: '首页', en: 'HOME' },
@@ -76,9 +126,34 @@ const onBrandClick = () => {
   <main class="content">
     <slot />
   </main>
+
+  <!-- 零宽滚动条的替代：右侧悬浮进度条，鼠标靠近或滚动才出现 -->
+  <div ref="scrubEl" class="scrub" aria-hidden="true"><i ref="scrubThumb"></i></div>
 </template>
 
 <style scoped>
+/* 悬浮进度条：不占宽度，只在需要时浮现 */
+.scrub {
+  position: fixed;
+  right: 3px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s var(--ease);
+}
+.scrub.on {
+  opacity: 1;
+}
+.scrub i {
+  position: absolute;
+  left: 0;
+  width: 4px;
+  border-radius: 4px;
+  background: rgba(126, 84, 46, 0.3);
+}
 .topbar {
   position: sticky;
   top: 0;

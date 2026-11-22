@@ -102,20 +102,7 @@ button {
   color: #4b2109;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(126, 84, 46, 0.22);
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(217, 87, 26, 0.45);
-}
+/* 滚动条见文件末：零宽、不占版心 */
 
 /* ===== 通用原子 ===== */
 .eyebrow {
@@ -303,15 +290,21 @@ button {
   color: var(--text);
 }
 
-/* ===== 页面切换 ===== */
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.15s ease, transform 0.18s var(--ease), filter 0.14s ease;
+/* ===== 页面切换：离场轻收、入场缓落，像翻过一页纸 ===== */
+.page-enter-active {
+  transition: opacity 0.34s var(--ease), transform 0.42s var(--ease), filter 0.3s ease;
 }
-.page-enter-from,
+.page-leave-active {
+  transition: opacity 0.2s ease, transform 0.24s var(--ease), filter 0.18s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px) scale(0.997);
+  filter: blur(3px);
+}
 .page-leave-to {
   opacity: 0;
-  transform: translateY(6px) scale(0.998);
+  transform: translateY(-4px) scale(0.999);
   filter: blur(2px);
 }
 
@@ -434,34 +427,25 @@ body::after {
   transform: scaleX(1);
 }
 
-/* 滚动条：平时完全隐形，鼠标落在这一块上才浮出暖橙细条 */
+/* 滚动条：零宽悬浮，不占版心，不挤压内容（滚轮/触控板照常滚） */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-*:hover {
-  scrollbar-color: rgba(126, 84, 46, 0.3) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 0;
+  height: 0;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  background-clip: content-box;
-  transition: background-color 0.25s ease;
-}
-*:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(126, 84, 46, 0.26);
-}
-*:hover::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(217, 87, 26, 0.5);
-}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}
+

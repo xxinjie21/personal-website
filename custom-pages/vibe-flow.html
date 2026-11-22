@@ -126,13 +126,14 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 
 @media (min-width:901px){
   /* 桌面端面板自己滚，页面高度固定在约一屏 */
-  .pane{display:flex;flex-direction:column;height:calc(100vh - 300px);min-height:470px}
+  .pane{display:flex;flex-direction:column;height:calc(100vh - 300px);min-height:470px;position:relative}
   .pane-head{flex:none}
   .pane-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:26px}
-  .pane-body::-webkit-scrollbar{width:8px}
-  .pane-body::-webkit-scrollbar-thumb{background:rgba(126,84,46,.22);border-radius:8px}
-  .pane-body::-webkit-scrollbar-track{background:transparent}
 }
+/* 没有滚动条，用底部渐隐交代「下面还有」；滚到底自动收起 */
+.pane-fade{display:none;position:absolute;left:1px;right:1px;bottom:1px;height:52px;border-radius:0 0 var(--radius) var(--radius);
+pointer-events:none;background:linear-gradient(rgba(255,253,250,0),rgba(255,253,250,.92));opacity:0;transition:opacity .3s var(--ease)}
+@media (min-width:901px){.pane.has-more .pane-fade{display:block;opacity:1}}
 @media (max-width:900px){
   .shell{grid-template-columns:1fr;gap:14px}
   .rail{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
@@ -220,6 +221,7 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
         <button class="copyp" type="button" id="copyPrompt">复制本阶段提示词</button>
       </div>
       <div class="pane-body" id="paneBody"></div>
+      <div class="pane-fade" aria-hidden="true"></div>
     </main>
   </div>
 
@@ -558,6 +560,22 @@ const copyMaster = document.getElementById('copyMaster')
 let current = 1
 let currentPrompt = ''
 
+// 面板不显示滚动条，用底部渐隐表示「还能往下看」
+function syncFade() {
+  const more = paneBody.scrollHeight - paneBody.scrollTop - paneBody.clientHeight > 6
+  pane.classList.toggle('has-more', more)
+}
+paneBody.addEventListener('scroll', syncFade, { passive: true })
+window.addEventListener('resize', syncFade, { passive: true })
+
+// 滚动条不占位，靠悬浮细条提示；frame.js 是 defer，等它到位再挂
+let paneOv = null
+window.addEventListener('DOMContentLoaded', () => {
+  paneOv = window.frameOverlay?.(paneBody, pane) || null
+  paneOv?.refresh()
+  syncFade()
+})
+
 const META = {
   1: '4 步 · 1 份 requirements.md',
   2: '5 步 · 4 条路由',
@@ -600,6 +618,9 @@ function selectStage(n, pushHash = true, scroll = true) {
   paneBody.innerHTML = sd.innerHTML
   paneBody.scrollTop = 0
   currentPrompt = (paneBody.querySelector('.pblock')?.textContent || '').trim()
+  window.frameSwap?.(paneBody)
+  syncFade()
+  paneOv?.refresh()
   if (pushHash) history.replaceState(null, '', '#stage-' + n)
   // 切换后把内容面板带回视野，避免停在上一阶段的滚动位置
   if (scroll && pane.getBoundingClientRect().top < -8) {
