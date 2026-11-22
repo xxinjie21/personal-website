@@ -227,17 +227,19 @@ body{overflow-x:hidden}
 .hdr .sub{font-size:11.5px;line-height:1.5;white-space:normal}
 .tabs{min-height:38px;padding:3px}
 .tab{min-height:36px;padding:0 13px;font-size:13px}
-.tools{gap:6px;padding:2px 0}
-.t{height:38px;padding:0 11px;font-size:12.5px}
-#btnToggle{min-width:5.2em}
+.tools{gap:6px;padding:2px 0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.t{height:38px;padding:0 11px;font-size:12.5px;flex:none;white-space:nowrap}
+#btnToggle{min-width:5.4em}
 .nav .yh{min-height:40px}
 .nav .yy{font-size:14px}
 .it{padding:9px 8px;max-width:78vw}
-.orig{max-height:32vh;padding:12px 14px}
+.orig{max-height:none;overflow:visible;padding:12px 14px}
 .orig .meta{font-size:12px;gap:9px}
 .en{font-size:17px;line-height:1.72}
-.parse{padding:12px 14px 52px;overflow-x:hidden}
+.parse{padding:12px 14px 52px;overflow:visible;flex:none;overflow-x:hidden}
 .parse>*,.en{max-width:100%}
+/* 手机只留一层滚动：句子和解析同屏往下走，不再被 32vh 的小窗子截断 */
+.stage{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .lhead{min-height:40px;font-size:14px}
 .mix li{font-size:13.5px}
 .mix li .rl{font-size:12px}
@@ -19723,10 +19725,11 @@ function highlight(g){
   const li = parseEl.querySelector('.mix li[data-g="'+g+'"]');
   if(li){
     li.classList.add('hi');
-    const off = li.getBoundingClientRect().top - parseEl.getBoundingClientRect().top;
+    const sc = (getComputedStyle(parseEl).overflowY === 'visible') ? (parseEl.closest('.stage') || parseEl) : parseEl;
+const off = li.getBoundingClientRect().top - sc.getBoundingClientRect().top;
     /* 和图谱跳转同一手感：缓动滚到目标块，而不是硬跳 */
-    if(off < 0 || off > parseEl.clientHeight - 40){
-      parseEl.scrollTo({ top: parseEl.scrollTop + off - 40, behavior: 'smooth' });
+    if(off < 0 || off > sc.clientHeight - 40){
+      sc.scrollTo({ top: sc.scrollTop + off - 40, behavior: 'smooth' });
     }
   }
 }
