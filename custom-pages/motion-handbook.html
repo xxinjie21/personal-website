@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 60 个能跑的样子</title>
+<title>动效手册 · 66 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -664,6 +664,71 @@ background:rgba(217,87,26,.06);border:1px solid rgba(217,87,26,.1)}
 .tm-row b{font:600 8.5px/1 var(--sans);color:#8a4a22;white-space:nowrap}
 .tm-row span{font:400 7.5px/1 var(--sans);color:#a5886f;white-space:nowrap}
 
+
+/* ==== 导航与结构 ==== */
+.ftree{width:192px;font-size:9.5px;color:#7a6552}
+.ft-node{display:flex;align-items:center;gap:5px;padding:3px 4px;border-radius:5px;cursor:pointer;transition:background .2s}
+.ft-node:hover{background:rgba(217,87,26,.06)}
+.ft-node b{font-weight:600;color:#6b5544}
+.ft-node .ft-n{margin-left:auto;font:500 8px/1 var(--mono);color:#b5a08c}
+.ft-ico{width:9px;font-size:8px;color:#c07a4a;transition:transform .3s var(--ease)}
+.ft-node.open .ft-ico{transform:rotate(90deg)}
+.ft-kids{max-height:0;overflow:hidden;margin-left:9px;padding-left:7px;border-left:1px solid rgba(126,84,46,.16);transition:max-height .34s var(--ease)}
+.ft-kids.open{max-height:110px}
+.ft-leaf{font:400 9px/1.85 var(--mono);color:#9c8774;white-space:nowrap}
+
+.toc{width:188px;font-size:9.5px}
+.toc-row{position:relative;padding:3px 0 3px 12px;cursor:pointer;color:#8d7863;transition:color .25s,font-weight .25s}
+.toc-row::before{content:"";position:absolute;left:0;top:50%;width:2px;height:0;border-radius:2px;
+background:#d9571a;transform:translateY(-50%);transition:height .3s var(--ease)}
+.toc-row.on{color:#c04a18;font-weight:600}
+.toc-row.on::before{height:72%}
+.toc-row.lvl1{font-weight:600;color:#6b5544}
+.toc-row.lvl2{padding-left:22px;font-size:9px;color:#9c8774}
+.toc-row.lvl2.on{color:#c04a18}
+
+.crumb{display:flex;align-items:center;gap:5px;max-width:196px;font-size:9px;color:#9c8774;white-space:nowrap}
+.crumb a{color:#8a7160;text-decoration:none;padding:2px 4px;border-radius:4px;transition:background .2s,color .2s}
+.crumb a:hover{background:rgba(217,87,26,.07);color:#c04a18}
+.crumb .sep{font-size:8px;color:#c0ad99}
+.crumb .more{font:600 9px/1 var(--mono);color:#b5a08c;padding:2px 4px;border-radius:4px;cursor:pointer}
+.crumb .more:hover{background:rgba(217,87,26,.07)}
+.crumb .cur{max-width:96px;overflow:hidden;text-overflow:ellipsis;font-weight:600;color:#5b432c}
+
+.side{width:179px;height:100px;display:flex;gap:7px;align-items:stretch}
+.rail{width:34px;flex:none;border-radius:10px;background:rgba(255,255,255,.72);border:1px solid rgba(126,84,46,.14);
+display:flex;flex-direction:column;align-items:center;gap:6px;padding:7px 0;cursor:pointer}
+.rail i{width:14px;height:14px;border-radius:4px;background:rgba(217,87,26,.16);transition:background .3s}
+.rail i.on{background:#d9571a}
+.rail .chev{margin-top:auto;font-size:9px;color:#b5a08c;transition:transform .35s var(--ease)}
+.side.tight .rail .chev{transform:rotate(180deg)}
+.side-body{width:138px;flex:none;border-radius:10px;background:rgba(255,255,255,.72);border:1px solid rgba(126,84,46,.14);
+padding:9px;display:grid;gap:7px;align-content:start;overflow:hidden;
+transition:width .4s var(--ease),opacity .3s,border-width .3s,padding .4s}
+.side-body i{display:block;height:7px;border-radius:4px;background:rgba(126,84,46,.16)}
+.side.tight .side-body{width:0;opacity:0;padding:0;border-width:0}
+
+.tags{display:flex;flex-wrap:wrap;gap:4px;width:192px}
+.tags .t{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:9px;
+color:#8a7160;background:rgba(255,255,255,.72);border:1px solid rgba(126,84,46,.16);cursor:pointer;
+transition:background .24s,color .24s,border-color .24s}
+.tags .t:hover{border-color:rgba(217,87,26,.4)}
+.tags .t.on{background:rgba(217,87,26,.12);border-color:rgba(217,87,26,.45);color:#b8480f;font-weight:600}
+.tags .t i{font:500 7.5px/1 var(--mono);color:#b5a08c;font-style:normal}
+.tags .t.on i{color:#c04a18}
+
+.sbox{width:192px}
+.sbox input{width:100%;box-sizing:border-box;padding:5px 8px;border-radius:8px;border:1px solid rgba(126,84,46,.18);
+background:#fffdf8;font-size:9.5px;color:#5b432c;outline:none;
+transition:border-color .2s,box-shadow .2s}
+.sbox input:focus{border-color:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.1)}
+.sbox ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:2px;font-size:9px;color:#8a7160}
+.sbox li{padding:2px 4px;border-radius:4px;transition:background .15s}
+.sbox li:hover{background:rgba(217,87,26,.06)}
+.sbox li.nores{color:#b5a08c;font-style:normal;cursor:default}
+.sbox li.nores:hover{background:none}
+.sbox mark{background:rgba(217,87,26,.16);color:#a9430f;border-radius:2px;padding:0 1px}
+
 </style>
 </head>
 <body>
@@ -679,9 +744,9 @@ background:rgba(217,87,26,.06);border:1px solid rgba(217,87,26,.1)}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">60 个动效与组件、12 套工具，全部真跑。</p>
+      <p class="lead">66 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">60 effects · 12 tools</span>
+    <span class="ph-count">66 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1519,6 +1584,143 @@ pill.style.width=b.getBoundingClientRect().width+'px'
     </article>
 </div>
 
+  
+  <!-- D 导航与结构 -->
+  <div class="group"><h2>导航与结构</h2><p>6 · 树 / 目录 / 过滤</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:0">
+      <span class="badge">tree</span>
+      <div class="demo">
+        <div class="ftree" id="ftreeDemo">
+          <div class="ft-node open"><span class="ft-ico">▸</span><b>考研</b><span class="ft-n">12</span></div>
+          <div class="ft-kids open">
+            <div class="ft-node open"><span class="ft-ico">▸</span><b>数学</b><span class="ft-n">2</span></div>
+            <div class="ft-kids open">
+              <div class="ft-leaf">第2章 · 导数.md</div>
+              <div class="ft-leaf">第3章 · 积分.md</div>
+            </div>
+            <div class="ft-node"><span class="ft-ico">▸</span><b>英语</b><span class="ft-n">3</span></div>
+            <div class="ft-kids"><div class="ft-leaf">生词本.md</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>文件树</b><span class="en">file tree</span></div>
+        <p class="say">层级用左缩进加一条极浅的引导线，三角只转 90°，展开靠 max-height 过渡；数量放右侧小字，别挤在名字后面。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.kids{max-height:0;overflow:hidden;margin-left:9px;border-left:1px solid 浅线;transition:max-height .34s}
+节点点击 → 同时切 .open 和 .kids 的 .open
+三角 .open 时 rotate(90deg)，别换字符</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">click</span>
+      <div class="demo">
+        <div class="toc" id="tocDemo">
+          <div class="toc-row lvl1 on">第 2 章 · 导数与微分</div>
+          <div class="toc-row lvl2">2.1 导数定义</div>
+          <div class="toc-row lvl2">2.2 求导法则</div>
+          <div class="toc-row lvl2">2.3 高阶导数</div>
+          <div class="toc-row lvl1">第 3 章 · 积分</div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>大纲视图</b><span class="en">outline / toc</span></div>
+        <p class="say">按标题级别缩进，当前节左侧一道短竖条加暖色字；滚动联动时只换高亮，不要整块跳动。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>行高统一 22px，二三级只改 padding-left
+当前项 ::before 竖条 height 0 → 70%，时长 .3s
+滚动高亮用 IntersectionObserver，别用 scrollTop 逐帧算</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">static</span>
+      <div class="demo">
+        <div class="crumb">
+          <a href="#">数学</a><span class="sep">›</span>
+          <a href="#">高等数学</a><span class="sep">›</span>
+          <span class="more">…</span><span class="sep">›</span>
+          <a href="#">第 2 章</a><span class="sep">›</span>
+          <span class="cur">导数与微分</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>面包屑</b><span class="en">breadcrumb</span></div>
+        <p class="say">路径太长就把中间收成“…”一个点，头尾一定留住；末级压成纯文字不可点，前几级 hover 才显底色。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>display:flex;gap:5px;white-space:nowrap
+中间级用 .more 收成 1 个 …，点击再展开
+当前级 .cur 加 max-width + ellipsis，标题再长也不换行</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">layout</span>
+      <div class="demo">
+        <div class="side" id="sideDemo">
+          <div class="rail" id="sideRail"><i class="on"></i><i></i><i></i><span class="chev">▸</span></div>
+          <div class="side-body"><i style="width:78%"></i><i style="width:56%"></i><i style="width:66%"></i><i style="width:42%"></i></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>侧栏折叠</b><span class="en">sidebar collapse</span></div>
+        <p class="say">收起时只留一条图标导轨，内容区宽度过渡到 0 并把箭头翻向；不要整块 display:none，用户会以为丢了东西。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.side-body{width:138px;transition:width .4s,opacity .3s}
+.tight .side-body{width:0;opacity:0;border-width:0}
+导轨固定 34px 不跟着缩，箭头 rotate(180deg)</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">filter</span>
+      <div class="demo">
+        <div class="tags" id="tagDemo">
+          <span class="t on">高数<i>8</i></span>
+          <span class="t">线代<i>5</i></span>
+          <span class="t on">导数<i>3</i></span>
+          <span class="t">积分<i>6</i></span>
+          <span class="t">真题<i>2</i></span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>标签筛选</b><span class="en">tag filter</span></div>
+        <p class="say">选中的标签换底色加粗，数量用更小的等宽字跟在后面；多选用“同时点亮”表示，不要弹一个已选面板。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>胶囊 padding 3px 7px，圆角 999，边框 1px 半透明
+选中：底色 12% 主色 + 边框 45% + 字 600 字重
+数量 7.5px 等宽字，与标签名差 1.5 个字阶就够</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">filter</span>
+      <div class="demo">
+        <div class="sbox" id="searchDemo">
+          <input type="text" placeholder="搜标题，比如 导数" aria-label="搜索示例" />
+          <ul>
+            <li data-t="导数与微分">导数与微分</li>
+            <li data-t="导数定义">导数定义</li>
+            <li data-t="求导法则">求导法则</li>
+            <li data-t="中值定理">中值定理</li>
+            <li data-t="积分公式">积分公式</li>
+            <li data-t="泰勒展开">泰勒展开</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>搜索过滤</b><span class="en">search filter</span></div>
+        <p class="say">边输边过滤，命中的字用低透明度主色块标出来；没结果就一行灰字提示，不要留个空框让人以为卡住。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>条目原文存 data-t，过滤时重建 &lt;mark&gt;，别直接改 innerHTML 丢原串
+无命中时插入一行 .nores，清空输入再移除
+输入框 :focus 加 3px 低透明度光环，不加 outline</pre></div>
+      </div>
+    </article>
+  </div>
+
   <!-- 工具分层 -->
   <section class="tools-sec">
     <div class="group"><h2>工具，按层级挑</h2><p>12 · 免费优先</p></div>
@@ -2296,6 +2498,87 @@ if (priceDemo) {
       unit.textContent = plans[n][1]
       amt.animate([{ transform: 'translateY(6px)', opacity: .4 }, { transform: 'none', opacity: 1 }], { duration: 220, easing: 'cubic-bezier(.22,.9,.28,1)' })
     })
+  })
+}
+
+</script>
+<script>
+
+/* 文件树折叠 */
+var ftree = document.getElementById('ftreeDemo')
+if (ftree) {
+  ftree.querySelectorAll('.ft-node').forEach(function (node) {
+    node.addEventListener('click', function () {
+      var kids = node.nextElementSibling
+      if (!kids || !kids.classList.contains('ft-kids')) return
+      var open = kids.classList.toggle('open')
+      node.classList.toggle('open', open)
+    })
+  })
+}
+
+/* 大纲高亮 */
+var toc = document.getElementById('tocDemo')
+if (toc) {
+  var rows = Array.prototype.slice.call(toc.querySelectorAll('.toc-row'))
+  rows.forEach(function (r) {
+    r.addEventListener('click', function () {
+      rows.forEach(function (x) { x.classList.toggle('on', x === r) })
+    })
+  })
+}
+
+/* 侧栏折叠 */
+var side = document.getElementById('sideDemo')
+var rail = document.getElementById('sideRail')
+if (side && rail) {
+  rail.addEventListener('click', function () {
+    side.classList.toggle('tight')
+  })
+}
+
+/* 标签多选 */
+var tagWrap = document.getElementById('tagDemo')
+if (tagWrap) {
+  tagWrap.querySelectorAll('.t').forEach(function (t) {
+    t.addEventListener('click', function () { t.classList.toggle('on') })
+  })
+}
+
+/* 搜索过滤 */
+var sbox = document.getElementById('searchDemo')
+if (sbox) {
+  var input = sbox.querySelector('input')
+  var list = sbox.querySelector('ul')
+  var items = Array.prototype.slice.call(list.querySelectorAll('li[data-t]'))
+  var nores = null
+  input.addEventListener('input', function () {
+    var q = input.value.trim()
+    var hit = 0
+    items.forEach(function (li) {
+      var txt = li.getAttribute('data-t')
+      var ok = !q || txt.indexOf(q) > -1
+      li.style.display = ok ? '' : 'none'
+      if (!ok) return
+      hit++
+      if (q) {
+        var at = txt.indexOf(q)
+        li.innerHTML = txt.slice(0, at) + '<mark>' + q + '</mark>' + txt.slice(at + q.length)
+      } else {
+        li.textContent = txt
+      }
+    })
+    if (!hit) {
+      if (!nores) {
+        nores = document.createElement('li')
+        nores.className = 'nores'
+        nores.textContent = '没有匹配的标题'
+        list.appendChild(nores)
+      }
+      nores.style.display = ''
+    } else if (nores) {
+      nores.style.display = 'none'
+    }
   })
 }
 
