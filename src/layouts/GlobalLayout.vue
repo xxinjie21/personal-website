@@ -1,28 +1,6 @@
 <script setup>
 // 纯阅读站点：不取进度、不连 Worker
-import { onBeforeUnmount, onMounted, computed, ref } from 'vue'
-
-// 28 考研初试：2027 年 12 月下旬（占位 12-21，临近再校准）
-const EXAM_DATE = new Date('2027-12-21T00:00:00+08:00')
-const daysLeft = computed(() => {
-  const ms = EXAM_DATE - new Date()
-  return Math.max(0, Math.ceil(ms / 86400000))
-})
-
-// 数字滚动入场
-const shownDays = ref(0)
-onMounted(() => {
-  const target = daysLeft.value
-  const t0 = performance.now()
-  const dur = 900
-  const step = () => {
-    const p = Math.min(1, (performance.now() - t0) / dur)
-    const e = 1 - Math.pow(1 - p, 3)
-    shownDays.value = Math.round(target * e)
-    if (p < 1) requestAnimationFrame(step)
-  }
-  requestAnimationFrame(step)
-})
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 // 顶栏：页面一滚就加投影，跟内容分层（阅读区内部滚动也要算，用捕获阶段接）
 const lifted = ref(false)
@@ -93,14 +71,6 @@ const onBrandClick = () => {
         <span>{{ l.label }}</span>
       </router-link>
     </nav>
-
-    <div class="meta">
-      <div class="countdown">
-        <span class="cd-label">距 28 考研初试</span>
-        <b class="mono">{{ shownDays }}</b>
-        <span class="cd-unit">天</span>
-      </div>
-    </div>
   </header>
 
   <main class="content">
@@ -399,13 +369,9 @@ const onBrandClick = () => {
   color: var(--accent-soft);
 }
 
-/* 右侧 */
-.meta {
+/* 右侧导航推到最右 */
+.nav {
   margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-shrink: 0;
 }
 .sync {
   display: inline-flex;
@@ -491,30 +457,6 @@ const onBrandClick = () => {
   }
 }
 
-.countdown {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  padding-left: 16px;
-  border-left: 1px solid var(--line);
-}
-.cd-label {
-  font-size: 10.5px;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-}
-.countdown b {
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--accent-cream);
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 26px rgba(217, 87, 26, 0.5);
-}
-.cd-unit {
-  font-size: 10.5px;
-  color: var(--muted);
-}
-
 .content {
   min-height: calc(100vh - var(--nav-height));
 }
@@ -534,16 +476,6 @@ const onBrandClick = () => {
   }
   .nav-link i {
     display: none;
-  }
-  .cd-label {
-    display: none;
-  }
-  .countdown {
-    padding-left: 10px;
-    gap: 3px;
-  }
-  .countdown b {
-    font-size: 16px;
   }
   .sync {
     display: none;
