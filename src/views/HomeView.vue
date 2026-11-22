@@ -536,7 +536,8 @@ max-width: 560px;
 }
 @media (max-width: 640px) {
   .hero {
-    min-height: auto;
+    /* 手机上也撑满一屏，水豚的地面线才会压在屏幕底边，而不是悬在半空 */
+    min-height: calc(100dvh - var(--nav-height));
     align-items: flex-start;
     padding: 24px 18px 38px;
   }
