@@ -279,8 +279,8 @@ const STAGES = [
     deliver: ['环境清单', '规则文件', '首个 commit'],
     goal: '先把「命令能跑、模型能连、代码能提交」三件事做掉，再让 AI 碰业务。',
     steps: [
-      { do: '装 Node 20 与 Git，版本号写进 README，别让下一个人猜环境。', tool: ['Node.js', 'https://nodejs.org'], gain: '环境清单 + 版本号' },
-      { do: '装 Python 3.12 与 uv（跑脚本、测试要用），已有 Python 可跳过。', tool: ['uv', 'https://docs.astral.sh/uv'], gain: '可复现的 Python 环境' },
+      { do: '按语言装运行时：JS→Node 20、Python→3.12、Java→JDK 21、Go→1.22，版本写进 README。', tool: ['Node.js（示例）', 'https://nodejs.org'], gain: '运行时 + 版本清单' },
+      { do: '装包管理器与虚拟环境：pnpm / uv / Maven / go mod，锁版本，别混用全局。', tool: ['uv（示例）', 'https://docs.astral.sh/uv'], gain: '依赖锁定 + 虚拟环境' },
       { do: '装一个 AI 编程工具：Claude Code / Cursor / Codex / Trae 任选，登录并把 key 放进 .env。', tool: ['Claude Code（示例）', 'https://docs.anthropic.com/en/docs/claude-code'], gain: '工具能对话、能改文件' },
       { do: '建仓库，写 .gitignore（node_modules / dist / .env），打第一个 commit。', tool: ['Git', 'https://git-scm.com'], gain: '干净基线 + 首个 commit' },
       { do: '写开发宪法：技术栈、目录、常用命令、禁区、提交规范；文件名按工具选。', tool: ['AGENTS.md 规范', 'https://agents.md'], gain: '项目宪法（CLAUDE.md / AGENTS.md）' }
@@ -293,18 +293,18 @@ const STAGES = [
     ],
     trap: '先写页面再补环境，报错时分不清是代码问题还是环境问题；先把工具链钉死。',
     details: [
-      '版本用 nvm / fnm 管，别用系统自带的老 Node；Python 用 uv 建虚拟环境，不进全局。',
-      'key 只放 .env，.env 进 .gitignore；前端代码里出现 key 就等于公开。',
+      '版本用语言自己的管理工具（nvm / pyenv / sdkman / asdf），别用系统自带老版本；依赖锁进 lock 文件。',
+      'key 只放 .env，.env 进 .gitignore；客户端代码里出现 key 就等于公开。',
       '规则文件名按工具：Claude Code 用 CLAUDE.md，Codex 用 AGENTS.md，Cursor 用 .cursorrules 或 .cursor/rules；内容不用为工具改。',
       '上下文看 /context：超过六成先 compact 或开新会话；跑偏用 rewind 回退，Esc 随时打断，别让错误滚雪球。'
     ],
     skill: { note: '该阶段没有对口 skill。环境问题看官方文档，别让 AI 猜版本号。' },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 1 阶段「备环境」。这一阶段不写业务代码，只把工具链和开发宪法配好。
-先问我 5 件事：操作系统、Node / Python 现有版本、用哪个 AI 编程工具（Claude Code / Cursor / Codex / Trae）、仓库是新建还是已有、有没有域名。
-答完按顺序给：安装命令（Windows / macOS 各一份）、.gitignore 内容、规则文件全文（按我选的工具给对应文件名）、第一个 commit 的命令。
+先问我 5 件事：用什么语言和框架、操作系统与已装版本、用哪个 AI 编程工具（Claude Code / Cursor / Codex / Trae）、仓库是新建还是已有、有没有域名。
+答完按顺序给：按我的语言给运行时安装命令（Windows / macOS 各一份）、.gitignore 内容、规则文件全文（按我选的工具给对应文件名）、第一个 commit 的命令。
 每条命令后面写「怎么验证成功」，装不上就给我两条备选方案，别直接跳过。`,
     user: [
-      '告诉我系统和已经装过的版本，避免重复安装；',
+      '告诉我用哪种语言和框架、系统和已装版本，避免重复安装；',
       '选一个 AI 工具（Claude Code / Cursor / Codex / Trae），并给仓库地址；',
       '确认规则文件里的技术栈、目录、禁区三项，别让我替你定。'
     ]
@@ -440,9 +440,9 @@ const STAGES = [
     deliver: ['design-tokens.md', '三页界面', '交互脚本'],
     goal: '三个页面各就各位，颜色、间距、圆角只从一套 token 里取，390 宽不横滚。',
     steps: [
-      { do: '先定 tokens：主色、纸底、四级文字、间距刻度、圆角、阴影。', tool: ['Astryx', 'https://github.com/facebook/astryx'], gain: 'design-tokens.md' },
-      { do: '按需装组件，不自造按钮、输入框、弹窗。', tool: ['shadcn/ui', 'https://ui.shadcn.com'], gain: '组件目录' },
-      { do: '写样式层与断点：桌面、平板、手机三档，只调列数和间距。', tool: ['Tailwind CSS', 'https://tailwindcss.com'], gain: '样式与断点' },
+      { do: '先定 tokens：主色、纸底、四级文字、间距刻度、圆角、阴影；什么语言都落一份 token 文件。', tool: ['Style Dictionary', 'https://styledictionary.com'], gain: 'design-tokens.md' },
+      { do: '按技术栈装组件库；非 JS 栈用模板引擎或原生组件，不自造基础控件。', tool: ['shadcn/ui（JS 示例）', 'https://ui.shadcn.com'], gain: '组件目录' },
+      { do: '写样式层与断点：CSS / Tailwind / 模板都行，三档断点只调列数和间距。', tool: ['Tailwind（示例）', 'https://tailwindcss.com'], gain: '样式与断点' },
       { do: '图标统一一套，只用一个线条风格。', tool: ['Lucide', 'https://lucide.dev'], gain: '图标清单' },
       { do: '写三页真实内容：首页讲清是谁，列表能扫读，详情能读完。', note: '真内容，不用 lorem', gain: '首页 / 列表 / 详情' },
       { do: '一页最多两个主动效（300–450ms），先叫得出名字再实现。', tool: ['动效手册', 'motion-handbook.html'], gain: '交互脚本' }
@@ -484,9 +484,9 @@ const STAGES = [
     deliver: ['迁移脚本', 'RLS 策略', 'lib/api', '登录与空错态'],
     goal: '换台机器照 README 就能跑：没登录的人进不了受限页，空态错态都有出口。',
     steps: [
-      { do: '把 SDD 里的 schema 落库：建表、加索引、写种子数据。', tool: ['Supabase', 'https://supabase.com'], gain: '迁移脚本 + 种子数据' },
-      { do: '开权限：默认拒绝，逐表逐操作放行，匿名 key 也验一遍。', tool: ['Supabase RLS', 'https://supabase.com/docs/guides/auth/row-level-security'], gain: '权限策略' },
-      { do: '写数据访问层，页面不直接拼 SQL、不出现表名。', tool: ['supabase-js', 'https://supabase.com/docs/reference/javascript'], gain: 'lib/api 封装' },
+      { do: '把 SDD 里的 schema 落库：建表、加索引、写种子数据（Postgres / MySQL / SQLite 都行）。', tool: ['Supabase（示例）', 'https://supabase.com'], gain: '迁移脚本 + 种子数据' },
+      { do: '开权限：默认拒绝，逐表逐操作放行；有 RLS 就匿名 key 验一遍。', tool: ['RLS（Supabase 示例）', 'https://supabase.com/docs/guides/auth/row-level-security'], gain: '权限策略' },
+      { do: '写数据访问层，页面不直接拼 SQL、不出现表名；按语言选 ORM 或 query builder。', tool: ['ORM（supabase-js 示例）', 'https://supabase.com/docs/reference/javascript'], gain: 'lib/api 封装' },
       { do: '接登录与会话：登录页、受限页回跳、登出清理。', gain: '登录 + 受限页' },
       { do: '补空态与错态：没数据说什么，失败给什么出口。', gain: '空态 / 错态组件' },
       { do: '写 env 样例与 README：启动步骤压到三条。', gain: 'env.example + README' }
@@ -504,7 +504,7 @@ const STAGES = [
       '数据访问收在 lib/api，页面里不出现 SQL 和表名，换库时只改一层。',
       '错误分三类给不同出口：未登录去登录、无权限说清原因、网络失败给重试。'
     ],
-    skill: { note: '该阶段没有对口 skill；表结构与权限是项目知识，交给 Supabase 的迁移与 SDK 更稳。' },
+    skill: { note: '该阶段没有对口 skill；表结构与权限是项目知识，交给数据库迁移与 ORM 更稳，按你的语言选驱动。' },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 6 阶段「接数据」。
 先问我 5 件事：数据库用哪个、要不要登录、游客能看什么、数据谁写谁读、测试账号有没有。
 然后按顺序做：迁移脚本 → RLS 策略（默认拒绝，逐条放行）→ lib/api 封装 → 登录与受限页 → 空态错态 → env.example 与 README。
@@ -523,8 +523,8 @@ const STAGES = [
     goal: '把「我看着没问题」换成可重跑的检查：单测、e2e、评审、冒烟各有清单。',
     steps: [
       { do: '列回归清单：解析、计算、格式化、权限判断哪些必须测。', note: '从 SDD 的测试点抄', gain: '回归清单' },
-      { do: '写单测覆盖纯逻辑，先跑红再跑绿。', tool: ['Vitest', 'https://vitest.dev'], gain: '单测 + 覆盖率' },
-      { do: 'e2e 只留三条主路径：进入、登录、增删一条数据。', tool: ['Playwright', 'https://playwright.dev'], gain: '3 条 e2e' },
+      { do: '写单测覆盖纯逻辑：Jest / Vitest、JUnit、pytest、go test 都行，先跑红再跑绿。', tool: ['Vitest（JS 示例）', 'https://vitest.dev'], gain: '单测 + 覆盖率' },
+      { do: 'e2e 只留三条主路径：进入、登录、增删一条数据。', tool: ['Playwright（示例）', 'https://playwright.dev'], gain: '3 条 e2e' },
       { do: '让另一个模型读 diff 做评审，只挑 bug、安全、性能三类问题。', tool: ['GitHub PR', 'https://github.com/features/pull-requests'], gain: '评审记录' },
       { do: '跑性能与安全：Lighthouse 分数、依赖审计、key 扫描。', tool: ['Lighthouse', 'https://developer.chrome.com/docs/lighthouse'], gain: '性能 / 安全报告' },
       { do: '定 10 条冒烟清单，已知问题全部进 issues。', gain: '冒烟.md + issue 列表' }
@@ -550,7 +550,7 @@ const STAGES = [
       why: '按真实浏览器跑页面：点、填、断言一次写完，比手工清单稳定。'
     },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 7 阶段「测试与评审」。目标是把「我看着没问题」换成可重跑的检查。
-先问我 5 件事：哪三条路径坏了最致命、单测覆盖哪些纯逻辑、e2e 用 Playwright 还是手工、上线前必须手点哪十件事、已知问题哪些能留到下一版。
+先问我 5 件事：哪三条路径坏了最致命、单测覆盖哪些纯逻辑、e2e 用哪个框架还是手工、上线前必须手点哪十件事、已知问题哪些能留到下一版。
 然后依次给：回归清单 → 单测文件 → 3 条 e2e → 评审清单（只挑 bug / 安全 / 性能）→ 冒烟 10 条 → 已知问题 issue 模板。
 每条测试给运行命令和预期输出；失败的定位路径也要写清。`,
     user: [
@@ -726,7 +726,7 @@ copyPrompt.addEventListener('click', () => copyText(currentPrompt, copyPrompt))
 
 copyMaster.addEventListener('click', () => {
   const master = `我要从零做一个网站，请你按 Vibe Coding 的 8 个阶段带我走一遍：备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代。
-工具以我指定的为准（Claude Code / Cursor / Codex / Trae 都可能），不要默认 Claude Code，也不要求我为了某个插件换工具。
+工具和语言都按我指定的来（Claude Code / Cursor / Codex / Trae；JS/TS、Python、Java、Go、PHP 都可能），不要默认 Claude Code，也不要默认 Node 那套；给命令时换成本语言的等价工具，别要求我为了某个插件或框架换技术栈。
 规则：
 1. 每个阶段开始前，先说明要用哪些工具 / 网站、需要我提供什么（仓库、域名、账号、参考截图），再给步骤；
 2. 一次最多问 3 个问题，每题给 2–3 个选项并说明影响，我答完再问下一组；
@@ -768,6 +768,8 @@ fromHash()
 </script>
 </body>
 </html>
+
+
 
 
 
