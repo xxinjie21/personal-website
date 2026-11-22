@@ -645,52 +645,101 @@ code {
 
 @media (max-width: 760px) {
   .pages-view {
-    padding: 32px 18px 80px;
+    padding: 26px 16px calc(72px + env(safe-area-inset-bottom));
   }
   .grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   /* 内嵌页：手机浏览器地址栏会吃掉 vh，改用 dvh 才不会顶出滚动条 */
   .page-shell {
     height: calc(100dvh - var(--nav-height));
-    padding: 0 4px 4px;
+    padding: 0;
   }
   .page-frame {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
   .head {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
   }
   .head h1 {
-    font-size: clamp(26px, 7.6vw, 34px);
+    font-size: clamp(26px, 7.4vw, 32px);
+    margin: 10px 0 10px;
   }
-  /* 触屏没有悬停：不做实时预览，卡片收短一些 */
-  .thumb {
-    aspect-ratio: 2 / 1;
+  .lede {
+    font-size: 14px;
+    line-height: 1.75;
   }
-  .tf {
-    display: none;
-  }
-  .phint-m {
-    display: none;
-  }
-  .phint-t {
-    display: inline;
-  }
-  .last {
-    top: 8px;
-    right: 8px;
-    background: #fffbf4;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  /* 触屏不保留 3D 图层：卡片文字不再发虚，滚动也不掉帧 */
+  /* 手机不做悬停预览：预览框缩成方形序号线，标题和文件名回到同一行 */
   .card {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    min-height: 0;
     transform-style: flat;
     will-change: auto;
   }
   .card:hover {
     transform: none;
+  }
+  .thumb {
+    width: 78px;
+    height: 78px;
+    flex: none;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+  }
+  .pnum {
+    font-size: 17px;
+    letter-spacing: 0.08em;
+  }
+  .ph {
+    background: linear-gradient(150deg, #f8eee1, #fffaf3);
+  }
+  .phint,
+  .tf {
+    display: none;
+  }
+  .meta {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0;
+    gap: 4px;
+  }
+  .meta h2 {
+    font-size: 16.5px;
+    line-height: 1.32;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .file {
+    font-size: 11.5px;
+  }
+  /* 触屏没有 hover，箭头常显，给一个明确的"可以点" */
+  .go {
+    position: static;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    padding: 9.5px;
+    margin-left: 4px;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    opacity: 1;
+    transform: none;
+    border: 1px solid rgba(217, 87, 26, 0.26);
+    border-radius: 9px;
+    color: var(--accent-soft);
+    background: rgba(217, 87, 26, 0.05);
+  }
+  .last {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
