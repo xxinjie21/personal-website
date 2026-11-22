@@ -172,7 +172,7 @@
 /* 公式 */
 /* 引用块里的推导公式再放大一档，例题本来就是拿来对着算的 */
 .markdown blockquote .md-math-block {
-  font-size: 1.15em;
+  font-size: 1em;
   margin: 8px 0 10px;
 }
 /* 整行公式可点开放大，光标先给提示 */
@@ -198,11 +198,11 @@
 }
 .markdown .katex-display {
   margin: 10px 0;
-  font-size: 1.15em;
+  font-size: 1.03em;
 }
 .markdown .katex {
-  /* 公式默认太细：整体放大一档，再用极细描边补笔画，Windows 上不至于糊成灰线 */
-  font-size: 1.1em;
+  /* 只比正文大一点点，再用极细描边补笔画，Windows 上不至于糊成灰线 */
+  font-size: 1.02em;
   color: inherit;
   text-rendering: geometricPrecision;
   -webkit-text-stroke: 0.3px currentColor;
