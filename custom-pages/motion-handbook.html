@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 47 个能跑的名字</title>
+<title>动效手册 · 59 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -542,6 +542,111 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
   .grid{grid-template-columns:1fr}
   .mcard:hover{transform:none}
 }
+
+/* ==== 3D 与材质 ==== */
+.c3d{width:100%;height:100%;display:grid;place-items:center;perspective:420px;perspective-origin:50% 46%}
+.c3d-ring{position:relative;width:82px;height:56px;transform-style:preserve-3d;animation:c3dspin 14s linear infinite}
+.c3d-ring i{position:absolute;inset:0;display:grid;place-items:center;border-radius:9px;border:1px solid rgba(217,87,26,.22);
+background:linear-gradient(150deg,#fde9d7,#f2c9a5);color:#8d4b21;font:600 10px/1 var(--mono);
+box-shadow:0 8px 16px rgba(126,84,46,.16),inset 0 1px 0 rgba(255,255,255,.9)}
+.c3d-ring i:nth-child(1){transform:rotateY(0deg) translateZ(64px)}
+.c3d-ring i:nth-child(2){transform:rotateY(60deg) translateZ(64px)}
+.c3d-ring i:nth-child(3){transform:rotateY(120deg) translateZ(64px)}
+.c3d-ring i:nth-child(4){transform:rotateY(180deg) translateZ(64px)}
+.c3d-ring i:nth-child(5){transform:rotateY(240deg) translateZ(64px)}
+.c3d-ring i:nth-child(6){transform:rotateY(300deg) translateZ(64px)}
+@keyframes c3dspin{from{transform:rotateX(-10deg) rotateY(0)}to{transform:rotateX(-10deg) rotateY(-360deg)}}
+
+.glass-stage{position:relative;width:190px;height:100px;border-radius:16px;overflow:hidden;display:grid;place-items:center}
+.glass-stage::before{content:"";position:absolute;inset:-24%;filter:blur(6px);
+background:radial-gradient(circle at 24% 22%,#ffd8b5 0 30%,transparent 56%),
+radial-gradient(circle at 76% 76%,#ffa06c 0 28%,transparent 54%),
+linear-gradient(120deg,#fff4e6,#ffd9bb)}
+.glass-panel{position:relative;width:132px;height:58px;border-radius:12px;display:grid;place-items:center;
+font-size:11px;color:#6a4a30;background:rgba(255,255,255,.42);backdrop-filter:blur(10px) saturate(150%);
+border:1px solid rgba(255,255,255,.78);box-shadow:0 12px 26px rgba(126,84,46,.16),inset 0 1px 0 rgba(255,255,255,.95);
+transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.glass-stage:hover .glass-panel{transform:translateY(-4px) scale(1.02);box-shadow:0 18px 34px rgba(126,84,46,.2),inset 0 1px 0 rgba(255,255,255,.95)}
+
+.grain-card{position:relative;width:150px;height:74px;border-radius:12px;overflow:hidden;display:grid;place-items:center;
+font:600 10px/1 var(--mono);letter-spacing:.14em;color:#6d4526;
+background:linear-gradient(135deg,#f8e2cd,#e8bf9a 58%,#cf9c72)}
+.grain-card::after{content:"";position:absolute;inset:0;opacity:.42;mix-blend-mode:multiply;pointer-events:none;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='120' height='120' filter='url(%23g)'/></svg>");
+background-size:110px 110px}
+
+.nb-btn{border:2px solid #3f2a19;border-radius:10px;background:#ffd6a5;color:#3f2a19;font:700 12px/1 var(--sans);
+padding:10px 18px;cursor:pointer;box-shadow:4px 4px 0 #3f2a19;
+transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+.nb-btn:active{transform:translate(4px,4px);box-shadow:0 0 0 #3f2a19}
+
+.blob{width:74px;height:62px;background:radial-gradient(circle at 30% 26%,#ffd0a8,#e2662a 62%,#c74a15);
+box-shadow:inset -8px -10px 16px rgba(120,40,0,.26),0 14px 24px rgba(217,87,26,.22);
+animation:blobmorph 7s ease-in-out infinite}
+@keyframes blobmorph{
+0%,100%{border-radius:58% 42% 47% 53%/50% 46% 54% 50%;transform:rotate(0)}
+50%{border-radius:40% 60% 64% 36%/46% 60% 40% 54%;transform:rotate(8deg)}}
+
+.metal{width:148px;height:42px;border-radius:21px;display:grid;place-items:center;
+font:600 10px/1 var(--mono);letter-spacing:.12em;color:#5b3f24;
+background:linear-gradient(105deg,#e7caa6 0%,#fffaf3 18%,#d8b28a 38%,#fff8ee 56%,#e0be98 76%,#c8a67c 100%);
+background-size:240% 100%;animation:metalsweep 4s linear infinite;
+box-shadow:0 10px 20px rgba(126,84,46,.18),inset 0 1px 0 rgba(255,255,255,.85)}
+@keyframes metalsweep{from{background-position:0 0}to{background-position:240% 0}}
+
+/* ==== 组件与版式 ==== */
+.seg{position:relative;display:flex;gap:2px;padding:4px;border-radius:999px;
+background:rgba(126,84,46,.08);border:1px solid rgba(126,84,46,.1)}
+.seg button{position:relative;z-index:2;border:0;background:none;padding:7px 13px;border-radius:999px;
+font:500 11px/1 var(--sans);color:#857163;cursor:pointer;transition:color .32s}
+.seg button.on{color:#b8480f}
+.seg .pill{position:absolute;top:4px;height:calc(100% - 8px);border-radius:999px;background:#fffdf7;
+box-shadow:0 2px 8px rgba(126,84,46,.16);transition:left .34s var(--ease),width .34s var(--ease);z-index:1}
+
+.stepper{position:relative;width:196px;display:flex;align-items:center;justify-content:space-between}
+.stepper .bar{position:absolute;left:12px;right:12px;top:50%;height:2px;transform:translateY(-50%);
+background:rgba(126,84,46,.16);border-radius:2px}
+.stepper .bar i{display:block;height:100%;width:0;background:#d9571a;border-radius:2px;transition:width .6s var(--ease)}
+.stepper .st{position:relative;z-index:2;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+font:600 10px/1 var(--mono);color:#a08b77;background:#fffdf8;border:1px solid rgba(126,84,46,.22);transition:all .4s var(--ease)}
+.stepper .st.on{background:#d9571a;border-color:#d9571a;color:#fff;box-shadow:0 0 0 4px rgba(217,87,26,.14)}
+.stepper .st.done{color:#d9571a;border-color:rgba(217,87,26,.55)}
+
+.price{width:176px;padding:12px 14px 14px;border-radius:14px;background:#fffdf8;border:1px solid rgba(126,84,46,.14);
+box-shadow:0 12px 24px rgba(126,84,46,.1)}
+.price .ph{display:flex;align-items:baseline;gap:5px}
+.price .amt{font:700 22px/1 var(--sans);color:#c04a18;font-variant-numeric:tabular-nums;transition:color .3s}
+.price .unit{font:400 10px/1 var(--mono);color:#a08b77}
+.price ul{list-style:none;margin:9px 0 10px;padding:0;display:grid;gap:4px;font-size:10px;color:#8e7a66}
+.price ul li::before{content:"· ";color:#d9571a}
+.price .sw{display:inline-flex;gap:2px;padding:2px;border-radius:999px;background:rgba(126,84,46,.08)}
+.price .sw button{border:0;background:none;padding:4px 8px;border-radius:999px;font-size:9px;color:#8e7a66;cursor:pointer}
+.price .sw button.on{background:#fffdf7;color:#b8480f;box-shadow:0 1px 4px rgba(126,84,46,.14)}
+
+.quote{width:186px;padding:12px;border-radius:14px;background:#fffdf8;border:1px solid rgba(126,84,46,.12);
+box-shadow:0 10px 22px rgba(126,84,46,.08)}
+.quote .stars{font-size:10px;letter-spacing:2px;color:#d9571a}
+.quote .txt{margin:6px 0 10px;font-size:10px;line-height:1.55;color:#7a6858}
+.quote .who{display:flex;align-items:center;gap:7px;font:500 10px/1 var(--sans);color:#8e7a66}
+.quote .stack{display:flex}
+.quote .stack i{width:16px;height:16px;border-radius:50%;background:linear-gradient(140deg,#ffd0a8,#e0722e);
+border:1.5px solid #fffdf8;margin-left:-5px}
+.quote .stack i:first-child{margin-left:0}
+
+.empty{width:180px;padding:14px;border-radius:14px;border:1px dashed rgba(126,84,46,.28);
+background:rgba(255,255,255,.55);text-align:center}
+.empty .ico{width:44px;height:44px;margin:0 auto 8px;border-radius:12px;display:grid;place-items:center;
+font-size:17px;background:linear-gradient(150deg,#ffe3c9,#ffc79a)}
+.empty b{display:block;font:600 11px/1.4 var(--sans);color:#6f5744}
+.empty span{font:400 10px/1.5 var(--sans);color:#a08b77}
+
+.fcols{width:196px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px;font-size:9px;color:#9a8571}
+.fcols ul{margin:0;padding:0;list-style:none}
+.fcols li{padding:1px 0;line-height:1.55}
+.fcols .fcol b{display:block;font:600 9.5px/1 var(--sans);color:#6f5744;margin-bottom:5px}
+.fcols .brand{font:700 12px/1 var(--sans);color:#c04a18;margin-bottom:6px}
+.fcols .note{display:block;margin-top:6px;color:#b3a190}
+
 </style>
 </head>
 <body>
@@ -557,9 +662,9 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">47 个动效、6 套工具，全部真跑。</p>
+      <p class="lead">59 个动效与组件、6 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">47 motions · 6 tools</span>
+    <span class="ph-count">59 effects · 6 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1178,6 +1283,190 @@ transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感
     </article>
   </div>
 
+
+  
+  <!-- B 3D 与材质 -->
+  <div class="group"><h2>3D 与材质</h2><p>6 · css 3d / 材质</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:0">
+      <span class="badge">3d</span>
+      <div class="demo"><div class="c3d"><div class="c3d-ring"><i>01</i><i>02</i><i>03</i><i>04</i><i>05</i><i>06</i></div></div></div>
+      <div class="info">
+        <div class="name"><b>3D 环视轮播</b><span class="en">css 3d ring</span></div>
+        <p class="say">六块面板各转 60°、再沿 Z 轴推出去，父层给一次透视就成环；整体匀速自转，别让每块自己加 perspective。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>父层 perspective:420px；子块 transform-style:preserve-3d
+每块 transform: rotateY(n×60deg) translateZ(64px)
+自转帧只改 rotateY(-360deg)，rotateX 固定不动</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">material</span>
+      <div class="demo"><div class="glass-stage"><div class="glass-panel">毛玻璃 · glass</div></div></div>
+      <div class="info">
+        <div class="name"><b>玻璃拟态浮现</b><span class="en">glassmorphism</span></div>
+        <p class="say">底下一层彩色光斑，面板半透加 backdrop-filter 模糊，再补一道 1px 内高光；没有背景光，玻璃会退化成白块。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>background: rgba(255,255,255,.42)
+backdrop-filter: blur(10px) saturate(150%)
+border: 1px solid rgba(255,255,255,.78)
+box-shadow: 0 12px 26px ..., inset 0 1px 0 rgba(255,255,255,.95)</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">texture</span>
+      <div class="demo"><div class="grain-card">grain · 纸感</div></div>
+      <div class="info">
+        <div class="name"><b>颗粒噪点铺底</b><span class="en">grain texture</span></div>
+        <p class="say">用 feTurbulence 生成噪点平铺，mix-blend-mode:multiply 压到四成；纯 CSS 就有胶片和纸的颗粒，别用图片。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>&lt;svg&gt;&lt;filter id="g"&gt;&lt;feTurbulence type="fractalNoise"
+baseFrequency=".9" numOctaves="3"/&gt;&lt;/filter&gt;
+::after{background-image:url(data:image/svg+xml,...);mix-blend-mode:multiply;opacity:.42}</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">component</span>
+      <div class="demo"><button class="nb-btn" type="button">按一下</button></div>
+      <div class="info">
+        <div class="name"><b>硬阴影按钮</b><span class="en">neubrutalism</span></div>
+        <p class="say">2px 实线描边加一块偏移 4px 的实心投影，按下时投影收掉、按钮位移补上，像按进纸里；新拟物最省事的一招。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>border:2px solid #3f2a19; box-shadow:4px 4px 0 #3f2a19
+:active{transform:translate(4px,4px);box-shadow:0 0 0 #3f2a19}
+描边色与投影必须同色，否则像重影</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="blob"></div></div>
+      <div class="info">
+        <div class="name"><b>液态形变球</b><span class="en">blob morph</span></div>
+        <p class="say">border-radius 用八值斜杠写法来回变形，叠内阴影和一点旋转，才像液滴；四个角一起变是圆的，变形要不同步。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>border-radius:58% 42% 47% 53%/50% 46% 54% 50%
+关键帧只改两组八值与 rotate(8deg)，时长 6−8s
+内阴影 -8px -10px 16px 给体积，外投影给浮起</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="metal">METALLIC</div></div>
+      <div class="info">
+        <div class="name"><b>金属扫光</b><span class="en">metal sheen</span></div>
+        <p class="say">渐变里塞三处亮带，background-size 拉到 240%，再平移背景；只调亮度是塑料，扫过亮带才像金属。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>linear-gradient(105deg,#e7caa6,#fffaf3 18%,#d8b28a 38%,#fff8ee 56%,#e0be98 76%)
+background-size:240% 100%; animation: 平移 background-position 0→240%</pre></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- C 组件与版式 -->
+  <div class="group"><h2>组件与版式</h2><p>6 · 组件 / 版式</p></div>
+  <div class="grid">
+    <article class="mcard" style="--i:0">
+      <span class="badge">click</span>
+      <div class="demo"><div class="seg" id="segDemo"><span class="pill"></span><button class="on" type="button">日</button><button type="button">周</button><button type="button">月</button></div></div>
+      <div class="info">
+        <div class="name"><b>分段控件</b><span class="en">segmented control</span></div>
+        <p class="say">一条底槽加一枚白滑块，切换时同时改滑块的 left 与 width，字色跟着变；不要每项自己变底色，那是标签不是分段。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>const b=seg.querySelector('button.on')
+pill.style.left=(b.getBoundingClientRect().left-seg.getBoundingClientRect().left-seg.clientLeft)+'px'
+pill.style.width=b.getBoundingClientRect().width+'px'
+首次进入与 resize 都要重算一次</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:1">
+      <span class="badge">auto</span>
+      <div class="demo"><div class="stepper" id="stepDemo"><span class="bar"><i></i></span><span class="st on">1</span><span class="st">2</span><span class="st">3</span><span class="st">4</span></div></div>
+      <div class="info">
+        <div class="name"><b>步骤条</b><span class="en">stepper</span></div>
+        <p class="say">圆点排一条线，当前点填色加外圈光环，走过的点描边变暖，底下进度条按当前步的百分比走，不要跳着变。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>progress = i/(n-1)*100 + '%'，写进 .bar i 的 width
+当前点 .on 加 box-shadow 0 0 0 4px 低透明度同色
+已走过的点用 .done 只改描边，别全都填色</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:2">
+      <span class="badge">click</span>
+      <div class="demo">
+        <div class="price" id="priceDemo">
+          <div class="ph"><span class="amt">￥39</span><span class="unit">/ 月</span></div>
+          <ul><li>不限笔记数</li><li>同步与导出</li><li>图谱视图</li></ul>
+          <div class="sw"><button class="on" type="button">月付</button><button type="button">年付</button></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>价目卡</b><span class="en">pricing card</span></div>
+        <p class="say">月付年付切换只改数字和单位，数字用 tabular-nums 防跳动；切换瞬间给数字一点位移，别整卡重建。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>font-variant-numeric: tabular-nums 锁字宽
+切换只替换 amt/unit 文本，卡片不动
+价格变化配 120ms 的 translateY 更稳</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:3">
+      <span class="badge">static</span>
+      <div class="demo">
+        <div class="quote">
+          <div class="stars">★★★★★</div>
+          <p class="txt">“笔记推到 Gitee，站点两分钟后自己就更新了，几乎不用管。”</p>
+          <div class="who"><span class="stack"><i></i><i></i><i></i></span> 3 位使用者</div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>评价卡</b><span class="en">testimonial</span></div>
+        <p class="say">星级用小字号拉开字距，头像叠一层（负 margin 加白描边），姓名与角色同一条基线；卡片里只留一句真话。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.stars{letter-spacing:2px} 星级别用图标，字号更稳
+头像 .stack i{margin-left:-5px;border:1.5px solid 底色}
+引文行长控制在 20 字内，卡片不塌</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:4">
+      <span class="badge">static</span>
+      <div class="demo"><div class="empty"><div class="ico">◍</div><b>这里还没有内容</b><span>从左边选一篇笔记，或者直接新建一条</span></div></div>
+      <div class="info">
+        <div class="name"><b>空状态</b><span class="en">empty state</span></div>
+        <p class="say">虚线框加一个渐变图形，一句说清状态、一句说下一步；只写“暂无数据”等于把用户丢在原地。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>border:1px dashed rgba(126,84,46,.28)
+图形 44px 圆角方块，渐变底 + 单字符号
+文案两行：状态一句，动作一句</pre></div>
+      </div>
+    </article>
+
+    <article class="mcard" style="--i:5">
+      <span class="badge">layout</span>
+      <div class="demo">
+        <div class="fcols">
+          <div class="fcol"><div class="brand">xxj / notes</div>把 Obsidian 的笔记摊开成能读的站点<span class="note">© 2026</span></div>
+          <div class="fcol"><b>浏览</b><ul><li>笔记</li><li>图谱</li><li>标签</li></ul></div>
+          <div class="fcol"><b>关于</b><ul><li>关于我</li><li>订阅</li><li>RSS</li></ul></div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name"><b>页脚版式</b><span class="en">footer grid</span></div>
+        <p class="say">三列不等宽，品牌列宽一点并压低字重，两组链接小字、行距松；标题和链接靠字重+颜色分层，别加分割线。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>grid-template-columns: 1.5fr 1fr 1fr
+链接 9px / 行高 1.55，标题 600 字重
+底部一行版权用更浅的颜色，不加 border-top</pre></div>
+      </div>
+    </article>
+  </div>
 
   <!-- 工具分层 -->
   <section class="tools-sec">
@@ -1850,6 +2139,66 @@ if (cv) {
   }, { threshold: .2 })
   cio.observe(cv)
 }
+</script>
+<script>
+
+/* 分段控件：滑块跟随当前项 */
+document.querySelectorAll('.seg').forEach(function (seg) {
+  var pill = seg.querySelector('.pill')
+  var btns = Array.prototype.slice.call(seg.querySelectorAll('button'))
+  function move() {
+    var b = seg.querySelector('button.on')
+    if (!b || !pill) return
+    var sr = seg.getBoundingClientRect(), br = b.getBoundingClientRect()
+    pill.style.left = (br.left - sr.left - seg.clientLeft) + 'px'
+    pill.style.width = br.width + 'px'
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.classList.toggle('on', x === b) })
+      move()
+    })
+  })
+  move()
+  requestAnimationFrame(move)
+  window.addEventListener('resize', move)
+})
+
+/* 步骤条：四步循环 */
+var stepDemo = document.getElementById('stepDemo')
+if (stepDemo) {
+  var steps = Array.prototype.slice.call(stepDemo.querySelectorAll('.st'))
+  var barFill = stepDemo.querySelector('.bar i')
+  var si = 0
+  var stepTick = function () {
+    steps.forEach(function (s, n) {
+      s.classList.toggle('on', n === si)
+      s.classList.toggle('done', n < si)
+    })
+    if (barFill) barFill.style.width = (si / (steps.length - 1) * 100) + '%'
+    si = (si + 1) % steps.length
+  }
+  stepTick()
+  setInterval(stepTick, 2200)
+}
+
+/* 价目卡：月付 / 年付 */
+var priceDemo = document.getElementById('priceDemo')
+if (priceDemo) {
+  var amt = priceDemo.querySelector('.amt')
+  var unit = priceDemo.querySelector('.unit')
+  var sws = Array.prototype.slice.call(priceDemo.querySelectorAll('.sw button'))
+  var plans = [['￥39', '/ 月'], ['￥390', '/ 年']]
+  sws.forEach(function (b, n) {
+    b.addEventListener('click', function () {
+      sws.forEach(function (x) { x.classList.toggle('on', x === b) })
+      amt.textContent = plans[n][0]
+      unit.textContent = plans[n][1]
+      amt.animate([{ transform: 'translateY(6px)', opacity: .4 }, { transform: 'none', opacity: 1 }], { duration: 220, easing: 'cubic-bezier(.22,.9,.28,1)' })
+    })
+  })
+}
+
 </script>
 </body>
 </html>
