@@ -173,7 +173,7 @@ html.leaving .wrap {
   align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
-  margin: 4px 0 12px;
+  margin: 12px 0 12px;
 }
 .ph-text {
   min-width: 0;
