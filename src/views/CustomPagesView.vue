@@ -65,6 +65,19 @@ function spot(e) {
   e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
   e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
 }
+
+// 悬停实时预览：第一次指向卡片才加载该页的 iframe，之后复用
+const thumbOn = ref({})
+const thumbReady = ref({})
+const thumbSrc = (s) => `${import.meta.env.BASE_URL}pagedocs/${s}.html`
+function warmThumb(p) {
+  // 触屏没有悬停，别为了一次轻触去拉整页 iframe
+  if (!window.matchMedia('(hover: hover)').matches) return
+  if (!thumbOn.value[p.slug]) thumbOn.value = { ...thumbOn.value, [p.slug]: true }
+}
+function thumbLoaded(p) {
+  if (!thumbReady.value[p.slug]) thumbReady.value = { ...thumbReady.value, [p.slug]: true }
+}
 </script>
 
 <template>
@@ -101,11 +114,35 @@ function spot(e) {
         class="card"
         @mousemove="spot"
         @click="remember(p)"
+        @pointerenter="warmThumb(p)"
+        @focusin="warmThumb(p)"
       >
-        <span class="idx mono">{{ String(i + 1).padStart(2, '0') }}</span>
-        <span v-if="p.slug === lastSlug" class="last mono">上次打开</span>
-        <h2>{{ p.title }}</h2>
-        <span class="file mono">{{ p.file }}</span>
+        <span class="thumb">
+          <span class="ph" aria-hidden="true">
+            <span class="pnum mono">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="phint mono phint-m">HOVER TO PREVIEW</span>
+            <span class="phint mono phint-t">TAP TO OPEN</span>
+          </span>
+          <iframe
+            v-if="thumbOn[p.slug]"
+            :src="thumbSrc(p.slug)"
+            class="tf"
+            :class="{ on: thumbReady[p.slug] }"
+            :title="`${p.title} 实时预览`"
+            tabindex="-1"
+            aria-hidden="true"
+            loading="lazy"
+            @load="thumbLoaded(p)"
+          />
+          <span class="tov">
+            <span class="topen">打开<Icon name="arrow-up-right" :size="12" /></span>
+          </span>
+          <span v-if="p.slug === lastSlug" class="last mono">上次打开</span>
+        </span>
+        <span class="meta">
+          <h2>{{ p.title }}</h2>
+          <span class="file mono">{{ p.file }}</span>
+        </span>
         <Icon name="arrow-up-right" class="go" :size="15" />
       </router-link>
     </div>
@@ -230,15 +267,15 @@ code {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
+  max-width: 800px;
 }
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 22px 22px 26px;
+  padding: 9px 9px 14px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(252, 244, 234, 0.86));
@@ -250,6 +287,7 @@ code {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   opacity: 0;
   background: radial-gradient(120% 80% at 80% 0%, rgba(217, 87, 26, 0.22), transparent 60%);
   transition: opacity 0.45s var(--ease);
@@ -267,6 +305,7 @@ code {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 3;
   pointer-events: none;
   opacity: 0;
   background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 200, 160, 0.14), transparent 70%);
@@ -278,6 +317,108 @@ code {
 .card:active {
   transform: translateY(-2px) scale(0.995);
 }
+
+/* 缩略窗口：悬停时才把该页 iframe 装进来，等比缩小成预览 */
+.thumb {
+  position: relative;
+  z-index: 1;
+  display: block;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  isolation: isolate;
+  border: 1px solid rgba(120, 84, 54, 0.1);
+}
+.ph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 90% at 72% 8%, rgba(217, 87, 26, 0.13), transparent 62%),
+    linear-gradient(160deg, #f7eee1, #fffdf9);
+}
+.pnum {
+  font-size: 30px;
+  letter-spacing: 0.1em;
+  color: rgba(120, 84, 54, 0.26);
+}
+.phint {
+  position: absolute;
+  left: 12px;
+  bottom: 11px;
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  color: rgba(120, 84, 54, 0.42);
+  transition: opacity 0.3s;
+}
+.phint-t {
+  display: none;
+}
+.card:hover .phint {
+  opacity: 0;
+}
+.tf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 312.5%;
+  height: 312.5%;
+  border: 0;
+  transform: scale(0.32);
+  transform-origin: 0 0;
+  pointer-events: none;
+  background: #fff;
+  opacity: 0;
+  transition: opacity 0.36s ease;
+}
+.tf.on {
+  opacity: 1;
+}
+.card:hover .tf.on {
+  transform: scale(0.325);
+  transition: opacity 0.36s ease, transform 0.5s var(--ease);
+}
+.tov {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 9px;
+  background: linear-gradient(180deg, rgba(28, 25, 23, 0) 52%, rgba(28, 25, 23, 0.26));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card:hover .tov {
+  opacity: 1;
+}
+.topen {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: rgba(255, 253, 249, 0.94);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.55);
+  transform: translateY(6px);
+  transition: transform 0.34s var(--ease);
+}
+.card:hover .topen {
+  transform: none;
+}
+.meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 10px 2px;
+}
 .idx {
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -285,12 +426,14 @@ code {
 }
 .last {
   position: absolute;
-  top: 15px;
-  right: 16px;
+  z-index: 4;
+  top: 10px;
+  right: 10px;
   padding: 2px 7px;
   border-radius: 20px;
   border: 1px solid rgba(217, 87, 26, 0.26);
-  background: rgba(217, 87, 26, 0.06);
+  background: rgba(255, 251, 244, 0.9);
+  backdrop-filter: blur(6px);
   font-size: 9px;
   letter-spacing: 0.1em;
   color: var(--accent);
@@ -386,6 +529,24 @@ code {
   }
   .grid {
     grid-template-columns: 1fr;
+  }
+  /* 触屏没有悬停：不做实时预览，卡片收短一些 */
+  .thumb {
+    aspect-ratio: 2 / 1;
+  }
+  .tf,
+  .tov {
+    display: none;
+  }
+  .phint-m {
+    display: none;
+  }
+  .phint-t {
+    display: inline;
+  }
+  .last {
+    top: 8px;
+    right: 8px;
   }
 }
 </style>
