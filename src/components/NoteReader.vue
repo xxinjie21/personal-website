@@ -48,6 +48,34 @@ function bindBody() {
     img.addEventListener('click', () => emit('lightbox', { src: img.src, alt: img.dataset.alt || '' }))
   })
   applyHighlight()
+  fitMathBlocks(el)
+}
+
+// 长公式：先按容器宽度等比缩一点，尽量一屏看全；缩到 0.8 倍仍放不下的才留给横向滚动
+function fitMathBlocks(root = bodyRef.value) {
+  if (!root) return
+  root.querySelectorAll('.md-math-block').forEach((mb) => {
+    mb.style.fontSize = ''
+    const base = parseFloat(getComputedStyle(mb).fontSize)
+    if (!base) return
+    const cw = mb.clientWidth
+    const sw = mb.scrollWidth
+    if (sw <= cw + 1) return
+    const k = cw / sw
+    if (k < 0.7) return
+    let size = base * k * 0.99
+    mb.style.fontSize = `${size.toFixed(2)}px`
+    const sw2 = mb.scrollWidth
+    if (sw2 > cw + 1) {
+      size = parseFloat(mb.style.fontSize) * (cw / sw2)
+      mb.style.fontSize = `${size.toFixed(2)}px`
+    }
+  })
+}
+let fitTimer = 0
+function onResize() {
+  clearTimeout(fitTimer)
+  fitTimer = setTimeout(() => fitMathBlocks(), 160)
 }
 
 // 关键词高亮：只在文本节点上包裹，不破坏代码块结构
@@ -130,8 +158,16 @@ function onMathClick(e) {
 function closeMath() {
   zoomMath.value = ''
 }
-onMounted(() => document.addEventListener('keydown', onMathKey))
-onBeforeUnmount(() => document.removeEventListener('keydown', onMathKey))
+onMounted(() => {
+  document.addEventListener('keydown', onMathKey)
+  window.addEventListener('resize', onResize)
+  if (document.fonts?.ready) document.fonts.ready.then(() => fitMathBlocks())
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onMathKey)
+  window.removeEventListener('resize', onResize)
+  clearTimeout(fitTimer)
+})
 function onMathKey(e) {
   if (e.key === 'Escape') closeMath()
 }
