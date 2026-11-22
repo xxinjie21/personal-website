@@ -89,14 +89,15 @@ footer{font-size:12.3px;color:var(--muted);text-align:center;line-height:1.8;mar
   body::before{display:none;animation:none}
   a.card,a.card:hover,a.card:focus-visible,a.card:active{transform:none;
   box-shadow:0 14px 32px -30px rgba(85,53,28,.7)}
-  body{padding:16px 14px 20px}
+  a.card:active{border-color:rgba(217,87,26,.36);background:#fffdfa}
+  body{padding:16px 14px calc(24px + env(safe-area-inset-bottom))}
   .wrap{min-height:calc(100vh - 36px);justify-content:flex-start;gap:0}
   .grid{grid-template-columns:1fr;gap:10px;grid-auto-rows:auto}
   a.card,a.card.wide{grid-column:auto;min-height:0;gap:6px;padding:15px 15px 14px}  .desc{line-height:1.75}
   .ph-count{display:none}
 }
 @media (max-width:520px){
-  body{padding:12px 11px 18px}
+  body{padding:12px 11px calc(22px + env(safe-area-inset-bottom))}
   .head h1,.page-head h1{font-size:clamp(26px,7.6vw,32px)}
   .desc{font-size:15.5px;line-height:1.72}
   .tags{gap:5px}

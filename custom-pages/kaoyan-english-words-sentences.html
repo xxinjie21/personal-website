@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>考研英语 · 单词与长难句</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b2432'/%3E%3Cpath d='M11 9v14M11 12h11' stroke='%23fbfaf6' stroke-width='2'/%3E%3Cpath d='M15 18h7' stroke='%23a8401f' stroke-width='2'/%3E%3C/svg%3E">
 <style>
 *{box-sizing:border-box}
 :root{--ink:#241a12;--muted:#8a7365;--line:rgba(126,84,46,.16);--paper:#f7f2ec;--white:#fffdfa;--accent:#d9571a;--blue:#3d6b86;--green:#4b7a56;--brown:#8a6a3c;--teal:#4a7370;--ease:cubic-bezier(.22,.9,.28,1)}
 html,body{height:100%;margin:0}
-body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh;overflow:hidden;background:var(--paper);color:var(--ink);font:15px/1.6 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:100vh;height:100dvh;overflow:hidden;-webkit-text-size-adjust:100%;-webkit-font-smoothing:auto;background:var(--paper);color:var(--ink);font:15px/1.6 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
 /* 滚动条与站点一致：平时完全透明，指针进入可滚区域才浮现 */
 *{scrollbar-width:thin;scrollbar-color:transparent transparent}
 *:hover{scrollbar-color:rgba(126,84,46,.3) transparent}
@@ -215,7 +215,49 @@ main.nav-narrow .nav .yh .yn,main.nav-narrow .nav .yh .k{display:none}
   .tools{grid-column:1/-1;justify-self:stretch;overflow-x:auto;flex-wrap:nowrap;gap:18px;padding:1px 0 2px}
   .tools::-webkit-scrollbar{display:none}
 }
-</style>
+/* ===== 手机端补强：字号、点击热区、长词断行 ===== */
+@media (max-width:779px){
+body{overflow-x:hidden}
+.hdr{padding:10px 12px 8px;gap:8px}
+.hdr>*{min-width:0}
+.hdr h1{font-size:17px;line-height:1.35;flex-wrap:wrap;gap:6px}
+.hdr h1 .yr{font-size:10.5px;padding:2px 6px}
+.hdr .sub{font-size:11.5px;line-height:1.5;white-space:normal}
+.tabs{min-height:38px;padding:3px}
+.tab{min-height:36px;padding:0 13px;font-size:13px}
+.tools{gap:6px;padding:2px 0}
+.t{height:38px;padding:0 11px;font-size:12.5px}
+#btnToggle{min-width:5.2em}
+.nav .yh{min-height:40px}
+.nav .yy{font-size:14px}
+.it{padding:9px 8px;max-width:78vw}
+.orig{max-height:32vh;padding:12px 14px}
+.orig .meta{font-size:12px;gap:9px}
+.en{font-size:17px;line-height:1.72}
+.parse{padding:12px 14px 52px;overflow-x:hidden}
+.parse>*,.en{max-width:100%}
+.lhead{min-height:40px;font-size:14px}
+.mix li{font-size:13.5px}
+.mix li .rl{font-size:12px}
+.mix li .num{font-size:11.5px}
+.wl li{font-size:13.5px;grid-template-columns:minmax(0,max-content) 40px minmax(0,1fr)}
+.wl li i{font-size:12px}
+.zh{font-size:15px;line-height:1.8}
+.sk{font-size:13.4px}
+.sk .lab{font-size:11px}
+.gli li,.segline li,.creed-b li{font-size:13.4px}
+.trap{font-size:13px}
+.creed-h{font-size:13.5px}
+.mine{font-size:13.4px}
+.foot{font-size:12px}
+.legend{font-size:11.5px;gap:10px}
+.en,.zh,.sk,.mix li,.wl li,.creed-b li,.segline li,.gli li,.orig .meta{overflow-wrap:anywhere;word-break:break-word}
+.mix li,.wl li,.mix li .rc,.wl li span{min-width:0}
+@media (hover:none){
+.it:hover,.lhead:hover,.nav .yh:hover{background:none}
+.t:active,.tab:active,.it:active,.lhead:active{background:rgba(217,87,26,.08)}
+}
+}</style>
 </head>
 <body>
 
