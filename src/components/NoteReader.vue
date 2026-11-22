@@ -275,19 +275,52 @@ function onMathKey(e) {
   box-shadow: 0 0 10px rgba(217, 87, 26, 0.5);
   pointer-events: none;
 }
-/* 阅读区不做入场动画：切篇、滚动都不让正文动，读者视线不被打断 */
+/* 换笔记：正文淡入 + 轻微上浮，切篇不“闪” */
 .article {
   max-width: 768px;
   margin: 0 auto;
   padding-top: 34px;
+  animation: article-in 0.34s var(--ease) both;
 }
+@keyframes article-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* 正文块依次浮现：前 10 块按 18ms 递减错峰，后面的块直接跟上，长文也不拖 */
 .markdown > * {
-  animation: none;
+  animation: block-in 0.4s var(--ease) both;
+}
+.markdown > *:nth-child(1) { animation-delay: 0.04s; }
+.markdown > *:nth-child(2) { animation-delay: 0.058s; }
+.markdown > *:nth-child(3) { animation-delay: 0.076s; }
+.markdown > *:nth-child(4) { animation-delay: 0.094s; }
+.markdown > *:nth-child(5) { animation-delay: 0.112s; }
+.markdown > *:nth-child(6) { animation-delay: 0.13s; }
+.markdown > *:nth-child(7) { animation-delay: 0.148s; }
+.markdown > *:nth-child(8) { animation-delay: 0.166s; }
+.markdown > *:nth-child(9) { animation-delay: 0.184s; }
+.markdown > *:nth-child(10) { animation-delay: 0.2s; }
+@keyframes block-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .state {
   padding: 60px 0;
   color: var(--text-muted);
   text-align: center;
+  animation: article-in 0.3s var(--ease) both;
 }
 /* 加载骨架：几道灰条从左往右扫一道光，比“加载中…”更像在等东西 */
 .skeleton {
@@ -490,6 +523,7 @@ function onMathKey(e) {
   transition: transform 0.34s var(--ease), box-shadow 0.34s var(--ease);
 }
 .reader :deep(.markdown .md-img:hover) {
+  transform: scale(1.012);
   box-shadow: 0 18px 36px -26px rgba(85, 53, 28, 0.6);
 }
 

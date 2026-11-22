@@ -152,6 +152,16 @@
   background: #fff;
   cursor: zoom-in;
   padding: 8px;
+  /* 图片进视口才淡入，长文往下滚时一张张浮现 */
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.markdown .md-img.img-await {
+  opacity: 0;
+  transform: scale(0.985);
+}
+.markdown .md-img.img-in {
+  opacity: 1;
+  transform: none;
 }
 .markdown figcaption {
   font-size: 11.5px;
@@ -197,10 +207,6 @@
   text-rendering: geometricPrecision;
   -webkit-text-stroke: 0.3px currentColor;
 }
-.markdown .md-math-block:hover {
-  background: rgba(217, 87, 26, 0.05);
-}
-
 /* 关键词高亮 */
 .markdown .kw-hit {
   background: rgba(255, 158, 61, 0.3);
