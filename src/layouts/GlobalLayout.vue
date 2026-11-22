@@ -82,7 +82,7 @@ const onBrandClick = () => {
           <path class="stroke s1" pathLength="100" d="M18 6 L4 24" />
           <path class="stroke s2" pathLength="100" d="M28 6 L42 24" />
           <path class="stroke s2" pathLength="100" d="M42 6 L28 24" />
-          <path class="stroke s3" pathLength="100" d="M54 6 V18 C54 25 49 27.5 44.5 23.5" />
+          <path class="stroke s3" pathLength="100" d="M58 6 V18 C58 25 54 27.5 51 24" />
         </svg>
       </span>
     </router-link>
