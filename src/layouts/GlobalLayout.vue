@@ -1,9 +1,13 @@
 <script setup>
 // 纯阅读站点：不取进度、不连 Worker
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 // 顶栏：页面一滚就加投影，跟内容分层（阅读区内部滚动也要算，用捕获阶段接）
 const lifted = ref(false)
+// 笔记库整页是自带的滚动容器，顶栏不需要投影来分层，直接压平
+const route = useRoute()
+const flatTopbar = computed(() => route.path.startsWith('/notes'))
 const scrubEl = ref(null)
 const scrubThumb = ref(null)
 let scrubTimer = 0
@@ -88,7 +92,7 @@ const onBrandClick = () => {
 </script>
 
 <template>
-  <header class="topbar" :class="{ lift: lifted }">
+  <header class="topbar" :class="{ lift: lifted, flat: flatTopbar }">
     <router-link
       to="/"
       class="brand"
@@ -167,15 +171,22 @@ const onBrandClick = () => {
   backdrop-filter: blur(22px) saturate(120%);
   -webkit-backdrop-filter: blur(22px) saturate(120%);
   border-bottom: 1px solid var(--line);
-  box-shadow: 0 12px 30px -28px rgba(85, 53, 28, 0.4);
+  box-shadow: 0 6px 16px -20px rgba(85, 53, 28, 0.26);
   transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease),
     border-color 0.3s var(--ease);
 }
-/* 页面往下滚一点：顶栏底色更实、投影加深，和内容分层 */
+/* 笔记库：顶栏和内容之间已有分隔线，不再叠阴影 */
+.topbar.flat,
+.topbar.flat.lift {
+  box-shadow: none;
+  /* 不参与阴影过渡，切到笔记库时立刻就是平的 */
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+/* 页面往下滚一点：顶栏底色更实、投影略微加深，和内容分层 */
 .topbar.lift {
   background: rgba(255, 253, 250, 0.96);
   border-color: rgba(126, 84, 46, 0.22);
-  box-shadow: 0 14px 34px -22px rgba(85, 53, 28, 0.5);
+  box-shadow: 0 8px 20px -16px rgba(85, 53, 28, 0.34);
 }
 
 /* 品牌 */
