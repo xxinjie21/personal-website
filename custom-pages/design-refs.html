@@ -30,7 +30,7 @@ header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:
 .brand p{font-size:12px;color:var(--muted);margin-top:6px}
 .count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
 color:var(--muted);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
 border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
 text-decoration:none;overflow:hidden;isolation:isolate;transform-style:preserve-3d;will-change:transform;
@@ -97,9 +97,9 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   <header>
     <div class="brand">
       <h1>设计灵感 · 参考站</h1>
-      <p>三个常去的地方，点卡片直接开原站，看到合适的就搬回 custom-pages/。</p>
+      <p>两个常去的地方，点卡片直接开原站，看到合适的就搬回 custom-pages/。</p>
     </div>
-    <span class="count">3 sites</span>
+    <span class="count">2 sites</span>
   </header>
 
   <div class="grid">
@@ -124,20 +124,9 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
       <p class="desc">拿它做什么：定不下版式、配色时先来这里滚几屏找方向，选中一套再动手做。</p>
       <div class="tagrow"><span class="tag">灵感发散</span><span class="tag">布局 / 配色</span><span class="tag">导出 HTML · React</span></div>
     </a>
-
-    <a class="card" style="--i:2" href="https://www.awwwards.com" target="_blank" rel="noopener noreferrer">
-      <div class="top"><span class="idx">03</span>
-        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
-      </div>
-      <h2>Awwwards</h2>
-      <p class="host">awwwards.com</p>
-      <p class="desc"><b>获奖网站集合</b>：每日 / 每月评出的优秀站点，整体创意、动效节奏、排版完成度都在成品级。</p>
-      <p class="desc">拿它做什么：想看「做到最好长什么样」时翻案例，找动效和首屏的处理方式。</p>
-      <p class="tip">这个站风控较严，若打开只显示 Forbidden，换 Chrome / Edge 再开。</p>
-    </a>
   </div>
 
-  <footer>纯外链，不在本站内嵌预览；三站都能直接用浏览器打开。</footer>
+  <footer>纯外链，不在本站内嵌预览；两个站都能直接用浏览器打开。</footer>
 </div>
 <script>
 // 光标跟随光斑 + 轻微倾斜（只在鼠标上生效，触屏不抢滚动）
