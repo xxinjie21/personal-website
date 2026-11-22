@@ -365,9 +365,9 @@ code {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 16px;
-  max-width: 1040px;
+  max-width: 860px;
 }
 .card {
   position: relative;
@@ -663,3 +663,4 @@ code {
   }
 }
 </style>
+

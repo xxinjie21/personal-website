@@ -18,375 +18,629 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{min-height:100%;background:
-radial-gradient(1100px 700px at 8% -12%,rgba(217,87,26,.1),transparent 62%),
-radial-gradient(900px 620px at 92% 4%,rgba(220,150,90,.08),transparent 66%),var(--bg);
+radial-gradient(1000px 620px at 6% -14%,rgba(217,87,26,.08),transparent 64%),
+radial-gradient(820px 560px at 96% 2%,rgba(220,150,90,.06),transparent 68%),var(--bg);
 color:var(--text);font-family:'Inter',-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-line-height:1.6;-webkit-font-smoothing:antialiased;padding:26px 22px 34px}
-.wrap{max-width:1080px;margin:0 auto}
-header{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+line-height:1.6;-webkit-font-smoothing:antialiased;padding:24px 22px 34px}
+.wrap{max-width:1180px;margin:0 auto}
+
+/* 顶部：跨页导航 */
+.devnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:18px;
+font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
+.devnav span.lbl{color:#b9a48f;margin-right:4px}
+.devnav a{padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,250,.7);
+color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
+.devnav a:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
+.devnav a.here{color:var(--accent-cream);border-color:rgba(217,87,26,.3);background:rgba(217,87,26,.07)}
+
+header{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-soft)}
 h1{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:30px;margin-top:8px;letter-spacing:-.01em}
-.lead{font-size:12.5px;color:var(--muted);max-width:560px;margin-top:8px;line-height:1.75}
-.legend{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--muted)}
-.legend span{border:1px solid var(--line);border-radius:20px;padding:3px 8px;background:rgba(255,253,250,.7)}
+.lead{font-size:12.5px;color:var(--muted);max-width:600px;margin-top:8px;line-height:1.75}
+.h-acts{margin-left:auto;align-self:flex-start;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:22px}
+.master{border:1px solid rgba(217,87,26,.3);background:rgba(217,87,26,.06);color:var(--accent-cream);
+border-radius:999px;padding:7px 14px;font:500 11.5px/1 'Inter',sans-serif;cursor:pointer;
+transition:all .26s var(--ease)}
+.master:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
 
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
-.stage{position:relative;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#fffdfa,#fdfaf5);
-box-shadow:0 16px 36px -34px rgba(85,53,28,.7);overflow:hidden;isolation:isolate;
-transition:border-color .28s,box-shadow .3s,transform .3s var(--ease),background .28s;
-animation:rise .7s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(var(--i) * 80ms + 60ms)}
-.stage:hover{border-color:rgba(217,87,26,.38);transform:translateY(-3px);box-shadow:0 26px 48px -34px rgba(140,70,30,.5);background:#fffefb}
-.stage.open{border-color:rgba(217,87,26,.45);box-shadow:0 30px 60px -36px rgba(140,70,30,.55)}
-.trigger{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:16px 16px 14px;color:inherit;font:inherit}
-.stage.open .trigger{background:rgba(217,87,26,.035)}
-.tr-top{display:flex;align-items:center;gap:8px}
-.no{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#b9a48f}
-.stage.open .no{color:var(--accent)}
-.title{font-family:'Playfair Display','Noto Serif SC',serif;font-size:16px;font-weight:500}
-.chev{margin-left:auto;width:22px;height:22px;display:grid;place-items:center;color:#a08f7e;transition:transform .34s var(--ease),color .24s}
-.chev svg{width:13px;height:13px}
-.stage.open .chev{transform:rotate(180deg);color:var(--accent)}
-.goal{margin-top:9px;font-size:12px;color:#5f574e;line-height:1.7}
-.tools{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px}
-.tool{font-family:var(--mono);font-size:9.5px;color:#8a7365;border:1px solid var(--line);border-radius:20px;padding:2px 7px;background:rgba(255,253,250,.85);transition:color .24s,border-color .24s,transform .3s var(--ease)}
-.stage:hover .tool{border-color:rgba(217,87,26,.28);color:#7a6455}
-.meta{margin-top:11px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:#a08f7e}
-.meta b{color:var(--accent-soft);font-weight:500}
+/* 左卡右内容 */
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:20px;align-items:start}
+.rail{position:sticky;top:18px;display:flex;flex-direction:column;gap:7px}
+.st{position:relative;display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;cursor:pointer;
+border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 12px 11px 14px;background:rgba(255,253,250,.7);
+color:inherit;font:inherit;transition:background .26s,border-color .24s,box-shadow .3s var(--ease),transform .26s var(--ease)}
+.st::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:2px;border-radius:2px;background:transparent;transition:background .24s}
+.st:hover{border-color:rgba(217,87,26,.32);background:#fffefb;transform:translateX(2px)}
+.st.on{background:#fffefb;border-color:rgba(217,87,26,.42);box-shadow:0 12px 26px -22px rgba(140,70,30,.6)}
+.st.on::before{background:var(--accent)}
+.st-no{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#b9a48f;padding-top:2px;transition:color .24s}
+.st.on .st-no{color:var(--accent)}
+.st-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.st-title{font-family:'Playfair Display','Noto Serif SC',serif;font-size:15px;font-weight:500;letter-spacing:.01em}
+.st.on .st-title{color:var(--accent-cream)}
+.st-goal{font-size:11px;color:var(--muted);line-height:1.5}
+.st-dot{margin-left:auto;width:5px;height:5px;border-radius:50%;background:rgba(217,87,26,.55);flex:none;margin-top:5px}
+.rail-note{margin-top:6px;font-size:10.5px;color:#a08f7e;line-height:1.7;padding:0 2px}
 
-.detail{display:none}
-.panel{display:none;margin-top:14px;border:1px solid rgba(217,87,26,.42);border-radius:var(--radius);
-background:linear-gradient(180deg,#fffefb,#fdf8f0);box-shadow:0 30px 60px -40px rgba(140,70,30,.55);overflow:hidden}
-.panel.on{display:block;animation:panelIn .38s cubic-bezier(.22,.8,.2,1)}
-.panel-bar{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px dashed var(--line);background:rgba(217,87,26,.035)}
-.panel-bar .pno{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent)}
-.panel-bar h2{font-family:"Playfair Display","Noto Serif SC",serif;font-weight:500;font-size:17px}
-.panel-bar .pclose{margin-left:auto;border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;
-font-size:10px;padding:4px 10px;cursor:pointer;color:var(--muted);transition:all .26s var(--ease)}
-.panel-bar .pclose:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
-.panel-body{padding:2px 16px 18px}
-@keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.detail-in{padding:4px 16px 18px;border-top:1px dashed var(--line);margin-top:2px}
-.block{margin-top:13px}
-.block h3{font-size:10px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:6px}
-.block p{font-size:11.5px;color:#5f574e;line-height:1.75}
-.steps{display:flex;flex-direction:column;gap:0;margin-top:2px}
-.step{position:relative;display:flex;gap:9px;padding:7px 0 9px 16px}
-.step::before{content:"";position:absolute;left:4px;top:12px;width:5px;height:5px;border-radius:50%;background:rgba(217,87,26,.45);
-box-shadow:0 0 0 3px rgba(217,87,26,.06)}
-.step::after{content:"";position:absolute;left:6px;top:20px;bottom:-2px;width:1px;background:var(--line)}
-.step:last-child::after{display:none}
-.step .n{font-family:var(--mono);font-size:9px;color:#b9a48f;padding-top:2px}
-.step .body{flex:1}
-.step .do{font-size:11.5px;color:var(--text-dim);line-height:1.6}
-.step .arrow{margin-top:4px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:10.5px;color:var(--muted);line-height:1.55}
-.tlink{font-family:var(--mono);font-size:9.5px;color:var(--accent);border-bottom:1px solid rgba(217,87,26,.28);padding-bottom:1px}
+/* 右侧面板 */
+.pane{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#fffdfa,#fdfaf5);
+box-shadow:0 20px 44px -36px rgba(85,53,28,.7);min-height:520px;overflow:hidden}
+.pane-head{display:flex;align-items:flex-start;gap:12px;padding:16px 20px 14px;border-bottom:1px dashed var(--line);
+background:rgba(217,87,26,.03)}
+.pno{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent)}
+.pane-head h2{font-family:'Playfair Display','Noto Serif SC',serif;font-weight:500;font-size:21px;margin-top:4px}
+.pmeta{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:#a08f7e;margin-top:5px}
+.copyp{margin-left:auto;flex:none;border:1px solid rgba(217,87,26,.3);background:rgba(217,87,26,.06);color:var(--accent-cream);
+border-radius:999px;padding:7px 13px;font:500 11px/1 'Inter',sans-serif;cursor:pointer;transition:all .26s var(--ease)}
+.copyp:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
+.copyp.done{background:rgba(217,87,26,.16);border-color:rgba(217,87,26,.5)}
+.pane-body{padding:4px 20px 22px}
+.sec{margin-top:16px}
+.sec>h3{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:7px}
+.sec>p{font-size:12px;color:#5f574e;line-height:1.8}
+
+/* 步骤 */
+.steps{list-style:none;display:flex;flex-direction:column;margin-top:2px}
+.steps li{position:relative;display:flex;gap:10px;padding:8px 0 10px 18px}
+.steps li::before{content:"";position:absolute;left:4px;top:13px;width:5px;height:5px;border-radius:50%;
+background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06)}
+.steps li::after{content:"";position:absolute;left:6px;top:20px;bottom:-3px;width:1px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.n{font-family:var(--mono);font-size:9px;color:#b9a48f;padding-top:3px;flex:none}
+.do{font-size:12px;color:var(--text-dim);line-height:1.65}
+.out{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:5px;font-size:11px;color:var(--muted)}
+.tlink{font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28);padding-bottom:1px}
 .tlink:hover{color:var(--accent-cream)}
 .gain{color:var(--text-dim)}
 .gain b{font-weight:600;color:var(--accent-cream)}
-.check{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
-.check li{font-size:11px;color:#5f574e;display:flex;gap:6px;line-height:1.65}
-.check li svg{width:12px;height:12px;flex:none;margin-top:3px;color:rgba(217,87,26,.6)}
-.trap{font-size:11px;color:#8a7365;padding:8px 10px;border-left:2px solid rgba(217,87,26,.35);background:rgba(217,87,26,.04);line-height:1.65;margin-top:4px}
-.nav{display:flex;gap:10px;margin-top:14px;padding-top:11px;border-top:1px dashed var(--line);font-size:10px;font-family:var(--mono);color:var(--muted);flex-wrap:wrap}
-.nav span{margin-right:auto;color:#b9a48f}
-.nav a{color:var(--accent);border-bottom:1px solid rgba(217,87,26,.28)}
-.nav a:hover{color:var(--accent-cream)}
 
-.appendix{margin-top:14px;padding:15px 17px;border:1px solid var(--line);border-radius:var(--radius);
-background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(255,250,244,.86));box-shadow:var(--shadow);
-display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;animation:rise .7s cubic-bezier(.16,1,.3,1) .62s backwards}
-.appendix .ap-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--accent-soft);text-transform:uppercase}
-.appendix h2{font-family:'Playfair Display','Noto Serif SC',serif;font-size:16px;font-weight:500;margin-top:5px}
-.appendix p{font-size:11.5px;color:#5f574e;line-height:1.75;margin-top:6px;max-width:640px}
-.appendix .ap-link{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(217,87,26,.3);border-radius:999px;padding:6px 12px;background:rgba(217,87,26,.06);transition:all .26s var(--ease)}
-.appendix .ap-link:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
+/* 验收 */
+.check{list-style:none;display:flex;flex-direction:column;gap:6px}
+.check li{font-size:11.5px;color:#5f574e;display:flex;gap:7px;line-height:1.7}
+.check svg{width:12px;height:12px;flex:none;margin-top:4px;color:rgba(217,87,26,.6)}
+.trap{font-size:11.5px;color:#8a7365;padding:9px 11px;border-left:2px solid rgba(217,87,26,.35);
+background:rgba(217,87,26,.04);line-height:1.7}
 
-footer{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.9}
+/* skill 并入 */
+.skillbox{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,253,250,.8);padding:12px 13px}
+.sk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sk-name{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--accent-cream)}
+.badge{font-size:9px;letter-spacing:.3px;padding:1px 6px;border-radius:20px;color:#ab4712;
+background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
+.sk-link{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28)}
+.sk-one{font-size:11.5px;color:#5f574e;line-height:1.7;margin-top:7px}
+.sk-row{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.sk-row .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#b9a48f;min-width:22px;padding-top:3px}
+.sk-row .v{flex:1;font-size:11px;color:var(--text-dim);line-height:1.65}
+.cmd{font-family:var(--mono);font-size:10.5px;color:var(--accent-cream);background:rgba(217,87,26,.06);
+border:1px solid rgba(217,87,26,.16);border-radius:6px;padding:2px 6px;display:inline-block;margin:2px 3px 2px 0;word-break:break-all}
+.copy{flex:none;border:1px solid var(--line);background:rgba(255,255,255,.8);border-radius:999px;
+font-size:10px;padding:3px 9px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;transition:all .24s var(--ease)}
+.copy:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
+.copy.done{background:rgba(217,87,26,.12);border-color:rgba(217,87,26,.4);color:var(--accent-cream)}
+.empty{display:flex;gap:9px;align-items:flex-start;padding:11px 12px;border:1px dashed var(--line-strong);
+border-radius:var(--radius-sm);background:rgba(255,253,250,.6);font-size:11.5px;color:var(--muted);line-height:1.7}
+.empty svg{width:13px;height:13px;flex:none;margin-top:3px;color:#b9a48f}
+.empty b{color:var(--text-dim);font-weight:600}
+.empty a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.3)}
+
+/* 提示词 */
+.pblock{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:10.5px;line-height:1.85;
+color:#5b4a3c;background:rgba(255,253,250,.85);border:1px solid var(--line);border-left:2px solid rgba(217,87,26,.3);
+border-radius:var(--radius-sm);padding:12px 13px;max-height:260px;overflow:auto}
+.say-by{font-size:10.5px;color:#a08f7e;margin-top:6px}
+
+footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);
+line-height:1.9;display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
 footer b{color:var(--accent-cream);font-weight:600}
-@keyframes rise{from{opacity:0;transform:translateY(12px) scale(.985);filter:blur(4px)}to{opacity:1;transform:none;filter:blur(0)}}
-@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28)}
+footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:14px}
+  .rail{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .st-goal{display:none}
+  .rail-note{grid-column:1/-1;margin-top:2px}
+  .pane{min-height:0}
+}
 @media (max-width:700px){
   body{padding:18px 14px 26px}
   h1{font-size:25px}
-  .legend{display:none}
-  .grid{grid-template-columns:1fr}
-  .stage:hover{transform:none}
-  .goal{font-size:12.5px}
-  .appendix{flex-direction:column}
-  .ap-link{margin-left:0}
+  .h-acts{margin-left:0}
+  .rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .st{padding:9px 10px 9px 12px}
+  .st-title{font-size:13.5px}
+  .pane-head{padding:14px 14px 12px;flex-wrap:wrap}
+  .copyp{margin-left:0}
+  .pane-body{padding:2px 14px 18px}
+  footer .ap{margin-left:0}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <nav class="devnav" aria-label="开发页导航">
+    <span class="lbl">开发</span>
+    <a href="vibe-flow.html" class="here">全流程</a>
+    <a href="motion-handbook.html">动效手册</a>
+    <a href="design-refs.html">设计参考</a>
+  </nav>
+
   <header>
     <div>
-      <p class="eyebrow">workflow</p>
+      <p class="eyebrow">workflow · 6 stages</p>
       <h1>Vibe Coding 全流程</h1>
-      <p class="lead">六张卡就是六个阶段。点开一张，看到这一步该干什么、哪一步用哪个工具、做完手里多出什么东西。</p>
+      <p class="lead">左边六个阶段，点一个，右边就是这一步的全部：做什么、用什么工具、得到什么、怎么判过关。每个阶段都能一键复制一段提示词，让 AI 先反问你，把需求问清再开工。</p>
     </div>
-    <div class="legend"><span>点卡展开</span><span>Enter / Space 也开</span><span>#stage-3 直达</span></div>
+    <div class="h-acts">
+      <button class="master" type="button" id="copyMaster">复制六阶段总提示词</button>
+    </div>
   </header>
 
-  <div class="grid" id="grid">
-    <!-- ① -->
-    <article class="stage" id="stage-1" data-i="0">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d1">
-        <div class="tr-top"><span class="no">STAGE 01</span><span class="title">定需求</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">把一句话想法，写成能判定对错的需求。</p>
-        <div class="tools"><span class="tool">doc-coauthoring</span></div>
-        <div class="meta"><span><b>4</b> steps</span><span><b>1</b> file</span></div>
+  <div class="shell">
+    <aside class="rail" id="rail" aria-label="阶段">
+      <button class="st on" type="button" data-stage="1" aria-selected="true">
+        <span class="st-no">01</span>
+        <span class="st-body"><span class="st-title">定需求</span><span class="st-goal">写成能判定对错的需求</span></span>
+        <span class="st-dot" title="有对口 skill"></span>
       </button>
-      <div class="detail" id="d1"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>需求文档能直接拿来排期，不出现「好看」「流畅」这类没法验收的词。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">先写一句可验收的总目标：谁，在什么页面，做成什么，怎么算成功。</p><div class="arrow">→ <span class="gain">得到「总目标」一节</span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">列页面清单，最多五页，每页一行用途。</p><div class="arrow">→ <span class="gain">得到页面清单（≤5）</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">写三条明确不做的功能，把范围钉死。</p><div class="arrow">→ <span class="gain">得到「不做」边界</span><span class="gain">·</span><span class="gain">省掉后期返工</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">把验收写成可观测现象：点击后出现什么、刷新后还剩什么。</p><div class="arrow">→ <span class="gain">得到验收清单 <b>requirements.md</b></span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>每条需求都对应一个可观测结果</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>页面清单不超过 5 页，能画在一张纸上</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>文档里零个主观形容词</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">需求写成散文，写着写着开始想配色——这时候退回去，先把页面清单定完。</p></div>
-        <div class="nav"><span>下一步</span><a href="#stage-2">02 起骨架 ↓</a><a href="skill-list.html">看该阶段的 skill ↗</a></div>
-      </div></div>
-    </article>
+      <button class="st" type="button" data-stage="2" aria-selected="false">
+        <span class="st-no">02</span>
+        <span class="st-body"><span class="st-title">起骨架</span><span class="st-goal">空壳先跑通，再谈内容</span></span>
+        <span class="st-dot" title="有对口 skill"></span>
+      </button>
+      <button class="st" type="button" data-stage="3" aria-selected="false">
+        <span class="st-no">03</span>
+        <span class="st-body"><span class="st-title">搭界面</span><span class="st-goal">先定 token，再生成页面</span></span>
+        <span class="st-dot" title="有对口 skill"></span>
+      </button>
+      <button class="st" type="button" data-stage="4" aria-selected="false">
+        <span class="st-no">04</span>
+        <span class="st-body"><span class="st-title">接数据</span><span class="st-goal">表、权限、登录都能用</span></span>
+      </button>
+      <button class="st" type="button" data-stage="5" aria-selected="false">
+        <span class="st-no">05</span>
+        <span class="st-body"><span class="st-title">上线</span><span class="st-goal">公网能开，深链不 404</span></span>
+      </button>
+      <button class="st" type="button" data-stage="6" aria-selected="false">
+        <span class="st-no">06</span>
+        <span class="st-body"><span class="st-title">验收</span><span class="st-goal">让机器替你点一遍</span></span>
+        <span class="st-dot" title="有对口 skill"></span>
+      </button>
+      <p class="rail-note">四个阶段有对口 skill，另外两个没有；不凑数，用工具顶。</p>
+    </aside>
 
-    <!-- ② -->
-    <article class="stage" id="stage-2" data-i="1">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d2">
-        <div class="tr-top"><span class="no">STAGE 02</span><span class="title">起骨架</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">先把空壳跑起来，再谈内容。</p>
-        <div class="tools"><span class="tool">opencode</span><span class="tool">vite</span><span class="tool">web-artifacts-builder</span></div>
-        <div class="meta"><span><b>5</b> steps</span><span><b>4</b> routes</span></div>
-      </button>
-      <div class="detail" id="d2"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>四条路由都能打开，页面是空的但不报错，可以往上堆内容。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">初始化工程，定技术栈与包管理器。</p><div class="arrow">→ <a class="tlink" href="https://github.com/sst/opencode" target="_blank" rel="noopener noreferrer">OpenCode</a><span class="gain">得到 package.json 与目录</span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">定四条路由与对应文件：首页、列表、详情、404。</p><div class="arrow">→ <a class="tlink" href="https://github.com/vitejs/vite" target="_blank" rel="noopener noreferrer">Vite</a><span class="gain">得到 4 个页面文件</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">按职责分目录：页面、组件、数据访问、工具函数。</p><div class="arrow">→ <span class="gain">得到不交叉的目录结构</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">起 dev，每页放一句占位文字，确认能跳转。</p><div class="arrow">→ <span class="gain">得到可跑空壳</span></div></div></div>
-          <div class="step"><span class="n">05</span><div class="body"><p class="do">跑一次 build，立刻提交第一个 commit。</p><div class="arrow">→ <span class="gain">得到干净基线</span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>dev 与 build 都零报错</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>四条路由全部 200，控制台零 error</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>改一行字，热更新 1 秒内生效</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">骨架阶段就开始写样式，目录越铺越乱；先把路由与目录定死，样式留到下一阶段。</p></div>
-        <div class="nav"><span>上下游</span><a href="#stage-1">↑ 01</a><a href="#stage-3">03 搭界面 ↓</a></div>
-      </div></div>
-    </article>
-
-    <!-- ③ -->
-    <article class="stage" id="stage-3" data-i="2">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d3">
-        <div class="tr-top"><span class="no">STAGE 03</span><span class="title">搭界面</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">先定规范，再让 AI 生成页面。</p>
-        <div class="tools"><span class="tool">astryx</span><span class="tool">shadcn/ui</span><span class="tool">tailwind</span><span class="tool">lucide</span><span class="tool">motion</span></div>
-        <div class="meta"><span><b>6</b> steps</span><span><b>3</b> pages</span></div>
-      </button>
-      <div class="detail" id="d3"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>三个页面各就各位，颜色、间距、圆角只从一套 token 里取。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">先定 tokens：主色、纸底、四级灰阶、间距刻度、圆角。</p><div class="arrow">→ <a class="tlink" href="https://github.com/facebook/astryx" target="_blank" rel="noopener noreferrer">Astryx</a><span class="gain">得到 <b>design-tokens.md</b></span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">按需装组件，不自造按钮和输入框。</p><div class="arrow">→ <a class="tlink" href="https://github.com/shadcn-ui/ui" target="_blank" rel="noopener noreferrer">shadcn/ui</a><span class="gain">得到组件目录</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">写样式层与断点：桌面、平板、手机三档。</p><div class="arrow">→ <a class="tlink" href="https://github.com/tailwindlabs/tailwindcss" target="_blank" rel="noopener noreferrer">Tailwind CSS</a><span class="gain">得到样式与断点</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">图标统一一套，只用一个线条风格。</p><div class="arrow">→ <a class="tlink" href="https://github.com/lucide-icons/lucide" target="_blank" rel="noopener noreferrer">Lucide</a><span class="gain">得到图标清单</span></div></div></div>
-          <div class="step"><span class="n">05</span><div class="body"><p class="do">写三页真实内容：首页讲清是谁，列表能扫读，详情能读完。</p><div class="arrow">→ <span class="gain">得到 首页 / 列表 / 详情</span></div></div></div>
-          <div class="step"><span class="n">06</span><div class="body"><p class="do">补动效：先叫得出名字，再决定用不用。</p><div class="arrow">→ <a class="tlink" href="https://github.com/motiondivision/motion" target="_blank" rel="noopener noreferrer">Motion</a><a class="tlink" href="motion-handbook.html">动效手册 ↗</a><span class="gain">得到交互脚本</span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>代码里没有裸数值，全部走 token</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>390 宽无横向滚动，字号不缩水</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>hover / focus / active 三态齐全</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>键盘 Tab 能走完整页，焦点看得见</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">先写样式再想内容，每个页面都要返工；内容先落，样式跟着内容长。</p></div>
-        <div class="nav"><span>上下游</span><a href="#stage-2">↑ 02</a><a href="#stage-4">04 接数据 ↓</a></div>
-      </div></div>
-    </article>
-
-    <!-- ④ -->
-    <article class="stage" id="stage-4" data-i="3">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d4">
-        <div class="tr-top"><span class="no">STAGE 04</span><span class="title">接数据</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">表、权限、登录，三样都要能用。</p>
-        <div class="tools"><span class="tool">supabase</span></div>
-        <div class="meta"><span><b>6</b> steps</span><span><b>1</b> schema</span></div>
-      </button>
-      <div class="detail" id="d4"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>换一台机器照 README 就能跑起来，没登录的人进不了受限页。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">建 schema：先写实体和关系，别先写页面需要的字段。</p><div class="arrow">→ <a class="tlink" href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a><span class="gain">得到迁移脚本</span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">开权限策略：默认拒绝，逐条放行。</p><div class="arrow">→ <span class="gain">得到策略表</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">写数据访问层，页面不直接拼 SQL。</p><div class="arrow">→ <span class="gain">得到 api 封装</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">接登录与会话，做登录页与「我的」页。</p><div class="arrow">→ <span class="gain">得到登录页与重置密码</span></div></div></div>
-          <div class="step"><span class="n">05</span><div class="body"><p class="do">补空态与错误态：没数据时说什么，失败时给什么出口。</p><div class="arrow">→ <span class="gain">得到空态 / 错误态组件</span></div></div></div>
-          <div class="step"><span class="n">06</span><div class="body"><p class="do">写 env 样例与 README，把启动步骤压到三步。</p><div class="arrow">→ <span class="gain">得到 <b>env.example</b> 与 README</span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>新环境照 README 三步能起来</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>列表空态有文案，失败有提示，不白屏</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>未登录访问受限页被拦回登录</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">先开全表权限后补策略，等于线上裸奔；权限从「全拒绝」反向加。</p></div>
-        <div class="nav"><span>上下游</span><a href="#stage-3">↑ 03</a><a href="#stage-5">05 上线 ↓</a></div>
-      </div></div>
-    </article>
-
-    <!-- ⑤ -->
-    <article class="stage" id="stage-5" data-i="4">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d5">
-        <div class="tr-top"><span class="no">STAGE 05</span><span class="title">上线</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">能在公网打开，刷新深链不 404。</p>
-        <div class="tools"><span class="tool">coolify</span></div>
-        <div class="meta"><span><b>6</b> steps</span><span><b>1</b> host</span></div>
-      </button>
-      <div class="detail" id="d5"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>一条流水线把代码推到线上，出问题能一步回滚。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">先定体积预算：首屏 JS 多少、图片多大，写进 README。</p><div class="arrow">→ <span class="gain">得到预算表</span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">写 CI：装依赖、跑测试、构建，三件事按顺序。</p><div class="arrow">→ <span class="gain">得到工作流文件</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">部署：容器或静态产物，按项目选。</p><div class="arrow">→ <a class="tlink" href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a><span class="gain">得到线上站点</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">配深链回退：任何子路径都回到入口页。</p><div class="arrow">→ <span class="gain">得到 404 回退规则</span></div></div></div>
-          <div class="step"><span class="n">05</span><div class="body"><p class="do">接域名与 HTTPS，把 http 跳转一次做完。</p><div class="arrow">→ <span class="gain">得到证书与跳转</span></div></div></div>
-          <div class="step"><span class="n">06</span><div class="body"><p class="do">做首屏体检：体积、请求数、首字时间。</p><div class="arrow">→ <span class="gain">得到体检记录</span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>线上首屏可打开，全站 HTTPS</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>随手复制内页链接刷新不 404</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>首屏 JS 不超过 120KB gzip</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">只测首页，深链一刷新就 404；上线前先手点三个内页。</p></div>
-        <div class="nav"><span>上下游</span><a href="#stage-4">↑ 04</a><a href="#stage-6">06 验收 ↓</a></div>
-      </div></div>
-    </article>
-
-    <!-- ⑥ -->
-    <article class="stage" id="stage-6" data-i="5">
-      <button class="trigger" type="button" aria-expanded="false" aria-controls="d6">
-        <div class="tr-top"><span class="no">STAGE 06</span><span class="title">验收</span>
-          <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
-        <p class="goal">让机器替你点一遍，别再靠肉眼。</p>
-        <div class="tools"><span class="tool">vitest</span><span class="tool">playwright</span><span class="tool">webapp-testing</span></div>
-        <div class="meta"><span><b>5</b> steps</span><span><b>2</b> suites</span></div>
-      </button>
-      <div class="detail" id="d6"><div class="detail-in">
-        <div class="block"><h3>目标</h3><p>核心路径一条命令能重跑，红了就知道哪一步断了。</p></div>
-        <div class="block"><h3>步骤</h3><div class="steps">
-          <div class="step"><span class="n">01</span><div class="body"><p class="do">单元测试只测纯逻辑：解析、格式化、计算。</p><div class="arrow">→ <a class="tlink" href="https://github.com/vitest-dev/vitest" target="_blank" rel="noopener noreferrer">Vitest</a><span class="gain">得到单元用例</span></div></div></div>
-          <div class="step"><span class="n">02</span><div class="body"><p class="do">e2e 只测三条：进入、登录、增删一条数据。</p><div class="arrow">→ <a class="tlink" href="https://github.com/microsoft/playwright" target="_blank" rel="noopener noreferrer">Playwright</a><span class="gain">得到 e2e 用例</span></div></div></div>
-          <div class="step"><span class="n">03</span><div class="body"><p class="do">写冒烟清单：上线前手点的十件事。</p><div class="arrow">→ <span class="gain">得到 checklist</span></div></div></div>
-          <div class="step"><span class="n">04</span><div class="body"><p class="do">清调试代码：console.log、假数据、临时开关。</p><div class="arrow">→ <span class="gain">得到干净构建</span></div></div></div>
-          <div class="step"><span class="n">05</span><div class="body"><p class="do">记已知问题，别用「以后再说」口头传。</p><div class="arrow">→ <span class="gain">得到 issues 清单</span></div></div></div>
-        </div></div>
-        <div class="block"><h3>验收</h3><ul class="check">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>CI 全绿，e2e 可本地一条命令重跑</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>控制台零 error，无 404 资源</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>源码里搜不到 console.log 与 TODO 占位</li>
-        </ul></div>
-        <div class="block"><h3>常见翻车</h3><p class="trap">e2e 写得比业务还多，维护成本压过收益；只测会真的坏的那几条。</p></div>
-        <div class="nav"><span>上下游</span><a href="#stage-5">↑ 05</a><a href="skill-list.html">看该阶段的 skill ↗</a></div>
-      </div></div>
-    </article>
+    <main class="pane" id="pane" aria-live="polite">
+      <div class="pane-head">
+        <div>
+          <span class="pno" id="pno">STAGE 01</span>
+          <h2 id="ptitle">定需求</h2>
+          <p class="pmeta" id="pmeta"></p>
+        </div>
+        <button class="copyp" type="button" id="copyPrompt">复制本阶段提示词</button>
+      </div>
+      <div class="pane-body" id="paneBody"></div>
+    </main>
   </div>
 
-  <section class="panel" id="detailPanel" aria-live="polite">
-    <div class="panel-bar">
-      <span class="pno" id="panelNo">STAGE 01</span>
-      <h2 id="panelTitle">定需求</h2>
-      <button class="pclose" type="button" id="panelClose">收起</button>
-    </div>
-    <div class="panel-body" id="panelBody"></div>
-  </section>
-
-  <section class="appendix">
-    <div>
-      <p class="ap-tag">appendix · 不进流程</p>
-      <h2>MoneyPrinterTurbo</h2>
-      <p>给一个主题就自己合成短视频：写稿、配音、找素材、拼画面。开源免费，模型调用按量自付。它不参与建站六个阶段，只在站点做完之后帮你做宣传片。</p>
-    </div>
-    <a class="ap-link" href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-  </section>
-
   <footer>
-    规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。每个阶段的工具都不必全装，够用就停。
+    <span>规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。工具不必全装，够用就停。</span>
+    <span class="ap">做完站点想顺手做条宣传片：<a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener noreferrer">MoneyPrinterTurbo ↗</a>（开源，给主题自动出短视频）</span>
   </footer>
 </div>
 
+<!-- 六阶段内容 -->
+<div class="sd" id="sd-1" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>需求文档能直接拿去排期：出现「好看」「流畅」这类词就算没写完。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">先写一句可验收的总目标：谁，在什么页面，做成什么，怎么算成功。</p>
+        <div class="out"><span>手写，不用工具</span><span class="gain">→ 得到「总目标」一节</span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">列页面清单，最多五页，每页一行用途。</p>
+        <div class="out"><span class="gain">→ 得到页面清单（≤5）</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">写三条明确不做的功能，把范围钉死。</p>
+        <div class="out"><span class="gain">→ 得到「不做」边界</span><span class="gain">·</span><span class="gain">省掉后期返工</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">把验收写成可观测现象：点一下出现什么、刷新后还剩什么。</p>
+        <div class="out"><a class="tlink" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">doc-coauthoring</a><span class="gain">→ 得到 <b>requirements.md</b></span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>每条需求都对应一个可观测结果</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>页面清单不超过 5 页，能画在一张纸上</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>文档里零个主观形容词</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">需求写成散文，写着写着开始想配色——这时候退回去，先把页面清单定完。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="skillbox">
+      <div class="sk-top"><span class="sk-name">doc-coauthoring</span><span class="badge">开源</span>
+        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
+      <p class="sk-one">和 AI 一起把需求文档写出来：先问清边界，再逐节对齐，最后成稿。</p>
+      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code><code class="cmd">/plugin install document-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
+      <div class="sk-row"><span class="k">用</span><div class="v">「用 doc-coauthoring 和我一起写这份需求，每节先问再写」</div></div>
+      <div class="sk-row"><span class="k">坑</span><div class="v">它擅长长文协作，不出代码；需求没边界时会反问很多轮，别指望一句话出稿。</div></div>
+    </div>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+    <pre class="pblock" data-prompt>你是我的 Vibe Coding 搭档，现在在第 1 阶段「定需求」。这一阶段不写代码、不画界面。
+
+请先用提问把需求问清楚：一次最多问 3 个问题，每个问题给 2–3 个选项并说明影响；我答完再问下一组。
+按这个顺序问：
+1) 这站点给谁用，他们为什么会打开；
+2) 一共几个页面，每页一句话用途；
+3) 必须有的三个功能，按优先级排；
+4) 明确不做的功能（至少三条）；
+5) 每个功能怎么算做完，用可观测现象描述；
+6) 有没有参考站点或明确反感的风格。
+
+我回答含糊时（「好看」「流畅」「差不多」）继续追问，直到能验收。
+问完用 200 字复述「目标 / 页面清单 / 不做 / 验收」，等我确认，再输出 requirements.md。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
+<div class="sd" id="sd-2" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>四条路由都能打开，页面空着但不报错，可以往上堆内容。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">初始化工程，定技术栈与包管理器。</p>
+        <div class="out"><a class="tlink" href="https://github.com/sst/opencode" target="_blank" rel="noopener noreferrer">OpenCode</a><span class="gain">→ 得到 package.json 与目录</span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">定四条路由与对应文件：首页、列表、详情、404。</p>
+        <div class="out"><a class="tlink" href="https://github.com/vitejs/vite" target="_blank" rel="noopener noreferrer">Vite</a><span class="gain">→ 得到 4 个页面文件</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">按职责分目录：页面、组件、数据访问、工具函数。</p>
+        <div class="out"><span class="gain">→ 得到不交叉的目录结构</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">起 dev，每页放一句占位文字，确认能跳转。</p>
+        <div class="out"><span class="gain">→ 得到可跑空壳</span></div></div></li>
+      <li><span class="n">05</span><div><p class="do">跑一次 build，立刻提交第一个 commit。</p>
+        <div class="out"><span class="gain">→ 得到干净基线</span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>dev 与 build 都零报错</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>四条路由全部 200，控制台零 error</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>改一行字，热更新 1 秒内生效</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">骨架阶段就开始写样式，目录越铺越乱；先把路由与目录定死，样式留到下一阶段。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="skillbox">
+      <div class="sk-top"><span class="sk-name">web-artifacts-builder</span><span class="badge">开源</span>
+        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
+      <p class="sk-one">直接生成可运行的前端产物：HTML、样式、脚本成套给出，而不是一段段碎片。</p>
+      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
+      <div class="sk-row"><span class="k">用</span><div class="v">「用 web-artifacts-builder 搭四条路由的空壳，先不写内容」</div></div>
+      <div class="sk-row"><span class="k">坑</span><div class="v">它偏爱单文件产物；要真实工程结构得明确说「用 Vite + 多文件目录」。</div></div>
+    </div>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+<pre class="pblock" data-prompt>你在第 2 阶段「起骨架」。目标只是把空壳跑通，不写内容和样式。
+
+先问我：
+1) 技术栈与包管理器（Vue + Vite / React + Next / 纯静态）；
+2) 页面路由清单，每页对应什么文件名；
+3) 目录怎么分（页面 / 组件 / 数据 / 工具）；
+4) 部署目标（GitHub Pages / Vercel / 自己的服务器）；
+5) 我机器上现有什么环境。
+
+问完再动手：初始化工程 → 建路由与占位页 → 起 dev 确认每页能开 → build 一次 → 提交第一个 commit。
+每做完一步，告诉我动了哪些文件、怎么验证，等我确认再下一步。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
+<div class="sd" id="sd-3" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>三个页面各就各位，颜色、间距、圆角只从一套 token 里取。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">先定 tokens：主色、纸底、四级灰阶、间距刻度、圆角。</p>
+        <div class="out"><a class="tlink" href="https://github.com/facebook/astryx" target="_blank" rel="noopener noreferrer">Astryx</a><span class="gain">→ 得到 <b>design-tokens.md</b></span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">按需装组件，不自造按钮和输入框。</p>
+        <div class="out"><a class="tlink" href="https://github.com/shadcn-ui/ui" target="_blank" rel="noopener noreferrer">shadcn/ui</a><span class="gain">→ 得到组件目录</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">写样式层与断点：桌面、平板、手机三档。</p>
+        <div class="out"><a class="tlink" href="https://github.com/tailwindlabs/tailwindcss" target="_blank" rel="noopener noreferrer">Tailwind CSS</a><span class="gain">→ 得到样式与断点</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">图标统一一套，只用一个线条风格。</p>
+        <div class="out"><a class="tlink" href="https://github.com/lucide-icons/lucide" target="_blank" rel="noopener noreferrer">Lucide</a><span class="gain">→ 得到图标清单</span></div></div></li>
+      <li><span class="n">05</span><div><p class="do">写三页真实内容：首页讲清是谁，列表能扫读，详情能读完。</p>
+        <div class="out"><span class="gain">→ 得到 首页 / 列表 / 详情</span></div></div></li>
+      <li><span class="n">06</span><div><p class="do">补动效：先叫得出名字，再决定用不用。</p>
+        <div class="out"><a class="tlink" href="https://github.com/motiondivision/motion" target="_blank" rel="noopener noreferrer">Motion</a><a class="tlink" href="motion-handbook.html">动效手册 ↗</a><span class="gain">→ 得到交互脚本</span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>代码里没有裸数值，全部走 token</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>390 宽无横向滚动，字号不缩水</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>hover / focus / active 三态齐全</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>键盘 Tab 能走完整页，焦点看得见</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">先写样式再想内容，每个页面都要返工；内容先落，样式跟着内容长。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="skillbox">
+      <div class="sk-top"><span class="sk-name">frontend-design</span><span class="badge">开源</span>
+        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
+      <p class="sk-one">界面结构、组件形态、排版节奏这一层的判断力，避免生成千篇一律的模板脸。</p>
+      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
+      <div class="sk-row"><span class="k">用</span><div class="v">「用 frontend-design 定版式，参考站内已有的间距和圆角」</div></div>
+      <div class="sk-row"><span class="k">坑</span><div class="v">它给的是设计判断，不是 token；token 要自己先落下，否则每页各写一套数值。</div></div>
+    </div>
+    <p class="say-by">找方向看 <a class="tlink" href="design-refs.html">设计参考 ↗</a>，挑动效看 <a class="tlink" href="motion-handbook.html">动效手册 ↗</a>。</p>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+<pre class="pblock" data-prompt>你在第 3 阶段「搭界面」。先把约束问清，再生成页面。
+
+先问我：
+1) 想要的调性（暖白纸感 / 冷灰极简 / 高对比）；
+2) 主色和一个强调色；
+3) 字体偏好（衬线标题还是全无衬线）；
+4) 圆角与间距偏松还是偏紧；
+5) 三个页面各自的重点内容；
+6) 想加的动效名字，不确定就让我从动效手册里挑；
+7) 移动端最窄要支持到多少宽。
+
+问完先给 design-tokens（颜色 / 字号 / 间距 / 圆角 / 断点），我确认后再逐页生成。
+生成时只允许用 token 里的值，不要出现裸数值；每页给我桌面和 390 宽两张截图。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
+<div class="sd" id="sd-4" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>换一台机器照 README 就能跑起来，没登录的人进不了受限页。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">建 schema：先写实体和关系，别先写页面需要的字段。</p>
+        <div class="out"><a class="tlink" href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a><span class="gain">→ 得到迁移脚本</span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">开权限策略：默认拒绝，逐条放行。</p>
+        <div class="out"><span class="gain">→ 得到策略表</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">写数据访问层，页面不直接拼 SQL。</p>
+        <div class="out"><span class="gain">→ 得到 api 封装</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">接登录与会话，做登录页与「我的」页。</p>
+        <div class="out"><span class="gain">→ 得到登录页与重置密码</span></div></div></li>
+      <li><span class="n">05</span><div><p class="do">补空态与错误态：没数据时说什么，失败时给什么出口。</p>
+        <div class="out"><span class="gain">→ 得到空态 / 错误态组件</span></div></div></li>
+      <li><span class="n">06</span><div><p class="do">写 env 样例与 README，把启动步骤压到三步。</p>
+        <div class="out"><span class="gain">→ 得到 <b>env.example</b> 与 README</span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>新环境照 README 三步能起来</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>列表空态有文案，失败有提示，不白屏</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>未登录访问受限页被拦回登录</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">先开全表权限后补策略，等于线上裸奔；权限从「全拒绝」反向加。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+      <span><b>该阶段暂无对口 skill。</b>表结构与权限是项目自身知识，交给 <a href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a> 的迁移与 SDK 更稳，别让 skill 猜你的业务规则。</span>
+    </div>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+<pre class="pblock" data-prompt>你在第 4 阶段「接数据」。
+
+先问我：
+1) 要存哪几类数据，各有哪些字段；
+2) 谁可以读写，哪些页面必须登录；
+3) 登录方式（邮箱 / 第三方 / 免登录只存本地）；
+4) 没数据时的空态文案；
+5) 数据出错时给用户什么出口。
+
+问清后按顺序做：建表与迁移 → 权限默认全拒绝再逐条放行 → 数据访问层 → 登录与会话 → 空态与错误态 → env.example 与三步启动的 README。
+不要替我的业务规则做假设，缺信息就回来问我。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
+<div class="sd" id="sd-5" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>一条流水线把代码推到线上，出问题能一步回滚。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">先定体积预算：首屏 JS 多少、图片多大，写进 README。</p>
+        <div class="out"><span class="gain">→ 得到预算表</span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">写 CI：装依赖、跑测试、构建，三件事按顺序。</p>
+        <div class="out"><span class="gain">→ 得到工作流文件</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">部署：容器或静态产物，按项目选。</p>
+        <div class="out"><a class="tlink" href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a><span class="gain">→ 得到线上站点</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">配深链回退：任何子路径都回到入口页。</p>
+        <div class="out"><span class="gain">→ 得到 404 回退规则</span></div></div></li>
+      <li><span class="n">05</span><div><p class="do">接域名与 HTTPS，把 http 跳转一次做完。</p>
+        <div class="out"><span class="gain">→ 得到证书与跳转</span></div></div></li>
+      <li><span class="n">06</span><div><p class="do">做首屏体检：体积、请求数、首字时间。</p>
+        <div class="out"><span class="gain">→ 得到体检记录</span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>线上首屏可打开，全站 HTTPS</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>随手复制内页链接刷新不 404</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>首屏 JS 不超过 120KB gzip</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">只测首页，深链一刷新就 404；上线前先手点三个内页。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+      <span><b>该阶段暂无对口 skill。</b>构建与部署的可重复性靠流水线保证，见 <a href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a>；skill 在这里帮不上忙。</span>
+    </div>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+<pre class="pblock" data-prompt>你在第 5 阶段「上线」。
+
+先问我：
+1) 托管在哪（GitHub Pages / Vercel / 自己的服务器）；
+2) 有没有域名和 HTTPS 需求；
+3) 是否需要 CI（装依赖 → 测试 → 构建）；
+4) 首屏体积预算；
+5) 出问题怎么回滚。
+
+问完按顺序做：定体积预算 → 写 CI → 部署 → 配深链回退 → 域名与 HTTPS → 首屏体检。
+每一步给出可验证的结果（URL、构建日志、体积数字），不要只说「已完成」。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
+<div class="sd" id="sd-6" hidden>
+  <section class="sec"><h3>目标</h3>
+    <p>核心路径一条命令能重跑，红了就知道哪一步断了。</p>
+  </section>
+  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
+    <ul class="steps">
+      <li><span class="n">01</span><div><p class="do">单元测试只测纯逻辑：解析、格式化、计算。</p>
+        <div class="out"><a class="tlink" href="https://github.com/vitest-dev/vitest" target="_blank" rel="noopener noreferrer">Vitest</a><span class="gain">→ 得到单元用例</span></div></div></li>
+      <li><span class="n">02</span><div><p class="do">e2e 只测三条：进入、登录、增删一条数据。</p>
+        <div class="out"><a class="tlink" href="https://github.com/microsoft/playwright" target="_blank" rel="noopener noreferrer">Playwright</a><span class="gain">→ 得到 e2e 用例</span></div></div></li>
+      <li><span class="n">03</span><div><p class="do">写冒烟清单：上线前手点的十件事。</p>
+        <div class="out"><span class="gain">→ 得到 checklist</span></div></div></li>
+      <li><span class="n">04</span><div><p class="do">清调试代码：console.log、假数据、临时开关。</p>
+        <div class="out"><span class="gain">→ 得到干净构建</span></div></div></li>
+      <li><span class="n">05</span><div><p class="do">记已知问题，别用「以后再说」口头传。</p>
+        <div class="out"><span class="gain">→ 得到 issues 清单</span></div></div></li>
+    </ul>
+  </section>
+  <section class="sec"><h3>验收</h3>
+    <ul class="check">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>CI 全绿，e2e 可本地一条命令重跑</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>控制台零 error，无 404 资源</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>源码里搜不到 console.log 与 TODO 占位</li>
+    </ul>
+  </section>
+  <section class="sec"><h3>常见翻车</h3><p class="trap">e2e 写得比业务还多，维护成本压过收益；只测会真的坏的那几条。</p></section>
+  <section class="sec"><h3>本阶段 skill</h3>
+    <div class="skillbox">
+      <div class="sk-top"><span class="sk-name">webapp-testing</span><span class="badge">开源</span>
+        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
+      <p class="sk-one">驱动浏览器真的打开页面、点按钮、读状态、截图，把「看起来没问题」变成可重跑的断言。</p>
+      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
+      <div class="sk-row"><span class="k">用</span><div class="v">「用 webapp-testing 跑一遍进入列表、开详情、返回首页，截图给我」</div></div>
+      <div class="sk-row"><span class="k">坑</span><div class="v">它会真开浏览器，本机没有 Playwright 依赖时会报错；先装依赖再让它跑。</div></div>
+    </div>
+  </section>
+  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
+<pre class="pblock" data-prompt>你在第 6 阶段「验收」。目标是把「我看着没问题」换成可重跑的检查。
+
+先问我：
+1) 哪三条路径坏了最致命；
+2) 用 Playwright 还是手工清单；
+3) 单元测试覆盖哪些纯逻辑；
+4) 上线前必须手点的十件事；
+5) 已知问题里哪些可以留到下一版。
+
+问完再做：写单元用例 → 写三条 e2e → 出冒烟清单 → 清调试代码 → 列已知问题。
+最后给我一份「跑一次要多久、红了怎么定位」的说明；验收不过的项，建议退回上一阶段。</pre>
+    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
+  </section>
+</div>
+
 <script>
-const grid = document.getElementById('grid')
-const stages = [...grid.querySelectorAll('.stage')]
-const panel = document.getElementById('detailPanel')
-const panelNo = document.getElementById('panelNo')
-const panelTitle = document.getElementById('panelTitle')
-const panelBody = document.getElementById('panelBody')
-const panelClose = document.getElementById('panelClose')
-let current = null
+const railItems = [...document.querySelectorAll('.st')]
+const pane = document.getElementById('pane')
+const pno = document.getElementById('pno')
+const ptitle = document.getElementById('ptitle')
+const pmeta = document.getElementById('pmeta')
+const paneBody = document.getElementById('paneBody')
+const copyPrompt = document.getElementById('copyPrompt')
+const copyMaster = document.getElementById('copyMaster')
 
-function closePanel() {
-  panel.classList.remove('on')
-  stages.forEach((s) => {
-    s.classList.remove('open')
-    s.querySelector('.trigger').setAttribute('aria-expanded', 'false')
-  })
-  current = null
+let current = 1
+let currentPrompt = ''
+
+const META = {
+  1: '4 步 · 1 份 requirements.md',
+  2: '5 步 · 4 条路由',
+  3: '6 步 · 3 个页面 · 1 套 token',
+  4: '6 步 · 1 份 schema',
+  5: '6 步 · 1 个线上站点',
+  6: '5 步 · 2 套测试'
 }
 
-function openStage(stage, scroll = true) {
-  const no = stage.id.replace('stage-', '').padStart(2, '0')
-  const src = stage.querySelector('.detail-in')
-  if (!src) return
-  if (current === stage && panel.classList.contains('on')) {
-    closePanel()
-    return
+async function copyText(text, btn, doneLabel = '已复制') {
+  try { await navigator.clipboard.writeText(text) }
+  catch (err) {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    document.body.appendChild(ta)
+    ta.select()
+    document.execCommand('copy')
+    ta.remove()
   }
-  stages.forEach((s) => {
-    const on = s === stage
-    s.classList.toggle('open', on)
-    s.querySelector('.trigger').setAttribute('aria-expanded', String(on))
+  if (!btn) return
+  const old = btn.textContent
+  btn.textContent = doneLabel
+  btn.classList.add('done')
+  setTimeout(() => { btn.textContent = old; btn.classList.remove('done') }, 1400)
+}
+
+function selectStage(n, pushHash = true, scroll = true) {
+  const sd = document.getElementById('sd-' + n)
+  if (!sd) return
+  current = n
+  railItems.forEach((b) => {
+    const on = Number(b.dataset.stage) === n
+    b.classList.toggle('on', on)
+    b.setAttribute('aria-selected', String(on))
   })
-  panelNo.textContent = 'STAGE ' + no
-  panelTitle.textContent = stage.querySelector('.title').textContent
-  panelBody.innerHTML = src.innerHTML
-  panel.classList.add('on')
-  current = stage
-  if (scroll) {
-    const top = panel.getBoundingClientRect().top + window.scrollY - 24
-    window.scrollTo({ top, behavior: 'smooth' })
+  const name = railItems.find((b) => Number(b.dataset.stage) === n).querySelector('.st-title').textContent
+  pno.textContent = 'STAGE 0' + n
+  ptitle.textContent = name
+  pmeta.textContent = META[n] || ''
+  paneBody.innerHTML = sd.innerHTML
+  paneBody.scrollTop = 0
+  currentPrompt = (paneBody.querySelector('.pblock')?.textContent || '').trim()
+  if (pushHash) history.replaceState(null, '', '#stage-' + n)
+  // 切换后把内容面板带回视野，避免停在上一阶段的滚动位置
+  if (scroll && pane.getBoundingClientRect().top < -8) {
+    pane.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 }
 
-stages.forEach((stage) => {
-  stage.querySelector('.trigger').addEventListener('click', () => openStage(stage))
+railItems.forEach((btn) => {
+  btn.addEventListener('click', () => selectStage(Number(btn.dataset.stage)))
 })
 
-panelClose.addEventListener('click', closePanel)
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && panel.classList.contains('on')) closePanel()
+copyPrompt.addEventListener('click', () => copyText(currentPrompt, copyPrompt))
+
+copyMaster.addEventListener('click', () => {
+  const master = `我要从零做一个网站，请你按 Vibe Coding 六个阶段带我走一遍：定需求 → 起骨架 → 搭界面 → 接数据 → 上线 → 验收。
+
+规则：
+1. 每个阶段开始前，先用提问的方式问清需求：一次最多 3 个问题，每个问题给 2–3 个选项并说明影响；我答完再问下一组。
+2. 我回答含糊（「好看」「流畅」「差不多」）时继续追问，直到能验收。
+3. 问清后先用 200 字复述该阶段目标与验收口径，等我确认再产出。
+4. 每个阶段结束给我「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走。
+
+现在从第 1 阶段开始，先问我第一批问题。`
+  copyText(master, copyMaster)
+})
+
+// 面板里的复制按钮（skill 的安装命令）
+paneBody.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy')
+  if (!btn) return
+  const row = btn.closest('.sk-row')
+  const text = row ? row.querySelector('.v').innerText.trim() : ''
+  copyText(text, btn)
 })
 
 // #stage-N 直达
-function openFromHash() {
-  const m = location.hash.match(/#stage-(\d)/)
-  if (!m) return
-  const stage = document.getElementById('stage-' + m[1])
-  if (stage) openStage(stage, true)
+const fromHash = () => {
+  const m = location.hash.match(/#stage-([1-6])/)
+  selectStage(m ? Number(m[1]) : 1, false, false)
 }
-openFromHash()
-window.addEventListener('hashchange', openFromHash)
+window.addEventListener('hashchange', fromHash)
+fromHash()
 </script>
 </body>
 </html>
-
-

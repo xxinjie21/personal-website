@@ -354,10 +354,23 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
   .grid{grid-template-columns:1fr}
   .mcard:hover{transform:none}
 }
+.devnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px;
+font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
+.devnav .lbl{color:#b9a48f;margin-right:4px}
+.devnav a{padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,250,.7);
+color:var(--muted);text-decoration:none;transition:all .24s var(--ease)}
+.devnav a:hover{border-color:rgba(217,87,26,.4);color:var(--accent-cream);transform:translateY(-1px)}
+.devnav a.here{color:var(--accent-cream);border-color:rgba(217,87,26,.3);background:rgba(217,87,26,.07)}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <nav class="devnav" aria-label="开发页导航">
+    <span class="lbl">开发</span>
+    <a href="vibe-flow.html">全流程</a>
+    <a href="motion-handbook.html" class="here">动效手册</a>
+    <a href="design-refs.html">设计参考</a>
+  </nav>
   <header>
     <div>
       <p class="eyebrow">motion handbook</p>
