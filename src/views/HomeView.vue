@@ -141,16 +141,24 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
 
     <p class="stage-note mono">MOVE THE CURSOR · THE RIBBON BREATHES</p>
 
-    <!-- 毛毛虫爬行：走线思路参考 Uiverse.io by Novaxlo (https://uiverse.io/Novaxlo/kind-snail-5, MIT)，动物与身体结构为本站自绘 -->
+    <!-- 小熊走路：走线思路参考 Uiverse.io by Novaxlo (https://uiverse.io/Novaxlo/kind-snail-5, MIT)，动物造型为本站自绘 -->
     <div class="crawl-track" aria-hidden="true">
       <div class="crawler">
-        <span class="c-seg" style="--k: 3"></span>
-        <span class="c-seg" style="--k: 2"></span>
-        <span class="c-seg" style="--k: 1"></span>
-        <span class="c-seg" style="--k: 0"></span>
-        <span class="c-head">
-          <span class="c-eye"></span>
-        </span>
+        <div class="bear">
+          <i class="leg l1"></i>
+          <i class="leg l2"></i>
+          <i class="leg l3"></i>
+          <i class="leg l4"></i>
+          <span class="tail"></span>
+          <span class="body"></span>
+          <span class="head">
+            <span class="ear e1"></span>
+            <span class="ear e2"></span>
+            <span class="eye y1"></span>
+            <span class="eye y2"></span>
+            <span class="muzzle"></span>
+          </span>
+        </div>
       </div>
     </div>
   </section>
@@ -189,12 +197,12 @@ max-width: 560px;
 .crawl-track {
   position: absolute;
   left: 0;
-  right: 0;
-  bottom: 9px;
-  height: 26px;
+  right: 320px;
+  bottom: 6px;
+  height: 64px;
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
 }
 .crawl-track::before {
   content: '';
@@ -212,17 +220,14 @@ max-width: 560px;
 .crawler {
   position: absolute;
   left: 0;
-  bottom: 6px;
-  display: flex;
-  align-items: flex-end;
-  gap: 1px;
+  bottom: 5px;
   transform: scale(1.3);
   transform-origin: bottom left;
-  animation: crawl-x 23s linear infinite;
+  animation: crawl-x 26s linear infinite;
 }
 @keyframes crawl-x {
   0% {
-    left: -54px;
+    left: -90px;
     opacity: 0;
   }
   4% {
@@ -236,124 +241,208 @@ max-width: 560px;
     opacity: 0;
   }
 }
-/* 身体分段：越靠尾越细，一节节上下拱 */
-.c-seg {
+/* 小熊：四足着地，左右交替迈步，边走边轻轻起伏 */
+.bear {
   position: relative;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 28%, #e9a163, #b26a33 72%, #8a4b22);
-  box-shadow: 0 2px 3px -2px rgba(90, 50, 20, 0.5);
-  animation: seg-wave 0.52s ease-in-out infinite alternate;
-  animation-delay: calc(var(--k) * -0.09s);
+  width: 62px;
+  height: 40px;
+  animation: bear-bob 0.66s ease-in-out infinite alternate;
 }
-.c-seg:nth-child(1) {
-  width: 6.5px;
-  height: 6.5px;
-  opacity: 0.8;
+@keyframes bear-bob {
+  from {
+    transform: translateY(0) rotate(-1.2deg);
+  }
+  to {
+    transform: translateY(-1.8px) rotate(1.2deg);
+  }
 }
-.c-seg:nth-child(2) {
-  width: 7.5px;
-  height: 7.5px;
-  opacity: 0.9;
-}
-.c-seg:nth-child(3) {
-  width: 8.5px;
-  height: 8.5px;
-}
-/* 每节的腿：两根细线交替摆，像真的在蹬 */
-.c-seg::before,
-.c-seg::after {
+/* 影子踩在虚线上，跟着起伏一深一浅 */
+.bear::after {
   content: '';
   position: absolute;
-  top: 6px;
-  width: 1.6px;
-  height: 5px;
-  border-radius: 2px;
-  background: #8a5528;
-  transform-origin: top center;
-  animation: leg-swing 0.52s ease-in-out infinite alternate;
-  animation-delay: calc(var(--k) * -0.09s);
-}
-.c-seg::before {
-  left: 1px;
-}
-.c-seg::after {
-  right: 1px;
-  animation-delay: calc(var(--k) * -0.09s - 0.26s);
-}
-@keyframes seg-wave {
-  from {
-    transform: translateY(0) rotate(-2deg);
-  }
-  to {
-    transform: translateY(-1.6px) rotate(2deg);
-  }
-}
-@keyframes leg-swing {
-  from {
-    transform: rotate(-22deg);
-  }
-  to {
-    transform: rotate(24deg);
-  }
-}
-/* 头：比身体略大，两根触须探路 */
-.c-head {
-  position: relative;
-  width: 12px;
-  height: 12px;
-  margin-left: 1px;
+  left: 6px;
+  right: 4px;
+  bottom: -1px;
+  height: 6px;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 30%, #f0b276, #a75f2c 74%, #7f4520);
-  animation: head-bob 0.52s ease-in-out infinite alternate;
+  background: radial-gradient(closest-side, rgba(88, 48, 18, 0.26), transparent 74%);
+  animation: bear-shadow 0.66s ease-in-out infinite alternate;
+}
+@keyframes bear-shadow {
+  from {
+    opacity: 0.75;
+    transform: scaleX(1);
+  }
+  to {
+    opacity: 0.45;
+    transform: scaleX(0.86);
+  }
+}
+/* 腿：前后各两条，对角同步，看起来像真的在走 */
+.leg {
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 14px;
+  border-radius: 4px 4px 5px 5px;
+  background: linear-gradient(180deg, #bb7c46, #8a4f26);
+  transform-origin: 50% 6%;
+  animation: leg-walk 0.66s ease-in-out infinite alternate;
+}
+/* 脚掌：底下压深一点，看着像踩实了 */
+.leg::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  border-radius: 0 0 5px 5px;
+  background: rgba(62, 32, 12, 0.16);
+}
+.leg.l1 {
+  left: 10px;
+}
+.leg.l2 {
+  left: 18px;
+  animation-delay: -0.33s;
+}
+.leg.l3 {
+  left: 28px;
+  animation-delay: -0.33s;
+}
+.leg.l4 {
+  left: 36px;
+}
+@keyframes leg-walk {
+  from {
+    transform: rotate(-13deg);
+  }
+  to {
+    transform: rotate(15deg);
+  }
+}
+.tail {
+  position: absolute;
+  left: 2px;
+  bottom: 19px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #cf9160, #96562b);
+}
+/* 身子：圆滚滚的，上亮下沉，靠一层内阴影立起来 */
+.body {
+  position: absolute;
+  left: 6px;
+  bottom: 9px;
+  width: 34px;
+  height: 23px;
+  border-radius: 50% 50% 46% 48% / 58% 58% 46% 42%;
+  background: radial-gradient(120% 120% at 32% 22%, #dc9e68 0%, #c0804a 46%, #98582c 78%, #7d431e 100%);
+  box-shadow:
+    inset -3px -5px 9px rgba(84, 42, 15, 0.34),
+    inset 3px 3px 7px rgba(255, 218, 178, 0.36);
+}
+/* 肚皮：一块浅色，让侧面不那么糊成一团 */
+.body::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  bottom: 2px;
+  width: 22px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(255, 226, 192, 0.38), rgba(255, 226, 192, 0));
+}
+/* 头：比身子大一圈，是萌点所在，耳朵随头一起摆 */
+.head {
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+  width: 29px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(115% 115% at 34% 24%, #e3ac75 0%, #c58651 48%, #9c5c2d 82%, #81481f 100%);
+  box-shadow:
+    inset -2px -3px 7px rgba(84, 42, 15, 0.3),
+    inset 2px 2px 6px rgba(255, 222, 188, 0.42);
+  animation: head-bob 0.66s ease-in-out infinite alternate;
 }
 @keyframes head-bob {
   from {
-    transform: translateY(-1px) rotate(-3deg);
+    transform: rotate(-2.5deg);
   }
   to {
-    transform: translateY(1px) rotate(3deg);
+    transform: rotate(2.5deg);
   }
 }
-.c-head::before,
-.c-head::after {
+.ear {
+  position: absolute;
+  top: -3px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #d79a61, #a2612f);
+}
+.ear.e1 {
+  left: 2px;
+}
+.ear.e2 {
+  right: 2px;
+}
+.ear::after {
   content: '';
   position: absolute;
-  top: -5px;
-  width: 1.5px;
-  height: 6px;
-  border-radius: 2px;
-  background: #8a5528;
-  transform-origin: bottom center;
-  animation: antenna 1.3s ease-in-out infinite alternate;
+  inset: 3px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 34%, #f2cdaa, #dcab84);
 }
-.c-head::before {
-  left: 3px;
-  transform: rotate(-24deg);
+/* 嘴套 + 鼻头：小熊的辨识度全靠这一块浅色，靠前侧（右边）才看得出朝哪走 */
+.muzzle {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  width: 15px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 28%, #fdf1e0, #f1d9ba 68%, #ddbc94);
+  box-shadow: 0 1px 2px rgba(120, 70, 30, 0.16);
 }
-.c-head::after {
-  right: 3px;
-  transform: rotate(24deg);
-  animation-delay: -0.65s;
-}
-@keyframes antenna {
-  from {
-    rotate: -7deg;
-  }
-  to {
-    rotate: 9deg;
-  }
-}
-.c-eye {
+.muzzle::after {
+  content: '';
   position: absolute;
   top: 3px;
-  right: 2.5px;
-  width: 2.6px;
-  height: 2.6px;
+  right: 4px;
+  width: 6px;
+  height: 4px;
   border-radius: 50%;
-  background: #2a1a10;
-  box-shadow: 0 0 0 0.6px rgba(255, 232, 210, 0.7);
+  background: #3b2414;
+}
+/* 眼睛：小圆点 + 一点高光，别做成死鱼眼 */
+.eye {
+  position: absolute;
+  top: 8px;
+  width: 3.6px;
+  height: 4.2px;
+  border-radius: 50%;
+  background: #2d1a0f;
+}
+.eye::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 0.9px;
+  width: 1.4px;
+  height: 1.4px;
+  border-radius: 50%;
+  background: rgba(255, 246, 236, 0.9);
+}
+.eye.y1 {
+  left: 8px;
+}
+.eye.y2 {
+  right: 10px;
 }
 .live {
   display: inline-block;
