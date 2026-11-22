@@ -97,6 +97,9 @@ background:rgba(217,87,26,.5);box-shadow:0 0 0 3px rgba(217,87,26,.06);transitio
 
 /* 验收 */
 .check{list-style:none;display:flex;flex-direction:column;gap:5px}
+.deliver{display:flex;flex-wrap:wrap;gap:5px}
+.deliver span{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--accent-cream);
+background:rgba(217,87,26,.06);border:1px solid rgba(217,87,26,.18);border-radius:6px;padding:3px 7px}
 .check li{font-size:11.5px;color:#5f574e;display:flex;gap:7px;line-height:1.6}
 .check svg{width:12px;height:12px;flex:none;margin-top:4px;color:rgba(217,87,26,.6)}
 .trap{font-size:11.5px;color:#8a7365;padding:9px 11px;border-left:2px solid rgba(217,87,26,.35);
@@ -129,6 +132,8 @@ background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
 .sk-link{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,87,26,.28)}
 .sk-one{font-size:11.5px;color:#5f574e;line-height:1.7;margin-top:7px}
 .sk-row{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.sk-why{font-size:11px;color:var(--muted);line-height:1.7;margin-top:7px}
+.sk-note{font-size:11.5px;color:#6b5b4d;line-height:1.75;padding:2px 2px 0}
 .sk-row .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#b9a48f;min-width:22px;padding-top:3px}
 .sk-row .v{flex:1;font-size:11px;color:var(--text-dim);line-height:1.65}
 .cmd{font-family:var(--mono);font-size:10.5px;color:var(--accent-cream);background:rgba(217,87,26,.06);
@@ -182,46 +187,41 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 
   <div class="page-head reveal">
     <div class="ph-text">
-      <p class="eyebrow">workflow · 6 stages</p>
+      <p class="eyebrow">workflow · 8 stages</p>
       <h1>Vibe Coding 全流程</h1>
-      <p class="lead">定需求 → 起骨架 → 搭界面 → 接数据 → 上线 → 验收。</p>
+      <p class="lead">备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代。</p>
     </div>
     <div class="ph-side">
-      <button class="master" type="button" id="copyMaster">复制六阶段总提示词</button>
+      <button class="master" type="button" id="copyMaster">复制八阶段总提示词</button>
     </div>
   </div>
 
   <div class="shell reveal">
     <aside class="rail" id="rail" aria-label="阶段">
       <button class="st on" type="button" data-stage="1" aria-selected="true">
-        <span class="st-no">01</span>
-        <span class="st-body"><span class="st-title">定需求</span><span class="st-goal">写成能判定对错的需求</span></span>
-        <span class="st-dot" title="有对口 skill"></span>
+        <span class="st-no">01</span><span class="st-body"><span class="st-title">备环境</span></span>
       </button>
       <button class="st" type="button" data-stage="2" aria-selected="false">
-        <span class="st-no">02</span>
-        <span class="st-body"><span class="st-title">起骨架</span><span class="st-goal">空壳先跑通，再谈内容</span></span>
-        <span class="st-dot" title="有对口 skill"></span>
+        <span class="st-no">02</span><span class="st-body"><span class="st-title">定需求</span></span>
       </button>
       <button class="st" type="button" data-stage="3" aria-selected="false">
-        <span class="st-no">03</span>
-        <span class="st-body"><span class="st-title">搭界面</span><span class="st-goal">先定 token，再生成页面</span></span>
-        <span class="st-dot" title="有对口 skill"></span>
+        <span class="st-no">03</span><span class="st-body"><span class="st-title">写 SDD</span></span>
       </button>
       <button class="st" type="button" data-stage="4" aria-selected="false">
-        <span class="st-no">04</span>
-        <span class="st-body"><span class="st-title">接数据</span><span class="st-goal">表、权限、登录都能用</span></span>
+        <span class="st-no">04</span><span class="st-body"><span class="st-title">起骨架</span></span>
       </button>
       <button class="st" type="button" data-stage="5" aria-selected="false">
-        <span class="st-no">05</span>
-        <span class="st-body"><span class="st-title">上线</span><span class="st-goal">公网能开，深链不 404</span></span>
+        <span class="st-no">05</span><span class="st-body"><span class="st-title">搭界面</span></span>
       </button>
       <button class="st" type="button" data-stage="6" aria-selected="false">
-        <span class="st-no">06</span>
-        <span class="st-body"><span class="st-title">验收</span><span class="st-goal">让机器替你点一遍</span></span>
-        <span class="st-dot" title="有对口 skill"></span>
+        <span class="st-no">06</span><span class="st-body"><span class="st-title">接数据</span></span>
       </button>
-      <p class="rail-note">四个阶段有对口 skill，另外两个没有；不凑数，用工具顶。</p>
+      <button class="st" type="button" data-stage="7" aria-selected="false">
+        <span class="st-no">07</span><span class="st-body"><span class="st-title">测试评审</span></span>
+      </button>
+      <button class="st" type="button" data-stage="8" aria-selected="false">
+        <span class="st-no">08</span><span class="st-body"><span class="st-title">上线迭代</span></span>
+      </button>
     </aside>
 
     <main class="pane" id="pane" aria-live="polite">
@@ -244,324 +244,9 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
   </div>
 
   <footer>
-    <span>规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。工具不必全装，够用就停。</span>
+    <span>规则只有一条：<b>验收不过就退回上一阶段</b>，别带着问题往下走。流程参考 <a href="https://yun.itheima.com/course/1100.html" target="_blank" rel="noopener noreferrer">黑马 Vibe Coding · SDD 全流程 ↗</a>。</span>
     <span class="ap">做完站点想顺手做条宣传片：<a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener noreferrer">MoneyPrinterTurbo ↗</a>（开源，给主题自动出短视频）</span>
   </footer>
-</div>
-
-<!-- 六阶段内容 -->
-<div class="sd" id="sd-1" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>需求文档能直接拿去排期：出现「好看」「流畅」这类词就算没写完。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">先写一句可验收的总目标：谁，在什么页面，做成什么，怎么算成功。</p>
-        <div class="out"><span>手写，不用工具</span><span class="gain">→ 得到「总目标」一节</span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">列页面清单，最多五页，每页一行用途。</p>
-        <div class="out"><span class="gain">→ 得到页面清单（≤5）</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">写三条明确不做的功能，把范围钉死。</p>
-        <div class="out"><span class="gain">→ 得到「不做」边界</span><span class="gain">·</span><span class="gain">省掉后期返工</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">把验收写成可观测现象：点一下出现什么、刷新后还剩什么。</p>
-        <div class="out"><a class="tlink" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">doc-coauthoring</a><span class="gain">→ 得到 <b>requirements.md</b></span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>每条需求都对应一个可观测结果</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>页面清单不超过 5 页，能画在一张纸上</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>文档里零个主观形容词</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">需求写成散文，写着写着开始想配色——这时候退回去，先把页面清单定完。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="skillbox">
-      <div class="sk-top"><span class="sk-name">doc-coauthoring</span><span class="badge">开源</span>
-        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
-      <p class="sk-one">和 AI 一起把需求文档写出来：先问清边界，再逐节对齐，最后成稿。</p>
-      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code><code class="cmd">/plugin install document-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
-      <div class="sk-row"><span class="k">用</span><div class="v">「用 doc-coauthoring 和我一起写这份需求，每节先问再写」</div></div>
-      <div class="sk-row"><span class="k">坑</span><div class="v">它擅长长文协作，不出代码；需求没边界时会反问很多轮，别指望一句话出稿。</div></div>
-    </div>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-    <pre class="pblock" data-prompt>你是我的 Vibe Coding 搭档，现在在第 1 阶段「定需求」。这一阶段不写代码、不画界面。
-
-请先用提问把需求问清楚：一次最多问 3 个问题，每个问题给 2–3 个选项并说明影响；我答完再问下一组。
-按这个顺序问：
-1) 这站点给谁用，他们为什么会打开；
-2) 一共几个页面，每页一句话用途；
-3) 必须有的三个功能，按优先级排；
-4) 明确不做的功能（至少三条）；
-5) 每个功能怎么算做完，用可观测现象描述；
-6) 有没有参考站点或明确反感的风格。
-
-我回答含糊时（「好看」「流畅」「差不多」）继续追问，直到能验收。
-问完用 200 字复述「目标 / 页面清单 / 不做 / 验收」，等我确认，再输出 requirements.md。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
-</div>
-
-<div class="sd" id="sd-2" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>四条路由都能打开，页面空着但不报错，可以往上堆内容。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">初始化工程，定技术栈与包管理器。</p>
-        <div class="out"><a class="tlink" href="https://github.com/sst/opencode" target="_blank" rel="noopener noreferrer">OpenCode</a><span class="gain">→ 得到 package.json 与目录</span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">定四条路由与对应文件：首页、列表、详情、404。</p>
-        <div class="out"><a class="tlink" href="https://github.com/vitejs/vite" target="_blank" rel="noopener noreferrer">Vite</a><span class="gain">→ 得到 4 个页面文件</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">按职责分目录：页面、组件、数据访问、工具函数。</p>
-        <div class="out"><span class="gain">→ 得到不交叉的目录结构</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">起 dev，每页放一句占位文字，确认能跳转。</p>
-        <div class="out"><span class="gain">→ 得到可跑空壳</span></div></div></li>
-      <li><span class="n">05</span><div><p class="do">跑一次 build，立刻提交第一个 commit。</p>
-        <div class="out"><span class="gain">→ 得到干净基线</span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>dev 与 build 都零报错</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>四条路由全部 200，控制台零 error</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>改一行字，热更新 1 秒内生效</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">骨架阶段就开始写样式，目录越铺越乱；先把路由与目录定死，样式留到下一阶段。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="skillbox">
-      <div class="sk-top"><span class="sk-name">web-artifacts-builder</span><span class="badge">开源</span>
-        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
-      <p class="sk-one">直接生成可运行的前端产物：HTML、样式、脚本成套给出，而不是一段段碎片。</p>
-      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin marketplace add anthropics/skills</code><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
-      <div class="sk-row"><span class="k">用</span><div class="v">「用 web-artifacts-builder 搭四条路由的空壳，先不写内容」</div></div>
-      <div class="sk-row"><span class="k">坑</span><div class="v">它偏爱单文件产物；要真实工程结构得明确说「用 Vite + 多文件目录」。</div></div>
-    </div>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-<pre class="pblock" data-prompt>你在第 2 阶段「起骨架」。目标只是把空壳跑通，不写内容和样式。
-
-先问我：
-1) 技术栈与包管理器（Vue + Vite / React + Next / 纯静态）；
-2) 页面路由清单，每页对应什么文件名；
-3) 目录怎么分（页面 / 组件 / 数据 / 工具）；
-4) 部署目标（GitHub Pages / Vercel / 自己的服务器）；
-5) 我机器上现有什么环境。
-
-问完再动手：初始化工程 → 建路由与占位页 → 起 dev 确认每页能开 → build 一次 → 提交第一个 commit。
-每做完一步，告诉我动了哪些文件、怎么验证，等我确认再下一步。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
-</div>
-
-<div class="sd" id="sd-3" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>三个页面各就各位，颜色、间距、圆角只从一套 token 里取。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">先定 tokens：主色、纸底、四级灰阶、间距刻度、圆角。</p>
-        <div class="out"><a class="tlink" href="https://github.com/facebook/astryx" target="_blank" rel="noopener noreferrer">Astryx</a><span class="gain">→ 得到 <b>design-tokens.md</b></span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">按需装组件，不自造按钮和输入框。</p>
-        <div class="out"><a class="tlink" href="https://github.com/shadcn-ui/ui" target="_blank" rel="noopener noreferrer">shadcn/ui</a><span class="gain">→ 得到组件目录</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">写样式层与断点：桌面、平板、手机三档。</p>
-        <div class="out"><a class="tlink" href="https://github.com/tailwindlabs/tailwindcss" target="_blank" rel="noopener noreferrer">Tailwind CSS</a><span class="gain">→ 得到样式与断点</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">图标统一一套，只用一个线条风格。</p>
-        <div class="out"><a class="tlink" href="https://github.com/lucide-icons/lucide" target="_blank" rel="noopener noreferrer">Lucide</a><span class="gain">→ 得到图标清单</span></div></div></li>
-      <li><span class="n">05</span><div><p class="do">写三页真实内容：首页讲清是谁，列表能扫读，详情能读完。</p>
-        <div class="out"><span class="gain">→ 得到 首页 / 列表 / 详情</span></div></div></li>
-      <li><span class="n">06</span><div><p class="do">补动效：先叫得出名字，再决定用不用。</p>
-        <div class="out"><a class="tlink" href="https://github.com/motiondivision/motion" target="_blank" rel="noopener noreferrer">Motion</a><a class="tlink" href="motion-handbook.html">动效手册 ↗</a><span class="gain">→ 得到交互脚本</span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>代码里没有裸数值，全部走 token</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>390 宽无横向滚动，字号不缩水</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>hover / focus / active 三态齐全</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>键盘 Tab 能走完整页，焦点看得见</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">先写样式再想内容，每个页面都要返工；内容先落，样式跟着内容长。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="skillbox">
-      <div class="sk-top"><span class="sk-name">frontend-design</span><span class="badge">开源</span>
-        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
-      <p class="sk-one">界面结构、组件形态、排版节奏这一层的判断力，避免生成千篇一律的模板脸。</p>
-      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
-      <div class="sk-row"><span class="k">用</span><div class="v">「用 frontend-design 定版式，参考站内已有的间距和圆角」</div></div>
-      <div class="sk-row"><span class="k">坑</span><div class="v">它给的是设计判断，不是 token；token 要自己先落下，否则每页各写一套数值。</div></div>
-    </div>
-    <p class="say-by">找方向看 <a class="tlink" href="design-refs.html">设计参考 ↗</a>，挑动效看 <a class="tlink" href="motion-handbook.html">动效手册 ↗</a>。</p>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-<pre class="pblock" data-prompt>你在第 3 阶段「搭界面」。先把约束问清，再生成页面。
-
-先问我：
-1) 想要的调性（暖白纸感 / 冷灰极简 / 高对比）；
-2) 主色和一个强调色；
-3) 字体偏好（衬线标题还是全无衬线）；
-4) 圆角与间距偏松还是偏紧；
-5) 三个页面各自的重点内容；
-6) 想加的动效名字，不确定就让我从动效手册里挑；
-7) 移动端最窄要支持到多少宽。
-
-问完先给 design-tokens（颜色 / 字号 / 间距 / 圆角 / 断点），我确认后再逐页生成。
-生成时只允许用 token 里的值，不要出现裸数值；每页给我桌面和 390 宽两张截图。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
-</div>
-
-<div class="sd" id="sd-4" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>换一台机器照 README 就能跑起来，没登录的人进不了受限页。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">建 schema：先写实体和关系，别先写页面需要的字段。</p>
-        <div class="out"><a class="tlink" href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a><span class="gain">→ 得到迁移脚本</span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">开权限策略：默认拒绝，逐条放行。</p>
-        <div class="out"><span class="gain">→ 得到策略表</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">写数据访问层，页面不直接拼 SQL。</p>
-        <div class="out"><span class="gain">→ 得到 api 封装</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">接登录与会话，做登录页与「我的」页。</p>
-        <div class="out"><span class="gain">→ 得到登录页与重置密码</span></div></div></li>
-      <li><span class="n">05</span><div><p class="do">补空态与错误态：没数据时说什么，失败时给什么出口。</p>
-        <div class="out"><span class="gain">→ 得到空态 / 错误态组件</span></div></div></li>
-      <li><span class="n">06</span><div><p class="do">写 env 样例与 README，把启动步骤压到三步。</p>
-        <div class="out"><span class="gain">→ 得到 <b>env.example</b> 与 README</span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>新环境照 README 三步能起来</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>列表空态有文案，失败有提示，不白屏</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>未登录访问受限页被拦回登录</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">先开全表权限后补策略，等于线上裸奔；权限从「全拒绝」反向加。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
-      <span><b>该阶段暂无对口 skill。</b>表结构与权限是项目自身知识，交给 <a href="https://github.com/supabase/supabase" target="_blank" rel="noopener noreferrer">Supabase</a> 的迁移与 SDK 更稳，别让 skill 猜你的业务规则。</span>
-    </div>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-<pre class="pblock" data-prompt>你在第 4 阶段「接数据」。
-
-先问我：
-1) 要存哪几类数据，各有哪些字段；
-2) 谁可以读写，哪些页面必须登录；
-3) 登录方式（邮箱 / 第三方 / 免登录只存本地）；
-4) 没数据时的空态文案；
-5) 数据出错时给用户什么出口。
-
-问清后按顺序做：建表与迁移 → 权限默认全拒绝再逐条放行 → 数据访问层 → 登录与会话 → 空态与错误态 → env.example 与三步启动的 README。
-不要替我的业务规则做假设，缺信息就回来问我。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
-</div>
-
-<div class="sd" id="sd-5" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>一条流水线把代码推到线上，出问题能一步回滚。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">先定体积预算：首屏 JS 多少、图片多大，写进 README。</p>
-        <div class="out"><span class="gain">→ 得到预算表</span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">写 CI：装依赖、跑测试、构建，三件事按顺序。</p>
-        <div class="out"><span class="gain">→ 得到工作流文件</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">部署：容器或静态产物，按项目选。</p>
-        <div class="out"><a class="tlink" href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a><span class="gain">→ 得到线上站点</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">配深链回退：任何子路径都回到入口页。</p>
-        <div class="out"><span class="gain">→ 得到 404 回退规则</span></div></div></li>
-      <li><span class="n">05</span><div><p class="do">接域名与 HTTPS，把 http 跳转一次做完。</p>
-        <div class="out"><span class="gain">→ 得到证书与跳转</span></div></div></li>
-      <li><span class="n">06</span><div><p class="do">做首屏体检：体积、请求数、首字时间。</p>
-        <div class="out"><span class="gain">→ 得到体检记录</span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>线上首屏可打开，全站 HTTPS</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>随手复制内页链接刷新不 404</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>首屏 JS 不超过 120KB gzip</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">只测首页，深链一刷新就 404；上线前先手点三个内页。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
-      <span><b>该阶段暂无对口 skill。</b>构建与部署的可重复性靠流水线保证，见 <a href="https://github.com/coollabsio/coolify" target="_blank" rel="noopener noreferrer">Coolify</a>；skill 在这里帮不上忙。</span>
-    </div>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-<pre class="pblock" data-prompt>你在第 5 阶段「上线」。
-
-先问我：
-1) 托管在哪（GitHub Pages / Vercel / 自己的服务器）；
-2) 有没有域名和 HTTPS 需求；
-3) 是否需要 CI（装依赖 → 测试 → 构建）；
-4) 首屏体积预算；
-5) 出问题怎么回滚。
-
-问完按顺序做：定体积预算 → 写 CI → 部署 → 配深链回退 → 域名与 HTTPS → 首屏体检。
-每一步给出可验证的结果（URL、构建日志、体积数字），不要只说「已完成」。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
-</div>
-
-<div class="sd" id="sd-6" hidden>
-  <section class="sec"><h3>目标</h3>
-    <p>核心路径一条命令能重跑，红了就知道哪一步断了。</p>
-  </section>
-  <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3>
-    <ul class="steps">
-      <li><span class="n">01</span><div><p class="do">单元测试只测纯逻辑：解析、格式化、计算。</p>
-        <div class="out"><a class="tlink" href="https://github.com/vitest-dev/vitest" target="_blank" rel="noopener noreferrer">Vitest</a><span class="gain">→ 得到单元用例</span></div></div></li>
-      <li><span class="n">02</span><div><p class="do">e2e 只测三条：进入、登录、增删一条数据。</p>
-        <div class="out"><a class="tlink" href="https://github.com/microsoft/playwright" target="_blank" rel="noopener noreferrer">Playwright</a><span class="gain">→ 得到 e2e 用例</span></div></div></li>
-      <li><span class="n">03</span><div><p class="do">写冒烟清单：上线前手点的十件事。</p>
-        <div class="out"><span class="gain">→ 得到 checklist</span></div></div></li>
-      <li><span class="n">04</span><div><p class="do">清调试代码：console.log、假数据、临时开关。</p>
-        <div class="out"><span class="gain">→ 得到干净构建</span></div></div></li>
-      <li><span class="n">05</span><div><p class="do">记已知问题，别用「以后再说」口头传。</p>
-        <div class="out"><span class="gain">→ 得到 issues 清单</span></div></div></li>
-    </ul>
-  </section>
-  <section class="sec"><h3>验收</h3>
-    <ul class="check">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>CI 全绿，e2e 可本地一条命令重跑</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>控制台零 error，无 404 资源</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>源码里搜不到 console.log 与 TODO 占位</li>
-    </ul>
-  </section>
-  <section class="sec"><h3>常见翻车</h3><p class="trap">e2e 写得比业务还多，维护成本压过收益；只测会真的坏的那几条。</p></section>
-  <section class="sec"><h3>本阶段 skill</h3>
-    <div class="skillbox">
-      <div class="sk-top"><span class="sk-name">webapp-testing</span><span class="badge">开源</span>
-        <a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
-      <p class="sk-one">驱动浏览器真的打开页面、点按钮、读状态、截图，把「看起来没问题」变成可重跑的断言。</p>
-      <div class="sk-row"><span class="k">装</span><div class="v"><code class="cmd">/plugin install example-skills@anthropic-agent-skills</code></div><button class="copy" type="button">复制</button></div>
-      <div class="sk-row"><span class="k">用</span><div class="v">「用 webapp-testing 跑一遍进入列表、开详情、返回首页，截图给我」</div></div>
-      <div class="sk-row"><span class="k">坑</span><div class="v">它会真开浏览器，本机没有 Playwright 依赖时会报错；先装依赖再让它跑。</div></div>
-    </div>
-  </section>
-  <section class="sec"><h3>让 AI 先问你：本阶段提示词</h3>
-<pre class="pblock" data-prompt>你在第 6 阶段「验收」。目标是把「我看着没问题」换成可重跑的检查。
-
-先问我：
-1) 哪三条路径坏了最致命；
-2) 用 Playwright 还是手工清单；
-3) 单元测试覆盖哪些纯逻辑；
-4) 上线前必须手点的十件事；
-5) 已知问题里哪些可以留到下一版。
-
-问完再做：写单元用例 → 写三条 e2e → 出冒烟清单 → 清调试代码 → 列已知问题。
-最后给我一份「跑一次要多久、红了怎么定位」的说明；验收不过的项，建议退回上一阶段。</pre>
-    <p class="say-by">把这段发给任意 AI（Claude / Codex / Cursor 都行），它会先反问，不会直接开始写。</p>
-  </section>
 </div>
 
 <script src="../embed/frame.js" defer></script>
@@ -574,8 +259,6 @@ const pmeta = document.getElementById('pmeta')
 const paneBody = document.getElementById('paneBody')
 const copyPrompt = document.getElementById('copyPrompt')
 const copyMaster = document.getElementById('copyMaster')
-
-
 const navCount = document.getElementById('navCount')
 const prevStage = document.getElementById('prevStage')
 const nextStage = document.getElementById('nextStage')
@@ -583,54 +266,337 @@ const nextStage = document.getElementById('nextStage')
 let current = 1
 let currentPrompt = ''
 
-const META = {
-  1: '4 步 · 1 份 requirements.md',
-  2: '5 步 · 4 条路由',
-  3: '6 步 · 3 个页面 · 1 套 token',
-  4: '6 步 · 1 份 schema',
-  5: '6 步 · 1 个线上站点',
-  6: '5 步 · 2 套测试'
-}
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg>'
+const FOLD = '<svg class="fold-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>'
 
-// 每阶段默认收起的细节：给用户看，不在折叠时占版面
-const DETAILS = {
-  1: [
-    '总目标只写一句：谁、在哪个页面、做成什么、怎么算成功。这句话写不出来，说明需求还没定。',
-    '页面清单每页补三样：从哪进、看什么、下一步去哪。缺一样的两页就该合并。',
-    '形容词换成数字：「快」写成「首屏 1.5s 内出现主内容」，「好看」写成「字号、间距、圆角都有固定值」。',
-    '「不做」至少三条（登录、搜索、多语言），写下来才挡得住临时加需求。'
-  ],
-  2: [
-    '目录先定死：pages / components / lib / styles，路由表单独一份，后三个阶段都按它放文件。',
-    '占位页放标题、一句占位、返回链接；空路由会被当成 404 排查半天。',
-    '第一个 commit 之前先写 .gitignore（node_modules、dist、.env），否则密钥跟着仓库走。',
-    'build 通过再提交，别让基线一开始就带着警告。'
-  ],
-  3: [
-    'token 只留必要项：底、面、主色、强调、四级文字、线、圆角、间距取 4 的倍数；按用途命名，不按颜色命名。',
-    '断点三档就够：≤720 单列、721–1080 两列、>1080 主栏 720 加侧栏；每档只调列数和间距。',
-    '内容先落：首页讲清是谁、列表能扫读、详情能读完；没真内容先用占位文案，不要 lorem。',
-    '一页最多两个主动效，300–450ms，触屏不能只靠 hover；先从动效手册里挑名字再实现。'
-  ],
-  4: [
-    'schema 先写实体和关系，再写字段；页面要的字段最后补，表结构不要跟着 UI 变形。',
-    '权限默认拒绝，逐表逐操作放行；用匿名 key 真跑一次，别只看本地登录态。',
-    '数据访问收在 lib/api，页面里不出现 SQL 和表名，换库时只改一层。',
-    '错误分三类给不同出口：未登录去登录、无权限说清原因、网络失败给重试。'
-  ],
-  5: [
-    '上线清单：env 变量齐、域名解析生效、HTTPS 正常、404 页能开、favicon 不 404。',
-    '构建和部署分开：CI 只跑 build 和类型检查，部署交给平台钩子，别在服务器上手敲命令。',
-    '留一条回滚路：保留上一个构建产物或上一版部署，出问题先回滚再查。',
-    '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。'
-  ],
-  6: [
-    '只测会回归的：解析、格式化、计算走单测；e2e 留 3 条主路径（进入、登录、增删一条数据）。',
-    '冒烟清单 10 条，每次上线照着点：首页、列表、详情、登录、登出、空态、404、刷新保持、390 宽、慢网。',
-    '上线后 24 小时盯 console error 和 5xx，比等用户反馈快一步。',
-    '已知问题写进 issues，不用「以后再说」口头传；下阶段开始前先清一遍。'
-  ]
-}
+// 八阶段：按黑马 Vibe Coding / SDD 的交付顺序排，工具与产出都落到具体动作
+const STAGES = [
+  {
+    n: 1,
+    title: '备环境',
+    meta: '5 步 · 1 份 CLAUDE.md',
+    deliver: ['环境清单', 'CLAUDE.md', '首个 commit'],
+    goal: '先把「命令能跑、模型能连、代码能提交」三件事做掉，再让 AI 碰业务。',
+    steps: [
+      { do: '装 Node 20 与 Git，版本号写进 README，别让下一个人猜环境。', tool: ['Node.js', 'https://nodejs.org'], gain: '环境清单 + 版本号' },
+      { do: '装 Python 3.12 与 uv（跑脚本、测试要用），已有 Python 可跳过。', tool: ['uv', 'https://docs.astral.sh/uv'], gain: '可复现的 Python 环境' },
+      { do: '装 AI 编程工具：Claude Code 或 Cursor 二选一，登录并把 key 放进 .env。', tool: ['Claude Code', 'https://docs.anthropic.com/en/docs/claude-code'], gain: '工具能对话、能改文件' },
+      { do: '建仓库，写 .gitignore（node_modules / dist / .env），打第一个 commit。', tool: ['Git', 'https://git-scm.com'], gain: '干净基线 + 首个 commit' },
+      { do: '写 CLAUDE.md 开发宪法：技术栈、目录、常用命令、禁区、提交规范。', tool: ['CLAUDE.md 文档', 'https://docs.anthropic.com/en/docs/claude-code/memory'], gain: '项目宪法 CLAUDE.md' }
+    ],
+    checks: [
+      'node -v、python -V、git -v 三条命令都有版本输出',
+      'AI 工具能读 CLAUDE.md，并复述出技术栈和禁区',
+      'git log 有首个提交，.env 没有进仓库',
+      '换一台机器照 README 能重装一遍'
+    ],
+    trap: '先写页面再补环境，报错时分不清是代码问题还是环境问题；先把工具链钉死。',
+    details: [
+      '版本用 nvm / fnm 管，别用系统自带的老 Node；Python 用 uv 建虚拟环境，不进全局。',
+      'key 只放 .env，.env 进 .gitignore；前端代码里出现 key 就等于公开。',
+      'CLAUDE.md 分三层：根目录写全局规则，子目录写模块约定，临时任务写局部说明。',
+      '上下文看 /context：超过六成先 compact 或开新会话；跑偏用 rewind 回退，Esc 随时打断，别让错误滚雪球。'
+    ],
+    skill: { note: '该阶段没有对口 skill。环境问题看官方文档，别让 AI 猜版本号。' },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 1 阶段「备环境」。这一阶段不写业务代码，只把工具链和开发宪法配好。
+先问我 5 件事：操作系统、Node / Python 现有版本、用 Claude Code 还是 Cursor、仓库是新建还是已有、有没有域名。
+答完按顺序给：安装命令（Windows / macOS 各一份）、.gitignore 内容、CLAUDE.md 全文、第一个 commit 的命令。
+每条命令后面写「怎么验证成功」，装不上就给我两条备选方案，别直接跳过。`,
+    user: [
+      '告诉我系统和已经装过的版本，避免重复安装；',
+      '选一个 AI 工具（Claude Code 或 Cursor），并给仓库地址；',
+      '确认 CLAUDE.md 里的技术栈、目录、禁区三项，别让我替你定。'
+    ]
+  },
+  {
+    n: 2,
+    title: '定需求',
+    meta: '5 步 · 1 份 PRD',
+    deliver: ['PRD.md', '页面清单', 'P0 优先级'],
+    goal: 'PRD 能直接拿去排期：出现「好看」「流畅」这类词，就算没写完。',
+    steps: [
+      { do: '写用户与场景：谁、在什么场景用、现在怎么凑合解决。', note: '手写，不用工具', gain: '用户与场景一节' },
+      { do: '列页面清单，最多五页，每页补「从哪进、看什么、下一步去哪」。', note: '手写，不用工具', gain: '页面清单（≤5）' },
+      { do: '功能分 P0 / P1 / P2，P0 不超过三条，先跑通再谈扩展。', note: '手写，不用工具', gain: '优先级表' },
+      { do: '写三条「明确不做」，把范围钉死，挡住临时加需求。', gain: '「不做」边界' },
+      { do: '每条需求配一个可观测验收：点一下出现什么、刷新后还剩什么。', tool: ['doc-coauthoring', 'https://github.com/anthropics/skills'], gain: 'PRD.md' }
+    ],
+    checks: [
+      '每页都有入口和下一步，孤页能说清为什么留',
+      'P0 不超过 3 条，P1 不超过 5 条',
+      '文档里零个主观形容词，全部换成数字或现象',
+      '「不做」至少 3 条，且每条能说出省掉多少返工'
+    ],
+    trap: '需求写成散文，写着写着开始想配色——这时候退回去，先把页面清单和 P0 定完。',
+    details: [
+      '总目标只写一句：谁、在哪个页面、做成什么、怎么算成功。写不出来说明需求还没定。',
+      '用户访谈只问三题：上次遇到这个问题是什么时候、当时怎么处理、哪一步最烦。',
+      '验收写成「点一下 → 出现什么」；写不出现象的需求，开发阶段一定扯皮。',
+      'PRD 三段就够：目标与用户、页面与功能、验收与不做；给 AI 的提示词按「角色 + 目标 + 约束 + 输出格式」四段写。'
+    ],
+    skill: {
+      name: 'doc-coauthoring',
+      badge: '开源',
+      repo: 'https://github.com/anthropics/skills',
+      cmds: ['/plugin marketplace add anthropics/skills', '/plugin install document-skills@anthropic-agent-skills'],
+      why: '把零散回答收成结构化 PRD：目标、范围、验收各一节，改起来不用重写全文。'
+    },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 2 阶段「定需求」，产出 PRD.md，不写代码、不画界面。
+先一次问我 3 个问题（每题给 2–3 个选项并说明影响）：给谁用、做几页、最想先跑通哪三件事；我答完再问下一组，最多三轮。
+问清后先复述目标与验收口径，等我确认，再按「用户与场景 / 页面清单 / P0-P2 / 不做 / 验收」五节写 PRD。
+页面每页必须写清从哪进、看什么、下一步去哪；验收必须写成可观测现象；形容词一律换成数字。`,
+    user: [
+      '回答三轮问题：给谁用、做几页、先跑通哪三件事；',
+      '拍板 P0 三条与「不做」三条，别让我替你砍需求；',
+      '确认页面清单和验收口径，回一句「就按这个做」再产出。'
+    ]
+  },
+  {
+    n: 3,
+    title: '写 SDD',
+    meta: '6 步 · 1 份 SDD',
+    deliver: ['SDD.md', 'schema.sql', 'openapi.yaml', '架构图'],
+    goal: '把「怎么实现」先写死：架构、目录、表、接口、验收；AI 只照文档写代码。',
+    steps: [
+      { do: '技术选型表：框架、UI、数据库、部署、理由，每项只留一个主选一个备选。', note: '表格，手写', gain: '选型表' },
+      { do: '画架构图与目录树：谁调谁、文件放哪、边界在哪。', tool: ['Excalidraw', 'https://excalidraw.com'], gain: '架构图 + 目录树' },
+      { do: '设计数据库：实体、字段、关系、索引，先实体后页面字段。', tool: ['dbdiagram.io', 'https://dbdiagram.io'], gain: 'ER 图 + schema.sql' },
+      { do: '列接口：方法、路径、入参、出参、错误码，一页至少一个接口。', tool: ['OpenAPI', 'https://swagger.io/specification'], gain: 'openapi.yaml' },
+      { do: '定权限与状态矩阵：谁能看什么，数据从哪个状态到哪个状态。', note: '表格，手写', gain: '权限 / 状态矩阵' },
+      { do: '写测试点与验收标准：每条 P0 至少一条用例。', gain: 'SDD.md 定稿' }
+    ],
+    checks: [
+      '每个页面都能对应到接口，没有「先写再说」的页',
+      '每张表能画出 ER 关系，字段有类型和默认值',
+      '错误码统一成四类：未登录 / 无权限 / 参数错 / 服务错',
+      '陌生人只看 SDD 能照着重写一遍'
+    ],
+    trap: '边写组件边改表，改到最后接口、页面、字段三边全对不上；SDD 必须先定稿再编码。',
+    details: [
+      'SDD 六章：选型、架构、目录、数据、接口、验收；缺哪章，编码阶段就会在哪章返工。',
+      '命名一次定死：表用复数下划线，接口用动词开头，组件用大驼峰；后面不再改。',
+      '错误码先定再写：401 去登录、403 说原因、422 指字段、500 给重试。',
+      '需求变更先改 SDD 再改代码；文档落后一天，后面全靠猜。'
+    ],
+    skill: { note: 'SDD 是项目自身知识，skill 替不了。用 dbdiagram、OpenAPI 这类工具把结构固定下来。' },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 3 阶段「写 SDD」。目标是把实现方案定稿，让编码阶段只做翻译，不做设计。这份 SDD 会直接交给 AI 批量编码（Spec Coding），接口和字段必须能被机器读懂。
+先问我 5 件事：技术栈有没有指定、数据库用哪个、要不要登录、部署在哪个平台、最窄要支持多少宽度。
+然后按六章产出：技术选型表（含理由与备选）、架构图（Mermaid）、目录树、数据库 schema、接口清单（OpenAPI 片段）、验收与测试点。
+每张表给字段类型和默认值；每个接口给成功与失败两种返回；有拿不准的选型直接说不确定，并给两条备选。`,
+    user: [
+      '确认技术栈与数据库，别让我在三个方案里猜；',
+      '确认登录方式与权限边界（游客能看什么）；',
+      '拍板数据实体与状态流转，后面不再加表。'
+    ]
+  },
+  {
+    n: 4,
+    title: '起骨架',
+    meta: '5 步 · 4 条路由',
+    deliver: ['目录骨架', '路由表', '占位页 ×4'],
+    goal: '空壳先跑通：路由能跳、构建能过、首次提交干净，再往里填内容。',
+    steps: [
+      { do: '按选型初始化项目，只装必需依赖，版本锁进 lock 文件。', note: '用选型里的脚手架', gain: '可运行的空项目' },
+      { do: '按 SDD 建目录：pages / components / lib / styles，先建空文件占位。', note: '照目录树建', gain: '目录与文件骨架' },
+      { do: '配路由表：几条路由、各自对应哪个页面、哪个是 404。', note: '路由表单独一份', gain: '路由表' },
+      { do: '每个路由放占位页：标题、一句占位、返回链接，先能跳通。', gain: '4 条路由可访问' },
+      { do: 'dev 与 build 都跑一遍，通过后打 commit，再开功能分支。', tool: ['Git', 'https://git-scm.com'], gain: '干净基线 + 分支' }
+    ],
+    checks: [
+      '每条路由直接输 URL 都能打开，刷新不 404',
+      'build 零报错，警告也清零',
+      '404 有独立页面和回首页入口',
+      '首个 commit 不含 node_modules、dist、.env'
+    ],
+    trap: '路由写死在组件里、目录随写随建，后面每加一页都要改三处。',
+    details: [
+      '目录先定死：pages / components / lib / styles，路由表单独一份，后四个阶段都按它放文件。',
+      '占位页三件套：标题、一句占位、返回链接；空路由会被当成 404 排查半天。',
+      '第一个 commit 前先写 .gitignore，否则密钥和构建产物跟着仓库走。',
+      'build 通过再提交，别让基线一开始就带着警告；功能开发一律开分支（feat/xxx），提交信息写「动词 + 范围 + 结果」。'
+    ],
+    skill: {
+      name: 'web-artifacts-builder',
+      badge: '开源',
+      repo: 'https://github.com/anthropics/skills',
+      cmds: ['/plugin marketplace add anthropics/skills', '/plugin install example-skills@anthropic-agent-skills'],
+      why: '从零拉一个能跑的前端骨架，目录、路由、占位页一次给全，省掉手搭脚手架。'
+    },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 4 阶段「起骨架」。只搭空壳，不写内容和样式。
+先确认三件事：用哪个脚手架、路由有哪几条、404 放哪个路径。然后按 SDD 的目录树建文件，给完整代码，不要省略。
+要求：每条路由可直接输 URL 打开；build 零报错；占位页有标题、一句占位、返回链接；提交前检查 .gitignore。
+做完给我 dev / build 两条命令和预期输出，并列出这一轮新增的每个文件及作用。`,
+    user: [
+      '确认脚手架与路由清单（含 404）；',
+      '给仓库分支名，确认是新建仓库还是已有；',
+      '本地跑一次 dev 和 build，把报错原文发我。'
+    ]
+  },
+  {
+    n: 5,
+    title: '搭界面',
+    meta: '6 步 · 3 页 · 1 套 token',
+    deliver: ['design-tokens.md', '三页界面', '交互脚本'],
+    goal: '三个页面各就各位，颜色、间距、圆角只从一套 token 里取，390 宽不横滚。',
+    steps: [
+      { do: '先定 tokens：主色、纸底、四级文字、间距刻度、圆角、阴影。', tool: ['Astryx', 'https://github.com/facebook/astryx'], gain: 'design-tokens.md' },
+      { do: '按需装组件，不自造按钮、输入框、弹窗。', tool: ['shadcn/ui', 'https://ui.shadcn.com'], gain: '组件目录' },
+      { do: '写样式层与断点：桌面、平板、手机三档，只调列数和间距。', tool: ['Tailwind CSS', 'https://tailwindcss.com'], gain: '样式与断点' },
+      { do: '图标统一一套，只用一个线条风格。', tool: ['Lucide', 'https://lucide.dev'], gain: '图标清单' },
+      { do: '写三页真实内容：首页讲清是谁，列表能扫读，详情能读完。', note: '真内容，不用 lorem', gain: '首页 / 列表 / 详情' },
+      { do: '一页最多两个主动效（300–450ms），先叫得出名字再实现。', tool: ['动效手册', 'motion-handbook.html'], gain: '交互脚本' }
+    ],
+    checks: [
+      '代码里没有裸数值，全部走 token',
+      '390 宽无横向滚动，字号不缩水',
+      'hover / focus / active 三态齐全',
+      '键盘 Tab 能走完整页，焦点看得见'
+    ],
+    trap: '先写样式再想内容，每个页面都要返工；内容先落，样式跟着内容长。',
+    details: [
+      'token 只留必要项：底、面、主色、强调、四级文字、线、圆角、间距取 4 的倍数；按用途命名。',
+      '断点三档就够：≤720 单列、721–1080 两列、>1080 主栏 720 加侧栏；每档只调列数和间距。',
+      '内容先落：没真内容先用占位文案，不要 lorem；占位也要像真话。',
+      '一页最多两个主动效，触屏不能只靠 hover；先从动效手册里挑名字再实现。'
+    ],
+    skill: {
+      name: 'frontend-design',
+      badge: '开源',
+      repo: 'https://github.com/anthropics/skills',
+      cmds: ['/plugin install example-skills@anthropic-agent-skills'],
+      why: '按设计规范生成页面：层级、留白、字阶一次到位，减少「AI 味」的居中卡片。'
+    },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 5 阶段「搭界面」。先问清约束，再生成页面。
+问 6 项：调性（纸感 / 极简 / 科技）、主色、字体、圆角与间距偏好、三页哪页最重要、最窄要支持多少宽度。
+顺序：先给 design-tokens（只给 token，不给页面）→ 我确认 → 再逐页生成；所有颜色间距必须引用 token 名，禁止裸值。
+每页给桌面与 390 两张截图说明布局差异；一页最多两个主动效，写清触发、时长、缓动。`,
+    user: [
+      '给 1–3 个参考站或截图，说明喜欢配色、字体还是布局；',
+      '拍板主色、字体、圆角、间距四组 token 取值；',
+      '看桌面与 390 宽两张截图，指出要改的页面和位置。'
+    ]
+  },
+  {
+    n: 6,
+    title: '接数据',
+    meta: '6 步 · 1 份 schema',
+    deliver: ['迁移脚本', 'RLS 策略', 'lib/api', '登录与空错态'],
+    goal: '换台机器照 README 就能跑：没登录的人进不了受限页，空态错态都有出口。',
+    steps: [
+      { do: '把 SDD 里的 schema 落库：建表、加索引、写种子数据。', tool: ['Supabase', 'https://supabase.com'], gain: '迁移脚本 + 种子数据' },
+      { do: '开权限：默认拒绝，逐表逐操作放行，匿名 key 也验一遍。', tool: ['Supabase RLS', 'https://supabase.com/docs/guides/auth/row-level-security'], gain: '权限策略' },
+      { do: '写数据访问层，页面不直接拼 SQL、不出现表名。', tool: ['supabase-js', 'https://supabase.com/docs/reference/javascript'], gain: 'lib/api 封装' },
+      { do: '接登录与会话：登录页、受限页回跳、登出清理。', gain: '登录 + 受限页' },
+      { do: '补空态与错态：没数据说什么，失败给什么出口。', gain: '空态 / 错态组件' },
+      { do: '写 env 样例与 README：启动步骤压到三条。', gain: 'env.example + README' }
+    ],
+    checks: [
+      '新环境照 README 三步能起来',
+      '列表空态有文案，失败有提示，不白屏',
+      '未登录访问受限页被挡回登录',
+      '前端源码里搜不到 service_role key'
+    ],
+    trap: '先开全表权限后补策略，等于线上裸奔；权限从「全拒绝」反向加。',
+    details: [
+      'schema 先写实体和关系，再写字段；页面要的字段最后补，表结构不要跟着 UI 变形。',
+      '权限默认拒绝，逐表逐操作放行；用匿名 key 真跑一次，别只看本地登录态。',
+      '数据访问收在 lib/api，页面里不出现 SQL 和表名，换库时只改一层。',
+      '错误分三类给不同出口：未登录去登录、无权限说清原因、网络失败给重试。'
+    ],
+    skill: { note: '该阶段没有对口 skill；表结构与权限是项目知识，交给 Supabase 的迁移与 SDK 更稳。' },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 6 阶段「接数据」。
+先问我 5 件事：数据库用哪个、要不要登录、游客能看什么、数据谁写谁读、测试账号有没有。
+然后按顺序做：迁移脚本 → RLS 策略（默认拒绝，逐条放行）→ lib/api 封装 → 登录与受限页 → 空态错态 → env.example 与 README。
+每步给完整文件与命令，并说明怎么验证「匿名能读 / 匿名不能写 / 登录能写」三条边界。`,
+    user: [
+      '注册 / 登录数据库平台，把项目 URL 与匿名 key 给我；',
+      '确认数据实体、字段与谁能读写，不确定就说「按你的建议」；',
+      '给一个测试账号，或同意先用匿名只读路径验证。'
+    ]
+  },
+  {
+    n: 7,
+    title: '测试评审',
+    meta: '6 步 · 2 套测试 · 1 次评审',
+    deliver: ['单测', '3 条 e2e', '评审记录', '冒烟.md'],
+    goal: '把「我看着没问题」换成可重跑的检查：单测、e2e、评审、冒烟各有清单。',
+    steps: [
+      { do: '列回归清单：解析、计算、格式化、权限判断哪些必须测。', note: '从 SDD 的测试点抄', gain: '回归清单' },
+      { do: '写单测覆盖纯逻辑，先跑红再跑绿。', tool: ['Vitest', 'https://vitest.dev'], gain: '单测 + 覆盖率' },
+      { do: 'e2e 只留三条主路径：进入、登录、增删一条数据。', tool: ['Playwright', 'https://playwright.dev'], gain: '3 条 e2e' },
+      { do: '让另一个模型读 diff 做评审，只挑 bug、安全、性能三类问题。', tool: ['GitHub PR', 'https://github.com/features/pull-requests'], gain: '评审记录' },
+      { do: '跑性能与安全：Lighthouse 分数、依赖审计、key 扫描。', tool: ['Lighthouse', 'https://developer.chrome.com/docs/lighthouse'], gain: '性能 / 安全报告' },
+      { do: '定 10 条冒烟清单，已知问题全部进 issues。', gain: '冒烟.md + issue 列表' }
+    ],
+    checks: [
+      '单测一条命令能跑，失败能定位到文件行号',
+      '3 条 e2e 全绿，且能在 CI 里重跑',
+      '评审意见逐条有回应：改 / 不改都写理由',
+      '冒烟 10 条每一条都能在 5 分钟内点完'
+    ],
+    trap: '只测「页面能打开」，不测边界：空数据、超长文本、无权限、断网，四个最容易漏。',
+    details: [
+      '只测会回归的：解析、格式化、计算走单测；e2e 留 3 条主路径。可以让测试 Subagent 先跑一遍，人只看红的那几条。',
+      '冒烟清单 10 条：首页、列表、详情、登录、登出、空态、404、刷新保持、390 宽、慢网。',
+      '评审看 diff 不看全文：一次只看一个 commit，挑 bug、安全、性能，不提风格偏好。',
+      '已知问题写进 issues，不用「以后再说」口头传；下阶段开始前先清一遍。'
+    ],
+    skill: {
+      name: 'webapp-testing',
+      badge: '开源',
+      repo: 'https://github.com/anthropics/skills',
+      cmds: ['/plugin install example-skills@anthropic-agent-skills'],
+      why: '按真实浏览器跑页面：点、填、断言一次写完，比手工清单稳定。'
+    },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 7 阶段「测试与评审」。目标是把「我看着没问题」换成可重跑的检查。
+先问我 5 件事：哪三条路径坏了最致命、单测覆盖哪些纯逻辑、e2e 用 Playwright 还是手工、上线前必须手点哪十件事、已知问题哪些能留到下一版。
+然后依次给：回归清单 → 单测文件 → 3 条 e2e → 评审清单（只挑 bug / 安全 / 性能）→ 冒烟 10 条 → 已知问题 issue 模板。
+每条测试给运行命令和预期输出；失败的定位路径也要写清。`,
+    user: [
+      '确认三条主路径与十个冒烟项；',
+      '给测试账号（登录、受限页各一个）；',
+      '跑一遍命令，把红色输出原文发我。'
+    ]
+  },
+  {
+    n: 8,
+    title: '上线迭代',
+    meta: '6 步 · 1 个线上站点',
+    deliver: ['CI 工作流', '线上站点', '监控告警', '回滚步骤'],
+    goal: '公网能开、深链不 404、出错能回滚；上线不是终点，是下一轮的起点。',
+    steps: [
+      { do: '列上线清单：env、构建命令、输出目录、404、favicon、深链回退。', note: '照清单勾', gain: '上线清单' },
+      { do: '写 CI：装依赖、跑测试、构建，三件事按顺序，失败就停。', tool: ['GitHub Actions', 'https://github.com/features/actions'], gain: 'CI 工作流' },
+      { do: '部署：静态产物或容器，按选型选一个平台，别手敲命令。', tool: ['Coolify', 'https://coolify.io'], gain: '线上站点' },
+      { do: '绑域名与 HTTPS：先加 CNAME / A 记录，再开强制 HTTPS。', tool: ['Cloudflare Pages', 'https://pages.cloudflare.com'], gain: '域名 + 证书' },
+      { do: '接监控：前端错误、5xx、可用性，各一条告警。', tool: ['Sentry', 'https://sentry.io'], gain: '错误与可用性监控' },
+      { do: '留回滚路 + 迭代清单：上一版能一键回去，新需求进 issues。', gain: '回滚步骤 + 迭代清单' }
+    ],
+    checks: [
+      '线上首页、列表、详情、404 四条 URL 都能直接打开',
+      '刷新深链不 404，HTTPS 无混合内容警告',
+      '前端产物里搜不到 key 与内网地址',
+      '回滚步骤写下来，别人照着能操作'
+    ],
+    trap: '在服务器上手敲命令部署，出问题说不清改了哪；构建和部署必须分开。',
+    details: [
+      '上线清单：env 变量齐、域名解析生效、HTTPS 正常、404 页能开、favicon 不 404。',
+      '构建和部署分开：CI 只跑 build 和测试，部署交给平台钩子，别在服务器上手敲命令。',
+      '留一条回滚路：保留上一个构建产物或上一版部署，出问题先回滚再查。',
+      '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。'
+    ],
+    skill: { note: '该阶段没有对口 skill；构建与部署的可重复性靠流水线，Coolify / Cloudflare 就够。' },
+    prompt: `你是我的 Vibe Coding 搭档，现在在第 8 阶段「上线与迭代」。
+先问我 5 件事：部署到哪个平台、有没有域名、构建命令与输出目录、要不要登录后才能看、出问题谁来回滚。
+然后给：上线清单（逐条可勾）、CI 工作流全文、部署步骤（含平台截图位置）、域名与 HTTPS 顺序、监控三项、回滚步骤。
+最后给上线后 24 小时的观察项：看哪些指标、出现什么就回滚、哪些问题进下一版。`,
+    user: [
+      '授权部署平台读取仓库，确认构建命令与输出目录；',
+      '绑定域名并按提示加 DNS 记录（CNAME / A）；',
+      '点一次发布，把线上链接发我，我按清单验一遍。'
+    ]
+  }
+]
 
 const PROMPT_TAIL = `
 
@@ -640,40 +606,6 @@ const PROMPT_TAIL = `
 3. 代码或文档给完整内容，不用「其余同上」省略；
 4. 结尾给验证方法：命令或点击路径，能重跑一遍；
 5. 有不确定的地方直接说不确定，别编。`
-
-// AI 照着这一步一步做，工具、产出、要用户配合的事都写死
-const USER_TASKS = {
-  1: [
-    '回答我第一轮 3 个问题：给谁用、做几页、最想先跑通哪三件事；',
-    '补充「明确不做」的三条边界，并确认页面清单（≤5 页）；',
-    '确认我复述的目标与验收口径，回一句「就按这个做」再让我产出。'
-  ],
-  2: [
-    '定技术栈与部署平台（不确定就选我给的默认方案）；',
-    '给我 GitHub 仓库地址与分支名，确认仓库是新建还是已有；',
-    '如果有域名，现在告诉我域名；没有就先用平台默认域名。'
-  ],
-  3: [
-    '给参考站或截图（1–3 个），说明喜欢的是配色、字体还是布局；',
-    '拍板主色、字体、圆角、间距四组 token 取值；',
-    '看桌面与 390 宽两张截图，指出要改的页面与位置。'
-  ],
-  4: [
-    '注册 / 登录我指定的数据库平台，把项目 URL 与匿名 key 给我；',
-    '确认数据实体与字段（谁、什么、什么时候、状态），不确定就说「按你的建议」；',
-    '提供测试账号，或同意先用匿名只读路径验证。'
-  ],
-  5: [
-    '授权部署平台读取仓库，确认构建命令与输出目录；',
-    '绑定域名并按提示加 DNS 记录（CNAME / A）；',
-    '点一次发布，把线上链接发我，我按清单验一遍。'
-  ],
-  6: [
-    '按冒烟清单实际点 10 条，把出问题的页面和操作步骤发我；',
-    '给测试账号（登录、受限页各一个）；',
-    '确认「已知问题」清单，同意哪些进 issues、哪些这版不修。'
-  ]
-}
 
 async function copyText(text, btn, doneLabel = '已复制') {
   try { await navigator.clipboard.writeText(text) }
@@ -692,136 +624,93 @@ async function copyText(text, btn, doneLabel = '已复制') {
   setTimeout(() => { btn.textContent = old; btn.classList.remove('done') }, 1400)
 }
 
+function stepsMarkup(s) {
+  return s.steps.map((st, i) => {
+    const tool = st.tool
+      ? `<a class="tlink" href="${st.tool[1]}" target="_blank" rel="noopener noreferrer">${st.tool[0]}</a>`
+      : `<span>${st.note || '不用外部工具'}</span>`
+    return `<li><span class="n">0${i + 1}</span><div><p class="do">${st.do}</p>
+      <div class="out">${tool}<span class="gain">→ 得到 <b>${st.gain}</b></span></div></div></li>`
+  }).join('')
+}
+
+function skillMarkup(s) {
+  const sk = s.skill || {}
+  if (sk.name) {
+    return `<section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
+        <span>本阶段 skill · ${sk.name}</span>${FOLD}
+      </button>
+      <div class="detail-body"><div class="detail-inner detail-skill"><div class="skillbox">
+        <div class="sk-top"><span class="sk-name">${sk.name}</span><span class="badge">${sk.badge || '开源'}</span>
+          <a class="sk-link" href="${sk.repo}" target="_blank" rel="noopener noreferrer">仓库 ↗</a></div>
+        <p class="sk-why">${sk.why || ''}</p>
+        <div class="sk-row"><span class="k">装</span><div class="v">${(sk.cmds || []).map((c) => `<code class="cmd">${c}</code>`).join('')}</div><button class="copy" type="button">复制</button></div>
+      </div></div></div></section>`
+  }
+  return `<section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
+      <span>本阶段 skill · 无对口 skill</span>${FOLD}
+    </button>
+    <div class="detail-body"><div class="detail-inner detail-skill"><p class="sk-note">${sk.note || '该阶段没有对口 skill。'}</p></div></div></section>`
+}
+
+function stageMarkup(s) {
+  return `<div class="scol main">
+      <section class="sec"><h3>目标</h3><p>${s.goal}</p></section>
+      <section class="sec"><h3>步骤 · 做什么 / 用什么 / 得到什么</h3><ul class="steps">${stepsMarkup(s)}</ul></section>
+    </div>
+    <div class="scol side">
+      <section class="sec"><h3>本阶段产出</h3><div class="deliver">${s.deliver.map((d) => `<span>${d}</span>`).join('')}</div></section>
+      <section class="sec"><h3>验收</h3><ul class="check">${s.checks.map((c) => `<li>${CHECK}${c}</li>`).join('')}</ul></section>
+      <section class="sec"><h3>常见翻车</h3><p class="trap">${s.trap}</p></section>
+      <section class="sec detail"><button class="detail-btn" type="button" aria-expanded="false">
+          <span>展开细节 · 容易忽略的地方</span>${FOLD}
+        </button>
+        <div class="detail-body"><div class="detail-inner"><ul>${s.details.map((t) => `<li><i></i><span>${t}</span></li>`).join('')}</ul></div></div>
+      </section>
+      ${skillMarkup(s)}
+    </div>`
+}
+
+function buildPrompt(s) {
+  const toolLine = (st) => st.tool
+    ? `工具/网站：${st.tool[0]}（${st.tool[1]}）`
+    : `工具/网站：${st.note || '不用外部工具'}`
+  const flows = s.steps.map((st, i) => `${i + 1}. 做什么：${st.do}\n   ① ${toolLine(st)}\n   ② 产出：${st.gain}`)
+  let text = s.prompt.trim()
+  text += '\n\n执行流程（按顺序做，每步先说清用什么工具、产出什么，我确认后再下一步）：\n' + flows.join('\n')
+  if (s.skill?.name) text += `\n\n配套 skill：${s.skill.name}（按这个 skill 的工作流做，别自己另起一套）`
+  text += '\n\n本阶段验收标准：\n' + s.checks.map((c, i) => `${i + 1}. ${c}`).join('\n')
+  text += '\n\n需要你（用户）配合的事，别替我猜：\n' + s.user.map((t, i) => `${i + 1}. ${t}`).join('\n')
+  text += '\n\n实践要点：\n' + s.details.map((t, i) => `${i + 1}. ${t}`).join('\n')
+  return text + PROMPT_TAIL
+}
+
 function selectStage(n, pushHash = true, scroll = true) {
-  const sd = document.getElementById('sd-' + n)
-  if (!sd) return
+  const s = STAGES[n - 1]
+  if (!s) return
   current = n
   railItems.forEach((b) => {
     const on = Number(b.dataset.stage) === n
     b.classList.toggle('on', on)
     b.setAttribute('aria-selected', String(on))
   })
-  const name = railItems.find((b) => Number(b.dataset.stage) === n).querySelector('.st-title').textContent
   pno.textContent = 'STAGE 0' + n
-  ptitle.textContent = name
-  pmeta.textContent = META[n] || ''
-  paneBody.innerHTML = sd.innerHTML
+  ptitle.textContent = s.title
+  pmeta.textContent = s.meta
+  paneBody.innerHTML = stageMarkup(s)
   paneBody.scrollTop = 0
-  // 提示词只进按钮，不在页面上摊开
-  const promptEl = paneBody.querySelector('.pblock')
-  currentPrompt = ((promptEl?.textContent || '').trim() + PROMPT_TAIL).trim()
-  promptEl?.closest('.sec')?.remove()
-
-  // 细节折叠：放在「常见翻车」后面，默认收起
-  const detail = document.createElement('section')
-  detail.className = 'sec detail'
-  detail.innerHTML = `<button class="detail-btn" type="button" aria-expanded="false">
-      <span>展开细节 · 容易忽略的地方</span>
-      <svg class="fold-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-    </button>
-    <div class="detail-body"><div class="detail-inner"><ul>${(DETAILS[n] || [])
-      .map((t) => `<li><i></i><span>${t}</span></li>`)
-      .join('')}</ul></div></div>`
-  const trapSec = paneBody.querySelector('.trap')?.closest('.sec')
-  if (trapSec) trapSec.after(detail)
-  else paneBody.appendChild(detail)
-
-  // 本阶段 skill 也折叠起来，标题保留 skill 名字
-  const skillSec = [...paneBody.querySelectorAll('.sec')].find((s) =>
-    /skill/i.test(s.querySelector('h3')?.textContent || '')
-  )
-  if (skillSec) {
-    const label = skillSec.querySelector('h3')
-    const skillName = skillSec.querySelector('.sk-name')?.textContent.trim() || ''
-    const holder = document.createElement('div')
-    holder.className = 'detail-inner detail-skill'
-    ;[...skillSec.children].forEach((c) => {
-      if (c !== label) holder.appendChild(c)
-    })
-    skillSec.classList.add('detail')
-    skillSec.innerHTML = `<button class="detail-btn" type="button" aria-expanded="false">
-        <span>${skillName ? '本阶段 skill · ' + skillName : '本阶段 skill'}</span>
-        <svg class="fold-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="detail-body"></div>`
-    const body = skillSec.querySelector('.detail-body')
-    body.appendChild(holder)
-  }
-
-  // 把页面上的步骤翻译成 AI 可执行的流程：步骤 + 工具/网站 + 产出
-  const flows = [...paneBody.querySelectorAll('.steps li')].map((li, i) => {
-    const act = (li.querySelector('.do')?.textContent || '').trim().replace(/\s+/g, ' ')
-    const tool = (li.querySelector('.tlink')?.textContent || '').trim()
-    const toolUrl = li.querySelector('.tlink')?.href || ''
-    const note = [...li.querySelectorAll('.out > span')]
-      .find((s) => !s.classList.contains('gain'))
-      ?.textContent.trim() || ''
-    const gain = ([...li.querySelectorAll('.gain')].map((g) => g.textContent.trim())
-      .join(' ')
-      .replace(/→\s*/, '')
-      .replace(/得到\s*/g, '')
-      .replace(/·/g, '，').replace(/\s*，\s*/g, '，')
-      .trim())
-    const fallback = n <= 2 ? '不拉外部工具，直接在对话里产出文档或文件' : '不新增外部服务，用项目已有工具'
-    const toolLine = tool
-      ? `工具/网站：${tool}${toolUrl ? '（' + toolUrl + '）' : ''}`
-      : note
-        ? `工具/网站：${note}`
-        : `工具/网站：${fallback}`
-    return `${i + 1}. 做什么：${act}\n   ① ${toolLine}\n   ② 产出：${gain || '结论写进对话，不落文件'}`
-  })
-  if (flows.length) {
-    currentPrompt += '\n\n执行流程（按顺序做，每步先说清用什么工具、产出什么，我确认后再下一步）：\n' + flows.join('\n')
-  }
-
-  // 配套 skill：有就点名，让 AI 按它的流程走
-  const skillName = paneBody.querySelector('.sk-name')?.textContent.trim()
-  if (skillName) {
-    currentPrompt += `\n\n配套 skill：${skillName}（按这个 skill 的工作流做，别自己另起一套）`
-  }
-
-  // 提示词补上本阶段验收标准，AI 拿到的是可判过的版本
-  const checks = [...paneBody.querySelectorAll('.check li')]
-    .map((li) => li.textContent.trim())
-    .filter(Boolean)
-  if (checks.length) {
-    currentPrompt += '\n\n本阶段验收标准：\n' + checks.map((c, i) => `${i + 1}. ${c}`).join('\n')
-  }
-  const userTasks = USER_TASKS[n] || []
-  if (userTasks.length) {
-    currentPrompt += '\n\n需要你（用户）配合的事，别替我猜：\n' + userTasks.map((t, i) => `${i + 1}. ${t}`).join('\n')
-  }
-  const tips = DETAILS[n] || []
-  if (tips.length) {
-    currentPrompt += '\n\n实践要点：\n' + tips.map((t, i) => `${i + 1}. ${t}`).join('\n')
-  }
-
-  // 正文两栏：目标 / 步骤 在左，验收 / 翻车 / 细节 / skill 在右
-  const colMain = document.createElement('div')
-  const colSide = document.createElement('div')
-  colMain.className = 'scol main'
-  colSide.className = 'scol side'
-  ;[...paneBody.children].forEach((s) => {
-    const t = s.querySelector?.('h3')?.textContent.trim() || ''
-    const toSide = !(t.startsWith('目标') || t.startsWith('步骤'))
-    ;(toSide ? colSide : colMain).appendChild(s)
-  })
-  paneBody.appendChild(colMain)
-  paneBody.appendChild(colSide)
+  currentPrompt = buildPrompt(s)
 
   // 逐段错峰入场，换阶段时内容是一层一层落下来的
-  const secs = [...paneBody.querySelectorAll('.sec')]
-  secs.forEach((s, i) => {
-    s.classList.add('swap-in')
-    s.style.animationDelay = i * 40 + 'ms'
+  paneBody.querySelectorAll('.sec').forEach((sec, i) => {
+    sec.classList.add('swap-in')
+    sec.style.animationDelay = i * 40 + 'ms'
   })
 
-  
-  navCount.textContent = `0${n} / 06`
+  navCount.textContent = `0${n} / 08`
   prevStage.disabled = n === 1
-  nextStage.disabled = n === 6
+  nextStage.disabled = n === 8
   if (pushHash) history.replaceState(null, '', '#stage-' + n)
-  // 切换后把内容面板带回视野，避免停在上一阶段的滚动位置
   if (scroll && pane.getBoundingClientRect().top < -8) {
     pane.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -834,20 +723,20 @@ railItems.forEach((btn) => {
 copyPrompt.addEventListener('click', () => copyText(currentPrompt, copyPrompt))
 
 copyMaster.addEventListener('click', () => {
-  const master = `我要从零做一个网站，请你按 Vibe Coding 六个阶段带我走一遍：定需求 → 起骨架 → 搭界面 → 接数据 → 上线 → 验收。
-
+  const master = `我要从零做一个网站，请你按 Vibe Coding 的 8 个阶段带我走一遍：备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代。
 规则：
-1. 每个阶段开始前，先用提问的方式问清需求：一次最多 3 个问题，每个问题给 2–3 个选项并说明影响；我答完再问下一组。
-2. 我回答含糊（「好看」「流畅」「差不多」）时继续追问，直到能验收。
-3. 先说明这个阶段要用哪些工具 / 网站、需要我提供什么（仓库、域名、账号、参考截图），再给步骤。
-4. 问清后先用 200 字复述该阶段目标与验收口径，等我确认再产出。
-5. 每个阶段结束给我「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走。
+1. 每个阶段开始前，先说明要用哪些工具 / 网站、需要我提供什么（仓库、域名、账号、参考截图），再给步骤；
+2. 一次最多问 3 个问题，每题给 2–3 个选项并说明影响，我答完再问下一组；
+3. 我回答含糊（「好看」「流畅」）时继续追问，直到能验收；
+4. 先用 200 字复述该阶段目标与验收口径，等我确认再产出；
+5. 每个阶段结束给「产出物清单 + 怎么验」；验收不过就退回上一阶段，不要带着问题往下走；
+6. 编码阶段只按 SDD 翻译，不临时改表、不改接口；变更先改文档再改代码。
 
 现在从第 1 阶段开始，先问我第一批问题。`
   copyText(master + PROMPT_TAIL, copyMaster)
 })
 
-// 面板里的复制按钮（skill 的安装命令）
+// 面板里的复制按钮与折叠
 paneBody.addEventListener('click', (e) => {
   const fold = e.target.closest('.detail-btn')
   if (fold) {
@@ -863,20 +752,22 @@ paneBody.addEventListener('click', (e) => {
   copyText(text, btn)
 })
 
-// 上一阶段 / 下一阶段
 prevStage.addEventListener('click', () => { if (current > 1) selectStage(current - 1) })
-nextStage.addEventListener('click', () => { if (current < 6) selectStage(current + 1) })
+nextStage.addEventListener('click', () => { if (current < 8) selectStage(current + 1) })
 
-// #stage-N 直达
 const fromHash = () => {
-  const m = location.hash.match(/#stage-([1-6])/)
+  const m = location.hash.match(/#stage-([1-8])/)
   selectStage(m ? Number(m[1]) : 1, false, false)
 }
 window.addEventListener('hashchange', fromHash)
 fromHash()
+
 </script>
 </body>
 </html>
+
+
+
 
 
 
