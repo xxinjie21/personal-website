@@ -143,6 +143,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
 
     <!-- 水豚走路：直接用 Uiverse.io by Novaxlo 的元素（https://uiverse.io/Novaxlo/kind-snail-5, MIT），只做缩放与定位适配 -->
     <div class="capy-stage" aria-hidden="true">
+      <div class="capy-mover">
       <div class="capybaraloader">
         <div class="capybara">
           <div class="capyhead">
@@ -160,6 +161,7 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
         <div class="loader">
           <div class="loaderline"></div>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -194,11 +196,15 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
   z-index: 3;
 max-width: 560px;
 }
-/* 水豚走路：照搬 Uiverse.io by Novaxlo 的元素（MIT），只靠 em 缩放塞进 hero 底部 */
-.capy-stage{position:absolute;left:44px;right:44px;bottom:16px;z-index:3;pointer-events:none;font-size:13px;overflow:hidden}
-.capybaraloader{width:14em;height:10em;position:relative;z-index:1;--color:rgb(204,125,45);--color2:rgb(83,56,28);transform:scale(.75);transform-origin:bottom left}
+/* 水豚走路：照搬 Uiverse.io by Novaxlo 的元素（MIT），缩得更小并沿整条底线一直往前爬 */
+.capy-stage{position:absolute;left:44px;right:300px;bottom:8px;height:72px;z-index:3;pointer-events:none;overflow:hidden;font-size:9px}
+/* 底线：拉通整段，不再用元素自带的短虚线 */
+.capy-stage::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:repeating-linear-gradient(90deg,rgba(126,84,46,.26) 0 7px,transparent 7px 15px)}
+.capy-mover{position:absolute;left:0;bottom:1px;animation:capy-crawl 34s linear infinite}
+@keyframes capy-crawl{0%{left:-104px;opacity:0}5%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}}
+.capybaraloader{width:14em;height:7.5em;position:relative;z-index:1;--color:rgb(204,125,45);--color2:rgb(83,56,28);transform:scale(.75);transform-origin:bottom left}
 .capybara{width:100%;height:7.5em;position:relative;z-index:1}
-.loader{width:100%;height:2.5em;position:relative;z-index:1;overflow:hidden}
+.loader{display:none}
 .capy{width:85%;height:100%;background:linear-gradient(var(--color),90%,var(--color2));border-radius:45%;position:relative;z-index:1;animation:movebody 1s linear infinite}
 .capyhead{width:7.5em;height:7em;bottom:0;right:0;position:absolute;background-color:var(--color);z-index:3;border-radius:3.5em;box-shadow:-1em 0 var(--color2);animation:movebody 1s linear infinite}
 .capyear{width:2em;height:2em;background:linear-gradient(-45deg,var(--color),90%,var(--color2));top:0;left:0;border-radius:100%;position:absolute;overflow:hidden;z-index:3}
@@ -221,8 +227,9 @@ max-width: 560px;
   .capy-stage {
     left: 18px;
     right: 18px;
-    bottom: 10px;
-    font-size: 9px;
+    bottom: 6px;
+    height: 58px;
+    font-size: 7.5px;
   }
 }
 .live {
