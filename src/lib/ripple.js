@@ -4,6 +4,7 @@
  * 元素不改 position / overflow，不占布局、不影响滚动。
  */
 const HOSTS = '[data-ripple], .btn, .btn-primary, .nav-link, .tab, .card'
+const HOVER_HOSTS = '[data-ripple], .nav-link, .tab, .card'
 const PRESS_MS = 420
 const HOVER_MS = 380
 const PRESS_SIZE = 200
@@ -59,7 +60,7 @@ document.addEventListener(
   'pointerover',
   (event) => {
     if (!fine.matches || event.pointerType !== 'mouse') return
-    const host = hostOf(event.target)
+    const host = event.target.closest(HOVER_HOSTS)
     if (!host || (event.relatedTarget instanceof Element && host.contains(event.relatedTarget))) return
     spawn(event.clientX, event.clientY, HOVER_SIZE, HOVER_MS, 0.34)
   },
