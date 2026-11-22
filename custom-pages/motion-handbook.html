@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>动效手册 · 77 个能跑的样子</title>
+<title>动效手册 · 78 个能跑的样子</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f7f2ec'/%3E%3Cpath d='M6 22c4 0 4-12 8-12s4 12 8 12' stroke='%23d9571a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -579,6 +579,17 @@ background:rgba(255,253,250,.94);color:#8a7663;box-shadow:0 10px 22px -14px rgba
   .say{font-size:11.5px}
   .acts button{min-height:34px}
 }
+
+/* ==== 三点跳动加载 ==== */
+.ld{display:inline-flex;align-items:flex-end;gap:7px;height:30px;padding:0 8px;border:0;border-radius:999px;
+background:transparent;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.ld i{width:8px;height:8px;border-radius:50%;background:linear-gradient(160deg,#f6a468,#d9571a);
+box-shadow:0 2px 6px rgba(217,87,26,.24);transform:translateY(0);opacity:.5;
+transition:opacity .26s var(--ease)}
+.ld:hover i,.ld:focus-visible i,.ld.run i{animation:ld-hop .42s cubic-bezier(.22,.8,.2,1) 3 both;opacity:1}
+.ld i:nth-child(2){animation-delay:.085s}
+.ld i:nth-child(3){animation-delay:.17s}
+@keyframes ld-hop{0%,100%{transform:translateY(0);opacity:.55}38%{transform:translateY(-8px);opacity:1}68%{transform:translateY(0);opacity:.72}}
 
 /* ==== 3D 与材质 ==== */
 .c3d{width:100%;height:100%;display:grid;place-items:center;perspective:420px;perspective-origin:50% 46%}
@@ -1214,9 +1225,9 @@ transition:text-shadow .45s var(--ease);cursor:default}
     <div class="ph-text">
       <p class="eyebrow">motion handbook</p>
       <h1>动效手册</h1>
-      <p class="lead">77 个动效与组件、12 套工具，全部真跑。</p>
+      <p class="lead">78 个动效与组件、12 套工具，全部真跑。</p>
     </div>
-    <span class="ph-count">77 effects · 12 tools</span>
+    <span class="ph-count">78 effects · 12 tools</span>
   </div>
 
   <!-- A 首屏 -->
@@ -1617,7 +1628,7 @@ transition .62s cubic-bezier(.22,.9,.28,1)；别配 opacity，两者一起会发
     </article>
   </div>
 
-  <div class="group"><h2>操作反馈</h2><p>12 · click</p></div>
+  <div class="group"><h2>操作反馈</h2><p>13 · click</p></div>
   <div class="grid">
     <article class="mcard" style="--i:1">
       <span class="badge">click</span>
@@ -1762,6 +1773,23 @@ transition:transform .24s cubic-bezier(.34,1.56,.64,1)  /* 超调才有果冻感
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
         <div class="src"><pre>box-shadow: 0 0 0 3px 同色12% , 0 8px 18px -14px 同色80%
 不要 outline:none 了事，键盘用户会失去焦点提示</pre></div>
+      </div>
+    </article>
+    <article class="mcard" style="--i:13">
+      <span class="badge">click</span>
+      <div class="demo">
+        <button class="ld" type="button" aria-label="三点跳动加载，点一下重播">
+          <i></i><i></i><i></i>
+        </button>
+      </div>
+      <div class="info">
+        <div class="name"><b>三点跳动加载</b><span class="en">bouncing dots</span></div>
+        <p class="say">三个点错开相位上下跳，比转圈更轻。悬停会播一轮，手指点一下再播一轮——触屏不靠 hover 也能看到。</p>
+        <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
+        <div class="src"><pre>.ld i{animation:ld-hop .42s cubic-bezier(.22,.8,.2,1) 3 both}
+.ld i:nth-child(2){animation-delay:.085s}
+.ld i:nth-child(3){animation-delay:.17s}
+@keyframes ld-hop{38%{transform:translateY(-8px);opacity:1}}</pre></div>
       </div>
     </article>
   </div>
@@ -2496,6 +2524,22 @@ $$('.copy').forEach((btn) => {
     const card = btn.closest('.mcard')
     if (!card) return
     window.frameCopy(motionPrompt(card), btn)
+  })
+})
+
+/* 三点加载：hover 由 CSS 播，触屏点击走这里再播一轮 */
+$$('.ld').forEach((el) => {
+  let timer = null
+  const play = () => {
+    el.classList.remove('run')
+    void el.offsetWidth
+    el.classList.add('run')
+    clearTimeout(timer)
+    timer = setTimeout(() => el.classList.remove('run'), 1300)
+  }
+  el.addEventListener('pointerdown', play)
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play() }
   })
 })
 
