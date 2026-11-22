@@ -409,7 +409,7 @@ const STAGES = [
     checks: [
       '每条路由直接输 URL 都能打开，刷新不 404',
       'build 零报错，警告也清零',
-      '404 有独立页面和回首页入口',
+      '404 有独立页面和回入口页入口',
       '首个 commit 不含 node_modules、dist、.env'
     ],
     trap: '路由写死在组件里、目录随写随建，后面每加一页都要改三处。',
@@ -432,15 +432,15 @@ const STAGES = [
   {
     n: 5,
     title: '搭界面',
-    meta: '6 步 · 3 页 · 1 套 token',
-    deliver: ['design-tokens.md', '三页界面', '动效名清单'],
-    goal: '三个页面各就各位，颜色、间距、圆角只从一套 token 里取，动效先叫得出名字再实现，390 宽不横滚。',
+    meta: '6 步 · 核心页 · 1 套 token',
+    deliver: ['design-tokens.md', '核心页面', '动效名清单'],
+    goal: 'PRD 里的页面各就各位，颜色、间距、圆角只从一套 token 里取，动效先叫得出名字再实现，390 宽不横滚。',
     steps: [
       { do: '「设计参考」挑 2 站写明抄哪层：uiverse 拿按钮，variant 学版式，awwwards 找调性。', tool: ['设计参考（本站）', 'design-refs.html'], gain: '参考清单 2 条' },
       { do: '先定 tokens：主色、纸底、四级文字、间距、圆角、阴影，落一份 token 文件。', tool: ['Style Dictionary', 'https://styledictionary.com'], gain: 'design-tokens.md' },
       { do: '按技术栈装组件库并写样式层与三档断点；组件按需引，不自造基础控件。', tool: ['shadcn/ui（JS 示例）', 'https://ui.shadcn.com'], gain: '组件 + 样式层' },
       { do: '图标统一一套，只用一个线条风格。', tool: ['Lucide', 'https://lucide.dev'], gain: '图标清单' },
-      { do: '三页写真内容：首页讲清是谁，列表能扫读，详情能读完，不用 lorem。', gain: '首页 / 列表 / 详情' },
+      { do: '按 PRD 写各页真内容：入口页讲清是什么，其余页按用途写全，不用 lorem。', gain: 'PRD 页面' },
       { do: '「动效手册」挑名：导航下划线、按钮磁吸、卡片倾斜、切页共享元素转场，点开 demo 再照抄。', tool: ['动效手册（本站）', 'motion-handbook.html'], gain: '交互脚本 + 动效名' }
     ],
     checks: [
@@ -458,7 +458,7 @@ const STAGES = [
       '设计参考只用来定调和对照，不照抄整站；动效手册里的每条都能真跑，挑名字前先点开看一眼再写进页面。'
     ],
     prompt: `你是我的 Vibe Coding 搭档，现在在第 5 阶段「搭界面」。先问清约束，再生成页面。
-问 6 项：调性（纸感 / 极简 / 科技）、主色、字体、圆角与间距偏好、三页哪页最重要、最窄要支持多少宽度。
+问 6 项：调性（纸感 / 极简 / 科技）、主色、字体、圆角与间距偏好、哪页最重要、最窄要支持多少宽度。
 顺序：先给 design-tokens（只给 token，不给页面）→ 我确认 → 再逐页生成；所有颜色间距必须引用 token 名，禁止裸值。
 每页给桌面与 390 两张截图说明布局差异；一页最多两个主动效，写清触发、时长、缓动。
 参考站与动效名我会从本站「设计参考」（uiverse / hover.dev / variant / awwwards / detail.design / vibeui）和「动效手册」（悬停下划线生长 / 磁吸按钮 / 倾斜卡片 / 共享元素转场 / 骨架屏 / 成功对勾）里挑好贴给你；按名字落到具体组件，写清触发、时长、缓动，不要自己发明新动效。`,
@@ -473,18 +473,18 @@ const STAGES = [
     title: '接数据',
     meta: '6 步 · 1 份 schema',
     deliver: ['迁移脚本', 'RLS 策略', 'lib/api', '登录与空错态'],
-    goal: '换台机器照 README 就能跑：没登录的人进不了受限页，空态错态都有出口。',
+    goal: '换台机器照 README 就能跑；要登录的受限页挡住未登录，空错态都有出口。',
     steps: [
       { do: '把 SDD 里的 schema 落库：建表、加索引、写种子数据（Postgres / MySQL / SQLite 都行）。', tool: ['Supabase（示例）', 'https://supabase.com'], gain: '迁移脚本 + 种子数据' },
       { do: '开权限：默认拒绝，逐表逐操作放行；有 RLS 就匿名 key 验一遍。', tool: ['RLS（Supabase 示例）', 'https://supabase.com/docs/guides/auth/row-level-security'], gain: '权限策略' },
       { do: '写数据访问层，页面不直接拼 SQL、不出现表名；按语言选 ORM 或 query builder。', tool: ['ORM（supabase-js 示例）', 'https://supabase.com/docs/reference/javascript'], gain: 'lib/api 封装' },
-      { do: '接登录与会话：登录页、受限页回跳、登出清理。', gain: '登录 + 受限页' },
+      { do: '接登录与会话（如项目需要）：登录页、受限页回跳、登出清理。', gain: '登录 + 受限页' },
       { do: '补空态与错态：没数据说什么，失败给什么出口。', gain: '空态 / 错态组件' },
       { do: '写 env 样例与 README：启动步骤压到三条。', gain: 'env.example + README' }
     ],
     checks: [
       '新环境照 README 三步能起来',
-      '列表空态有文案，失败有提示，不白屏',
+      '数据空态有文案，失败有提示，不白屏',
       '未登录访问受限页被挡回登录',
       '前端源码里搜不到 service_role key'
     ],
@@ -529,7 +529,7 @@ const STAGES = [
     trap: '只测「页面能打开」，不测边界：空数据、超长文本、无权限、断网，四个最容易漏。',
     details: [
       '只测会回归的：解析、格式化、计算走单测；e2e 留 3 条主路径。可以让测试 Subagent 先跑一遍，人只看红的那几条。',
-      '冒烟清单 10 条：首页、列表、详情、登录、登出、空态、404、刷新保持、390 宽、慢网。',
+      '冒烟清单 10 条：入口页、主要功能页、登录、登出、空态、404、刷新保持、390 宽、慢网。',
       '评审看 diff 不看全文：一次只看一个 commit，挑 bug、安全、性能，不提风格偏好。',
       '已知问题写进 issues，不用「以后再说」口头传；下阶段开始前先清一遍。',
       '验收时打开<a class="tlink" href="motion-handbook.html">动效手册</a>，按 SDD 里记下的名字（如「磁吸按钮」「共享元素转场」「骨架屏」）逐条触发比对：只写不跑、或跑了卡顿的，算没做。'
@@ -559,7 +559,7 @@ const STAGES = [
       { do: '留回滚路 + 迭代清单：上一版能一键回去，新需求进 issues。', gain: '回滚步骤 + 迭代清单' }
     ],
     checks: [
-      '线上首页、列表、详情、404 四条 URL 都能直接打开',
+      '线上入口页、主要功能页、404 都能直接打开',
       '刷新深链不 404，HTTPS 无混合内容警告',
       '前端产物里搜不到 key 与内网地址',
       '回滚步骤写下来，别人照着能操作'
@@ -633,11 +633,11 @@ const TEMPLATES = {
   1: `# CLAUDE.md / AGENTS.md（项目宪法）
 
 ## 项目一句话
-{{项目名}}：{{谁在什么场景用它，做成什么}}。页面：{{页面 A}} / {{页面 B}} / {{页面 C}} / 登录。
+{{项目名}}：{{谁在什么场景用它，做成什么}}。页面按 PRD 清单填。
 
 ## 技术栈
 - 语言与框架：{{填写}}
-- 数据库：{{填写}}
+- 数据存储：{{填写 / 没有就写无}}
 - 部署：{{填写}}
 
 ## 目录
@@ -685,35 +685,33 @@ $ git commit -m "chore: 初始化项目骨架"
 一句话目标：{{谁}} 在 {{什么场景}} 下，用 {{项目名}} 完成 {{什么事}}，{{怎么算成功}}。
 用户：{{自己 / 同事 / 客户}}；现在用 {{什么方式}} 凑合。
 
-## 2. 页面清单
-1. 首页 / ：一句介绍 + 最近 5 条 + 去列表 / 去登录
-2. 列表 /list ：全部数据，显示标题、分类、时间；空态给下一步
-3. 详情 /item/:id ：字段详情，可编辑、可删除
-4. 登录 /login ：账号登录；登录后回跳列表
+## 2. 页面清单（按项目定，不硬凑）
+1. {{页面 1}} /{{路径}} ：{{用途 + 关键内容}}
+2. {{页面 2}} /{{路径}} ：{{用途 + 关键内容}}
+3. {{页面 3}} /{{路径}} ：{{用途 + 关键内容}}
+（有登录、后台等再追加，没有就删）
 
 ## 3. 功能优先级
 P0（这版必须）
-- 新增一条数据：填最少字段 → 保存
-- 列表与筛选：按分类只看这一类
-- 登录与私有数据：未登录只读示例，登录后读写自己的
+- {{核心动作 1}}：{{输入什么 → 得到什么}}
+- {{核心动作 2}}：{{输入什么 → 得到什么}}
+- {{权限与状态}}：{{游客能做什么，登录后能做什么}}
 
 P1（下一版）
-- 导入 / 批量导入
-- 搜索
+- {{增强或批量操作}}
 
 P2（先不做，记下来）
-- 多人协作、公开主页、移动 App
+- {{协作 / 公开 / 移动 App 等}}
 
 ## 4. 明确不做（三条）
-- 不做协作与分享链接
-- 不做移动端 App，只做响应式网页
-- 不做多语言
+- 不做 {{X}}
+- 不做 {{Y}}
+- 不做 {{Z}}
 
 ## 5. 验收（可观测）
-- 新增一条后，刷新列表还在
-- 选一个分类，列表只剩这一类
-- 未登录访问 /list 被带回 /login；登录后能回到 /list
-- 390 宽下无横向滚动，按钮可点
+- {{主流程走一遍}}，刷新后结果还在
+- {{关键动作}} 在 390 宽下可点、无横滚
+- {{越权 / 空值 / 失败}} 都有明确提示
 `,
   3: `# SDD（软件设计文档）
 
@@ -725,63 +723,62 @@ P2（先不做，记下来）
 | 部署 | {{填写}} | {{填写}} | {{填写}} |
 
 ## 2. 架构与目录
-浏览器 → 前端页面 → lib/api → 数据库（权限在数据库或服务端控）
-src/pages/{{页面 A, B, C, Login}}
+浏览器 → 页面 → lib/api → 数据存储（权限在数据层或服务端控）
+src/pages/{{按 PRD 的页面}}
 src/components/{{组件}}
 src/lib/api/{{模块}}
 docs/{PRD.md,SDD.md,tasks.md}
 
 ## 3. 数据模型
-records
-- id uuid pk
-- user_id uuid not null（owner）
-- title text not null
-- body text default ''
-- tags text[] default '{}'
-- created_at timestamptz default now()
-索引：user_id、tags gin
+{{实体}}
+- id {{主键类型}} pk
+- {{归属字段}}（如需按用户隔离）
+- {{字段 1}} {{类型}} {{约束}}
+- {{字段 2}} {{类型}} {{约束}}
+- created_at {{时间类型}} default now()
+索引：{{查询常用的字段}}
 
 ## 4. 接口
-GET  /api/records?tag=       列出我的数据（可按分类）
-POST /api/records            新增 { title, body, tags }
-PATCH /api/records/:id       改标题 / 正文 / 分类
-DELETE /api/records/:id      删除
+GET  /api/{{实体}}          列出（可按 {{筛选字段}}）
+POST /api/{{实体}}          新增 { {{字段}} }
+PATCH /api/{{实体}}/:id     改 {{字段}}
+DELETE /api/{{实体}}/:id    删除
 错误码：401 未登录 / 403 非本人 / 422 字段不合法 / 500 服务错
 
 ## 5. 权限与状态
-游客：只读示例 3 条（前端写死）
-登录用户：只能读写自己的行
-状态：无 → 已保存 →（可编辑）→ 已删除
+游客：{{能看什么}}
+登录用户：{{能读写什么}}
+状态：{{初始 → 已保存 →（可编辑）→ 已删除}}
 
 ## 6. 测试点
-- 新增后刷新仍在
+- {{主流程}}后刷新仍在
 - 别人的 id 不能读、不能改
-- 标题为空时用默认文案兜底
-- 两个分类组合筛选
+- {{空值}}用默认文案兜底
+- {{筛选 / 排序}}结果正确
 
 ---
 # tasks.md（依赖顺序）
-- [ ] T1 建表 + 权限 + 种子 3 条
-- [ ] T2 lib/api 四个方法
-- [ ] T3 登录页与回跳
-- [ ] T4 列表 + 筛选
-- [ ] T5 新增 / 编辑 / 删除
+- [ ] T1 {{建表 + 权限 + 种子}}
+- [ ] T2 lib/api 基础方法
+- [ ] T3 {{登录页与回跳（如需）}}
+- [ ] T4 {{页面 2 + 核心交互}}
+- [ ] T5 {{主操作（增 / 改 / 删）}}
 - [ ] T6 空态、错态、390 宽
 `,
   4: `# 骨架清单
 
 ## 目录
-src/pages/        {{页面 A, B, C, Login}}
+src/pages/        {{按 PRD 的页面}}
 src/components/   {{组件}}
 src/lib/api/      {{模块}}
 docs/             PRD.md SDD.md tasks.md
 
 ## 路由表
-/           {{页面 A}}
-/list       {{页面 B}}（需登录）
-/item/:id   {{页面 C}}（需登录）
-/login      登录
-*           404 → 回首页
+/                {{入口页}}
+{{/路径 2}}      {{页面 2}}
+{{/路径 3}}      {{页面 3}}
+/login           登录（如需）
+*                404 → 回入口页
 
 ## 命令（以 Vite 为例，换栈用等价命令）
 $ npm create vite@latest {{项目名}} -- --template vue
@@ -789,10 +786,10 @@ $ cd {{项目名}} && npm i
 $ git init && git add . && git commit -m "chore: init skeleton"
 
 ## 占位页三件套
-标题 + 一句占位 + 返回首页链接；每条路由直接输 URL 都能打开。
+标题 + 一句占位 + 返回入口页链接；每条路由直接输 URL 都能打开。
 
 ## 完成标志
-- [ ] 4 条路由都能打开，刷新不 404
+- [ ] 路由表里的每条都能打开，刷新不 404
 - [ ] build 零报错
 - [ ] 404 有独立页面
 - [ ] .gitignore 写好，首 commit 干净
@@ -813,11 +810,11 @@ $ git init && git add . && git commit -m "chore: init skeleton"
 - 动效：______（名字 + 触发 + 时长 + 缓动，写进组件注释）
 - 只挑 1–2 个，多了页面会吵
 
-## 页面内容（先落内容再调样式）
-- 首页：一句话是什么 + 最近 5 条 + 两个入口
-- 列表：每条一行，标题 + 分类 + 时间；空态文案写清下一步
-- 详情：字段、编辑、删除；操作放右下
-- 登录：输入框 + 按钮 + 失败提示
+## 页面内容（按 PRD 的页面清单，一页一条）
+- 入口页：一句话是什么 + 主要入口 + 最近内容
+- {{页面 2}}：{{这一页先落哪些内容，按什么顺序读}}
+- {{页面 3}}：{{这一页先落哪些内容，操作放哪}}
+- 登录页（如需）：输入框 + 按钮 + 失败提示
 
 ## 断点
 ≤720 单列；721–1080 两列；>1080 主栏 720 + 侧栏
@@ -826,35 +823,33 @@ $ git init && git add . && git commit -m "chore: init skeleton"
 一页最多两个：卡片 hover 抬 1px；切页淡入 300–450ms；不做只靠 hover 的交互
 `,
   6: `-- schema.sql（Postgres / Supabase 示例，按你的库改类型）
-create table records (
+create table {{实体}} (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  title text not null,
-  body text default '',
-  tags text[] not null default '{}',
+  {{归属字段}} uuid references auth.users(id) on delete cascade,
+  {{字段 1}} {{类型}} not null,
+  {{字段 2}} {{类型}} default {{默认值}},
   created_at timestamptz not null default now()
 );
-create index records_user_idx on records(user_id);
-create index records_tags_idx on records using gin(tags);
+create index {{实体}}_owner_idx on {{实体}}({{归属字段}});
 
-alter table records enable row level security;
+alter table {{实体}} enable row level security;
 
-create policy "own rows select" on records
-  for select using (auth.uid() = user_id);
-create policy "own rows insert" on records
-  for insert with check (auth.uid() = user_id);
-create policy "own rows update" on records
-  for update using (auth.uid() = user_id);
-create policy "own rows delete" on records
-  for delete using (auth.uid() = user_id);
+create policy "own rows select" on {{实体}}
+  for select using (auth.uid() = {{归属字段}});
+create policy "own rows insert" on {{实体}}
+  for insert with check (auth.uid() = {{归属字段}});
+create policy "own rows update" on {{实体}}
+  for update using (auth.uid() = {{归属字段}});
+create policy "own rows delete" on {{实体}}
+  for delete using (auth.uid() = {{归属字段}});
 
--- 种子：给游客看的 3 条示例（按你的权限方案调整）
+-- 种子：给游客看的示例数据（按你的权限方案调整）
 
 -- lib/api（以 supabase-js 为例；换栈用等价 ORM）
-list({ tag })      → from('records').select().order('created_at', desc)
-create(input)      → from('records').insert({...input, user_id: uid})
-update(id, patch)  → from('records').update(patch).eq('id', id)
-remove(id)         → from('records').delete().eq('id', id)
+list({{筛选}})      → from('{{实体}}').select().order('created_at', desc)
+create(input)      → from('{{实体}}').insert({...input, {{归属字段}}: uid})
+update(id, patch)  → from('{{实体}}').update(patch).eq('id', id)
+remove(id)         → from('{{实体}}').delete().eq('id', id)
 
 -- .env.example
 DB_URL=
@@ -863,33 +858,33 @@ DB_ANON_KEY=
 -- README 三步
 1) 复制 .env.example 为 .env 并填两项
 2) 安装依赖并启动
-3) 打开 /login 登录，新增一条数据验证
+3) 打开 {{入口页}}，把主流程走一遍
 `,
   7: `# 测试与评审清单
 
 ## 单测（纯逻辑）
 - 输入解析与默认值
-- 标题为空时兜底
-- 标签去重、trim
+- {{空值}}兜底
+- {{列表字段}}去重、trim
 - 权限判断：非本人 id 返回 403
 
 ## e2e 三条
-1) 打开首页 → 去登录 → 登录成功回列表
-2) 新增一条 → 列表出现 → 刷新仍在
-3) 删除一条 → 列表消失 → 空态出现
+1) 打开 {{入口页}} → {{进入主流程}} → 结果可见
+2) {{新增一条}} → {{结果区}}出现 → 刷新仍在
+3) {{删除一条}} → {{结果区}}消失 → 空态出现
 
 ## 冒烟 10 条
-首页 / 列表 / 详情 / 登录 / 登出 / 空态 / 404 / 刷新保持 / 390 宽 / 慢网
+入口页 / 主要功能页 / 登录 / 登出 / 空态 / 404 / 刷新保持 / 390 宽 / 慢网 / {{项目特有}}
 
 ## 评审只看三类
 - bug：空值、越权、重复提交
 - 安全：key 是否进前端、权限是否漏
-- 性能：列表是否一次拉全量、图片是否未压缩
+- 性能：长列表是否一次拉全量、图片是否未压缩
 
 ## 已知问题模板
-标题：登录后回跳丢失
-步骤：未登录访问 /list → 登录 → 停在首页
-期望：回到 /list
+标题：{{登录后回跳丢失}}
+步骤：{{未登录访问列表页}} → {{登录}} → {{停在入口页}}
+期望：{{回到原页面}}
 标签：bug / P1
 `,
   8: `# 上线清单
@@ -911,14 +906,14 @@ jobs:
 ## 上线前
 - [ ] env 变量齐（数据库地址 / 公开 key）
 - [ ] 构建命令与输出目录确认
-- [ ] 4 条路由 + 404 直接输 URL 能开
+- [ ] 路由表全部 + 404 直接输 URL 能开
 - [ ] 深链刷新不 404
 - [ ] favicon 不 404
 - [ ] 前端产物搜不到 key
 - [ ] HTTPS 无混合内容
 
 ## 部署顺序
-1) 平台授权读仓库 → 2) 配构建命令 → 3) 绑域名加 CNAME → 4) 开强制 HTTPS → 5) 发布并验四条 URL
+1) 平台授权读仓库 → 2) 配构建命令 → 3) 绑域名加 CNAME → 4) 开强制 HTTPS → 5) 发布并验主要 URL
 
 ## 回滚
 保留上一版构建产物 / 上一版部署；线上 5xx 或白屏先回滚，再查日志。
@@ -1140,6 +1135,8 @@ fromHash()
 </script>
 </body>
 </html>
+
+
 
 
 

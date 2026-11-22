@@ -324,15 +324,19 @@ box-shadow:0 16px 36px -34px rgba(85,53,28,.6);position:relative}
 .tdemo .seq.play i:nth-child(2){animation-delay:.15s}
 .tdemo .seq.play i:nth-child(3){animation-delay:.3s}
 @keyframes seq{to{transform:translateY(-8px);background:rgba(217,87,26,.4)}}
-.cube{width:30px;height:30px;position:relative;transform-style:preserve-3d;transform:rotateX(-20deg);animation:turn 9s linear infinite}
-.cube i{position:absolute;inset:0;background:rgba(217,87,26,.18);border:1px solid rgba(217,87,26,.35)}
-.cube i:nth-child(1){transform:translateZ(15px)}
-.cube i:nth-child(2){transform:rotateY(180deg) translateZ(15px)}
-.cube i:nth-child(3){transform:rotateY(90deg) translateZ(15px)}
-.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(15px)}
-.cube i:nth-child(5){transform:rotateX(90deg) translateZ(15px)}
-.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(15px)}
-@keyframes turn{to{transform:rotateY(360deg) rotateX(-20deg)}}
+/* 三层结构：舞台给透视、外层给固定俯仰、内层只管绕 Y 轴自转 */
+.cube-stage{perspective:260px;perspective-origin:50% 45%;display:grid;place-items:center}
+.cube-tilt{transform-style:preserve-3d;transform:rotateX(-18deg) rotateZ(-4deg)}
+.cube-tilt .cube{width:34px;height:34px;position:relative;transform-style:preserve-3d;animation:turn 8s linear infinite}
+.cube i{position:absolute;inset:0;border:1px solid rgba(217,87,26,.4);backface-visibility:hidden}
+/* 六个面用不同底色模拟受光：正面最亮、背面最暗，顶面次亮 */
+.cube i:nth-child(1){transform:translateZ(17px);background:rgba(217,87,26,.3)}
+.cube i:nth-child(2){transform:rotateY(180deg) translateZ(17px);background:rgba(217,87,26,.08)}
+.cube i:nth-child(3){transform:rotateY(90deg) translateZ(17px);background:rgba(217,87,26,.2)}
+.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(17px);background:rgba(217,87,26,.13)}
+.cube i:nth-child(5){transform:rotateX(90deg) translateZ(17px);background:rgba(217,87,26,.26)}
+.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(17px);background:rgba(217,87,26,.1)}
+@keyframes turn{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 .tdemo .frames{display:flex;gap:5px}
 .tdemo .frames i{width:14px;height:20px;border-radius:3px;border:1px solid rgba(217,87,26,.3);background:rgba(217,87,26,.06);animation:frame 1.2s steps(1) infinite}
 .tdemo .frames i:nth-child(2){animation-delay:.3s}
