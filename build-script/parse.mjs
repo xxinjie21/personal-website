@@ -273,10 +273,10 @@ function main() {
     tags,
     customPages,
     assetCount: Object.keys(assets).length,
-    generatedAt: new Date().toISOString(),
   }
   fs.mkdirSync(dataDir, { recursive: true })
-  fs.writeFileSync(path.join(dataDir, 'site-manifest.json'), JSON.stringify(manifest, null, 2))
+  // 末尾补换行，避免每次构建都因为“文件末尾缺换行”产生无意义 diff
+  fs.writeFileSync(path.join(dataDir, 'site-manifest.json'), JSON.stringify(manifest, null, 2) + '\n')
   console.log(
     `[parse] notes=${notes.length} edges=${edges.length} tags=${tags.length} pages=${customPages.length} assets=${manifest.assetCount}`
   )

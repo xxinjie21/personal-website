@@ -1,15 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import NotesView from '../views/NotesView.vue'
-import CustomPagesView from '../views/CustomPagesView.vue'
-import NotFoundView from '../views/NotFoundView.vue'
 
-// 干净路径路由（无 #）：本地 dev/preview 与带 SPA 回退的静态托管均可直接访问
+// 页面按需加载：首页的 three.js 不再跟着首屏一起下载，进哪个页面才拉哪个页面的代码
 const routes = [
-  { path: '/', name: 'home', component: HomeView, meta: { title: '主页' } },
-  { path: '/notes', name: 'notes', component: NotesView, meta: { title: 'Obsidian 笔记' } },
-  { path: '/custom-pages/:page?', name: 'custom-pages', component: CustomPagesView, meta: { title: '自定义页面' } },
-  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView, meta: { title: '页面不存在' } },
+  { path: '/', name: 'home', component: () => import('../views/HomeView.vue'), meta: { title: '主页' } },
+  { path: '/notes', name: 'notes', component: () => import('../views/NotesView.vue'), meta: { title: 'Obsidian 笔记' } },
+  { path: '/custom-pages/:page?', name: 'custom-pages', component: () => import('../views/CustomPagesView.vue'), meta: { title: '自定义页面' } },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue'), meta: { title: '页面不存在' } },
 ]
 
 const router = createRouter({
@@ -52,6 +48,23 @@ if (canViewTransition) {
         .then(() => nav)
     }
   }
+
+  // 浏览器后退 / 前进走的是 popstate，不经过 push/replace：这里补一次转场，
+  // 先抓旧页快照，等 Vue 渲染完新页面（下一个任务）再抓新页
+  window.addEventListener('popstate', () => {
+    if (running) return
+    running = true
+    try {
+      const vt = document.startViewTransition(
+        () => new Promise((resolve) => setTimeout(resolve, 0))
+      )
+      vt.finished.finally(() => {
+        running = false
+      })
+    } catch (e) {
+      running = false
+    }
+  }, true)
 }
 
 export default router

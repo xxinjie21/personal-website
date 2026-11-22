@@ -507,14 +507,7 @@ body::after {
   .reveal-d3 {
     animation: none;
   }
-  .page-enter-active,
-  .page-leave-active {
-    transition: opacity 0.24s ease;
-  }
-  .page-enter-from,
-  .page-leave-to {
-    filter: none;
-  }
+
   html {
     -webkit-text-size-adjust: 100%;
   }
@@ -545,10 +538,4 @@ body::after {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .page-enter-active,
-  .page-leave-active {
-    transition: none;
-  }
-}
 
