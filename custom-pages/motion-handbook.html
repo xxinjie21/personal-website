@@ -1044,22 +1044,6 @@ transition:background .25s,border-color .25s}
 .tm-row b{font:600 8.5px/1 'Inter',sans-serif;color:#fff;white-space:nowrap}
 .tm-row span{font:400 7.5px/1 'Inter',sans-serif;color:rgba(255,255,255,.6);white-space:nowrap}
 
-
-/* ==== 展示增强：大演示区 + 悬停 + 全部视图 ==== */
-.demo{height:190px;
-background:radial-gradient(120% 105% at 50% -10%,#fffdf9 0%,#fbf3e7 58%,#f6ead9 100%);
-box-shadow:inset 0 1px 0 #fff,inset 0 -26px 34px -30px rgba(85,53,28,.5)}
-.mcard{transition:transform .36s var(--ease),box-shadow .36s var(--ease),border-color .36s}
-.mcard:hover{transform:translateY(-4px);
-box-shadow:0 34px 64px -38px rgba(85,53,28,.62);border-color:rgba(217,87,26,.3)}
-.mcard:hover .badge{color:#b8480f;border-color:rgba(217,87,26,.38);background:rgba(217,87,26,.09)}
-.say{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.mtabs .all-tab{font-weight:600;color:#8a7160}
-.mtabs .all-tab.on{color:var(--accent-cream);border-color:rgba(217,87,26,.4);background:rgba(217,87,26,.1)}
-body.all-view .gsec{display:block}
-body.all-view .gsec + .gsec{margin-top:6px}
-body.all-view .gsec .group{margin-top:22px}
-
 </style>
 </head>
 <body>
@@ -3122,35 +3106,6 @@ document.addEventListener('click', function (e) {
 }, true)
 window.addEventListener('resize', syncSegs)
 syncSegs()
-</script>
-<script>
-
-/* 全部视图：一屏按组顺序铺开，方便快速扫 */
-;(function () {
-  var bar = document.querySelector('.mtabs')
-  if (!bar || bar.querySelector('.all-tab')) return
-  var total = document.querySelectorAll('.mcard').length
-  var btn = document.createElement('button')
-  btn.type = 'button'
-  btn.className = 'all-tab'
-  btn.innerHTML = '全部<i>' + total + '</i>'
-  bar.insertBefore(btn, bar.firstChild)
-  var apply = function (on) {
-    document.body.classList.toggle('all-view', on)
-    btn.classList.toggle('on', on)
-  }
-  btn.addEventListener('click', function () {
-    apply(!document.body.classList.contains('all-view'))
-  })
-  bar.addEventListener('click', function (e) {
-    var t = e.target.closest('button')
-    if (t && !t.classList.contains('all-tab')) apply(false)
-  }, true)
-  window.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') apply(false)
-  })
-})()
-
 </script>
 </body>
 </html>
