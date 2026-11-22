@@ -561,7 +561,26 @@ watch(
         :keyword="keyword"
         @update:keyword="keyword = $event"
         @select="openNote($event)"
-      />
+      >
+        <template #actions>
+          <button
+            type="button"
+            class="pane-toggle"
+            :title="leftOpen ? '收起目录栏' : '展开目录栏'"
+            @click="togglePane('left')"
+          >
+            <Icon name="chevron-left" :size="14" :weight="1.7" />
+          </button>
+          <button
+            type="button"
+            class="pane-toggle search-btn"
+            title="搜索 / 筛选笔记"
+            @click="openSearch"
+          >
+            <Icon name="search" :size="14" :weight="1.7" />
+          </button>
+        </template>
+      </NoteTree>
     </div>
 
     <div v-if="leftOpen || rightOpen" class="drawer-scrim" @click="closeDrawers" />
@@ -579,30 +598,6 @@ watch(
 
     <main class="center">
       <div class="tabs">
-        <button
-          type="button"
-          class="pane-toggle"
-          :class="{ off: !leftOpen }"
-          :title="leftOpen ? '收起目录栏' : '展开目录栏'"
-          @click="togglePane('left')"
-        >
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <rect x="2.5" y="4" width="15" height="12" rx="2" />
-            <line x1="7.5" y1="4" x2="7.5" y2="16" />
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="pane-toggle search-btn"
-          title="搜索 / 筛选笔记"
-          @click="openSearch"
-        >
-          <Icon name="search" :size="15" :weight="1.7" />
-        </button>
-        <span class="tabs-brand">
-          <i>LIBRARY</i>
-          <b class="mono">{{ notes.length }}</b>
-        </span>
         <button
           v-for="slug in tabs"
           :key="slug"
@@ -1144,27 +1139,6 @@ watch(
   color: var(--text-muted);
   white-space: nowrap;
 }
-.tabs-brand {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 0 12px 0 4px;
-  margin-right: 4px;
-  border-right: 1px solid var(--line);
-  flex: none;
-}
-.tabs-brand i {
-  font-style: normal;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--accent-soft);
-}
-.tabs-brand b {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--muted);
-}
 .rail {
   background: linear-gradient(180deg, #fffdfa, #f8f1e8);
   border-left: 1px solid var(--border);
@@ -1517,22 +1491,11 @@ watch(
     padding: 6px 8px;
     gap: 4px;
   }
-  /* 窄屏横向滑动时，两个抽屉按钮吸附在两端，随时可点 */
-  .tabs > .pane-toggle:first-of-type {
-    position: sticky;
-    left: 0;
-    z-index: 6;
-    background: var(--bg-panel);
-  }
   .tabs > .pane-toggle:last-of-type {
     position: sticky;
     right: 0;
     z-index: 6;
     background: var(--bg-panel);
-  }
-  .tabs-brand {
-    padding: 0 8px 0 2px;
-    margin-right: 2px;
   }
   .tab {
     padding: 8px 9px;
@@ -1555,7 +1518,6 @@ watch(
   .pane-right {
     width: 84vw !important;
   }
-  .tabs-brand,
   .tabs-count {
     display: none;
   }

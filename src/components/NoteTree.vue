@@ -127,8 +127,11 @@ watch(
 <template>
   <aside class="tree">
     <div class="tree-head">
-      <span class="eyebrow">NOTES</span>
+      <span class="eyebrow">LIBRARY</span>
       <b class="mono">{{ notes.length }}</b>
+      <div class="tree-head-actions">
+        <slot name="actions" />
+      </div>
     </div>
     <div class="tree-search">
       <input
@@ -164,18 +167,24 @@ watch(
 }
 .tree-head {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
   padding: 14px 14px 8px;
 }
 .tree-head .eyebrow {
-  font-size: 9.5px;
+  font-size: 10.5px;
   letter-spacing: 0.2em;
 }
 .tree-head b {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 400;
   color: var(--muted);
+}
+.tree-head-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .tree-search {
   padding: 10px;
