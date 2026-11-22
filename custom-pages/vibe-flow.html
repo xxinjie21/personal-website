@@ -42,6 +42,7 @@ color:inherit;font:inherit;transition:background .24s var(--ease),border-color .
 .st.on{background:rgba(217,87,26,.07);border-bottom-color:var(--accent)}
 .st-no{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:#b9a48f;padding-top:0;transition:color .24s}
 .st.on .st-no{color:var(--accent)}
+.st.done .st-title::after{content:"✓";margin-left:4px;font-size:9px;color:var(--accent)}
 .st-body{display:flex;flex-direction:column;gap:0;min-width:0}
 .st-title{font-family:'Playfair Display','Noto Serif SC',serif;font-size:13.5px;font-weight:500;letter-spacing:.01em;white-space:nowrap}
 .st.on .st-title{color:var(--accent-cream)}
@@ -63,6 +64,12 @@ background:rgba(217,87,26,.03)}
 border-radius:999px;padding:7px 13px;font:500 11px/1 'Inter',sans-serif;cursor:pointer;transition:all .26s var(--ease)}
 .copyp:hover{background:rgba(217,87,26,.12);transform:translateY(-1px)}
 .copyp.done{background:rgba(217,87,26,.16);border-color:rgba(217,87,26,.5)}
+.phead-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-left:auto}
+.phead-actions .copyp{margin-left:0}
+.copyp.ghost{background:rgba(255,253,250,.6);border-color:var(--line);color:var(--text-dim)}
+.copyp.ghost:hover{border-color:rgba(217,87,26,.35);color:var(--accent-cream)}
+.prog{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--accent-cream);
+border:1px solid rgba(217,87,26,.18);background:rgba(217,87,26,.05);border-radius:999px;padding:4px 8px}
 .pane-body{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);column-gap:30px;
 padding:10px 22px 8px}
 .pane-body>.scol{display:flex;flex-direction:column;min-width:0}
@@ -78,9 +85,13 @@ font:500 11px/1 'Inter',sans-serif;color:var(--text-dim);cursor:pointer;transiti
 
 /* 步骤：一行一张小卡，编号在左，产出在右 */
 .steps{list-style:none;display:grid;gap:5px;margin-top:3px}
-.steps li{position:relative;display:flex;gap:8px;padding:6px 9px 7px 23px;
+.steps li{position:relative;display:flex;gap:8px;padding:6px 9px 7px 23px;cursor:pointer;
 border:1px solid var(--line);border-radius:10px;background:rgba(255,253,250,.55);
 transition:background .26s var(--ease),border-color .26s var(--ease),transform .26s var(--ease),box-shadow .3s var(--ease)}
+.steps li.done{background:rgba(217,87,26,.05);border-color:rgba(217,87,26,.24)}
+.steps li.done .n{color:var(--accent)}
+.steps li.done .n::after{content:"✓";margin-left:2px;font-size:8px}
+.steps li.done .do{color:#7d6a5b}
 .steps li:hover{background:#fffefb;border-color:rgba(217,87,26,.3);transform:translateY(-1px);
 box-shadow:0 10px 20px -20px rgba(140,70,30,.55)}
 .steps li::before{content:"";position:absolute;left:10px;top:14px;width:6px;height:6px;border-radius:50%;
@@ -198,7 +209,7 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
 
   <div class="page-head reveal">
     <div class="ph-text">
-      <p class="eyebrow">workflow · 8 stages</p>
+      <p class="eyebrow">workflow · 8 stages · 一个书签库做完</p>
       <h1>Vibe Coding 全流程</h1>
       <p class="lead">备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代。</p>
     </div>
@@ -243,12 +254,16 @@ footer .ap{margin-left:auto;font-size:11px;color:var(--muted)}
           <h2 id="ptitle">定需求</h2>
           <p class="pmeta" id="pmeta"></p>
         </div>
-        <button class="copyp" type="button" id="copyPrompt">复制本阶段提示词</button>
+        <div class="phead-actions">
+          <span class="prog" id="stageProg">0/5 步</span>
+          <button class="copyp ghost" type="button" id="copyTpl">复制交付模板</button>
+          <button class="copyp" type="button" id="copyPrompt">复制本阶段提示词</button>
+        </div>
       </div>
       <div class="pane-body" id="paneBody"></div>
       <div class="stage-nav">
         <button class="navbtn" type="button" id="prevStage">← 上一阶段</button>
-        <span class="nav-count" id="navCount">01 / 06</span>
+        <span class="nav-count" id="navCount">01 / 08</span>
         <button class="navbtn" type="button" id="nextStage">下一阶段 →</button>
       </div>
     </main>
@@ -269,6 +284,8 @@ const ptitle = document.getElementById('ptitle')
 const pmeta = document.getElementById('pmeta')
 const paneBody = document.getElementById('paneBody')
 const copyPrompt = document.getElementById('copyPrompt')
+const copyTpl = document.getElementById('copyTpl')
+const stageProg = document.getElementById('stageProg')
 const copyMaster = document.getElementById('copyMaster')
 const navCount = document.getElementById('navCount')
 const prevStage = document.getElementById('prevStage')
@@ -594,7 +611,8 @@ const STAGES = [
       '上线清单：env 变量齐、域名解析生效、HTTPS 正常、404 页能开、favicon 不 404。',
       '构建和部署分开：CI 只跑 build 和测试，部署交给平台钩子，别在服务器上手敲命令。',
       '留一条回滚路：保留上一个构建产物或上一版部署，出问题先回滚再查。',
-      '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。'
+      '自定义域名先加 CNAME 再开强制 HTTPS，顺序反了会一直卡在证书验证。',
+      '完整产物清单：docs/PRD.md、docs/SDD.md、docs/tasks.md；四页源码；schema.sql 与权限策略；单测 + 3 条 e2e；CI 配置；线上地址。逐项打勾，缺一项都不算做完。'
     ],
     skill: { note: '该阶段没有对口 skill；构建与部署的可重复性靠流水线，Coolify / Cloudflare 就够。' },
     prompt: `你是我的 Vibe Coding 搭档，现在在第 8 阶段「上线与迭代」。
@@ -652,6 +670,303 @@ const REFS = {
   ]
 }
 
+// 每个阶段都能直接落一份真文件；模板按「我的书签库」这个案例填好，换栈改字段即可
+const TEMPLATES = {
+  1: `# CLAUDE.md / AGENTS.md（项目宪法 · 我的书签库）
+
+## 项目一句话
+收藏网页链接，打标签，按标签找回来。页面：列表 / 详情 / 登录。
+
+## 技术栈
+- 语言与框架：（按你选的填，例如 Vue 3 + Vite / Spring Boot / Go）
+- 数据库：（Postgres / MySQL / SQLite）
+- 部署：（Cloudflare Pages / Coolify / 其他）
+
+## 目录
+src/pages        页面
+src/components   组件
+src/lib/api      数据访问（页面里不写 SQL）
+docs/            PRD.md / SDD.md / tasks.md
+
+## 常用命令
+$ 安装依赖：（pnpm i / mvn install / go mod tidy）
+$ 本地启动：（pnpm dev / mvn spring-boot:run / go run .）
+$ 构建：（pnpm build / mvn package / go build）
+$ 测试：（pnpm test / mvn test / go test ./...）
+
+## 禁区
+- key 只进 .env，代码与仓库里都不出现
+- 改表或改接口前先改 SDD，再改代码
+- 不直接改 main，一个任务一个分支
+- 不引入第二个 UI 库或第二个状态库
+
+## 提交规范
+feat(bookmarks): 新增收藏
+fix(auth): 修复登录回跳
+docs(sdd): 补接口错误码
+
+---
+# .gitignore
+node_modules/
+dist/
+build/
+.env
+.env.local
+.DS_Store
+*.log
+
+---
+# 第一个 commit
+$ git init
+$ git add .
+$ git commit -m "chore: 初始化书签库骨架"
+`,
+  2: `# PRD · 我的书签库
+
+## 1. 目标与用户
+一句话目标：任何人打开就能收藏链接，登录后自己的收藏只有自己看得到，刷新不丢。
+用户：自己 + 两三个朋友；场景：看到好文章先存，之后按标签找回。
+
+## 2. 页面清单（4 页）
+1. 首页 / ：一句介绍 + 最近 5 条收藏 + 去列表 / 去登录
+2. 列表 /list ：全部收藏，显示标题、域名、标签；空态给「还没有收藏」
+3. 详情 /b/:id ：标题、链接、标签、备注；可编辑、可删除
+4. 登录 /login ：邮箱登录；登录后回跳列表
+
+## 3. 功能优先级
+P0（这版必须）
+- 新增收藏：粘贴 URL → 自动带出标题 → 保存
+- 列表与标签筛选：点标签只看这一类
+- 登录与私有数据：未登录只能看示例，登录后读写自己的
+
+P1（下一版）
+- 导入浏览器书签 HTML
+- 全文搜索
+
+P2（先不做，记下来）
+- 多人共享收藏夹、公开主页、浏览器插件
+
+## 4. 明确不做（三条）
+- 不做协作与分享链接
+- 不做移动端 App，只做响应式网页
+- 不做多语言
+
+## 5. 验收（可观测）
+- 新增一条收藏后，刷新列表还在
+- 点标签「设计」，列表只剩带该标签的条目
+- 未登录访问 /list 被带回 /login；登录后能回到 /list
+- 390 宽下无横向滚动，按钮可点
+`,
+  3: `# SDD · 我的书签库
+
+## 1. 选型
+| 层 | 主选 | 备选 | 理由 |
+| 前端 | Vue 3 + Vite | React | 轻、构建快 |
+| UI | 原生 CSS + tokens | shadcn/ui | 页面少，不引重型库 |
+| 数据 | Postgres（Supabase） | SQLite | 需要登录与行级权限 |
+| 部署 | Cloudflare Pages | Coolify | 静态前端免费 |
+
+## 2. 架构与目录
+浏览器 → 前端页面 → lib/api → 数据库（RLS 控权限）
+src/pages/{Home,List,Detail,Login}.vue
+src/components/{BookmarkCard,TagFilter,EmptyState}.vue
+src/lib/api/bookmarks.ts
+docs/{PRD.md,SDD.md,tasks.md}
+
+## 3. 数据模型
+bookmarks
+- id uuid pk
+- user_id uuid not null（owner）
+- url text not null
+- title text not null default ''
+- tags text[] default '{}'
+- note text default ''
+- created_at timestamptz default now()
+索引：user_id、tags gin
+
+## 4. 接口
+GET  /api/bookmarks?tag=       列出我的收藏（可按标签）
+POST /api/bookmarks            新增 { url, title, tags, note }
+PATCH /api/bookmarks/:id       改标题 / 标签 / 备注
+DELETE /api/bookmarks/:id      删除
+错误码：401 未登录 / 403 非本人 / 422 字段不合法 / 500 服务错
+
+## 5. 权限与状态
+游客：只读示例 3 条（前端写死）
+登录用户：只能 select/insert/update/delete 自己的行
+状态：无 → 已保存 →（可编辑）→ 已删除
+
+## 6. 测试点
+- 新增后刷新仍在
+- 别人的 id 不能读、不能改
+- 空标题时用域名兜底
+- 标签筛选组合两个标签
+
+---
+# tasks.md（依赖顺序）
+- [ ] T1 建表 + RLS + 种子 3 条
+- [ ] T2 lib/api 四个方法
+- [ ] T3 登录页与回跳
+- [ ] T4 列表 + 标签筛选
+- [ ] T5 新增 / 编辑 / 删除
+- [ ] T6 空态、错态、390 宽
+`,
+  4: `# 骨架清单 · 我的书签库
+
+## 目录
+src/pages/         Home List Detail Login
+src/components/    BookmarkCard TagFilter EmptyState
+src/lib/api/       bookmarks
+docs/              PRD.md SDD.md tasks.md
+
+## 路由表
+/           Home
+/list       List（需登录）
+/b/:id      Detail（需登录）
+/login      Login
+*           404 → 回首页
+
+## 命令（以 Vite 为例，换栈用等价命令）
+$ npm create vite@latest bookmark-app -- --template vue
+$ cd bookmark-app && npm i
+$ git init && git add . && git commit -m "chore: init skeleton"
+
+## 占位页三件套
+标题 + 一句占位 + 返回首页链接；每条路由直接输 URL 都能打开。
+
+## 完成标志
+- [ ] 4 条路由都能打开，刷新不 404
+- [ ] build 零报错
+- [ ] 404 有独立页面
+- [ ] .gitignore 写好，首 commit 干净
+`,
+  5: `# design-tokens.css（示例，按你的栈落成等价文件）
+
+:root{
+  --bg:#f7f2ec; --panel:#fffdfa; --text:#241a12;
+  --text-dim:#564334; --muted:#8a7365;
+  --line:rgba(126,84,46,.16); --accent:#d9571a;
+  --radius:18px; --radius-sm:12px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px;
+  --ease:cubic-bezier(.22,.8,.2,1);
+}
+
+## 页面内容（先落内容再调样式）
+- 首页：一句话是什么 + 最近 5 条 + 两个入口
+- 列表：每条一行，标题 + 域名 + 标签；空态文案写清楚下一步
+- 详情：标题、链接、标签、备注；编辑与删除放右下
+- 登录：一个输入框 + 一个按钮 + 失败提示
+
+## 断点
+≤720 单列；721–1080 两列；>1080 主栏 720 + 侧栏
+
+## 动效
+一页最多两个：卡片 hover 抬 1px；切页淡入 300–450ms；不做只靠 hover 的交互
+`,
+  6: `-- schema.sql（Postgres / Supabase 示例）
+create table bookmarks (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  url text not null,
+  title text not null default '',
+  tags text[] not null default '{}',
+  note text default '',
+  created_at timestamptz not null default now()
+);
+create index bookmarks_user_idx on bookmarks(user_id);
+create index bookmarks_tags_idx on bookmarks using gin(tags);
+
+alter table bookmarks enable row level security;
+
+create policy "own rows select" on bookmarks
+  for select using (auth.uid() = user_id);
+create policy "own rows insert" on bookmarks
+  for insert with check (auth.uid() = user_id);
+create policy "own rows update" on bookmarks
+  for update using (auth.uid() = user_id);
+create policy "own rows delete" on bookmarks
+  for delete using (auth.uid() = user_id);
+
+-- 种子：给游客看的 3 条示例（user_id 可为 null 的方案自行调整）
+
+-- lib/api（以 supabase-js 为例；换栈用等价 ORM）
+list({ tag })      → from('bookmarks').select().order('created_at', desc)
+create(input)      → from('bookmarks').insert({...input, user_id: uid})
+update(id, patch)  → from('bookmarks').update(patch).eq('id', id)
+remove(id)         → from('bookmarks').delete().eq('id', id)
+
+-- .env.example
+VITE_DB_URL=
+VITE_DB_ANON_KEY=
+
+-- README 三步
+1) 复制 .env.example 为 .env 并填两项
+2) 安装依赖并启动
+3) 打开 /login 登录，新增一条收藏验证
+`,
+  7: `# 测试与评审清单 · 我的书签库
+
+## 单测（纯逻辑）
+- URL 解析出域名
+- 标题为空时用域名兜底
+- 标签去重、trim
+- 权限判断：非本人 id 返回 403
+
+## e2e 三条
+1) 打开首页 → 去登录 → 登录成功回列表
+2) 新增一条 → 列表出现 → 刷新仍在
+3) 删除一条 → 列表消失 → 空态出现
+
+## 冒烟 10 条
+首页 / 列表 / 详情 / 登录 / 登出 / 空态 / 404 / 刷新保持 / 390 宽 / 慢网
+
+## 评审只看三类
+- bug：空值、越权、重复提交
+- 安全：key 是否进前端、RLS 是否漏
+- 性能：列表是否一次拉全量、图片是否未压缩
+
+## 已知问题模板
+标题：登录后回跳丢失
+步骤：未登录访问 /list → 登录 → 停在首页
+期望：回到 /list
+标签：bug / P1
+`,
+  8: `# 上线清单 · 我的书签库
+
+## CI（GitHub Actions 示例）
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+## 上线前
+- [ ] env 变量齐（DB URL / anon key）
+- [ ] 构建命令与输出目录确认
+- [ ] 4 条路由 + 404 直接输 URL 能开
+- [ ] 深链刷新不 404
+- [ ] favicon 不 404
+- [ ] 前端产物搜不到 key
+- [ ] HTTPS 无混合内容
+
+## 部署顺序
+1) 平台授权读仓库 → 2) 配构建命令 → 3) 绑域名加 CNAME → 4) 开强制 HTTPS → 5) 发布并验四条 URL
+
+## 回滚
+保留上一版构建产物 / 上一版部署；线上 5xx 或白屏先回滚，再查日志。
+
+## 上线后 24h
+看 console error、5xx、登录失败率；出现连续 5xx 或白屏 → 回滚。
+`
+}
+
 const PROMPT_TAIL = `
 
 输出要求：
@@ -683,7 +998,7 @@ function stepsMarkup(s) {
     const tool = st.tool
       ? `<a class="tlink" href="${st.tool[1]}" target="_blank" rel="noopener noreferrer">${st.tool[0]}</a>`
       : `<span>${st.note || '不用外部工具'}</span>`
-    return `<li><span class="n">0${i + 1}</span><div><p class="do">${st.do}</p>
+    return `<li data-step="${i}" role="checkbox" aria-checked="false" tabindex="0"><span class="n">0${i + 1}</span><div><p class="do">${st.do}</p>
       <div class="out">${tool}<span class="gain">→ 得到 <b>${st.gain}</b></span></div></div></li>`
   }).join('')
 }
@@ -746,6 +1061,45 @@ function buildPrompt(s) {
   return text + PROMPT_TAIL
 }
 
+function doneKey(n) { return 'vibe:done:' + n }
+
+function syncProg() {
+  const items = [...paneBody.querySelectorAll('.steps li')]
+  if (!items.length) return stageProg.textContent = '— 步'
+  const done = items.filter((li) => li.classList.contains('done')).length
+  stageProg.textContent = `${done}/${items.length} 步`
+  stageProg.classList.toggle('all', done === items.length)
+}
+
+function restoreDone(n) {
+  let saved = []
+  try { saved = JSON.parse(localStorage.getItem(doneKey(n)) || '[]') } catch (err) { saved = [] }
+  paneBody.querySelectorAll('.steps li').forEach((li) => {
+    const on = saved.includes(Number(li.dataset.step))
+    li.classList.toggle('done', on)
+    li.setAttribute('aria-checked', String(on))
+  })
+  syncProg()
+}
+
+function saveDone(n) {
+  const done = [...paneBody.querySelectorAll('.steps li.done')].map((li) => Number(li.dataset.step))
+  try { localStorage.setItem(doneKey(n), JSON.stringify(done)) } catch (err) {}
+  syncProg()
+  syncTabs()
+}
+
+// 顶部阶段条同步总进度：某阶段全部勾完就标一个小勾，跨刷新保留
+function syncTabs() {
+  railItems.forEach((btn) => {
+    const n = Number(btn.dataset.stage)
+    const total = (STAGES[n - 1]?.steps || []).length
+    let done = 0
+    try { done = (JSON.parse(localStorage.getItem(doneKey(n)) || '[]')).length } catch (err) { done = 0 }
+    btn.classList.toggle('done', total > 0 && done >= total)
+  })
+}
+
 function selectStage(n, pushHash = true, scroll = true) {
   const s = STAGES[n - 1]
   if (!s) return
@@ -760,6 +1114,8 @@ function selectStage(n, pushHash = true, scroll = true) {
   pmeta.textContent = s.meta
   paneBody.innerHTML = stageMarkup(s)
   paneBody.scrollTop = 0
+  restoreDone(n)
+  syncTabs()
   currentPrompt = buildPrompt(s)
 
   // 逐段错峰入场，换阶段时内容是一层一层落下来的
@@ -782,6 +1138,7 @@ railItems.forEach((btn) => {
 })
 
 copyPrompt.addEventListener('click', () => copyText(currentPrompt, copyPrompt))
+copyTpl.addEventListener('click', () => copyText(TEMPLATES[current] || '', copyTpl, '模板已复制'))
 
 copyMaster.addEventListener('click', () => {
   const master = `我要从零做一个网站，请你按 Vibe Coding 的 8 个阶段带我走一遍：备环境 → 定需求 → 写 SDD → 起骨架 → 搭界面 → 接数据 → 测试评审 → 上线迭代；每一步可参照 Spec Kit 或 BMAD 的对应环节，不用只磕一套。
@@ -798,8 +1155,15 @@ copyMaster.addEventListener('click', () => {
   copyText(master + PROMPT_TAIL, copyMaster)
 })
 
-// 面板里的复制按钮与折叠
+// 面板里的复制按钮、折叠与步骤勾选
 paneBody.addEventListener('click', (e) => {
+  const step = e.target.closest('.steps li')
+  if (step && !e.target.closest('a')) {
+    const on = step.classList.toggle('done')
+    step.setAttribute('aria-checked', String(on))
+    saveDone(current)
+    return
+  }
   const fold = e.target.closest('.detail-btn')
   if (fold) {
     const box = fold.closest('.detail')
@@ -812,6 +1176,16 @@ paneBody.addEventListener('click', (e) => {
   const row = btn.closest('.sk-row')
   const text = row ? row.querySelector('.v').innerText.trim() : ''
   copyText(text, btn)
+})
+
+paneBody.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' && e.key !== ' ') return
+  const step = e.target.closest('.steps li')
+  if (!step) return
+  e.preventDefault()
+  const on = step.classList.toggle('done')
+  step.setAttribute('aria-checked', String(on))
+  saveDone(current)
 })
 
 prevStage.addEventListener('click', () => { if (current > 1) selectStage(current - 1) })
