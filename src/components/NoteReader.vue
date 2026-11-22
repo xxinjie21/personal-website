@@ -389,4 +389,27 @@ function onScroll(e) {
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
+
+/* 手机：收窄到 18px 边距，标题降一档，正文行宽更适合竖屏 */
+@media (max-width: 640px) {
+  .reader {
+    padding: 0 18px 64px;
+  }
+  .read-bar {
+    width: calc(100% + 36px);
+    margin-left: -18px;
+  }
+  .article {
+    padding-top: 22px;
+  }
+  .title {
+    font-size: 23px;
+    line-height: 1.34;
+    margin-bottom: 10px;
+  }
+  .meta {
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+}
 </style>

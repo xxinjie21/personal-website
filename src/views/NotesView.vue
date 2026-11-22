@@ -101,6 +101,8 @@ function openNote(slug, { addTab = true } = {}) {
   rememberLast(slug)
   router.replace({ query: { ...route.query, note: slug } })
   loadNote(slug)
+  // 手机上目录是浮层：选完就收起来，把正文让出来
+  if (narrowScreen()) leftOpen.value = false
 }
 
 function closeTab(slug) {
@@ -338,8 +340,10 @@ watch([activeHeading, outlineRows], () => nextTick(syncIndicator), { flush: 'pos
 // 三栏：左右两栏都能拖宽、能收起；宽度只活在本次会话里，不落盘
 const leftW = ref(250)
 const rightW = ref(272)
-const leftOpen = ref(true)
-const rightOpen = ref(true)
+// 窄屏默认收起两侧栏，正文独占一屏；桌面仍按原来的双栏打开
+const narrowScreen = () => (typeof window !== 'undefined' ? window.innerWidth <= 900 : false)
+const leftOpen = ref(!narrowScreen())
+const rightOpen = ref(!narrowScreen())
 const dragging = ref('')
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
@@ -530,6 +534,8 @@ watch(
         @select="openNote($event)"
       />
     </div>
+
+    <div v-if="leftOpen" class="drawer-scrim" @click="leftOpen = false" />
 
     <div
       class="splitter"
@@ -811,6 +817,10 @@ watch(
   min-height: 0;
   transition: width 0.34s var(--ease), opacity 0.26s var(--ease);
   will-change: width;
+}
+
+.drawer-scrim {
+  display: none;
 }
 .pane.closed {
   opacity: 0;
@@ -1382,6 +1392,93 @@ watch(
   font-size: 12px;
   animation: lb-fade 0.34s var(--ease) 0.08s both;
 }
+
+/* ===== 平板 / 手机：三栏收成一栏，目录变抽屉 ===== */
+@media (max-width: 900px) {
+  /* 抽屉展开时点空白处收起 */
+  .drawer-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 55;
+    display: block;
+    background: rgba(18, 12, 6, 0.34);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .notes-view {
+    height: calc(100dvh - var(--nav-height));
+  }
+  /* 左栏改成浮层：展开时盖住正文，收起时宽度归零 */
+  .pane-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 60;
+    width: min(84vw, 330px) !important;
+    background: var(--bg-panel);
+    box-shadow: 28px 0 60px -34px rgba(50, 32, 18, 0.6);
+  }
+  .pane-left.closed {
+    width: 0 !important;
+    box-shadow: none;
+  }
+  .pane-left .pane-body {
+    width: 100% !important;
+  }
+  /* 浮层模式下不再需要拖拽分隔条 */
+  .splitter {
+    display: none;
+  }
+  /* 右栏（大纲 / 链接）在窄屏让位给正文 */
+  .pane-right,
+  .edge-handle.right {
+    display: none;
+  }
+  .center {
+    width: 100%;
+  }
+  .tabs {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+  .tabs-brand {
+    padding: 0 8px 0 2px;
+    margin-right: 2px;
+  }
+  .tab {
+    padding: 8px 9px;
+    flex: 0 0 auto;
+  }
+  .tab-name {
+    max-width: 120px;
+  }
+  .pane-toggle {
+    min-width: 36px;
+    min-height: 34px;
+  }
+  /* 右栏已隐藏，第二个切换按钮也就没用了 */
+  .tabs > .pane-toggle:nth-of-type(2) {
+    display: none;
+  }
+  .edge-handle {
+    width: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .pane-left {
+    width: 84vw !important;
+  }
+  .tabs-brand,
+  .tabs-count {
+    display: none;
+  }
+  .tab-name {
+    max-width: 96px;
+  }
+}
+
 @keyframes lb-fade {
   from {
     opacity: 0;

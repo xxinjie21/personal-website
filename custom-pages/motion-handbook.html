@@ -541,6 +541,21 @@ transition:color .22s,border-color .22s,background .24s var(--ease),transform .2
   body{padding:18px 14px 26px}
   .grid{grid-template-columns:1fr}
   .mcard:hover{transform:none}
+  /* 12 个页签在窄屏换成一排可横向滑，不再折成四行 */
+  .mtabs{flex-wrap:nowrap;overflow-x:auto;gap:5px;padding-bottom:4px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .mtabs::-webkit-scrollbar{display:none}
+  .mtabs button{flex:0 0 auto;padding:7px 12px;font-size:12px;scroll-snap-align:start}
+  .mtabs button i{font-size:9.5px}
+  .info{padding:11px 13px 12px}
+  .badge{top:7px;left:7px}
+  .page-head h1{font-size:clamp(30px,8vw,40px)}
+}
+@media (max-width:420px){
+  body{padding:14px 11px 22px}
+  .mcard .demo{height:146px}
+  .name b{font-size:12.5px}
+  .say{font-size:11px}
 }
 
 /* ==== 3D 与材质 ==== */

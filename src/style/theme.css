@@ -442,6 +442,41 @@ body::after {
   background: transparent;
 }
 
+/* ===== 移动端基础：平板与手机 ===== */
+@media (max-width: 900px) {
+  :root {
+    --nav-height: 54px;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    overscroll-behavior-y: contain;
+  }
+  /* 触屏不显示系统点击高亮，交给组件自己的 :active 反馈 */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  img,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+  /* 输入框字号低于 16px 时 iOS 会自动放大页面 */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-enter-active,
   .page-leave-active {

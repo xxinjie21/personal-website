@@ -40,7 +40,9 @@ function build() {
   camera.lookAt(0, 0, 0)
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  // 手机 / 平板 GPU 弱一些：像素比封到 1.5，避免满血 2x 掉帧
+  const isSmall = w < 900
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isSmall ? 1.5 : 2))
   renderer.setSize(w, h, false)
   renderer.setClearColor(0x000000, 0)
   el.value.appendChild(renderer.domElement)

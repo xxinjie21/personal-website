@@ -543,13 +543,19 @@ const onBrandClick = () => {
 }
 @media (max-width: 900px) {
   .topbar {
-    gap: 16px;
+    gap: 12px;
     padding: 0 14px;
+    height: 54px;
   }
   .nav-link {
-    padding: 8px 8px;
+    padding: 11px 12px;
+    min-height: 40px;
+    align-items: center;
   }
   .nav-link i {
+    display: none;
+  }
+  .nav-link em {
     display: none;
   }
   .sync {
@@ -560,8 +566,37 @@ const onBrandClick = () => {
   .brand-text {
     display: none;
   }
+  .topbar {
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .nav {
+    gap: 0;
+    margin-left: auto;
+  }
+  .nav-link {
+    padding: 11px 9px;
+  }
   .nav-link span {
-    font-size: 12.5px;
+    font-size: 13px;
+  }
+  .nav-link.router-link-active::after {
+    left: 9px;
+    right: 9px;
+  }
+  .brand {
+    padding: 6px;
+  }
+}
+/* 触屏：去掉悬停位移，补点击反馈 */
+@media (hover: none) {
+  .nav-link:hover {
+    transform: none;
+    box-shadow: none;
+    background: none;
+  }
+  .nav-link:active {
+    background: rgba(217, 87, 26, 0.1);
   }
 }
 </style>

@@ -608,6 +608,20 @@ code {
   .grid {
     grid-template-columns: 1fr;
   }
+  /* 内嵌页：手机浏览器地址栏会吃掉 vh，改用 dvh 才不会顶出滚动条 */
+  .page-shell {
+    height: calc(100dvh - var(--nav-height));
+    padding: 0 4px 4px;
+  }
+  .page-frame {
+    border-radius: 0 0 8px 8px;
+  }
+  .head {
+    margin-bottom: 30px;
+  }
+  .head h1 {
+    font-size: clamp(26px, 7.6vw, 34px);
+  }
   /* 触屏没有悬停：不做实时预览，卡片收短一些 */
   .thumb {
     aspect-ratio: 2 / 1;

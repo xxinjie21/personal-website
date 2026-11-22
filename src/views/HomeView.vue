@@ -521,16 +521,45 @@ max-width: 560px;
 }
 @media (max-width: 640px) {
   .hero {
-    padding: 22px 18px 34px;
+    min-height: auto;
+    align-items: flex-start;
+    padding: 24px 18px 38px;
+  }
+  .copy {
+    max-width: none;
+    width: 100%;
+  }
+  .copy h1 {
+    margin: 14px 0 14px;
+    font-size: clamp(30px, 8.8vw, 40px);
+    line-height: 1.16;
+  }
+  .lede {
+    max-width: none;
+    margin-bottom: 22px;
+    font-size: 13.5px;
+    line-height: 1.75;
+  }
+  .cta {
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+  .cta .btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 46px;
   }
   .vol-row {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding-top: 14px;
   }
   .vol {
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    min-height: 54px;
+    padding: 11px 14px;
   }
   .vol-top {
     width: auto;
@@ -538,6 +567,13 @@ max-width: 560px;
   }
   .vol-bar {
     display: none;
+  }
+  .capy-stage {
+    left: 18px;
+    right: 18px;
+    bottom: 6px;
+    height: 52px;
+    font-size: 7.5px;
   }
 }
 </style>
