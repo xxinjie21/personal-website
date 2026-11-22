@@ -540,7 +540,7 @@ code {
   padding: 12px 10px 2px;
 }
 .idx {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   color: var(--muted);
 }
@@ -554,7 +554,7 @@ code {
   border: 1px solid rgba(217, 87, 26, 0.26);
   background: rgba(255, 251, 244, 0.9);
   backdrop-filter: blur(6px);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--accent);
   animation: lastIn 0.5s var(--ease) both;
@@ -637,7 +637,7 @@ code {
   color: var(--text-dim);
 }
 .hint {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   color: var(--muted) !important;
   margin-top: 10px !important;

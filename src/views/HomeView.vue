@@ -409,7 +409,7 @@ max-width: 560px;
   width: 100%;
 }
 .vol-idx {
-  font-size: 9px;
+  font-size: 10.5px;
   letter-spacing: 0.2em;
   color: var(--muted);
 }

@@ -1,7 +1,7 @@
 /* 笔记正文排版（Obsidian 阅读模式风格） */
 .markdown {
-  font-size: 14px;
-  line-height: 1.78;
+  font-size: 15px;
+  line-height: 1.82;
   color: var(--text);
   word-break: break-word;
 }
@@ -12,25 +12,25 @@
   scroll-margin-top: calc(var(--nav-height) + 12px);
 }
 .markdown h1 {
-  font-size: 20px;
+  font-size: 22px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 6px;
 }
 .markdown h2 {
-  font-size: 17px;
+  font-size: 18.5px;
 }
 .markdown h3 {
-  font-size: 15px;
+  font-size: 16.5px;
 }
 .markdown h4,
 .markdown h5,
 .markdown h6 {
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--text-muted);
 }
 
 .markdown p {
-  margin: 0 0 12px;
+  margin: 0 0 13px;
 }
 .markdown ul,
 .markdown ol {
@@ -85,7 +85,7 @@
   top: 8px;
   right: 8px;
   padding: 3px 8px;
-  font-size: 11px;
+  font-size: 12px;
   border-radius: 6px;
   border: 1px solid var(--border);
   background: rgba(255, 253, 250, 0.92);

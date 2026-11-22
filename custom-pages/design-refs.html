@@ -52,10 +52,10 @@ a.card:hover::before,a.card:focus-visible::before{opacity:1}
 a.card:hover::after,a.card:focus-visible::after{opacity:1;transform:scale(1)}
 a.card:active{transform:perspective(820px) translateY(-1px) scale(.992)}
 .top{display:flex;align-items:center;gap:8px}
-.idx{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:1.2px;color:#b9a48f;
+.idx{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:1.2px;color:#98836e;
 transition:color .24s,letter-spacing .34s var(--ease)}
 a.card:hover .idx{color:var(--accent);letter-spacing:2px}
-.flag{display:inline-flex;align-items:center;line-height:1.4;font-size:9.5px;letter-spacing:.3px;padding:2px 7px;border-radius:20px;color:#ab4712;
+.flag{display:inline-flex;align-items:center;line-height:1.4;font-size:10px;letter-spacing:.3px;padding:2px 7px;border-radius:20px;color:#ab4712;
 background:rgba(217,87,26,.09);border:1px solid rgba(217,87,26,.22)}
 .ref:hover .go,.ref:focus-within .go{opacity:0;pointer-events:none} .go{margin-left:auto;display:flex;align-items:center;justify-content:center;gap:4px;width:26px;height:26px;padding:0;
 border:1px solid var(--line);border-radius:8px;color:#8a7f74;overflow:hidden;
@@ -67,20 +67,20 @@ a.card:hover .go,a.card:focus-visible .go{width:62px;color:#fff;border-color:var
 box-shadow:0 10px 20px -12px rgba(217,87,26,.75);transform:none}
 a.card:hover .go .gl,a.card:focus-visible .go .gl{max-width:34px;opacity:1}
 a.card:hover .go svg,a.card:focus-visible .go svg{transform:translate(1px,-1px)}
-h2{font-family:'Playfair Display','Noto Serif SC',serif;font-size:18px;font-weight:500;letter-spacing:.01em;width:fit-content;position:relative}
+h2{font-family:'Playfair Display','Noto Serif SC',serif;font-size:19px;font-weight:500;letter-spacing:.01em;width:fit-content;position:relative}
 h2::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;border-radius:2px;background:var(--accent);
 transition:width .36s var(--ease)}
 a.card:hover h2::after,a.card:focus-visible h2::after{width:100%}
-.host{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;color:#a08f7e;letter-spacing:.2px}
-.desc{font-size:12.5px;line-height:1.85;color:#5f574e}
+.host{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;color:#8b7662;letter-spacing:.2px}
+.desc{font-size:13.5px;line-height:1.85;color:#5f574e}
 .desc b{font-weight:600;color:var(--ink)}
 .tagrow{margin-top:auto;display:flex;flex-wrap:wrap;gap:5px;padding-top:8px}
-.tag{font-size:10px;color:#8a7f74;border:1px solid var(--line);border-radius:20px;padding:3px 8px;background:rgba(255,253,249,.8);
+.tag{font-size:10.5px;color:#8a7f74;border:1px solid var(--line);border-radius:20px;padding:3px 8px;background:rgba(255,253,249,.8);
 transition:color .24s,border-color .24s,transform .3s var(--ease)}
 a.card:hover .tag{border-color:rgba(217,87,26,.3);color:#7a6455}
 a.card:hover .tag:nth-child(2){transform:translateY(-1px)}
 a.card:hover .tag:nth-child(3){transform:translateY(-2px)}
-.tip{font-size:10.5px;color:#a08f7e;border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+.tip{font-size:10.5px;color:#8b7662;border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
 footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margin-top:14px;padding-top:2px;animation:fade .5s var(--ease) .3s both}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.985) rotate(-.4deg)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -94,7 +94,7 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;margi
 @media (max-width:520px){
   body{padding:12px 11px 18px}
   .head h1,.page-head h1{font-size:clamp(26px,7.6vw,32px)}
-  .desc{font-size:12.5px;line-height:1.7}
+  .desc{font-size:13px;line-height:1.72}
   .tags{gap:5px}
 }
 </style>

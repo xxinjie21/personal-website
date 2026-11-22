@@ -341,7 +341,7 @@ function toTop() {
 }
 .crumb {
   margin: 0 0 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   letter-spacing: 0.04em;
 }
@@ -358,7 +358,7 @@ function toTop() {
   align-items: center;
   gap: 0;
   margin: 0 0 10px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   letter-spacing: 0.02em;
 }
@@ -427,7 +427,7 @@ function toTop() {
   margin-bottom: 18px;
 }
 .tag {
-  font-size: 11px;
+  font-size: 12px;
   padding: 2px 8px;
   border-radius: 999px;
   background: rgba(217, 87, 26, 0.13);
@@ -435,7 +435,7 @@ function toTop() {
   color: var(--accent-soft);
 }
 .alias {
-  font-size: 11px;
+  font-size: 12px;
   padding: 2px 8px;
   border-radius: 999px;
   border: 1px solid var(--border);

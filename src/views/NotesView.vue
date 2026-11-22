@@ -963,7 +963,7 @@ watch(
 .mini-key {
   font-style: normal;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   color: var(--muted);
   border: 1px solid rgba(217, 87, 26, 0.2);
   border-radius: 4px;
@@ -1069,7 +1069,7 @@ watch(
   border-radius: 8px 8px 0 0;
   background: transparent;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 12.5px;
   white-space: nowrap;
   cursor: pointer;
   transition: color 0.25s var(--ease), background 0.25s var(--ease),
@@ -1135,12 +1135,12 @@ watch(
   transform: rotate(90deg) scale(1.08);
 }
 .tabs-empty {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--text-muted);
 }
 .tabs-count {
   margin-left: auto;
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -1156,12 +1156,12 @@ watch(
 .tabs-brand i {
   font-style: normal;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.2em;
   color: var(--accent-soft);
 }
 .tabs-brand b {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--muted);
 }
@@ -1248,7 +1248,7 @@ watch(
 }
 .rail-idx {
   font-style: normal;
-  font-size: 9px;
+  font-size: 10px;
   margin-right: 8px;
   color: var(--muted);
   opacity: 0.75;
@@ -1256,11 +1256,11 @@ watch(
 .rail-count {
   color: var(--text-muted);
   font-weight: 400;
-  font-size: 11px;
+  font-size: 12px;
 }
 .rail-empty {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.5;
 }

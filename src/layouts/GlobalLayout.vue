@@ -384,7 +384,7 @@ const onBrandClick = () => {
 .nav-link i {
   font-family: 'JetBrains Mono', monospace;
   font-style: normal;
-  font-size: 9px;
+  font-size: 10.5px;
   color: var(--muted);
   opacity: 0.7;
 }
@@ -474,7 +474,7 @@ const onBrandClick = () => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid var(--line);
