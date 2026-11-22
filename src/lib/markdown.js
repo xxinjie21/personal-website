@@ -174,30 +174,7 @@ export function enhanceRendered(container) {
     wrap.appendChild(table)
   })
 
-  // 图片进视口再淡入：长文里滚动到哪张，哪张才浮现
-  const io =
-    typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver(
-          (entries) => {
-            entries.forEach((en) => {
-              if (!en.isIntersecting) return
-              en.target.classList.add('img-in')
-              io.unobserve(en.target)
-            })
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
-        )
-      : null
-  container.querySelectorAll('.md-img').forEach((img) => {
-    if (img.dataset.revealBound) return
-    img.dataset.revealBound = '1'
-    if (!io || img.complete) {
-      img.classList.add('img-in')
-      return
-    }
-    img.classList.add('img-await')
-    io.observe(img)
-  })
+
 }
 
 export function extractTags(text = '') {
