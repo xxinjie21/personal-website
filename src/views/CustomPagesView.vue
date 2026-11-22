@@ -232,9 +232,6 @@ function thumbLoaded(p) {
             loading="lazy"
             @load="thumbLoaded(p)"
           />
-          <span class="tov">
-            <span class="topen">打开<Icon name="arrow-up-right" :size="12" /></span>
-          </span>
           <span v-if="p.slug === lastSlug" class="last mono">上次打开</span>
         </span>
         <span class="meta">
@@ -492,38 +489,6 @@ code {
   transform: scale(0.325);
   transition: opacity 0.36s ease, transform 0.5s var(--ease);
 }
-.tov {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 9px;
-  background: linear-gradient(180deg, rgba(28, 25, 23, 0) 52%, rgba(28, 25, 23, 0.26));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.card:hover .tov {
-  opacity: 1;
-}
-.topen {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 12px;
-  border-radius: 20px;
-  background: rgba(255, 253, 249, 0.94);
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 600;
-  box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.55);
-  transform: translateY(6px);
-  transition: transform 0.34s var(--ease);
-}
-.card:hover .topen {
-  transform: none;
-}
 .meta {
   position: relative;
   z-index: 1;
@@ -647,8 +612,7 @@ code {
   .thumb {
     aspect-ratio: 2 / 1;
   }
-  .tf,
-  .tov {
+  .tf {
     display: none;
   }
   .phint-m {
