@@ -33,8 +33,22 @@ const loaded = ref(null)
 const loading = ref(false)
 const cache = new Map()
 
-const tabs = ref([])
-const activeSlug = ref('')
+// 首屏定位：路由带的笔记 → 上次打开 → 第一篇，同步算好再渲染，文件树就不会先全展开再收
+function pickInitialSlug() {
+  const fromQuery = String(route.query.note || '')
+  if (fromQuery && noteBySlug.has(fromQuery)) return fromQuery
+  const last = readLast()
+  if (last) return last
+  const first =
+    notes.find((n) => n.rel.includes('00-考研总览')) ||
+    notes.find((n) => n.rel.startsWith('考研/')) ||
+    notes[0]
+  return first ? first.slug : ''
+}
+
+const initialSlug = pickInitialSlug()
+const tabs = ref(initialSlug ? [initialSlug] : [])
+const activeSlug = ref(initialSlug)
 const keyword = ref(String(route.query.q || ''))
 const lightbox = ref(null)
 
@@ -502,15 +516,11 @@ const nextNote = computed(() =>
 onMounted(async () => {
   window.addEventListener('keydown', onKey)
   setTimeout(trackHeading, 400)
-  const fromQuery = String(route.query.note || '')
-  if (fromQuery && noteBySlug.has(fromQuery)) openNote(fromQuery)
-  else if (readLast()) openNote(readLast())
-  else {
-    const first =
-      notes.find((n) => n.rel.includes('00-考研总览')) ||
-      notes.find((n) => n.rel.startsWith('考研/')) ||
-      notes[0]
-    if (first) openNote(first.slug)
+  // 定位已在 setup 阶段完成，这里只把正文补上，避免再触发一次目录折叠
+  if (activeSlug.value) {
+    loadNote(activeSlug.value)
+    rememberLast(activeSlug.value)
+    if (!route.query.note) router.replace({ query: { ...route.query, note: activeSlug.value } })
   }
 })
 

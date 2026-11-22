@@ -22,8 +22,8 @@ function topLevelDirs(list) {
   return set
 }
 
-// 没有当前笔记时才退回"顶层分区展开"的默认视图
-expanded.value = props.activeSlug ? new Set() : topLevelDirs(props.notes)
+// 没有当前笔记时才退回"顶层分区展开"的默认视图；有则直接只展开它的祖先，首帧就定好
+expanded.value = props.activeSlug ? ancestorsOf(props.activeSlug) || new Set() : topLevelDirs(props.notes)
 
 // 首次定位：只保留当前笔记所在路径（祖先展开，其余全部收起）
 // 之后切笔记只补展开祖先，不再动用户手动展开的分区
@@ -91,18 +91,19 @@ function toggle(path) {
 // 选中笔记时只展开它的父级目录，其余文件夹收起，并把它滚到树栏中间
 const bodyEl = ref(null)
 
-function scrollToActive() {
+function scrollToActive(smooth = true) {
   const body = bodyEl.value
   const el = body?.querySelector('.file.active')
   if (!body || !el) return
   const r = el.getBoundingClientRect()
   const b = body.getBoundingClientRect()
   const top = body.scrollTop + r.top - b.top - (b.height - r.height) / 2
-  body.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+  body.scrollTo({ top: Math.max(0, top), behavior: smooth ? 'smooth' : 'auto' })
 }
 
-// 进入笔记库的第一次定位才收拢目录，之后只补展开
-let focusedOnce = false
+// 进入笔记库的第一次定位才收拢目录，之后只补展开；首帧已有当前笔记就不再收一次
+let focusedOnce = Boolean(props.activeSlug)
+let scrolledOnce = false
 
 watch(
   () => props.activeSlug,
@@ -116,7 +117,8 @@ watch(
       }
     }
     await nextTick()
-    scrollToActive()
+    scrollToActive(scrolledOnce)
+    scrolledOnce = true
   },
   { immediate: true }
 )
