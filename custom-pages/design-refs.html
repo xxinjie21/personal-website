@@ -30,7 +30,10 @@ header{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:
 .brand p{font-size:12px;color:var(--muted);margin-top:6px}
 .count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.8px;
 color:var(--muted);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-content:start}
+/* 前三张每行三列（各占 2 份），后两张各占 3 份，正好铺满第二行 */
+a.card{grid-column:span 2}
+a.card.wide{grid-column:span 3}
 a.card{position:relative;display:flex;flex-direction:column;gap:8px;min-height:206px;padding:18px 18px 16px;
 border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fffdf9,#fdfaf4);color:inherit;
 text-decoration:none;overflow:hidden;isolation:isolate;transform-style:preserve-3d;will-change:transform;
@@ -87,7 +90,7 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   body{padding:16px 14px 20px}
   .wrap{min-height:calc(100vh - 36px);justify-content:flex-start;gap:14px}
   .grid{grid-template-columns:1fr;gap:10px}
-  a.card{min-height:0;gap:6px;padding:15px 15px 14px}
+  a.card,a.card.wide{grid-column:auto;min-height:0;gap:6px;padding:15px 15px 14px}
   .desc{line-height:1.75}
   .brand h1{font-size:18px}
   .count{display:none}
@@ -99,9 +102,9 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
   <header>
     <div class="brand">
       <h1>设计灵感 · 参考站</h1>
-      <p>三个免费站，分工不重：找零件、找微交互、找提示词。点卡片开原站，看到合适的搬回 custom-pages/。</p>
+      <p>五个站，各有分工：找零件、找微交互、找提示词、找方向、找标杆。点卡片开原站，看到合适的搬回 custom-pages/。</p>
     </div>
-    <span class="count">3 sites</span>
+    <span class="count">5 sites</span>
   </header>
 
   <div class="grid">
@@ -137,9 +140,31 @@ footer{font-size:11px;color:var(--muted);text-align:center;line-height:1.8;paddi
       <p class="desc">拿它做什么：想加某块内容又说不清长什么样，复制那条 prompt，再附一张截图定风格。</p>
       <div class="tagrow"><span class="tag">prompt 可复制</span><span class="tag">版式结构</span><span class="tag">免登录</span></div>
     </a>
+
+    <a class="card wide" style="--i:3" href="https://variant.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">04</span><span class="flag">AI 方向探索</span>
+        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Variant</h2>
+      <p class="host">variant.com</p>
+      <p class="desc"><b>一句想法出一串方案</b>：输入「一个极简博客」，往下滚就是一屏接一屏的不同方向，不用自己反复改提示词。</p>
+      <p class="desc">拿它做什么：定不下版式、配色时先来滚几屏，挑一套再动手做。</p>
+      <div class="tagrow"><span class="tag">灵感发散</span><span class="tag">布局 · 配色</span><span class="tag">导出 HTML</span></div>
+    </a>
+
+    <a class="card wide" style="--i:4" href="https://www.awwwards.com" target="_blank" rel="noopener noreferrer">
+      <div class="top"><span class="idx">05</span><span class="flag">免费浏览</span>
+        <span class="go"><span class="gl">打开</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9.5 7H17V14.5"/></svg></span>
+      </div>
+      <h2>Awwwards</h2>
+      <p class="host">awwwards.com</p>
+      <p class="desc"><b>获奖站点画廊</b>：Site of the Day 之类评出来的网页设计，每张都能直接点开看原站、看动效和排版怎么做的。</p>
+      <p class="desc">拿它做什么：想看「做得比自己好一档」的页面长什么样时来翻，评奖维度本身就是一份改稿清单。</p>
+      <div class="tagrow"><span class="tag">网页设计</span><span class="tag">奖项画廊</span><span class="tag">动效参考</span></div>
+    </a>
   </div>
 
-  <footer>三站都能免费浏览；Uiverse 的源码、VibeUI 的 prompt 都直接可复制。</footer>
+  <footer>五个站都能免费浏览；Uiverse 的源码、VibeUI 的 prompt 都可直接复制。</footer>
 </div>
 <script>
 // 光标跟随光斑 + 轻微倾斜（只在鼠标上生效，触屏不抢滚动）
