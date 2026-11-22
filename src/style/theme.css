@@ -323,6 +323,51 @@ button {
   filter: blur(2px);
 }
 
+/* ===== 点击涟漪：固定覆盖层，纯装饰，不参与布局也不吃事件 ===== */
+.ripple-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint;
+}
+.ripple-wave {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--d, 160px);
+  height: var(--d, 160px);
+  margin: calc(var(--d, 160px) / -2) 0 0 calc(var(--d, 160px) / -2);
+  border-radius: 50%;
+  border: 1px solid rgba(217, 87, 26, 0.38);
+  background: radial-gradient(
+    circle,
+    rgba(217, 87, 26, 0.2),
+    rgba(217, 87, 26, 0.07) 46%,
+    rgba(217, 87, 26, 0) 70%
+  );
+  opacity: var(--o, 0.4);
+  transform: translate(var(--x, 0), var(--y, 0)) scale(0.12);
+  animation: ripple-wave var(--ms, 420ms) var(--ease) forwards;
+  will-change: transform, opacity;
+}
+@keyframes ripple-wave {
+  from {
+    transform: translate(var(--x, 0), var(--y, 0)) scale(0.12);
+    opacity: var(--o, 0.4);
+  }
+  to {
+    transform: translate(var(--x, 0), var(--y, 0)) scale(1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ripple-wave {
+    display: none;
+  }
+}
+
 /* ===== 全局颗粒：PIXZEN 的印刷噪点，压到 4% ===== */
 body::after {
   content: '';
