@@ -949,16 +949,16 @@ font:600 11.5px/1 'Inter',sans-serif;color:#8a7260;cursor:pointer;transition:col
 box-shadow:0 8px 16px -10px rgba(85,53,28,.6),inset 0 1px 0 #fff;
 transition:left .34s var(--ease),width .34s var(--ease);z-index:1}
 
-.stepper{position:relative;display:flex;align-items:center;justify-content:space-between;width:216px}
-.stepper .bar{position:absolute;left:14px;right:14px;top:50%;height:2px;transform:translateY(-50%);
-background:rgba(126,84,46,.16);border-radius:2px}
-.stepper .bar i{display:block;height:100%;width:0;border-radius:2px;
-background:linear-gradient(90deg,#ec9350,#d9571a);transition:width .6s var(--ease)}
-.stepper .st{position:relative;z-index:2;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+.stepper{display:flex;align-items:center;width:216px}
+.stepper .ln{flex:1;height:2px;margin:0 7px;border-radius:2px;overflow:hidden;background:rgba(126,84,46,.16)}
+.stepper .ln i{display:block;height:100%;width:0;border-radius:2px;
+background:linear-gradient(90deg,#ec9350,#d9571a);transition:width .5s var(--ease)}
+.stepper .ln.full i{width:100%}
+.stepper .st{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
 font:600 11px/1 var(--mono);color:#a08b77;background:#fffdf8;border:1px solid rgba(126,84,46,.22);
-box-shadow:0 0 0 3px #fffdf7,0 4px 10px -8px rgba(85,53,28,.7);transition:all .4s var(--ease)}
+box-shadow:0 4px 10px -8px rgba(85,53,28,.7);transition:all .4s var(--ease)}
 .stepper .st.on{background:linear-gradient(140deg,#f08c42,#d9571a);border-color:transparent;color:#fff;
-box-shadow:0 0 0 3px #fffdf7,0 0 0 8px rgba(217,87,26,.12),0 10px 18px -10px rgba(217,87,26,.9)}
+box-shadow:0 0 0 4px rgba(217,87,26,.12),0 10px 18px -10px rgba(217,87,26,.9)}
 .stepper .st.done{color:#c04a18;border-color:rgba(217,87,26,.5);background:rgba(217,87,26,.06)}
 
 .price{width:200px;padding:10px 13px 11px;border-radius:14px;
@@ -1768,13 +1768,13 @@ pill.style.width=b.getBoundingClientRect().width+'px'
     <article class="mcard" style="--i:1">
       <span class="badge">auto</span>
       <div class="demo">
-        <div class="stepper" id="stepDemo"><span class="bar"><i></i></span><span class="st on">1</span><span class="st">2</span><span class="st">3</span><span class="st">4</span></div>
+        <div class="stepper" id="stepDemo"><span class="st on">1</span><span class="ln"><i></i></span><span class="st">2</span><span class="ln"><i></i></span><span class="st">3</span><span class="ln"><i></i></span><span class="st">4</span></div>
       </div>
       <div class="info">
         <div class="name"><b>步骤条</b><span class="en">stepper</span></div>
-        <p class="say">当前点渐变填充加一圈光环，走过的点只换描边，进度条按百分比跟着走；四个点不同时亮，节奏才清楚。</p>
+        <p class="say">当前点渐变填充加一圈光环，走过的点只换描边，点与点之间的短线一段段点亮；四个点不同时亮，节奏才清楚。</p>
         <div class="acts"><button class="copy" type="button">复制提示词</button><button class="toggle" type="button">查看实现</button></div>
-        <div class="src"><pre>progress = i/(n-1)*100 + '%'，写进 .bar i 的 width
+        <div class="src"><pre>点与点之间各是一段独立短线，走到第几格就点亮前几段
 当前点 .on 用双层阴影：4px 光环 + 落地投影
 已走过的点 .done 只改描边与淡底</pre></div>
       </div>
@@ -2749,14 +2749,14 @@ document.querySelectorAll('.seg').forEach(function (seg) {
 var stepDemo = document.getElementById('stepDemo')
 if (stepDemo) {
   var steps = Array.prototype.slice.call(stepDemo.querySelectorAll('.st'))
-  var barFill = stepDemo.querySelector('.bar i')
+  var lines = Array.prototype.slice.call(stepDemo.querySelectorAll('.ln'))
   var si = 0
   var stepTick = function () {
     steps.forEach(function (s, n) {
       s.classList.toggle('on', n === si)
       s.classList.toggle('done', n < si)
     })
-    if (barFill) barFill.style.width = (si / (steps.length - 1) * 100) + '%'
+    lines.forEach(function (l, n) { l.classList.toggle('full', n < si) })
     si = (si + 1) % steps.length
   }
   stepTick()
