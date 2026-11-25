@@ -142,6 +142,23 @@ function animate() {
   renderer.render(scene, camera)
 }
 
+function start() {
+  if (running || !renderer) return
+  running = true
+  clock.getDelta()
+  raf = requestAnimationFrame(animate)
+}
+
+function stop() {
+  running = false
+  cancelAnimationFrame(raf)
+}
+
+function onVisibility() {
+  if (document.hidden) stop()
+  else if (inView) start()
+}
+
 function resize() {
   if (!renderer || !el.value) return
   const w = el.value.clientWidth || 1
