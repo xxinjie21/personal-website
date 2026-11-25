@@ -216,8 +216,8 @@ onBeforeUnmount(() => clearTimeout(rotTimer))
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(90deg, #f7f2ec 0%, rgba(247, 242, 236, 0.94) 30%, rgba(247, 242, 236, 0.55) 52%, rgba(247, 242, 236, 0.12) 70%, transparent 82%),
-    linear-gradient(180deg, rgba(247, 242, 236, 0.75), transparent 22%, transparent 78%, rgba(247, 242, 236, 0.8));
+    linear-gradient(90deg, #f7f2ec 0%, rgba(247, 242, 236, 0.95) 24%, rgba(247, 242, 236, 0.6) 38%, rgba(247, 242, 236, 0.1) 50%, transparent 58%),
+    linear-gradient(180deg, rgba(247, 242, 236, 0.55), transparent 16%, transparent 84%, rgba(247, 242, 236, 0.6));
 }
 .copy {
   position: relative;
